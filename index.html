@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pulkit Taneja | Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/42b6d41336.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div id="animated-bg"></div>
+
+    <header>
+        <nav>
+            <a href="#hero" class="logo">Pulkit Taneja</a>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero">
+            <div class="shape shape-1 parallax-layer" data-speed="-40"></div>
+            <div class="shape shape-2 parallax-layer" data-speed="30"></div>
+            <div class="shape shape-3 parallax-layer" data-speed="-25"></div>
+            <div class="shape shape-4 parallax-layer" data-speed="50"></div>
+            <div class="hero-content parallax-layer" data-speed="-10">
+                <h1>Hi, I'm Pulkit</h1>
+                <p class="hero-subtitle">Computer Science Student | Web Developer | ML Enthusiast</p>
+                <p>A 2nd-year CSE student passionate about Web Development & Machine Learning — building projects that blend creativity with technology. 🚀</p>
+            </div>
+        </section>
+
+        <section id="about" class="scroll-section">
+            <h2>About Me</h2>
+            <p>
+                As a passionate second-year Computer Science student at <strong>VIT Chennai</strong>, my focus is on creating projects at the intersection of <strong>Web Development</strong> and <strong>Machine Learning</strong>.
+            </p>
+            <p>
+                I thrive on learning new technologies and am constantly seeking opportunities to apply my growing skill set to solve challenging, real-world problems and contribute to innovative projects.
+            </p>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/pulkit-taneja-627437366/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                <a href="https://github.com/pulkittaneja09" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+        </section>
+
+        <section id="skills" class="scroll-section">
+            <h2>My Tech Stack</h2>
+            <div class="skills-grid">
+                <div class="skill-card"><i class="fab fa-html5"></i><span>HTML</span></div>
+                <div class="skill-card"><i class="fab fa-css3-alt"></i><span>CSS</span></div>
+                <div class="skill-card"><i class="fab fa-js-square"></i><span>JavaScript</span></div>
+                <div class="skill-card"><i class="fab fa-react"></i><span>React</span></div>
+                <div class="skill-card is-learning"><i class="fab fa-golang"></i><span>GoLang</span></div>
+                <div class="skill-card is-learning"><i class="fas fa-database"></i><span>MongoDB</span></div>
+                <div class="skill-card is-learning"><i class="fas fa-robot"></i><span>Machine Learning</span></div>
+            </div>
+        </section>
+
+        <section id="projects" class="scroll-section">
+            <h2>My Projects <span id="repo-count"></span></h2>
+            <p class="section-intro">
+                I love to create things and I'm always working on something new. Below are some of my favorite projects I've worked on.
+            </p>
+            <div id="projects-grid">
+                <div class="loader"></div>
+            </div>
+            <p class="projects-summary">
+                These projects represent my journey into web development and machine learning, where each line of code is a step towards solving real-world problems and mastering new technologies.
+            </p>
+        </section>
+
+        <section id="contact" class="scroll-section">
+            <h2>Get In Touch</h2>
+            <p class="section-intro">Have a question or a project in mind? Drop me a message!</p>
+            <form id="contact-form" action="https://formspree.io/f/movnqazz" method="POST">
+                <input type="email" name="email" placeholder="Your Email" required>
+                <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+                <button type="submit" class="contact-button">Send Message</button>
+            </form>
+            <div id="form-status"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Pulkit Taneja. All Rights Reserved.</p>
+    </footer>
+
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="modal-title"></h2>
+            <p id="modal-description"></p>
+            <h3>Technologies Used:</h3>
+            <div id="modal-techs"></div>
+            <a id="modal-link" href="#" target="_blank" class="contact-button">View on GitHub</a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
