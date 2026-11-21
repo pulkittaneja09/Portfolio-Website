@@ -24,14 +24,15 @@ export function About() {
         style={stagger(4)}
       >
         <span className="label mr-1 text-faint">Now</span>
+        {/* Separators trail their item, so a wrapped line never opens on a dot. */}
         {now.map((item, i) => (
-          <span key={item} className="flex items-center gap-3 text-sm text-strong">
-            {i > 0 && (
-              <span className="text-faint" aria-hidden>
+          <span key={item} className="text-sm text-strong">
+            {item}
+            {i < now.length - 1 && (
+              <span className="ml-3 text-faint" aria-hidden>
                 ·
               </span>
             )}
-            {item}
           </span>
         ))}
       </div>

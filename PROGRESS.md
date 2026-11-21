@@ -77,6 +77,7 @@ Studied live in Chrome via Playwright (1440×900 + 390px), with computed styles 
 - 9: Founder card: the only non-row surface — hairline border, white 6%→0 gradient from the top edge, role · since, one-line mission with a serif accent ('Lectures in, syllabus-mapped *knowledge* out.'), the Lecture → Transcript → Knowledge → Syllabus coverage pipeline as an inline mono SVG sized from the label lengths (step labels whisper/llm/map on the connectors; stacks vertically below 640px), V-NEST and DPIIT credentials with champagne ✓, stack line.
 - 10: Contact: 'Let's build *something*.' as one big line, a two-line availability note, the email set large (click copies with toast + inline 'Copied to clipboard' in champagne, mailto fallback), GitHub / LinkedIn / LeetCode / Résumé links. The old Formspree form is gone (email is the single route). Footer: one small mono line whose ⌘K and ` are real buttons into the palette and terminal. Old Footer, MagneticButton and StatusBadge deleted.
 - 11: Palette, terminal, Ask widget and toasts moved onto the new tokens (no legacy classes left in any component). Palette: the selected command carries a 2px champagne line like the active nav item; 'Top' now really scrolls to the top (the old hero id is gone); no theme entry. Terminal: champagne for accent lines, errors underlined not red. Overlay entrances are fade + scale + lift, no blur. Ask copy no longer points at the removed hero. Also fixed: the agent card header wrapped on the 'scrap-2-spark' trace — now one line with a truncating slug; card height verified constant (185px) across all traces at 1440/1024/390.
+- 12: 390px: zero horizontal overflow; header → links → agent card → sections; glass top bar shows the current section once past the header (mounted, not opacity-hidden); project thumbnails tuck under their text; pipeline stacks vertically; Now strip and tools line wrap after dots. Name measured on one line at 360/375/390/414/768/1024/1280/1440/1920. 404 page rebuilt (it had lost its gutters). Reduced motion verified by script at 1440 and 390: no running animations, Lenis and spotlight off, nothing armed or hidden, complete static trace with no caret. Thumbnails now dim with brightness instead of opacity, so nothing on screen rests below opacity 1.
 
 ## Checklist
 
@@ -91,7 +92,7 @@ Studied live in Chrome via Playwright (1440×900 + 390px), with computed styles 
 - [x] 9. Founder card with SVG pipeline
 - [x] 10. Contact + footer
 - [x] 11. Restyle command palette, terminal and Ask widget to match (champagne accent, no light-mode entries)
-- [ ] 12. Mobile layout (390px) + reduced-motion pass
+- [x] 12. Mobile layout (390px) + reduced-motion pass
 - [ ] 13. Fix/verify the reveal bug: nothing stuck blurred or invisible
 - [ ] 14. Playwright QA at 1440, 1280, 1024 and 390px (one-line name, no theme toggle, no stuck opacity/blur, body contrast ≥ 7:1, not template-like)
 - [ ] 15. npm run build, fix all warnings, final summary

@@ -52,15 +52,13 @@ export function MobileBar({ active, onOpenPalette }: Props) {
           >
             PT
           </span>
-          <span
-            className={cn(
-              'label truncate text-body transition-[opacity,transform] duration-300',
-              pastHeader && section ? 'translate-y-0 opacity-100' : 'translate-y-1 opacity-0',
-            )}
-            aria-hidden
-          >
-            {section}
-          </span>
+          {/* Mounted only once it has something to say, keyed by section so
+              each change settles in fresh. */}
+          {pastHeader && section && (
+            <span key={section} className="line-in label truncate text-body" aria-hidden>
+              {section}
+            </span>
+          )}
         </a>
 
         <button

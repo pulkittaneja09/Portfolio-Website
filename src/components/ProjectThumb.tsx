@@ -6,7 +6,7 @@ const frame = 'relative aspect-[16/10] overflow-hidden rounded-lg border border-
 
 /**
  * A 16:10 thumbnail for a project row: the real screenshot, slightly dimmed
- * until the row is hovered. A project with no interface to show gets a
+ * (brightness, not opacity — it is fully opaque at rest) until the row is hovered. A project with no interface to show gets a
  * schematic of its own architecture instead — the services and data stores
  * from its case-study diagram, cascaded in mono. Nothing invented.
  */
@@ -23,7 +23,7 @@ export function ProjectThumb({ project, className }: { project: Project; classNa
           height={640}
           loading="lazy"
           decoding="async"
-          className="h-full w-full object-cover object-left-top opacity-80 saturate-[0.85] transition-[opacity,filter] duration-300 group-hover/row:opacity-100 group-hover/row:saturate-100"
+          className="h-full w-full object-cover object-left-top brightness-[0.8] saturate-[0.85] transition-[filter] duration-300 group-hover/row:brightness-100 group-hover/row:saturate-100"
         />
       </div>
     );
