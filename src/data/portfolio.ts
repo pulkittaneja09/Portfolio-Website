@@ -230,7 +230,7 @@ export const projects: Project[] = [
     // TODO(pulkit): drop a screenshot of the analytics dashboard into
     // public/previews/ as scrap-2-spark.webp and set it here.
     preview: null,
-    emphasis: 'wide',
+    emphasis: 'standard',
     tags: ['Machine learning', 'Backend', 'Sustainability'],
     detail: {
       overview: [
@@ -366,7 +366,7 @@ export const projects: Project[] = [
     // TODO(pulkit): no UI to screenshot — a snippet of the API surface or an
     // ER diagram would work well here as public/previews/ieee-backend.webp.
     preview: null,
-    emphasis: 'standard',
+    emphasis: 'wide',
     tags: ['Go', 'Backend', 'Open source'],
     detail: {
       overview: [

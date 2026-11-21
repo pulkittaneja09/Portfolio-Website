@@ -143,8 +143,11 @@ export interface Project {
   preview: string | null;
   /** Extra frames cycled on hover. */
   previewFrames?: string[];
-  /** Bento emphasis: "lead" cards get the largest tile. */
-  emphasis: 'lead' | 'wide' | 'standard';
+  /**
+   * Bento placement. `lead` is the tall 7-column tile, `standard` stacks
+   * beside it, and `wide` runs full width as a banner.
+   */
+  emphasis: 'lead' | 'standard' | 'wide';
   tags: string[];
   /** Detail page content. */
   detail: {

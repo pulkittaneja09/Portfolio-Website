@@ -1,0 +1,103 @@
+import { ProjectCard } from '@/components/ProjectCard';
+import { Reveal } from '@/components/Reveal';
+import { SectionHeading } from '@/components/SectionHeading';
+import { ArrowUpRightIcon, GitHubIcon } from '@/components/icons';
+import { GITHUB_USERNAME, projects, sideProjects } from '@/data/portfolio';
+import type { Project } from '@/data/types';
+
+/**
+ * Asymmetric bento: the lead project takes a 2x2 tile, the rest fill around it.
+ * Placement is derived from each project's `emphasis`, so reordering the data
+ * reflows the grid without touching this file.
+ */
+const placement: Record<Project['emphasis'], string> = {
+  lead: 'lg:col-span-7 lg:row-span-2',
+  standard: 'lg:col-span-5',
+  wide: 'lg:col-span-12',
+};
+
+export function Projects() {
+  return (
+    <section id="work" aria-labelledby="work-title" className="scroll-mt-24 py-24 sm:py-28">
+      <div className="shell">
+        <SectionHeading
+          index="01"
+          eyebrow="Selected work"
+          title={<span id="work-title">Things I built that are running right now.</span>}
+          lede="Four projects, three of them live in production. Each card links to a case study with the architecture, what was hard, and what I would do next."
+          aside={
+            <a
+              href={`https://github.com/${GITHUB_USERNAME}?tab=repositories`}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-muted transition-colors hover:text-accent"
+            >
+              <GitHubIcon className="h-4 w-4" />
+              All repositories
+              <ArrowUpRightIcon className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+          }
+        />
+
+        <div className="grid gap-4 sm:gap-5 lg:grid-cols-12">
+          {projects.map((project, index) => (
+            <Reveal
+              key={project.slug}
+              index={index}
+              as="div"
+              className={`${placement[project.emphasis]} flex`}
+            >
+              <ProjectCard
+                project={project}
+                variant={project.emphasis === 'wide' ? 'banner' : project.emphasis}
+                className="w-full"
+              />
+            </Reveal>
+          ))}
+        </div>
+
+        {/* ── Smaller work ───────────────────────────────────────────────── */}
+        <div className="mt-16">
+          <Reveal>
+            <div className="flex items-baseline gap-3">
+              <h3 className="eyebrow">Also on the shelf</h3>
+              <span className="h-px flex-1 bg-line" aria-hidden />
+            </div>
+          </Reveal>
+
+          <ul className="mt-6 grid gap-px overflow-hidden rounded-card border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+            {sideProjects.map((item, index) => (
+              <Reveal as="li" key={item.name} index={index} className="group bg-surface">
+                <a
+                  href={item.repo}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="flex h-full flex-col p-5 transition-colors hover:bg-elevated"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <h4 className="font-display text-base transition-colors group-hover:text-accent">
+                      {item.name}
+                    </h4>
+                    <ArrowUpRightIcon className="h-4 w-4 shrink-0 text-faint transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent" />
+                  </div>
+
+                  <p className="mt-2 flex-1 text-[0.875rem] leading-relaxed text-muted">{item.blurb}</p>
+
+                  {item.metric && (
+                    <p className="mt-3 font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-accent">
+                      {item.metric}
+                    </p>
+                  )}
+
+                  <p className="mt-3 font-mono text-[0.625rem] uppercase tracking-[0.1em] text-faint">
+                    {item.stack.join(' · ')}
+                  </p>
+                </a>
+              </Reveal>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
