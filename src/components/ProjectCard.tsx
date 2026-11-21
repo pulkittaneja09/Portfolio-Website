@@ -129,7 +129,9 @@ export function ProjectCard({ project, className, variant = 'standard' }: Props)
         <div
           className={cn(
             'pointer-events-none absolute inset-0 from-surface via-surface/10 to-transparent opacity-80',
-            banner ? 'bg-gradient-to-t lg:bg-gradient-to-r lg:from-transparent lg:to-surface' : 'bg-gradient-to-t',
+            banner
+              ? 'bg-gradient-to-t lg:bg-gradient-to-r lg:from-transparent lg:to-surface'
+              : 'bg-gradient-to-t',
           )}
           aria-hidden
         />
@@ -143,10 +145,7 @@ export function ProjectCard({ project, className, variant = 'standard' }: Props)
       <div className={cn('flex flex-1 flex-col p-5', (lead || banner) && 'sm:p-6')}>
         <div className="flex items-start justify-between gap-4">
           <h3
-            className={cn(
-              'font-display leading-tight',
-              lead || banner ? 'text-xl sm:text-2xl' : 'text-lg',
-            )}
+            className={cn('font-display leading-tight', lead || banner ? 'text-xl sm:text-2xl' : 'text-lg')}
           >
             {/* The whole card is clickable through this stretched link, while
                 the demo and source buttons below stay independently clickable. */}

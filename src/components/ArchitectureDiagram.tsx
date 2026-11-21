@@ -13,7 +13,10 @@ const BOX_W = 132;
 const BOX_H = 56;
 const PAD = 26;
 
-const toneStyles: Record<Architecture['nodes'][number]['tone'], { fill: string; stroke: string; label: string }> = {
+const toneStyles: Record<
+  Architecture['nodes'][number]['tone'],
+  { fill: string; stroke: string; label: string }
+> = {
   client: { fill: 'rgb(var(--elevated))', stroke: 'rgb(var(--line))', label: 'rgb(var(--ink))' },
   service: { fill: 'rgb(var(--elevated))', stroke: 'rgb(var(--accent) / 0.55)', label: 'rgb(var(--ink))' },
   model: { fill: 'rgb(var(--accent) / 0.14)', stroke: 'rgb(var(--accent))', label: 'rgb(var(--ink))' },

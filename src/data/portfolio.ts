@@ -265,7 +265,14 @@ export const projects: Project[] = [
           { id: 'csv', label: 'Telemetry CSV', note: 'cycle-level', col: 0, row: 1, tone: 'client' },
           { id: 'ui', label: 'React + Vite', note: 'Vercel', col: 1, row: 1, tone: 'client' },
           { id: 'api', label: 'FastAPI', note: 'Render', col: 2, row: 1, tone: 'service' },
-          { id: 'feat', label: 'Feature engineering', note: 'degradation trend', col: 3, row: 0, tone: 'service' },
+          {
+            id: 'feat',
+            label: 'Feature engineering',
+            note: 'degradation trend',
+            col: 3,
+            row: 0,
+            tone: 'service',
+          },
           { id: 'model', label: 'Random Forest', note: 'scikit-learn', col: 4, row: 0, tone: 'model' },
           { id: 'report', label: 'Health report', note: 'RUL · risk · reuse', col: 4, row: 2, tone: 'store' },
         ],
@@ -401,7 +408,14 @@ export const projects: Project[] = [
           { id: 'client', label: 'Portal client', note: 'applicants', col: 0, row: 1, tone: 'client' },
           { id: 'gin', label: 'Gin router', note: 'Go', col: 1, row: 1, tone: 'service' },
           { id: 'mw', label: 'Middleware', note: 'JWT · validation', col: 2, row: 0, tone: 'service' },
-          { id: 'handlers', label: 'Handlers', note: 'users · applications', col: 3, row: 1, tone: 'service' },
+          {
+            id: 'handlers',
+            label: 'Handlers',
+            note: 'users · applications',
+            col: 3,
+            row: 1,
+            tone: 'service',
+          },
           { id: 'pg', label: 'PostgreSQL', note: 'pooled · migrated', col: 4, row: 1, tone: 'store' },
         ],
         edges: [
@@ -512,8 +526,7 @@ export const venture: Venture = {
     },
     {
       label: 'DPIIT-recognised',
-      detail:
-        'Recognised startup under India’s Department for Promotion of Industry and Internal Trade.',
+      detail: 'Recognised startup under India’s Department for Promotion of Industry and Internal Trade.',
       // TODO(pulkit): add the DPIIT recognition number and date — a recruiter
       // reading closely will look for it, and it is strong proof.
     },
@@ -557,7 +570,11 @@ export const skillGroups: SkillGroup[] = [
     title: 'Backend',
     blurb: 'The services that carry the models.',
     items: [
-      { name: 'FastAPI', icon: 'fastapi', usedIn: ['ParcelPilot AI Support Copilot', 'Scrap 2 Spark', 'KnowledgeHub AI', 'Dezors'] },
+      {
+        name: 'FastAPI',
+        icon: 'fastapi',
+        usedIn: ['ParcelPilot AI Support Copilot', 'Scrap 2 Spark', 'KnowledgeHub AI', 'Dezors'],
+      },
       { name: 'Node.js', icon: 'nodedotjs', usedIn: ['Ollamachat API', 'Career Advisor Backend'] },
       { name: 'Express', icon: 'express', usedIn: ['Career Advisor Backend'] },
       { name: 'PostgreSQL', icon: 'postgresql', usedIn: ['IEEE Recruitment Backend'] },
@@ -569,9 +586,17 @@ export const skillGroups: SkillGroup[] = [
     title: 'Languages',
     blurb: 'Ranked by what I actually ship in.',
     items: [
-      { name: 'Python', icon: 'python', usedIn: ['ParcelPilot AI Support Copilot', 'Scrap 2 Spark', 'KnowledgeHub AI', 'SDG Corporation'] },
+      {
+        name: 'Python',
+        icon: 'python',
+        usedIn: ['ParcelPilot AI Support Copilot', 'Scrap 2 Spark', 'KnowledgeHub AI', 'SDG Corporation'],
+      },
       { name: 'Go', icon: 'go', usedIn: ['IEEE Recruitment Backend', 'Go Movies API', 'GoFormHandler'] },
-      { name: 'TypeScript', icon: 'typescript', usedIn: ['ParcelPilot AI Support Copilot', 'Scrap 2 Spark', 'This site'] },
+      {
+        name: 'TypeScript',
+        icon: 'typescript',
+        usedIn: ['ParcelPilot AI Support Copilot', 'Scrap 2 Spark', 'This site'],
+      },
       { name: 'JavaScript', icon: 'javascript', usedIn: ['KnowledgeHub AI', 'Ollamachat API'] },
       { name: 'C++', icon: 'cplusplus', usedIn: ['DSA practice', 'Coursework'] },
       { name: 'Java', icon: 'openjdk', usedIn: ['OOP coursework'] },
@@ -587,8 +612,16 @@ export const skillGroups: SkillGroup[] = [
       { name: 'Linux', icon: 'linux', usedIn: ['Dezors VPS'] },
       { name: 'Nginx', icon: 'nginx', usedIn: ['Dezors'] },
       { name: 'Git', icon: 'git', usedIn: ['Everything'] },
-      { name: 'Vercel', icon: 'vercel', usedIn: ['ParcelPilot AI Support Copilot', 'Scrap 2 Spark', 'KnowledgeHub AI'] },
-      { name: 'Render', icon: 'render', usedIn: ['ParcelPilot AI Support Copilot', 'Scrap 2 Spark', 'KnowledgeHub AI'] },
+      {
+        name: 'Vercel',
+        icon: 'vercel',
+        usedIn: ['ParcelPilot AI Support Copilot', 'Scrap 2 Spark', 'KnowledgeHub AI'],
+      },
+      {
+        name: 'Render',
+        icon: 'render',
+        usedIn: ['ParcelPilot AI Support Copilot', 'Scrap 2 Spark', 'KnowledgeHub AI'],
+      },
       { name: 'Postman', icon: 'postman', usedIn: ['API development'] },
     ],
   },
@@ -597,7 +630,11 @@ export const skillGroups: SkillGroup[] = [
     title: 'Frontend',
     blurb: 'Enough to ship the whole product.',
     items: [
-      { name: 'React', icon: 'react', usedIn: ['ParcelPilot AI Support Copilot', 'Scrap 2 Spark', 'This site'] },
+      {
+        name: 'React',
+        icon: 'react',
+        usedIn: ['ParcelPilot AI Support Copilot', 'Scrap 2 Spark', 'This site'],
+      },
       { name: 'Vite', icon: 'vite', usedIn: ['Scrap 2 Spark', 'KnowledgeHub AI', 'This site'] },
       { name: 'Tailwind CSS', icon: 'tailwindcss', usedIn: ['Scrap 2 Spark', 'This site'] },
     ],

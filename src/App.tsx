@@ -66,11 +66,7 @@ export default function App() {
         Skip to content
       </a>
 
-      <Nav
-        onOpenPalette={openPalette}
-        onOpenTerminal={openTerminal}
-        isHome={location.pathname === '/'}
-      />
+      <Nav onOpenPalette={openPalette} onOpenTerminal={openTerminal} isHome={location.pathname === '/'} />
 
       <main id="main">
         <Routes>

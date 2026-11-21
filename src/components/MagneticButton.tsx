@@ -70,7 +70,10 @@ export function MagneticButton(props: AnchorProps | ButtonProps) {
     onBlur: reset,
     style: {
       transform: `translate3d(${offset.x}px, ${offset.y}px, 0)`,
-      transition: offset.x === 0 && offset.y === 0 ? 'transform 0.5s cubic-bezier(0.16,1,0.3,1)' : 'transform 0.09s linear',
+      transition:
+        offset.x === 0 && offset.y === 0
+          ? 'transform 0.5s cubic-bezier(0.16,1,0.3,1)'
+          : 'transform 0.09s linear',
     },
     className: cn(
       'group inline-flex items-center justify-center gap-2 rounded-full border px-5 py-2.5 text-sm transition-colors duration-300 will-change-transform',
@@ -81,13 +84,7 @@ export function MagneticButton(props: AnchorProps | ButtonProps) {
 
   if ('href' in props && props.href) {
     return (
-      <a
-        {...shared}
-        href={props.href}
-        download={props.download}
-        target={props.target}
-        rel={props.rel}
-      >
+      <a {...shared} href={props.href} download={props.download} target={props.target} rel={props.rel}>
         {children}
       </a>
     );

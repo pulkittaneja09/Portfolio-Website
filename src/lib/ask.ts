@@ -50,7 +50,18 @@ const TOPICS: Topic[] = [
   },
   {
     id: 'availability',
-    keywords: ['available', 'availability', 'hire', 'hiring', 'internship', 'intern', 'job', 'open', 'join', 'notice'],
+    keywords: [
+      'available',
+      'availability',
+      'hire',
+      'hiring',
+      'internship',
+      'intern',
+      'job',
+      'open',
+      'join',
+      'notice',
+    ],
     answer: () =>
       `${profile.availability}. He is based in ${profile.location} and open to remote work — he already did a six-month remote engineering internship at Dezors. The fastest way to reach him is ${profile.email}.`,
     related: ['What is his experience?', 'Can I see his résumé?', 'What is his strongest project?'],
@@ -74,7 +85,17 @@ const TOPICS: Topic[] = [
   },
   {
     id: 'rag',
-    keywords: ['rag', 'retrieval', 'chroma', 'chromadb', 'embedding', 'vector', 'knowledgehub', 'langchain', 'gemini'],
+    keywords: [
+      'rag',
+      'retrieval',
+      'chroma',
+      'chromadb',
+      'embedding',
+      'vector',
+      'knowledgehub',
+      'langchain',
+      'gemini',
+    ],
     answer: () => {
       const p = projects.find((item) => item.slug === 'knowledgehub-ai');
       if (!p) return 'No data for that project.';
@@ -84,7 +105,16 @@ const TOPICS: Topic[] = [
   },
   {
     id: 'mcp',
-    keywords: ['mcp', 'model context protocol', 'langgraph', 'automation', 'itsm', 'sdg', 'tooling', 'routing'],
+    keywords: [
+      'mcp',
+      'model context protocol',
+      'langgraph',
+      'automation',
+      'itsm',
+      'sdg',
+      'tooling',
+      'routing',
+    ],
     answer: () => {
       const sdg = experience.find((item) => item.org === 'SDG Corporation');
       return `At SDG Corporation he built an MCP server exposing 10+ enterprise tools, plus LangGraph agent workflows that route by intent to the right tool — used to speed up internal ITSM resolution. He also wrote the Python/FastAPI integrations behind automated ticket creation, retrieval, updates and workflow execution. ${sdg ? `That was ${sdg.start} to ${sdg.end} in ${sdg.location}.` : ''}`;
@@ -93,14 +123,42 @@ const TOPICS: Topic[] = [
   },
   {
     id: 'ml',
-    keywords: ['ml', 'machine learning', 'model', 'accuracy', 'random forest', 'battery', 'scrap', 'spark', 'nasa', 'prediction', 'data science', 'classifier'],
+    keywords: [
+      'ml',
+      'machine learning',
+      'model',
+      'accuracy',
+      'random forest',
+      'battery',
+      'scrap',
+      'spark',
+      'nasa',
+      'prediction',
+      'data science',
+      'classifier',
+    ],
     answer: () =>
       `Scrap 2 Spark predicts the remaining useful life of lithium-ion batteries with a Random Forest trained on the NASA Battery Dataset — 2,716 cycles across 34 cells, reaching R² = 0.879 on held-out data. He also built a fake-news classifier (TF-IDF + logistic regression) that scores 97.9% on a held-out split of a 20,800-article corpus, and a fake-job-posting detector at roughly 93%.`,
     related: ['What does Scrap 2 Spark do?', 'What is his Python stack?', 'What else has he built?'],
   },
   {
     id: 'backend',
-    keywords: ['backend', 'api', 'fastapi', 'go', 'golang', 'postgres', 'postgresql', 'database', 'server', 'nginx', 'docker', 'deploy', 'devops', 'infra'],
+    keywords: [
+      'backend',
+      'api',
+      'fastapi',
+      'go',
+      'golang',
+      'postgres',
+      'postgresql',
+      'database',
+      'server',
+      'nginx',
+      'docker',
+      'deploy',
+      'devops',
+      'infra',
+    ],
     answer: () =>
       `Backend is the centre of gravity. FastAPI across ParcelPilot, Scrap 2 Spark, KnowledgeHub AI and the Dezors production backend. Go with Gin and PostgreSQL for the IEEE recruitment portal that handled 1,000+ applicants — JWT auth, validation, migrations and Docker. On the infrastructure side: Docker, Linux, Nginx as a reverse proxy on a VPS, and deployments on Vercel and Render.`,
     related: ['Does he write Go?', 'What has he deployed to production?', 'What is his full stack?'],
@@ -116,14 +174,36 @@ const TOPICS: Topic[] = [
   },
   {
     id: 'startup',
-    keywords: ['startup', 'audaxity', 'founder', 'ceo', 'company', 'venture', 'incubat', 'vnest', 'v-nest', 'dpiit'],
+    keywords: [
+      'startup',
+      'audaxity',
+      'founder',
+      'ceo',
+      'company',
+      'venture',
+      'incubat',
+      'vnest',
+      'v-nest',
+      'dpiit',
+    ],
     answer: () =>
       `${venture.name} — he is ${venture.role}, since ${venture.since}. ${venture.pitch} It is ${venture.badges.map((b) => b.label.toLowerCase()).join(' and ')}. The MVP ships Whisper-based speech-to-text, AI knowledge generation and automated syllabus mapping.`,
     related: ['What is he building there?', 'What is his experience?', 'Is he available for internships?'],
   },
   {
     id: 'experience',
-    keywords: ['experience', 'worked', 'work history', 'employment', 'intern', 'internships', 'role', 'roles', 'dezors', 'jobs'],
+    keywords: [
+      'experience',
+      'worked',
+      'work history',
+      'employment',
+      'intern',
+      'internships',
+      'role',
+      'roles',
+      'dezors',
+      'jobs',
+    ],
     answer: () =>
       experience
         .map((item) => `${item.role} at ${item.org} (${item.start} – ${item.end}): ${item.bullets[0]}`)
@@ -132,22 +212,58 @@ const TOPICS: Topic[] = [
   },
   {
     id: 'skills',
-    keywords: ['skill', 'skills', 'stack', 'tech', 'technology', 'language', 'languages', 'know', 'tools', 'framework'],
+    keywords: [
+      'skill',
+      'skills',
+      'stack',
+      'tech',
+      'technology',
+      'language',
+      'languages',
+      'know',
+      'tools',
+      'framework',
+    ],
     answer: () =>
-      skillGroups.map((group) => `${group.title}: ${group.items.map((item) => item.name).join(', ')}.`).join(' ') +
-      ` CS fundamentals: ${fundamentals.join(', ')}.`,
+      skillGroups
+        .map((group) => `${group.title}: ${group.items.map((item) => item.name).join(', ')}.`)
+        .join(' ') + ` CS fundamentals: ${fundamentals.join(', ')}.`,
     related: ['What is his backend stack?', 'What machine learning has he done?', 'Does he write Go?'],
   },
   {
     id: 'education',
-    keywords: ['education', 'study', 'studying', 'college', 'university', 'degree', 'cgpa', 'gpa', 'vit', 'graduate', 'graduation', 'school'],
+    keywords: [
+      'education',
+      'study',
+      'studying',
+      'college',
+      'university',
+      'degree',
+      'cgpa',
+      'gpa',
+      'vit',
+      'graduate',
+      'graduation',
+      'school',
+    ],
     answer: () =>
       `${education.degree} in ${education.field} at ${education.institution}, ${education.start} to ${education.end}. ${education.score} ${education.scoreLabel}. He has also solved 120+ problems on LeetCode.`,
     related: ['Is he available for internships?', 'What has he built?', 'Where is he based?'],
   },
   {
     id: 'contact',
-    keywords: ['contact', 'email', 'reach', 'linkedin', 'github', 'resume', 'cv', 'download', 'phone', 'call'],
+    keywords: [
+      'contact',
+      'email',
+      'reach',
+      'linkedin',
+      'github',
+      'resume',
+      'cv',
+      'download',
+      'phone',
+      'call',
+    ],
     answer: () =>
       `Email ${profile.email}. ${profile.socials
         .filter((social) => social.icon !== 'mail')
@@ -165,7 +281,10 @@ const TOPICS: Topic[] = [
   {
     id: 'numbers',
     keywords: ['metric', 'metrics', 'number', 'numbers', 'result', 'results', 'impact', 'proof', 'stats'],
-    answer: () => stats.map((stat) => `${stat.prefix ?? ''}${stat.value}${stat.suffix ?? ''} — ${stat.label}`).join('. ') + '.',
+    answer: () =>
+      stats
+        .map((stat) => `${stat.prefix ?? ''}${stat.value}${stat.suffix ?? ''} — ${stat.label}`)
+        .join('. ') + '.',
     related: ['What machine learning has he done?', 'What has he built?', 'What is his experience?'],
   },
   {
@@ -186,9 +305,44 @@ export const SUGGESTED_QUESTIONS = [
 ];
 
 const STOP_WORDS = new Set([
-  'a', 'an', 'the', 'is', 'are', 'was', 'were', 'do', 'does', 'did', 'has', 'have', 'had',
-  'he', 'his', 'him', 'you', 'your', 'i', 'me', 'my', 'what', 'tell', 'about', 'of', 'to',
-  'for', 'in', 'on', 'with', 'and', 'or', 'can', 'could', 'would', 'show', 'give', 'any',
+  'a',
+  'an',
+  'the',
+  'is',
+  'are',
+  'was',
+  'were',
+  'do',
+  'does',
+  'did',
+  'has',
+  'have',
+  'had',
+  'he',
+  'his',
+  'him',
+  'you',
+  'your',
+  'i',
+  'me',
+  'my',
+  'what',
+  'tell',
+  'about',
+  'of',
+  'to',
+  'for',
+  'in',
+  'on',
+  'with',
+  'and',
+  'or',
+  'can',
+  'could',
+  'would',
+  'show',
+  'give',
+  'any',
 ]);
 
 function tokenise(question: string): string[] {

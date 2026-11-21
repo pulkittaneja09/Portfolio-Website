@@ -71,7 +71,10 @@ export function TerminalOverlay({ open, onClose }: Props) {
   }, [open]);
 
   useEffect(() => {
-    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: reduced ? 'auto' : 'smooth' });
+    scrollRef.current?.scrollTo({
+      top: scrollRef.current.scrollHeight,
+      behavior: reduced ? 'auto' : 'smooth',
+    });
   }, [blocks, reduced]);
 
   const submit = useCallback(
@@ -188,9 +191,7 @@ export function TerminalOverlay({ open, onClose }: Props) {
                 <span className="h-2.5 w-2.5 rounded-full bg-amber-400/70" />
                 <span className="h-2.5 w-2.5 rounded-full bg-accent/70" />
               </span>
-              <p className="flex-1 truncate font-mono text-xs text-faint">
-                pulkit@portfolio — ~/about
-              </p>
+              <p className="flex-1 truncate font-mono text-xs text-faint">pulkit@portfolio — ~/about</p>
               <button
                 type="button"
                 onClick={onClose}
@@ -223,7 +224,10 @@ export function TerminalOverlay({ open, onClose }: Props) {
                           href={line.href}
                           target={line.href.startsWith('mailto:') ? undefined : '_blank'}
                           rel="noreferrer noopener"
-                          className={cn(toneClass[line.tone ?? 'default'], 'underline decoration-dotted underline-offset-4 hover:text-accent')}
+                          className={cn(
+                            toneClass[line.tone ?? 'default'],
+                            'underline decoration-dotted underline-offset-4 hover:text-accent',
+                          )}
                         >
                           {line.text}
                         </a>

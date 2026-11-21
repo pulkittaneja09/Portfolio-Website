@@ -6,9 +6,7 @@ export function NotFound() {
   return (
     <section className="shell flex min-h-[80vh] flex-col justify-center py-32">
       <p className="eyebrow">Error 404</p>
-      <h1 className="mt-4 font-display text-display-lg">
-        That page does not exist.
-      </h1>
+      <h1 className="mt-4 font-display text-display-lg">That page does not exist.</h1>
       <p className="mt-4 max-w-md text-muted">
         The link may be stale. Everything on this site is reachable from the home page, or with ⌘K.
       </p>

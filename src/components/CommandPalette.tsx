@@ -51,10 +51,7 @@ export function CommandPalette({ open, onClose, onOpenTerminal }: Props) {
     window.setTimeout(action, 60);
   };
 
-  const sections = useMemo(
-    () => [{ id: 'hero', label: 'Top' }, ...nav],
-    [],
-  );
+  const sections = useMemo(() => [{ id: 'hero', label: 'Top' }, ...nav], []);
 
   return (
     <AnimatePresence>
@@ -201,7 +198,9 @@ export function CommandPalette({ open, onClose, onOpenTerminal }: Props) {
                 <Command.Group heading="Elsewhere" className="cmd-group">
                   <Command.Item
                     value="open github profile"
-                    onSelect={() => run(() => window.open(`https://github.com/pulkittaneja09`, '_blank', 'noopener'))}
+                    onSelect={() =>
+                      run(() => window.open(`https://github.com/pulkittaneja09`, '_blank', 'noopener'))
+                    }
                     className="cmd-item"
                   >
                     <GitHubIcon className="h-4 w-4 text-faint" />
@@ -221,7 +220,11 @@ export function CommandPalette({ open, onClose, onOpenTerminal }: Props) {
                   </Command.Item>
                   <Command.Item
                     value="send me an email"
-                    onSelect={() => run(() => { window.location.href = `mailto:${profile.email}`; })}
+                    onSelect={() =>
+                      run(() => {
+                        window.location.href = `mailto:${profile.email}`;
+                      })
+                    }
                     className="cmd-item"
                   >
                     <MailIcon className="h-4 w-4 text-faint" />

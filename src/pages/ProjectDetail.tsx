@@ -91,19 +91,34 @@ export function ProjectDetail() {
 
           <div className="mt-8 flex flex-wrap gap-3">
             {project.links.demo && (
-              <MagneticButton href={project.links.demo} variant="solid" target="_blank" rel="noreferrer noopener">
+              <MagneticButton
+                href={project.links.demo}
+                variant="solid"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
                 <PlayIcon className="h-4 w-4" />
                 Live demo
               </MagneticButton>
             )}
             {project.links.repo && (
-              <MagneticButton href={project.links.repo} variant="outline" target="_blank" rel="noreferrer noopener">
+              <MagneticButton
+                href={project.links.repo}
+                variant="outline"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
                 <GitHubIcon className="h-4 w-4" />
                 Source
               </MagneticButton>
             )}
             {project.links.api && (
-              <MagneticButton href={project.links.api} variant="ghost" target="_blank" rel="noreferrer noopener">
+              <MagneticButton
+                href={project.links.api}
+                variant="ghost"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
                 <ArrowUpRightIcon className="h-4 w-4" />
                 API
               </MagneticButton>
@@ -150,7 +165,10 @@ export function ProjectDetail() {
               <h2 className="eyebrow">What it does</h2>
               <ul className="mt-4 space-y-3">
                 {project.detail.highlights.map((highlight) => (
-                  <li key={highlight.slice(0, 24)} className="flex gap-3 text-[0.9375rem] leading-relaxed text-ink/85">
+                  <li
+                    key={highlight.slice(0, 24)}
+                    className="flex gap-3 text-[0.9375rem] leading-relaxed text-ink/85"
+                  >
                     <span className="mt-[0.45rem] h-1 w-3 shrink-0 bg-accent" aria-hidden />
                     {highlight}
                   </li>
@@ -238,7 +256,9 @@ export function ProjectDetail() {
         >
           <div>
             <p className="eyebrow">Next project</p>
-            <p className="mt-1.5 font-display text-xl transition-colors group-hover:text-accent">{next.name}</p>
+            <p className="mt-1.5 font-display text-xl transition-colors group-hover:text-accent">
+              {next.name}
+            </p>
           </div>
           <ArrowRightIcon className="h-5 w-5 text-faint transition-all group-hover:translate-x-1.5 group-hover:text-accent" />
         </Link>

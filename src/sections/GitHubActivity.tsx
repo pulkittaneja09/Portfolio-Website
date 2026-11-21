@@ -91,7 +91,11 @@ function LanguageBar({ languages }: { languages: GitHubData['languages'] }) {
 
   return (
     <div>
-      <div className="flex h-2 w-full overflow-hidden rounded-full bg-elevated" role="img" aria-label="Language breakdown across public repositories">
+      <div
+        className="flex h-2 w-full overflow-hidden rounded-full bg-elevated"
+        role="img"
+        aria-label="Language breakdown across public repositories"
+      >
         {shown.map((language) => (
           <span
             key={language.name}
@@ -151,8 +155,7 @@ export function GitHubActivity({ state }: Props) {
               rel="noreferrer noopener"
               className="group inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 font-mono text-xs text-muted transition-colors hover:border-accent/50 hover:text-ink"
             >
-              <GitHubIcon className="h-4 w-4" />
-              @{GITHUB_USERNAME}
+              <GitHubIcon className="h-4 w-4" />@{GITHUB_USERNAME}
               <ArrowUpRightIcon className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </a>
           }
@@ -232,9 +235,7 @@ export function GitHubActivity({ state }: Props) {
                       <dt className="font-mono text-[0.625rem] uppercase tracking-[0.12em] text-faint">
                         Followers
                       </dt>
-                      <dd className="mt-1 font-display text-2xl text-ink">
-                        {state.data.user.followers}
-                      </dd>
+                      <dd className="mt-1 font-display text-2xl text-ink">{state.data.user.followers}</dd>
                     </div>
                     <div className="col-span-2">
                       <dt className="font-mono text-[0.625rem] uppercase tracking-[0.12em] text-faint">

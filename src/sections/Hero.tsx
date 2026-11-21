@@ -75,10 +75,7 @@ export function Hero() {
             </div>
 
             {/* ── Three CTAs ─────────────────────────────────────────────── */}
-            <div
-              className="hero-rise mt-9 flex flex-wrap items-center gap-3"
-              style={riseDelay(0.4)}
-            >
+            <div className="hero-rise mt-9 flex flex-wrap items-center gap-3" style={riseDelay(0.4)}>
               <MagneticButton href="#work" variant="solid">
                 View projects
                 <ArrowRightIcon className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -103,8 +100,7 @@ export function Hero() {
               <div className="flex items-center gap-2">
                 <dt className="sr-only">Studying</dt>
                 <dd>
-                  <span className="text-muted">{education.degree} CSE</span> · VIT Chennai ·{' '}
-                  {education.end}
+                  <span className="text-muted">{education.degree} CSE</span> · VIT Chennai · {education.end}
                 </dd>
               </div>
               <div className="flex items-center gap-2">

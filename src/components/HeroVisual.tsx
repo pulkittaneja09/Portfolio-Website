@@ -74,7 +74,13 @@ function MeshFallback() {
       </g>
       <g fill="rgb(var(--accent))">
         {nodes.map((n, i) => (
-          <circle key={i} cx={n.x} cy={n.y} r={i % 3 === 0 ? 1.5 : 1} fillOpacity={i % 3 === 0 ? 0.95 : 0.6} />
+          <circle
+            key={i}
+            cx={n.x}
+            cy={n.y}
+            r={i % 3 === 0 ? 1.5 : 1}
+            fillOpacity={i % 3 === 0 ? 0.95 : 0.6}
+          />
         ))}
       </g>
     </svg>

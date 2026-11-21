@@ -33,14 +33,8 @@ export function Nav({ onOpenPalette, onOpenTerminal, isHome }: NavProps) {
         condensed && 'border-b border-line bg-bg/80 backdrop-blur-xl',
       )}
     >
-      <nav
-        className="shell flex h-[var(--nav-h)] items-center justify-between gap-4"
-        aria-label="Main"
-      >
-        <Link
-          to="/"
-          className="group flex items-center gap-2.5 font-mono text-sm tracking-tight text-ink"
-        >
+      <nav className="shell flex h-[var(--nav-h)] items-center justify-between gap-4" aria-label="Main">
+        <Link to="/" className="group flex items-center gap-2.5 font-mono text-sm tracking-tight text-ink">
           <span
             className="grid h-7 w-7 place-items-center rounded-md border border-accent/40 bg-accent/[0.08] font-display text-xs font-semibold text-accent"
             aria-hidden
@@ -72,12 +66,7 @@ export function Nav({ onOpenPalette, onOpenTerminal, isHome }: NavProps) {
                   aria-current={isActive ? 'true' : undefined}
                 >
                   {item.label}
-                  {isActive && (
-                    <span
-                      className="absolute inset-x-3 -bottom-0.5 h-px bg-accent"
-                      aria-hidden
-                    />
-                  )}
+                  {isActive && <span className="absolute inset-x-3 -bottom-0.5 h-px bg-accent" aria-hidden />}
                 </a>
               </li>
             );

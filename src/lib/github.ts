@@ -107,9 +107,7 @@ function summariseLanguages(repos: GitHubRepo[]): GitHubData['languages'] {
     counts.set(repo.language, (counts.get(repo.language) ?? 0) + 1);
   });
 
-  return [...counts.entries()]
-    .map(([name, count]) => ({ name, count }))
-    .sort((a, b) => b.count - a.count);
+  return [...counts.entries()].map(([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count);
 }
 
 /**
@@ -138,10 +136,26 @@ export async function fetchGitHubData(signal?: AbortSignal): Promise<GitHubData>
   return data;
 }
 
-/** Repos worth showing: recently touched, with stars breaking ties. */
+/**
+ * How substantial a repo looks to someone skimming: a written description and
+ * a deployed demo are the signals that it is a real project rather than a
+ * scratch pad. Without this, sorting by recency alone leads the section with
+ * whatever was touched last — often coursework with no description.
+ */
+function substance(repo: GitHubRepo): number {
+  let score = 0;
+  if (repo.description) score += 2;
+  if (repo.homepage) score += 2;
+  if (repo.topics && repo.topics.length > 0) score += 1;
+  return score;
+}
+
+/** Repos worth showing: substance first, then stars, then recency. */
 export function topRepos(repos: GitHubRepo[], limit = 6): GitHubRepo[] {
   return [...repos]
     .sort((a, b) => {
+      const bySubstance = substance(b) - substance(a);
+      if (bySubstance !== 0) return bySubstance;
       if (b.stargazers_count !== a.stargazers_count) return b.stargazers_count - a.stargazers_count;
       return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
     })

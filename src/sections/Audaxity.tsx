@@ -61,9 +61,7 @@ export function Audaxity() {
                         <SparkIcon className="h-4 w-4 shrink-0" />
                         {badge.label}
                       </p>
-                      <p className="mt-1.5 text-[0.8125rem] leading-relaxed text-muted">
-                        {badge.detail}
-                      </p>
+                      <p className="mt-1.5 text-[0.8125rem] leading-relaxed text-muted">{badge.detail}</p>
                     </li>
                   ))}
                 </ul>
@@ -105,9 +103,7 @@ export function Audaxity() {
                         </span>
                         <div>
                           <h3 className="font-display text-base">{step.title}</h3>
-                          <p className="mt-1.5 text-[0.875rem] leading-relaxed text-muted">
-                            {step.body}
-                          </p>
+                          <p className="mt-1.5 text-[0.875rem] leading-relaxed text-muted">{step.body}</p>
                         </div>
                       </div>
                     </li>
@@ -115,8 +111,8 @@ export function Audaxity() {
                 </ol>
 
                 <p className="mt-5 font-mono text-[0.6875rem] leading-relaxed text-faint">
-                  Lecture → transcript → structured knowledge → syllabus coverage. Each stage feeds
-                  the next, so coverage is measured rather than assumed.
+                  Lecture → transcript → structured knowledge → syllabus coverage. Each stage feeds the next,
+                  so coverage is measured rather than assumed.
                 </p>
               </div>
             </div>

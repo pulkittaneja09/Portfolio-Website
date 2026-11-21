@@ -22,11 +22,7 @@ export function RotatingRoles({ roles, intervalMs = 2600 }: Props) {
   }, [reduced, roles.length, intervalMs]);
 
   if (reduced) {
-    return (
-      <p className="font-mono text-sm text-muted">
-        {roles.join(' · ')}
-      </p>
-    );
+    return <p className="font-mono text-sm text-muted">{roles.join(' · ')}</p>;
   }
 
   return (

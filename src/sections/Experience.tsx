@@ -27,14 +27,17 @@ export function Experience() {
           />
 
           {experience.map((item, index) => (
-            <Reveal as="li" key={`${item.org}-${item.role}`} index={index} className="relative pb-12 pl-8 last:pb-0 sm:pl-12">
+            <Reveal
+              as="li"
+              key={`${item.org}-${item.role}`}
+              index={index}
+              className="relative pb-12 pl-8 last:pb-0 sm:pl-12"
+            >
               {/* Marker */}
               <span
                 className={cn(
                   'absolute left-0 top-1.5 grid h-[15px] w-[15px] place-items-center rounded-full border-2 sm:h-[19px] sm:w-[19px]',
-                  item.kind === 'founder'
-                    ? 'border-accent bg-accent/20'
-                    : 'border-line bg-bg',
+                  item.kind === 'founder' ? 'border-accent bg-accent/20' : 'border-line bg-bg',
                 )}
                 aria-hidden
               >
@@ -122,9 +125,7 @@ export function Experience() {
                 <p className="font-mono text-sm text-ink">
                   {education.start} — {education.end.replace(' (expected)', '')}
                 </p>
-                <p className="font-mono text-[0.625rem] uppercase tracking-[0.12em] text-faint">
-                  Expected
-                </p>
+                <p className="font-mono text-[0.625rem] uppercase tracking-[0.12em] text-faint">Expected</p>
               </div>
             </div>
           </div>

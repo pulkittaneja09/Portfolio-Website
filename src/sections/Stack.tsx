@@ -36,11 +36,7 @@ function Group({ group, index }: { group: SkillGroup; index: number }) {
           {/* Fixed height so swapping the caption never shifts the grid. */}
           <div className="mt-1 min-h-[3.5rem] sm:min-h-[4rem]">
             {active ? (
-              <p
-                id={captionId}
-                className="text-[0.8125rem] leading-relaxed text-muted"
-                aria-live="polite"
-              >
+              <p id={captionId} className="text-[0.8125rem] leading-relaxed text-muted" aria-live="polite">
                 <span className="font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-accent">
                   {active.name}
                 </span>

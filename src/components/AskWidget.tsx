@@ -66,11 +66,7 @@ export function AskWidget() {
         aria-expanded={open}
         aria-controls="ask-panel"
       >
-        {open ? (
-          <CloseIcon className="h-4 w-4 text-accent" />
-        ) : (
-          <ChatIcon className="h-4 w-4 text-accent" />
-        )}
+        {open ? <CloseIcon className="h-4 w-4 text-accent" /> : <ChatIcon className="h-4 w-4 text-accent" />}
         <span className="hidden sm:inline">{open ? 'Close' : 'Ask about Pulkit'}</span>
         <span className="sm:hidden">{open ? 'Close' : 'Ask'}</span>
       </button>
