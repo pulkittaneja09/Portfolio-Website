@@ -28,7 +28,7 @@ export function Audaxity() {
             {/* One light source, high and centred-right. Monochrome. */}
             <div
               className="pointer-events-none absolute -top-1/2 left-1/2 h-full w-[120%] -translate-x-1/3"
-              style={{ background: 'radial-gradient(closest-side, rgb(var(--light) / 0.07), transparent)' }}
+              style={{ background: 'radial-gradient(closest-side, rgb(var(--pool) / calc(var(--pool-strength) * 1.5)), transparent)' }}
               aria-hidden
             />
             {/* A brighter hairline along the top edge, where the light lands. */}

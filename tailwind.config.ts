@@ -57,8 +57,8 @@ export default {
       borderRadius: { panel: '0.875rem' },
       boxShadow: {
         // Depth from elevation, never from colour.
-        lift: '0 1px 2px rgb(0 0 0 / 0.2), 0 12px 32px -12px rgb(0 0 0 / 0.45)',
-        float: '0 1px 2px rgb(0 0 0 / 0.25), 0 24px 64px -24px rgb(0 0 0 / 0.6)',
+        lift: 'var(--shadow-lift)',
+        float: 'var(--shadow-float)',
       },
       transitionTimingFunction: {
         quiet: 'cubic-bezier(0.16, 1, 0.3, 1)',

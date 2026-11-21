@@ -10,7 +10,7 @@ export function Backdrop() {
       <div
         className="absolute left-1/2 top-[-28rem] h-[56rem] w-[80rem] -translate-x-1/2"
         style={{
-          background: 'radial-gradient(closest-side, rgb(var(--light) / 0.045), transparent)',
+          background: 'radial-gradient(closest-side, rgb(var(--pool) / var(--pool-strength)), transparent)',
         }}
       />
     </div>

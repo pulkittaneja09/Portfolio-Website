@@ -32,6 +32,11 @@
     --light: 255 255 255;
     --grid-line: rgba(255, 255, 255, 0.045);
     --grain-opacity: 0.025;
+    /* Ambient light pools: always light, in either theme. */
+    --pool: 255 255 255;
+    --pool-strength: 0.045;
+    --shadow-lift: 0 1px 2px rgb(0 0 0 / 0.2), 0 12px 32px -12px rgb(0 0 0 / 0.45);
+    --shadow-float: 0 1px 2px rgb(0 0 0 / 0.25), 0 24px 64px -24px rgb(0 0 0 / 0.6);
 
     --shell-x: clamp(1.25rem, 5vw, 3rem);
     --nav-h: 3.75rem;
@@ -54,6 +59,10 @@
     --light: 0 0 0;
     --grid-line: rgba(0, 0, 0, 0.045);
     --grain-opacity: 0.018;
+    --pool: 255 255 255;
+    --pool-strength: 0.9;
+    --shadow-lift: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px -12px rgb(0 0 0 / 0.08);
+    --shadow-float: 0 1px 2px rgb(0 0 0 / 0.04), 0 20px 48px -24px rgb(0 0 0 / 0.12);
 
     color-scheme: light;
   }
