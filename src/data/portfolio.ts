@@ -9,6 +9,7 @@
  */
 
 import type {
+  AgentTrace,
   Education,
   ExperienceItem,
   NavItem,
@@ -89,6 +90,48 @@ export const nav: NavItem[] = [
   { id: 'projects', label: 'Projects' },
   { id: 'founder', label: 'Founder' },
   { id: 'contact', label: 'Contact' },
+];
+
+/**
+ * The left-column "agent run" card cycles through these. Each is an example of
+ * the kind of system behind a real project, labelled "example trace" on the
+ * page — illustrative output, not a benchmark. Plain ASCII on purpose: the
+ * mono font's latin subset has no arrow or ≥ glyphs, and a trace reads truer.
+ */
+export const agentTraces: AgentTrace[] = [
+  {
+    project: 'audaxity',
+    task: 'map lecture to syllabus',
+    steps: [
+      { kind: 'plan', detail: '3 steps' },
+      { kind: 'tool', detail: 'mcp://transcripts.search', time: '142ms' },
+      { kind: 'tool', detail: 'rag.retrieve(k=8)', time: '88ms' },
+      { kind: 'llm', detail: 'synthesize + cite', time: '1.2s' },
+    ],
+    result: '4 topics covered · 2 gaps flagged',
+  },
+  {
+    project: 'scrap-2-spark',
+    task: 'grade battery pack B-0417',
+    steps: [
+      { kind: 'plan', detail: '3 steps' },
+      { kind: 'http', detail: 'POST /predict/rul', time: '64ms' },
+      { kind: 'model', detail: 'random_forest.predict', time: '11ms' },
+      { kind: 'rule', detail: 'soh >= 70% -> second life', time: '2ms' },
+    ],
+    result: 'reuse · ~410 cycles remaining',
+  },
+  {
+    project: 'parcelpilot',
+    task: 'refund status for TXT-501',
+    steps: [
+      { kind: 'plan', detail: 'authorize -> retrieve -> answer' },
+      { kind: 'auth', detail: 'scope ACCT-001, ACCT-003', time: '2ms' },
+      { kind: 'db', detail: 'owner(TXT-501) -> ACCT-004', time: '4ms' },
+      { kind: 'guard', detail: 'owner not in scope', time: '1ms' },
+    ],
+    result: '403 · no retrieval, no tokens spent',
+  },
 ];
 
 /** Proof bar. Verified figures only — no rounding up, no vanity metrics. */

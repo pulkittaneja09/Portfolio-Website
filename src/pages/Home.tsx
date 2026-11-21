@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Footer } from '@/components/Footer';
+import { AgentRun } from '@/components/AgentRun';
 import { Identity } from '@/components/Identity';
 import { MobileBar } from '@/components/MobileBar';
 import { ProfileLinks } from '@/components/ProfileLinks';
@@ -49,15 +50,17 @@ export function Home({ onOpenTerminal, onOpenPalette }: HomeProps) {
             lines; the full 45/55 split and 96px gutters from 1280px up. */}
         <div className="lg:grid lg:grid-cols-[minmax(0,48fr)_minmax(0,52fr)] lg:gap-x-12 xl:grid-cols-[minmax(0,45fr)_minmax(0,55fr)] xl:gap-x-16">
           {/* ── Left: identity rail ─────────────────────────────────────── */}
-          <header className="rail flex flex-col pt-[5.5rem] lg:pb-[clamp(1.75rem,5.5vh,4rem)] lg:pt-[clamp(2.75rem,9vh,6rem)]">
+          <header className="rail flex flex-col">
             <div>
               <Identity />
               <SectionNav active={active} className="rail-nav hidden lg:block" />
             </div>
 
-            {/* Task 5: the agent-run signature card sits here. */}
+            {/* Mobile order: header, links, then the card; desktop keeps
+                identity → nav → card → links. */}
+            <AgentRun className="rail-card order-3 mt-10 lg:order-none" />
 
-            <ProfileLinks className="enter mt-8 lg:mt-0" />
+            <ProfileLinks className="enter order-2 mt-8 lg:order-none lg:mt-0" />
           </header>
 
           {/* ── Right: the scrolling column ─────────────────────────────── */}

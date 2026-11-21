@@ -187,6 +187,25 @@ export interface SkillGroup {
   items: { name: string; icon: IconSlug; usedIn: string[] }[];
 }
 
+/** One step of an example agent trace. Steps without `time` (the plan) get no ✓. */
+export interface TraceStep {
+  kind: string;
+  detail: string;
+  time?: string;
+}
+
+/**
+ * An illustrative agent run for the signature card. Clearly labelled as an
+ * example trace in the UI — these are not measurements.
+ */
+export interface AgentTrace {
+  /** Short project slug shown in the card header. */
+  project: string;
+  task: string;
+  steps: TraceStep[];
+  result: string;
+}
+
 export interface NavItem {
   id: string;
   label: string;

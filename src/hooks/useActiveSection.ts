@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react';
  * to one rAF) is simpler and steadier than intersection ratios, which flicker
  * between short sections.
  *
- * At the very bottom of the page the last section wins, even if it is too
- * short for its top to ever reach the line.
+ * At the very top the first section wins; at the very bottom the last one
+ * does, even if it is too short for its top to ever reach the line.
  */
 export function useActiveSection(ids: readonly string[], lineRatio = 0.33): string | null {
   const [active, setActive] = useState<string | null>(ids[0] ?? null);
@@ -32,6 +32,8 @@ export function useActiveSection(ids: readonly string[], lineRatio = 0.33): stri
       const atBottom =
         window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
       if (atBottom) current = list[list.length - 1];
+      // Before any scrolling, the page is about its first section, full stop.
+      if (window.scrollY < 8) current = list[0];
 
       setActive(current);
     };

@@ -18,7 +18,7 @@ export function SectionNav({ active, className }: { active: string | null; class
               <a
                 href={`#${item.id}`}
                 aria-current={isActive ? 'location' : undefined}
-                className="group flex items-center gap-4 py-[clamp(0.3rem,1.05vh,0.7rem)]"
+                className="group flex items-center gap-4"
               >
                 <span
                   className={cn(
