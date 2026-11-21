@@ -35,5 +35,9 @@ export function useCountUp({ to, durationMs = 1400, decimals = 0, start }: Optio
     return () => cancelAnimationFrame(frame.current);
   }, [to, durationMs, start, reduced]);
 
-  return value.toFixed(decimals);
+  // Group thousands so 1000 reads as 1,000 mid-count as well as at rest.
+  return value.toLocaleString(undefined, {
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  });
 }

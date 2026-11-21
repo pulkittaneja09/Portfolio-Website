@@ -31,11 +31,11 @@ function usePreviewFrames(project: Project, active: boolean): string | null {
 function PreviewPlaceholder({ project }: { project: Project }) {
   return (
     <div className="grid h-full w-full place-items-center bg-elevated">
-      <div className="px-6 text-center">
+      <div className="relative z-10 px-6 text-center">
         <p className="font-mono text-[0.625rem] uppercase tracking-[0.2em] text-faint">
-          {project.stack.slice(0, 3).join(' · ')}
+          {project.tags.join(' · ')}
         </p>
-        <p className="mt-2 font-display text-lg text-accent">{project.metric.value}</p>
+        <p className="mt-2 font-mono text-[0.6875rem] text-faint/70">Screenshot coming</p>
       </div>
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.35]"

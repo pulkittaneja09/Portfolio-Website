@@ -59,7 +59,7 @@ export function Hero() {
           {/* ── Copy ─────────────────────────────────────────────────────── */}
           <div className="max-w-2xl">
             <motion.div {...fade(0)}>
-              <StatusBadge label={`🟢 ${profile.availability}`} />
+              <StatusBadge label={profile.availability} />
             </motion.div>
 
             <h1

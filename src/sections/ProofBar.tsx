@@ -40,12 +40,12 @@ export function ProofBar({ publicRepos }: ProofBarProps) {
   const { ref, inView } = useInView<HTMLDivElement>();
 
   return (
-    <section aria-labelledby="proof-heading" className="border-y border-line bg-line">
+    <section aria-labelledby="proof-heading" className="border-y border-line bg-bg">
       <h2 id="proof-heading" className="sr-only">
         Proof in numbers
       </h2>
 
-      <div ref={ref} className="shell bg-bg">
+      <div ref={ref} className="shell">
         {/* gap-px over the line colour draws the separators, so there is no
             doubled border where the grid wraps. */}
         <ul className="-mx-4 grid grid-cols-2 gap-px bg-line sm:-mx-5 sm:grid-cols-3 lg:grid-cols-6">

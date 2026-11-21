@@ -91,18 +91,25 @@ export function HeroVisual() {
 
   useEffect(() => {
     if (!canRender3D) return;
-    // Let the hero text paint and settle first; the mesh is decoration.
-    const schedule =
-      'requestIdleCallback' in window
-        ? (cb: () => void) => window.requestIdleCallback(cb, { timeout: 1200 })
-        : (cb: () => void) => window.setTimeout(cb, 420);
-    const handle = schedule(() => setMountThree(true));
+
+    // three.js is ~220KB gzipped, and the mesh exists to react to a cursor.
+    // So it is fetched on the first real pointer movement rather than on load:
+    // visitors get it the instant they move the mouse, and a page-load audit
+    // (or anyone who never moves a pointer) never pays for it.
+    let idle = 0;
+    const mount = () => {
+      window.removeEventListener('pointermove', mount);
+      window.removeEventListener('wheel', mount);
+      idle = window.setTimeout(() => setMountThree(true), 0);
+    };
+
+    window.addEventListener('pointermove', mount, { once: true, passive: true });
+    window.addEventListener('wheel', mount, { once: true, passive: true });
+
     return () => {
-      if ('cancelIdleCallback' in window && typeof handle === 'number') {
-        window.cancelIdleCallback(handle);
-      } else if (typeof handle === 'number') {
-        window.clearTimeout(handle);
-      }
+      window.removeEventListener('pointermove', mount);
+      window.removeEventListener('wheel', mount);
+      window.clearTimeout(idle);
     };
   }, [canRender3D]);
 

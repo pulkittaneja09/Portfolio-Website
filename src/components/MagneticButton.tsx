@@ -25,7 +25,8 @@ type AnchorProps = BaseProps & {
 
 type ButtonProps = BaseProps & {
   href?: never;
-  onClick: () => void;
+  /** Optional: a `type="submit"` button is driven by its form instead. */
+  onClick?: () => void;
   type?: 'button' | 'submit';
   download?: never;
   target?: never;
