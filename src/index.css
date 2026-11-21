@@ -355,18 +355,21 @@
     will-change: transform;
   }
 
-  @keyframes hero-word {
+  /* Blur-to-sharp for the name. No opacity: the text is painted, and so
+     counted for LCP, from the very first frame. */
+  @keyframes hero-sharpen {
     from {
-      transform: translate3d(0, 104%, 0);
+      filter: blur(14px);
+      transform: translate3d(0, 0.08em, 0);
     }
     to {
+      filter: blur(0);
       transform: none;
     }
   }
 
-  .hero-word {
-    animation: hero-word 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
-    will-change: transform;
+  .hero-sharpen {
+    animation: hero-sharpen 0.56s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
   /* Blur-to-sharp, for headings below the fold. */
@@ -389,7 +392,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     .hero-rise,
-    .hero-word,
+    .hero-sharpen,
     .sharpen {
       animation: none;
       opacity: 1;

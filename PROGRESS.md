@@ -4,7 +4,7 @@ Resume rule: read this file first, continue from the first unticked task, do not
 
 - [x] 1. Set up design tokens, fonts, background grid/grain, and remove all old styles
 - [x] 2. Navbar + command palette restyle
-- [ ] 3. Hero with the grayscale point-cloud sphere
+- [x] 3. Hero with the grayscale point-cloud sphere
 - [ ] 4. Proof bar / stats
 - [ ] 5. Projects bento grid with spotlight cards + project detail view
 - [ ] 6. Experience timeline
@@ -21,3 +21,4 @@ Resume rule: read this file first, continue from the first unticked task, do not
 ## Notes
 - 1: Monochrome token set (CSS vars + Tailwind), self-hosted Geist/Geist Mono (old Inter/Space Grotesk/JetBrains removed), fixed dot-matrix backdrop + SVG film grain, Lenis, blur reveal, scramble headings, numbered SectionHeading, lime favicon/theme-colour replaced, custom cursor and /design page removed, all legacy tokens migrated.
 - 2: Nav is a floating glass bar (16px blur, --surface, hairline) that condenses on scroll; palette is a glass sheet with blur-in, hairline selected rows, search icon; quiet button variants; programmatic scroll routed through Lenis; nested scrollers marked data-lenis-prevent.
+- 3: Hero rebuilt: 120px Geist name with blur-to-sharp (no opacity, LCP-safe), live IST clock, white-dot pill, facts row; grayscale R3F point sphere lazy-loaded on first interaction, fixed cursor-bend (window pointer tracking), paused offscreen, crossfades from a 2D-canvas static fallback used on mobile/reduced motion.

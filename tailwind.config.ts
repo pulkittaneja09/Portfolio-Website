@@ -35,9 +35,9 @@ export default {
         mono: ['"Geist Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       fontSize: {
-        // Hero: 72px at 390px wide, up to 120px on a wide screen.
+        // Hero: 72px on a phone, up to 120px on a wide screen.
         'display-xl': [
-          'clamp(3.25rem, 9.5vw, 7.5rem)',
+          'clamp(4.5rem, 9.5vw, 7.5rem)',
           { lineHeight: '0.95', letterSpacing: '-0.04em', fontWeight: '500' },
         ],
         'display-lg': [

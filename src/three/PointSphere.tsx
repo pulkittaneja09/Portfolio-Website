@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
@@ -125,7 +125,31 @@ function Cloud({ color }: { color: string }) {
   const points = useRef<THREE.Points>(null);
   const cloud = useMemo(buildCloud, []);
   const dot = useDotTexture();
-  const { pointer, viewport, gl } = useThree();
+  const { viewport, gl } = useThree();
+
+  // The canvas is pointer-events: none (it sits under the hero copy), so R3F's
+  // own pointer never updates. Track the cursor on the window instead, mapped
+  // into the canvas' normalised device coordinates. Off-canvas values simply
+  // land outside the sphere and push nothing.
+  const pointer = useRef({ x: 9, y: 9 });
+  useEffect(() => {
+    const onMove = (event: PointerEvent) => {
+      const rect = gl.domElement.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      pointer.current.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      pointer.current.y = -(((event.clientY - rect.top) / rect.height) * 2 - 1);
+    };
+    const onLeave = () => {
+      pointer.current.x = 9;
+      pointer.current.y = 9;
+    };
+    window.addEventListener('pointermove', onMove, { passive: true });
+    document.addEventListener('pointerleave', onLeave);
+    return () => {
+      window.removeEventListener('pointermove', onMove);
+      document.removeEventListener('pointerleave', onLeave);
+    };
+  }, [gl]);
 
   const geometry = useMemo(() => {
     const g = new THREE.BufferGeometry();
@@ -164,7 +188,10 @@ function Cloud({ color }: { color: string }) {
 
     // Cursor in world space on the sphere's plane. The push is applied in
     // local space, so it stays put on the surface as the cloud rotates.
-    const half = { x: (pointer.x * viewport.width) / 2, y: (pointer.y * viewport.height) / 2 };
+    const half = {
+      x: (pointer.current.x * viewport.width) / 2,
+      y: (pointer.current.y * viewport.height) / 2,
+    };
     cursor.current.set(half.x, half.y, RADIUS * 0.6);
     if (group.current) group.current.worldToLocal(cursor.current);
 
@@ -226,9 +253,18 @@ function Cloud({ color }: { color: string }) {
   );
 }
 
-export default function PointSphere({ color }: { color: string }) {
+interface Props {
+  color: string;
+  /** False while the hero is off screen: the render loop stops entirely. */
+  active: boolean;
+  onReady?: () => void;
+}
+
+export default function PointSphere({ color, active, onReady }: Props) {
   return (
     <Canvas
+      frameloop={active ? 'always' : 'never'}
+      onCreated={() => onReady?.()}
       // Decorative: not worth 3x pixels on a retina panel.
       dpr={[1, 1.75]}
       camera={{ position: [0, 0, 7], fov: 42 }}

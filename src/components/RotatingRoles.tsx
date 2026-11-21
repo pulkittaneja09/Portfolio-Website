@@ -22,24 +22,22 @@ export function RotatingRoles({ roles, intervalMs = 2600 }: Props) {
   }, [reduced, roles.length, intervalMs]);
 
   if (reduced) {
-    return <p className="font-mono text-sm text-muted">{roles.join(' · ')}</p>;
+    return <p className="font-mono text-[0.8125rem] text-muted">{roles.join(' · ')}</p>;
   }
 
   return (
-    <div className="flex items-center gap-2.5 font-mono text-sm text-muted">
-      <span className="text-text" aria-hidden>
-        ▸
-      </span>
+    <div className="flex items-center gap-3 font-mono text-[0.8125rem] text-muted">
+      <span className="h-px w-5 bg-[var(--border-hover)]" aria-hidden />
       {/* The live region announces each role once for screen readers. */}
       <span className="relative block h-6 overflow-hidden" aria-live="polite" aria-atomic="true">
         <AnimatePresence mode="wait" initial={false}>
           <m.span
             key={roles[index]}
             className="block whitespace-nowrap"
-            initial={{ y: 22, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -22, opacity: 0 }}
-            transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ y: 12, opacity: 0, filter: 'blur(4px)' }}
+            animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
+            exit={{ y: -12, opacity: 0, filter: 'blur(4px)' }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
             {roles[index]}
           </m.span>
