@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { CloseIcon } from '@/components/icons';
 import { profile } from '@/data/portfolio';
@@ -155,7 +155,7 @@ export function TerminalOverlay({ open, onClose }: Props) {
   return (
     <AnimatePresence>
       {open && (
-        <motion.div
+        <m.div
           className="fixed inset-0 z-[75] flex items-center justify-center p-3 sm:p-6"
           initial={reduced ? undefined : { opacity: 0 }}
           animate={reduced ? undefined : { opacity: 1 }}
@@ -173,7 +173,7 @@ export function TerminalOverlay({ open, onClose }: Props) {
             tabIndex={-1}
           />
 
-          <motion.div
+          <m.div
             className="relative flex h-full max-h-[min(42rem,88vh)] w-full max-w-3xl flex-col overflow-hidden rounded-xl border border-line bg-[rgb(var(--surface))] shadow-lift"
             initial={reduced ? undefined : { opacity: 0, y: 16, scale: 0.985 }}
             animate={reduced ? undefined : { opacity: 1, y: 0, scale: 1 }}
@@ -277,8 +277,8 @@ export function TerminalOverlay({ open, onClose }: Props) {
               <span className="hidden sm:inline">tab completes · ↑↓ history · ctrl+l clears · </span>
               esc closes
             </div>
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
       )}
     </AnimatePresence>
   );

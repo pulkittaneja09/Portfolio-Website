@@ -1,5 +1,5 @@
 import { Command } from 'cmdk';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -59,7 +59,7 @@ export function CommandPalette({ open, onClose, onOpenTerminal }: Props) {
   return (
     <AnimatePresence>
       {open && (
-        <motion.div
+        <m.div
           className="fixed inset-0 z-[70] flex items-start justify-center px-4 pt-[12vh] sm:pt-[16vh]"
           initial={reduced ? undefined : { opacity: 0 }}
           animate={reduced ? undefined : { opacity: 1 }}
@@ -74,7 +74,7 @@ export function CommandPalette({ open, onClose, onOpenTerminal }: Props) {
             tabIndex={-1}
           />
 
-          <motion.div
+          <m.div
             className="relative w-full max-w-xl"
             initial={reduced ? undefined : { opacity: 0, y: -10, scale: 0.985 }}
             animate={reduced ? undefined : { opacity: 1, y: 0, scale: 1 }}
@@ -230,8 +230,8 @@ export function CommandPalette({ open, onClose, onOpenTerminal }: Props) {
                 </Command.Group>
               </Command.List>
             </Command>
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
       )}
     </AnimatePresence>
   );

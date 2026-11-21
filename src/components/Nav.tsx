@@ -47,7 +47,10 @@ export function Nav({ onOpenPalette, onOpenTerminal, isHome }: NavProps) {
           >
             PT
           </span>
-          <span className="hidden sm:inline">
+          {/* The wordmark is hidden on small screens, so the link needs a
+              name that is always present. */}
+          <span className="sr-only">{profile.name} — home</span>
+          <span className="hidden sm:inline" aria-hidden>
             {profile.name.split(' ')[0]}
             <span className="text-faint">.dev</span>
           </span>
@@ -96,8 +99,10 @@ export function Nav({ onOpenPalette, onOpenTerminal, isHome }: NavProps) {
             type="button"
             onClick={onOpenPalette}
             className="group flex items-center gap-2 rounded-full border border-line py-1.5 pl-3 pr-2 text-sm text-muted transition-colors duration-300 hover:border-accent/50 hover:text-ink"
-            aria-label="Open command palette"
           >
+            {/* No aria-label here: it would hide the button's own visible
+                text from its accessible name. */}
+            <span className="sr-only">Open command palette.</span>
             <CommandIcon className="h-3.5 w-3.5" />
             <span className="hidden xl:inline">Jump to…</span>
             <kbd className="rounded border border-line bg-elevated px-1.5 py-0.5 font-mono text-[0.625rem] text-faint">

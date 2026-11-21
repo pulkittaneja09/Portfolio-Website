@@ -43,9 +43,9 @@ function RepoRow({ repo }: { repo: GitHubData['repos'][number] }) {
         className="flex h-full flex-col p-4 sm:p-5"
       >
         <div className="flex items-start justify-between gap-3">
-          <h4 className="truncate font-mono text-sm text-ink transition-colors group-hover:text-accent">
+          <h3 className="truncate font-mono text-sm text-ink transition-colors group-hover:text-accent">
             {repo.name}
-          </h4>
+          </h3>
           <ArrowUpRightIcon className="h-4 w-4 shrink-0 text-faint transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent" />
         </div>
 

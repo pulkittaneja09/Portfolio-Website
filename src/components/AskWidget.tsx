@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { ChatIcon, CloseIcon, SendIcon, SparkIcon } from '@/components/icons';
 import { profile } from '@/data/portfolio';
@@ -78,7 +78,7 @@ export function AskWidget() {
       {/* ── Panel ────────────────────────────────────────────────────────── */}
       <AnimatePresence>
         {open && (
-          <motion.div
+          <m.div
             id="ask-panel"
             role="dialog"
             aria-label="Ask about Pulkit"
@@ -164,7 +164,7 @@ export function AskWidget() {
               Answers are matched against this page&rsquo;s data, not generated. For anything it cannot
               answer, email {profile.email}.
             </p>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </>

@@ -1,34 +1,35 @@
-import { motion } from 'framer-motion';
 import { HeroVisual } from '@/components/HeroVisual';
 import { MagneticButton } from '@/components/MagneticButton';
 import { RotatingRoles } from '@/components/RotatingRoles';
 import { StatusBadge } from '@/components/StatusBadge';
 import { ArrowRightIcon, DownloadIcon, MailIcon } from '@/components/icons';
 import { education, profile } from '@/data/portfolio';
-import { useReducedMotion } from '@/hooks/useReducedMotion';
 
-/** Word-by-word entrance for the name. Skipped entirely under reduced motion. */
+/**
+ * The hero's entrance is CSS, not Framer Motion, and it animates transform
+ * only — never opacity.
+ *
+ * A JS-driven fade holds each element at opacity 0 until React has hydrated.
+ * On a throttled phone that pushed Largest Contentful Paint to 3.6s, 87% of
+ * it render delay, because the LCP element here is the tagline. Painting at
+ * full opacity from the first frame and sliding it into place keeps the
+ * entrance and drops the delay. The `.hero-rise` keyframes in index.css
+ * collapse to nothing under prefers-reduced-motion.
+ */
+const riseDelay = (seconds: number) => ({ animationDelay: `${seconds}s` });
+
+/** Word-by-word reveal for the name: masked, not faded. */
 function AnimatedName({ name }: { name: string }) {
-  const reduced = useReducedMotion();
   const words = name.split(' ');
-
-  if (reduced) {
-    return <>{name}</>;
-  }
 
   return (
     <>
       {words.map((word, i) => (
         <span key={word}>
           <span className="inline-block overflow-hidden pb-[0.06em] align-bottom">
-            <motion.span
-              className="inline-block"
-              initial={{ y: '102%' }}
-              animate={{ y: 0 }}
-              transition={{ duration: 0.85, delay: 0.08 + i * 0.09, ease: [0.16, 1, 0.3, 1] }}
-            >
+            <span className="hero-word inline-block" style={riseDelay(0.06 + i * 0.09)}>
               {word}
-            </motion.span>
+            </span>
           </span>
           {/* A plain breaking space between the blocks, so the name wraps. */}
           {i < words.length - 1 ? ' ' : null}
@@ -39,16 +40,6 @@ function AnimatedName({ name }: { name: string }) {
 }
 
 export function Hero() {
-  const reduced = useReducedMotion();
-  const fade = (delay: number) =>
-    reduced
-      ? {}
-      : {
-          initial: { opacity: 0, y: 14 },
-          animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] as const },
-        };
-
   return (
     <section
       id="hero"
@@ -61,9 +52,9 @@ export function Hero() {
         <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16">
           {/* ── Copy ─────────────────────────────────────────────────────── */}
           <div className="min-w-0 max-w-2xl">
-            <motion.div {...fade(0)}>
+            <div className="hero-rise" style={riseDelay(0)}>
               <StatusBadge label={profile.availability} />
-            </motion.div>
+            </div>
 
             <h1
               id="hero-name"
@@ -72,19 +63,22 @@ export function Hero() {
               <AnimatedName name={profile.name} />
             </h1>
 
-            <motion.p
-              {...fade(0.34)}
-              className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-ink/85 sm:text-xl"
+            <p
+              className="hero-rise mt-6 max-w-xl text-pretty text-lg leading-relaxed text-ink/85 sm:text-xl"
+              style={riseDelay(0.24)}
             >
               {profile.tagline}
-            </motion.p>
+            </p>
 
-            <motion.div {...fade(0.42)} className="mt-4">
+            <div className="hero-rise mt-4" style={riseDelay(0.32)}>
               <RotatingRoles roles={profile.roles} />
-            </motion.div>
+            </div>
 
             {/* ── Three CTAs ─────────────────────────────────────────────── */}
-            <motion.div {...fade(0.5)} className="mt-9 flex flex-wrap items-center gap-3">
+            <div
+              className="hero-rise mt-9 flex flex-wrap items-center gap-3"
+              style={riseDelay(0.4)}
+            >
               <MagneticButton href="#work" variant="solid">
                 View projects
                 <ArrowRightIcon className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -99,12 +93,12 @@ export function Hero() {
                 <MailIcon className="h-4 w-4" />
                 Contact
               </MagneticButton>
-            </motion.div>
+            </div>
 
             {/* ── Context line ───────────────────────────────────────────── */}
-            <motion.dl
-              {...fade(0.58)}
-              className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-line pt-6 font-mono text-xs text-faint"
+            <dl
+              className="hero-rise mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-line pt-6 font-mono text-xs text-faint"
+              style={riseDelay(0.48)}
             >
               <div className="flex items-center gap-2">
                 <dt className="sr-only">Studying</dt>
@@ -123,26 +117,20 @@ export function Hero() {
                 <dt className="sr-only">Location</dt>
                 <dd>{profile.location}</dd>
               </div>
-            </motion.dl>
+            </dl>
           </div>
 
           {/* ── Visual ───────────────────────────────────────────────────── */}
-          <motion.div
-            {...(reduced
-              ? {}
-              : {
-                  initial: { opacity: 0, scale: 0.94 },
-                  animate: { opacity: 1, scale: 1 },
-                  transition: { duration: 1.1, delay: 0.3, ease: [0.16, 1, 0.3, 1] as const },
-                })}
-            className="relative mx-auto w-full min-w-0 max-w-md lg:max-w-none"
+          <div
+            className="hero-rise relative mx-auto w-full min-w-0 max-w-md lg:max-w-none"
+            style={riseDelay(0.3)}
           >
             <HeroVisual />
 
             <p className="mt-2 text-center font-mono text-[0.625rem] uppercase tracking-[0.2em] text-faint lg:text-right">
               agent graph · live
             </p>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

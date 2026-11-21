@@ -1,3 +1,5 @@
+@import './fonts.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -14,7 +16,7 @@
     --line: 40 44 40;
     --ink: 237 241 236;
     --muted: 152 160 152;
-    --faint: 104 111 104;
+    --faint: 134 142 134;
     --accent: 200 255 46;
     --accent-ink: 10 11 10;
 
@@ -31,17 +33,13 @@
     --line: 221 224 213;
     --ink: 17 19 17;
     --muted: 85 91 85;
-    --faint: 122 129 122;
+    --faint: 101 107 101;
     /* Electric lime is unreadable on white, so light mode uses a deepened
        lime that still clears AA for text and borders. */
     --accent: 77 124 15;
     --accent-ink: 255 255 255;
 
     color-scheme: light;
-  }
-
-  * {
-    @apply border-line;
   }
 
   html {
@@ -141,6 +139,53 @@
   .link-underline:hover,
   .link-underline:focus-visible {
     background-size: 100% 1px;
+  }
+
+  /* ── Hero entrance ───────────────────────────────────────────────────────
+     Deliberately CSS, and deliberately transform-only. A framer-motion fade
+     holds the element at opacity 0 until React has hydrated, which pushed
+     Largest Contentful Paint out by three seconds on a throttled phone. This
+     starts at first paint and never hides the text, so the LCP element is
+     painted as soon as it exists. */
+  @keyframes hero-rise {
+    from {
+      transform: translate3d(0, 14px, 0);
+    }
+    to {
+      transform: none;
+    }
+  }
+
+  .hero-rise {
+    animation: hero-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+    will-change: transform;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-rise {
+      animation: none;
+    }
+  }
+
+  /* Name words slide up out of their mask. Transform only, same reason. */
+  @keyframes hero-word {
+    from {
+      transform: translate3d(0, 102%, 0);
+    }
+    to {
+      transform: none;
+    }
+  }
+
+  .hero-word {
+    animation: hero-word 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+    will-change: transform;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-word {
+      animation: none;
+    }
   }
 
   /* ── Command palette (cmdk) ───────────────────────────────────────────── */

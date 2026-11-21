@@ -19,6 +19,10 @@ export default {
         accent: 'rgb(var(--accent) / <alpha-value>)',
         'accent-ink': 'rgb(var(--accent-ink) / <alpha-value>)',
       },
+      borderColor: {
+        // Consumed by Tailwind's preflight, so no extra universal selector.
+        DEFAULT: 'rgb(var(--line) / <alpha-value>)',
+      },
       fontFamily: {
         display: ['"Space Grotesk"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],

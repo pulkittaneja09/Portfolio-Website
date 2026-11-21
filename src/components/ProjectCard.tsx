@@ -5,6 +5,7 @@ import type { Project } from '@/data/types';
 import { useIsDesktopPointer } from '@/hooks/useMediaQuery';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { cn } from '@/lib/cn';
+import { previewSrcSet } from '@/lib/images';
 
 /**
  * Cycles a project's screenshots while the card is hovered — the "looping
@@ -112,6 +113,8 @@ export function ProjectCard({ project, className, variant = 'standard' }: Props)
         {frame ? (
           <img
             src={frame}
+            srcSet={previewSrcSet(frame)}
+            sizes="(min-width: 1024px) 45vw, (min-width: 640px) 90vw, 100vw"
             alt={`${project.name} interface`}
             width={1024}
             height={lead ? 576 : 640}

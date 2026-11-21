@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
@@ -37,7 +37,7 @@ export function RotatingRoles({ roles, intervalMs = 2600 }: Props) {
       {/* The live region announces each role once for screen readers. */}
       <span className="relative block h-6 overflow-hidden" aria-live="polite" aria-atomic="true">
         <AnimatePresence mode="wait" initial={false}>
-          <motion.span
+          <m.span
             key={roles[index]}
             className="block whitespace-nowrap"
             initial={{ y: 22, opacity: 0 }}
@@ -46,7 +46,7 @@ export function RotatingRoles({ roles, intervalMs = 2600 }: Props) {
             transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
           >
             {roles[index]}
-          </motion.span>
+          </m.span>
         </AnimatePresence>
       </span>
     </div>

@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import type { ReactNode } from 'react';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
@@ -17,7 +17,7 @@ interface RevealProps {
  */
 export function Reveal({ children, index = 0, className, as = 'div', y = 18 }: RevealProps) {
   const reduced = useReducedMotion();
-  const Component = motion[as];
+  const Component = m[as];
 
   if (reduced) {
     const Plain = as;

@@ -12,6 +12,7 @@ import {
   RocketIcon,
 } from '@/components/icons';
 import { profile, projects } from '@/data/portfolio';
+import { previewSrcSet } from '@/lib/images';
 import { NotFound } from '@/pages/NotFound';
 
 /** Keeps the document title and description in step with the route. */
@@ -117,6 +118,8 @@ export function ProjectDetail() {
               <Reveal className="mb-12">
                 <img
                   src={project.preview}
+                  srcSet={previewSrcSet(project.preview)}
+                  sizes="(min-width: 1024px) 60vw, 100vw"
                   alt={`${project.name} interface`}
                   width={1024}
                   height={492}
@@ -187,6 +190,8 @@ export function ProjectDetail() {
                     <img
                       key={frame}
                       src={frame}
+                      srcSet={previewSrcSet(frame)}
+                      sizes="(min-width: 640px) 30vw, 100vw"
                       alt={`${project.name} — additional screen`}
                       width={1024}
                       height={480}

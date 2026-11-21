@@ -1,4 +1,5 @@
-import { Suspense, lazy } from 'react';
+import { lazy } from 'react';
+import { DeferredSection } from '@/components/DeferredSection';
 import { Footer } from '@/components/Footer';
 import { useGitHub } from '@/hooks/useGitHub';
 import { Audaxity } from '@/sections/Audaxity';
@@ -9,8 +10,9 @@ import { Hero } from '@/sections/Hero';
 import { ProofBar } from '@/sections/ProofBar';
 import { Projects } from '@/sections/Projects';
 
-// The stack grid carries ~40KB of inlined brand paths. It sits well below the
-// fold, so it loads on its own rather than in the initial bundle.
+// The stack grid inlines ~30 brand glyphs across five sub-grids. Mounting it
+// during load cost more in style recalculation than in bytes, so it waits
+// until the reader is heading toward it.
 const Stack = lazy(() => import('@/sections/Stack'));
 
 interface HomeProps {
@@ -30,10 +32,9 @@ export function Home({ onOpenTerminal, onOpenPalette }: HomeProps) {
       <Experience />
       <Audaxity />
 
-      {/* min-height matches the loaded section closely enough to avoid a jump. */}
-      <Suspense fallback={<div className="min-h-[52rem]" aria-hidden />}>
+      <DeferredSection id="stack" minHeight="56rem">
         <Stack />
-      </Suspense>
+      </DeferredSection>
 
       <GitHubActivity state={github} />
       <Contact />
