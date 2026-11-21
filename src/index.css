@@ -269,6 +269,53 @@
     }
   }
 
+  /* ── Row lists (experience, projects) ──────────────────────────────────────
+     Hovering one row fades every other row to 50%, so the eye stays on the
+     one under the cursor. :has() rather than a group hover, so the gaps
+     between rows dim nothing. Fine pointers only. */
+  .row-item {
+    transition: opacity 0.3s var(--ease);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .row-list:has(.row-item:hover) .row-item:not(:hover),
+    .row-list:has(.row-item:focus-within) .row-item:not(:focus-within) {
+      opacity: 0.5;
+    }
+  }
+
+  /* The row surface: invisible until hovered or focused, then a 3% panel with
+     a 6% hairline. Bleeds 16px past the text column so text stays aligned. */
+  .row-card {
+    position: relative;
+    display: block;
+    margin-inline: -1rem;
+    padding: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.75rem;
+    transition:
+      background-color 0.3s var(--ease),
+      border-color 0.3s var(--ease);
+  }
+
+  .row-card:hover,
+  .row-card:focus-visible,
+  .row-card:has(:focus-visible) {
+    background-color: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.06);
+  }
+
+  .row-card:focus-visible {
+    outline-offset: 2px;
+  }
+
+  @media (min-width: 640px) {
+    .row-card {
+      margin-inline: -1.25rem;
+      padding: 1.25rem;
+    }
+  }
+
   /* ── Surfaces ──────────────────────────────────────────────────────────── */
   .glass {
     background: rgb(var(--bg-rgb) / 0.72);

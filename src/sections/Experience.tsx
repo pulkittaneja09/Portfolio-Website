@@ -1,122 +1,101 @@
 import { Reveal } from '@/components/Reveal';
-import { SectionLabel } from '@/components/SectionLabel';
+import { Section } from '@/components/Section';
 import { ArrowUpRightIcon } from '@/components/icons';
-import { education, experience } from '@/data/portfolio';
-import { cn } from '@/lib/cn';
+import { experience, profile } from '@/data/portfolio';
+import type { ExperienceItem } from '@/data/types';
+import { formatRange } from '@/lib/dates';
+
+function ExperienceRow({ item }: { item: ExperienceItem }) {
+  const external = Boolean(item.href?.startsWith('http'));
+  const body = (
+    <>
+      <div className="pt-0.5">
+        <p className="font-mono text-[0.6875rem] uppercase leading-snug tracking-[0.04em] text-faint [text-wrap:balance]">
+          {formatRange(item.start, item.end)}
+        </p>
+        <p className="meta mt-1.5 hidden sm:block">{item.location}</p>
+      </div>
+
+      <div className="min-w-0">
+        <h3 className="font-medium leading-snug text-strong transition-colors duration-300 group-hover/row:text-accent">
+          {item.role}
+          <span className="text-faint"> · </span>
+          <span className="whitespace-nowrap">
+            {item.org}
+            {item.href && (
+              <ArrowUpRightIcon
+                className="ml-1 inline-block h-3.5 w-3.5 -translate-y-px transition-transform duration-300 group-hover/row:-translate-y-[3px] group-hover/row:translate-x-0.5"
+                aria-hidden
+              />
+            )}
+          </span>
+        </h3>
+
+        <ul className="mt-2 space-y-1 text-[0.9375rem] leading-relaxed text-body transition-colors duration-300 group-hover/row:text-strong/80">
+          {item.impact.map((line) => (
+            <li key={line}>{line}</li>
+          ))}
+        </ul>
+
+        <ul className="mt-3.5 flex flex-wrap gap-1.5" aria-label="Technologies used">
+          {item.stack.map((tech) => (
+            <li key={tech} className="chip">
+              {tech}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
+  );
+
+  const layout = 'row-card group/row grid gap-y-2 sm:grid-cols-[27%_minmax(0,1fr)] sm:gap-x-6';
+
+  if (!item.href) return <div className={layout}>{body}</div>;
+
+  return (
+    <a
+      href={item.href}
+      className={layout}
+      {...(external ? { target: '_blank', rel: 'noreferrer noopener' } : {})}
+      aria-label={`${item.role} at ${item.org}${external ? ' (opens in a new tab)' : ''}`}
+    >
+      {body}
+    </a>
+  );
+}
 
 /**
- * A changelog-style timeline: dates in a mono rail on the left, the work on
- * the right, joined by a single hairline spine. The current role holds the
- * only lit node.
+ * Three rows: dates in mono on the left, the work on the right. Hovering one
+ * row lifts it onto a faint panel and fades the others (see `.row-list`).
  */
 export function Experience() {
   return (
-    <section id="experience" aria-labelledby="experience-title" className="section-y scroll-mt-24">
-      <div className="shell">
-        <SectionLabel id="experience-title" className="mb-10">
-          Experience
-        </SectionLabel>
+    <Section id="experience" label="Experience">
+      <ol className="row-list space-y-3">
+        {experience.map((item, index) => (
+          <li key={`${item.org}-${item.role}`} className="row-item">
+            <Reveal index={index}>
+              <ExperienceRow item={item} />
+            </Reveal>
+          </li>
+        ))}
+      </ol>
 
-        <ol className="relative">
-          {experience.map((item, index) => {
-            const current = item.end.toLowerCase() === 'present';
-            return (
-              <Reveal
-                as="li"
-                key={`${item.org}-${item.role}`}
-                index={index}
-                className="relative grid gap-4 border-t border-hairline py-10 sm:py-12 md:grid-cols-[13rem_minmax(0,1fr)] md:gap-12"
-              >
-                {/* ── Rail ─────────────────────────────────────────────── */}
-                <div className="flex items-start gap-3 md:flex-col md:gap-2">
-                  <p className="label flex items-center gap-2.5 text-text">
-                    <span
-                      className={cn(
-                        'h-1.5 w-1.5 rounded-full',
-                        current ? 'soft-pulse bg-text' : 'border border-[var(--border-hover)]',
-                      )}
-                      aria-hidden
-                    />
-                    {item.start} — {item.end}
-                  </p>
-                  <p className="label text-faint md:pl-4">{item.location}</p>
-                </div>
-
-                {/* ── Work ─────────────────────────────────────────────── */}
-                <div className="min-w-0">
-                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                    <h3 className="text-display-sm">{item.role}</h3>
-                    {item.kind === 'founder' && (
-                      <span className="label rounded-full border border-hairline px-2 py-0.5 text-[0.625rem]">
-                        Founder
-                      </span>
-                    )}
-                  </div>
-
-                  {item.href ? (
-                    <a
-                      href={item.href}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      className="group mt-1.5 inline-flex items-center gap-1 text-muted transition-colors duration-400 ease-quiet hover:text-text"
-                    >
-                      {item.org}
-                      <ArrowUpRightIcon className="h-3.5 w-3.5 transition-transform duration-400 ease-quiet group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                    </a>
-                  ) : (
-                    <p className="mt-1.5 text-muted">{item.org}</p>
-                  )}
-
-                  <ul className="mt-6 max-w-[64ch] space-y-3">
-                    {item.bullets.map((bullet) => (
-                      <li
-                        key={bullet.slice(0, 32)}
-                        className="flex gap-4 text-[0.9375rem] leading-relaxed text-muted"
-                      >
-                        <span
-                          className="mt-[0.7rem] h-px w-3 shrink-0 bg-[var(--border-hover)]"
-                          aria-hidden
-                        />
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <p className="meta mt-6 uppercase tracking-[0.08em]">{item.stack.join(' · ')}</p>
-                </div>
-              </Reveal>
-            );
-          })}
-        </ol>
-
-        {/* ── Education ──────────────────────────────────────────────────── */}
-        <Reveal index={3}>
-          <div className="panel mt-6 grid gap-6 p-6 sm:p-8 md:grid-cols-[13rem_minmax(0,1fr)_auto] md:items-center md:gap-12">
-            <p className="label">Education</p>
-            <div>
-              <h3 className="text-lg tracking-[-0.015em]">{education.institution}</h3>
-              <p className="mt-1 text-sm text-muted">
-                {education.degree}, {education.field}
-              </p>
-            </div>
-
-            <div className="flex items-end gap-10 md:text-right">
-              <div>
-                <p className="text-[1.75rem] font-medium leading-none tracking-[-0.035em] text-text">
-                  {education.score}
-                </p>
-                <p className="meta mt-2 uppercase tracking-[0.08em]">{education.scoreLabel}</p>
-              </div>
-              <div>
-                <p className="text-sm text-text">
-                  {education.start} — {education.end.replace(' (expected)', '')}
-                </p>
-                <p className="meta mt-2 uppercase tracking-[0.08em]">Expected</p>
-              </div>
-            </div>
-          </div>
-        </Reveal>
-      </div>
-    </section>
+      <Reveal index={3}>
+        <a
+          href={profile.resumePath}
+          target="_blank"
+          rel="noopener"
+          className="group mt-10 inline-flex items-center gap-1.5 text-[0.9375rem] font-medium text-strong"
+        >
+          <span className="link link-on-group">View full résumé</span>
+          <ArrowUpRightIcon
+            className="h-3.5 w-3.5 text-body transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
+            aria-hidden
+          />
+          <span className="sr-only">(PDF, opens in a new tab)</span>
+        </a>
+      </Reveal>
+    </Section>
   );
 }

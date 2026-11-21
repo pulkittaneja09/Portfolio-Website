@@ -551,8 +551,13 @@ export const experience: ExperienceItem[] = [
       'Pitched and secured incubation under V-NEST, VIT Chennai, to build an AI-powered Academic Intelligence Platform for higher-education institutions.',
       'Built and shipped the MVP with Whisper-based speech-to-text, AI-powered knowledge generation and automated syllabus mapping.',
     ],
+    impact: [
+      'Pitched and won V-NEST incubation for an AI academic-intelligence platform, now DPIIT-recognised.',
+      'Shipped the MVP: Whisper speech-to-text, AI knowledge generation and automated syllabus mapping.',
+    ],
     stack: ['Whisper', 'Python', 'FastAPI', 'LLMs'],
-    // TODO(pulkit): add the Audaxity site once it is live.
+    // TODO(pulkit): point this at the Audaxity site once it is live.
+    href: '#founder',
   },
   {
     org: 'SDG Corporation',
@@ -565,7 +570,12 @@ export const experience: ExperienceItem[] = [
       'Developed an MCP server exposing 10+ enterprise tools and built LangGraph agent workflows for intent-based tool routing, accelerating internal ITSM service resolution across the company’s platforms.',
       'Built Python/FastAPI integrations for automated ticket creation, retrieval, updates and workflow execution, replacing manual intervention across enterprise ITSM systems.',
     ],
+    impact: [
+      'Built an MCP server exposing 10+ enterprise tools, with LangGraph agents routing each request by intent.',
+      'Automated ITSM ticket creation, retrieval and updates with Python/FastAPI integrations.',
+    ],
     stack: ['MCP', 'LangGraph', 'Python', 'FastAPI', 'ITSM'],
+    // TODO(pulkit): add the company URL as `href` to make this row a link.
   },
   {
     org: 'Dezors',
@@ -578,7 +588,12 @@ export const experience: ExperienceItem[] = [
       'Built a Gemini-powered content generation pipeline that turned user prompts into structured slide content, automating end-to-end PowerPoint creation for decks of up to 50 slides.',
       'Designed and deployed a FastAPI backend powering an AI-driven Microsoft 365 alternative, configuring Nginx as a reverse proxy for production traffic on a VPS.',
     ],
+    impact: [
+      'Built a Gemini pipeline that turns one prompt into a structured deck of up to 50 slides.',
+      'Deployed the FastAPI backend for an AI Microsoft 365 alternative behind Nginx on a VPS.',
+    ],
     stack: ['FastAPI', 'Google Gemini', 'Nginx', 'Linux', 'VPS'],
+    // TODO(pulkit): add the company URL as `href` to make this row a link.
   },
 ];
 

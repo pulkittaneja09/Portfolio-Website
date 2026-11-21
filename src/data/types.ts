@@ -97,9 +97,12 @@ export interface ExperienceItem {
   start: string;
   end: string;
   location: string;
-  /** Impact-first bullets: verb + what + result. */
+  /** Impact-first bullets: verb + what + result. Long form, for the terminal and résumé views. */
   bullets: string[];
+  /** Two short impact lines for the experience row on the page. */
+  impact: string[];
   stack: string[];
+  /** Makes the whole row a link: an external URL, or an in-page anchor like "#founder". */
   href?: string;
   kind: 'founder' | 'internship';
 }
