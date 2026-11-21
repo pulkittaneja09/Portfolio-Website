@@ -11,6 +11,11 @@ import { useReducedMotion } from '@/hooks/useReducedMotion';
  */
 let instance: Lenis | null = null;
 
+/** Desktop sections land level with the rail's top; mobile ones clear the 56px bar. */
+function scrollOffset(): number {
+  return window.matchMedia('(min-width: 1024px)').matches ? -96 : -72;
+}
+
 /**
  * Scroll to an element on the shared curve when Lenis is running, natively
  * otherwise. Anything that scrolls programmatically should go through this,
@@ -18,7 +23,7 @@ let instance: Lenis | null = null;
  */
 export function scrollToTarget(target: HTMLElement | null, smooth = true): void {
   if (!target) return;
-  if (instance) instance.scrollTo(target, { offset: -96, immediate: !smooth });
+  if (instance) instance.scrollTo(target, { offset: scrollOffset(), immediate: !smooth });
   else target.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto' });
 }
 
@@ -60,7 +65,7 @@ export function useLenis(): void {
       if (!target) return;
 
       event.preventDefault();
-      lenis.scrollTo(target as HTMLElement, { offset: -96 });
+      lenis.scrollTo(target as HTMLElement, { offset: scrollOffset() });
       history.replaceState(null, '', hash);
     };
 

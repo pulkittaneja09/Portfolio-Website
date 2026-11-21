@@ -163,6 +163,45 @@
     background-size: 100% 1px;
   }
 
+  /* ── Layout: the identity rail ─────────────────────────────────────────── */
+
+  /* Desktop: a sticky, full-height column whose three groups (identity + nav,
+     the agent trace, links) spread out with space-between. Its padding is set
+     in vh on the element, so a 690px-tall laptop viewport still fits it all. */
+  @media (min-width: 1024px) {
+    .rail {
+      position: sticky;
+      top: 0;
+      align-self: start;
+      height: 100vh;
+      justify-content: space-between;
+    }
+
+    .rail-nav {
+      margin-top: clamp(1.5rem, 5.5vh, 3.5rem);
+    }
+  }
+
+  /* Too short for the rail to fit: let it scroll away with the page rather
+     than clip its bottom edge. */
+  @media (min-width: 1024px) and (max-height: 600px) {
+    .rail {
+      position: static;
+      height: auto;
+    }
+  }
+
+  /* In-page jumps land below the mobile bar, or level with the rail's top. */
+  .section-anchor {
+    scroll-margin-top: 4.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    .section-anchor {
+      scroll-margin-top: 6rem;
+    }
+  }
+
   /* ── Surfaces ──────────────────────────────────────────────────────────── */
   .glass {
     background: rgb(var(--bg-rgb) / 0.72);
@@ -252,6 +291,12 @@
     max-width: 75rem;
     margin-inline: auto;
     padding-inline: clamp(1.25rem, 5vw, 3rem);
+  }
+
+  /* Old sections nested in the new right column: no second gutter. */
+  main .shell {
+    max-width: none;
+    padding-inline: 0;
   }
 
   .section-y {

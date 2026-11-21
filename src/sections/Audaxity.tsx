@@ -9,7 +9,7 @@ import { venture } from '@/data/portfolio';
  */
 export function Audaxity() {
   return (
-    <section id="audaxity" aria-labelledby="audaxity-title" className="section-y scroll-mt-24">
+    <section id="founder" aria-labelledby="audaxity-title" className="section-y scroll-mt-24">
       <div className="shell">
         <Reveal>
           <div className="flex items-center gap-4">

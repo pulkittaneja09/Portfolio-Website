@@ -19,7 +19,7 @@ const placement: Record<Project['emphasis'], string> = {
 
 export function Projects() {
   return (
-    <section id="work" aria-labelledby="work-title" className="section-y scroll-mt-24">
+    <section id="projects" aria-labelledby="work-title" className="section-y scroll-mt-24">
       <div className="shell">
         <SectionLabel id="work-title" className="mb-10">
           Projects

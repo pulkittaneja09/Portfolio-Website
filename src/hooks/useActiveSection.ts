@@ -1,47 +1,55 @@
 import { useEffect, useState } from 'react';
 
 /**
- * Returns the id of the section currently under the nav. Uses a single
- * observer over all sections rather than a scroll listener, so it costs
- * nothing while idle.
+ * Scroll-spy: the active section is the last one whose top has passed a line
+ * a third of the way down the viewport. Reading positions on scroll (batched
+ * to one rAF) is simpler and steadier than intersection ratios, which flicker
+ * between short sections.
+ *
+ * At the very bottom of the page the last section wins, even if it is too
+ * short for its top to ever reach the line.
  */
-export function useActiveSection(ids: string[]): string | null {
-  const [active, setActive] = useState<string | null>(null);
+export function useActiveSection(ids: readonly string[], lineRatio = 0.33): string | null {
+  const [active, setActive] = useState<string | null>(ids[0] ?? null);
+  const key = ids.join('|');
 
   useEffect(() => {
-    const sections = ids
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => el !== null);
+    const list = key.split('|').filter(Boolean);
+    if (list.length === 0) return;
 
-    if (sections.length === 0 || typeof IntersectionObserver === 'undefined') return;
+    let frame = 0;
 
-    const visible = new Map<string, number>();
+    const compute = () => {
+      frame = 0;
+      const line = window.innerHeight * lineRatio;
+      let current = list[0];
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) visible.set(entry.target.id, entry.intersectionRatio);
-          else visible.delete(entry.target.id);
-        });
+      for (const id of list) {
+        const section = document.getElementById(id);
+        if (section && section.getBoundingClientRect().top <= line) current = id;
+      }
 
-        // Pick the most-visible section, falling back to document order.
-        let best: string | null = null;
-        let bestRatio = 0;
-        ids.forEach((id) => {
-          const ratio = visible.get(id);
-          if (ratio !== undefined && ratio > bestRatio) {
-            best = id;
-            bestRatio = ratio;
-          }
-        });
-        setActive(best);
-      },
-      { rootMargin: '-20% 0px -55% 0px', threshold: [0.05, 0.25, 0.5, 0.75] },
-    );
+      const atBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+      if (atBottom) current = list[list.length - 1];
 
-    sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
-  }, [ids]);
+      setActive(current);
+    };
+
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(compute);
+    };
+
+    compute();
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+
+    return () => {
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+      cancelAnimationFrame(frame);
+    };
+  }, [key, lineRatio]);
 
   return active;
 }

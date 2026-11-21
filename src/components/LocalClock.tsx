@@ -12,7 +12,7 @@ function istNow(): string {
 }
 
 /**
- * "Chennai, IN — 23:41 IST", ticking once a minute.
+ * "Chennai · 23:41 IST", ticking once a minute.
  *
  * Aligned to the top of the minute rather than polling every second, so the
  * page wakes the main thread sixty times less often while idle.
@@ -39,7 +39,7 @@ export function LocalClock({ className }: { className?: string }) {
 
   return (
     <span className={className}>
-      Chennai, IN — <time dateTime={time}>{time}</time> IST
+      Chennai · <time dateTime={time}>{time}</time> IST
     </span>
   );
 }

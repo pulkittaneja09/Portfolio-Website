@@ -47,9 +47,11 @@ export interface Social {
 
 export interface Profile {
   name: string;
-  /** Rendered as the hero's one-line positioning statement. */
+  /** Job title under the name. */
+  title: string;
+  /** One-liner under the title (two lines at most in the left column). */
   tagline: string;
-  /** Rotating roles under the tagline. */
+  /** Short role descriptors, used by the terminal's `whoami`. */
   roles: string[];
   /** 2–3 sentence summary, used by the terminal, the chat widget and SEO. */
   summary: string;

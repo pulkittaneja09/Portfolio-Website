@@ -1,8 +1,7 @@
 import { Suspense, lazy, useCallback, useEffect, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { CursorSpotlight } from '@/components/CursorSpotlight';
 import { GrainOverlay } from '@/components/GrainOverlay';
-import { Nav } from '@/components/Nav';
 import { useGlobalShortcuts } from '@/hooks/useGlobalShortcuts';
 import { useLenis } from '@/hooks/useLenis';
 import { whenIdle } from '@/lib/idle';
@@ -28,7 +27,6 @@ export default function App() {
   // Once an overlay has been opened it stays mounted, so its exit animation
   // has something to animate out of.
   const [loaded, setLoaded] = useState({ palette: false, terminal: false });
-  const location = useLocation();
 
   const openPalette = useCallback(() => {
     setLoaded((current) => ({ ...current, palette: true }));
@@ -63,20 +61,18 @@ export default function App() {
 
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:border focus:border-strong focus:bg-elevated focus:px-4 focus:py-2 focus:text-sm"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:border focus:border-strong focus:bg-bg focus:px-4 focus:py-2 focus:text-sm focus:text-strong"
       >
         Skip to content
       </a>
 
-      <Nav onOpenPalette={openPalette} onOpenTerminal={openTerminal} isHome={location.pathname === '/'} />
-
-      <main id="main">
-        <Routes>
-          <Route path="/" element={<Home onOpenTerminal={openTerminal} onOpenPalette={openPalette} />} />
-          <Route path="/projects/:slug" element={<ProjectDetail />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </main>
+      {/* Each page renders its own <main id="main">: on the home page it is
+          the right-hand column, beside the identity rail. */}
+      <Routes>
+        <Route path="/" element={<Home onOpenTerminal={openTerminal} onOpenPalette={openPalette} />} />
+        <Route path="/projects/:slug" element={<ProjectDetail />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
 
       <Suspense fallback={null}>{widgetReady && <AskWidget />}</Suspense>
 

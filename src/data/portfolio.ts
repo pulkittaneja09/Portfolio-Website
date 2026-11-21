@@ -24,7 +24,9 @@ export const GITHUB_USERNAME = 'pulkittaneja09';
 
 export const profile: Profile = {
   name: 'Pulkit Taneja',
-  tagline: 'I build AI agents and the backends that run them.',
+  title: 'AI Agents & Backend Engineer',
+  tagline:
+    'I build AI agents, RAG systems and the Go/Python backends that run them in production. Founder of Audaxity.',
   roles: [
     'Founder, Audaxity Technologies',
     'AI / Backend Engineer',
@@ -36,7 +38,7 @@ export const profile: Profile = {
   location: 'Chennai, India',
   email: 'pulkittaneja0509@gmail.com',
   phone: '+91 94681 28969',
-  availability: 'Open to AI/ML & backend internships, 2027',
+  availability: 'Open to AI/ML & backend internships · 2027',
   resumePath: '/Pulkit_Taneja_Resume.pdf',
   // TODO(pulkit): swap in your real domain after the first Vercel deploy —
   // this drives canonical URLs, sitemap.xml, Open Graph and JSON-LD.
@@ -80,12 +82,12 @@ export const education: Education = {
   scoreLabel: 'CGPA / 10.0',
 };
 
+/** Section anchors, in page order. Drives the left-column nav and ⌘K. */
 export const nav: NavItem[] = [
-  { id: 'work', label: 'Work' },
+  { id: 'about', label: 'About' },
   { id: 'experience', label: 'Experience' },
-  { id: 'audaxity', label: 'Audaxity' },
-  { id: 'stack', label: 'Stack' },
-  { id: 'github', label: 'GitHub' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'founder', label: 'Founder' },
   { id: 'contact', label: 'Contact' },
 ];
 
