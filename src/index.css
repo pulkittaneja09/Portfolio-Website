@@ -315,11 +315,29 @@
     }
   }
 
-  /* The founder card: a hairline box lit from its top edge, white 6% → 0. */
+  /* The founder card: a hairline box lit from its top edge, white 6% → 0,
+     over an opaque ground so the cursor spotlight never shines through behind
+     its text (that would cost contrast). */
   .founder-card {
     background:
       linear-gradient(to bottom, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0) 45%),
-      rgba(255, 255, 255, 0.012);
+      var(--bg);
+  }
+
+  /* 2% white, but opaque: the agent card looks exactly like rgba(255,255,255,
+     .02) on the page, while blocking the spotlight behind its trace text. */
+  .surface-solid {
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02)),
+      var(--bg);
+  }
+
+  /* Inside a hovered row the panel, a chip's own fill and the spotlight stack
+     up; the chip text lifts with the rest of the row to stay above 7:1. */
+  .row-card:hover .chip,
+  .row-card:focus-visible .chip,
+  .row-card:has(:focus-visible) .chip {
+    color: rgb(var(--text-strong-rgb) / 0.8);
   }
 
   /* ── Surfaces ──────────────────────────────────────────────────────────── */
@@ -344,9 +362,11 @@
     inset: 0;
     z-index: -10;
     pointer-events: none;
+    /* 4.5% at the centre, not 5%: measured, 5% put body text directly under
+       the cursor at 6.95:1; 4.5% keeps every word above 7:1 and looks the same. */
     background: radial-gradient(
       600px circle at var(--spot-x, 50%) var(--spot-y, -20%),
-      rgb(var(--accent-rgb) / 0.05),
+      rgb(var(--accent-rgb) / 0.045),
       transparent 80%
     );
     display: none;

@@ -107,7 +107,9 @@ function MoreProjects() {
                 <span className="shrink-0 text-[0.9375rem] font-medium text-strong transition-colors duration-300 group-hover/more:text-accent">
                   {item.name}
                 </span>
-                <span className="hidden min-w-0 flex-1 truncate text-sm text-body sm:block">{item.blurb}</span>
+                <span className="hidden min-w-0 flex-1 truncate text-sm text-body transition-colors duration-300 group-hover/more:text-strong/80 sm:block">
+                  {item.blurb}
+                </span>
                 <span className="ml-auto flex shrink-0 items-baseline gap-3 sm:ml-0">
                   {item.metric && <span className="font-mono text-xs text-accent">{item.metric}</span>}
                   <ArrowUpRightIcon

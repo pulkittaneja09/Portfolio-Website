@@ -198,7 +198,7 @@ export function AgentRun({ className }: { className?: string }) {
     <figure
       ref={rootRef}
       className={cn(
-        'enter w-full max-w-[22.5rem] overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.02] font-mono text-xs',
+        'enter surface-solid w-full max-w-[22.5rem] overflow-hidden rounded-xl border border-white/[0.08] font-mono text-xs',
         className,
       )}
       style={stagger(9)}
