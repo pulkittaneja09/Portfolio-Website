@@ -58,92 +58,91 @@ export function Contact() {
     }
   }
 
+  const field =
+    'mt-2 w-full rounded-lg border border-hairline bg-transparent px-3.5 py-2.5 text-sm text-text outline-none transition-[border-color,background-color] duration-400 ease-quiet placeholder:text-faint hover:border-strong focus:border-strong focus:bg-light/[0.02]';
+
   return (
-    <section
-      id="contact"
-      aria-labelledby="contact-title"
-      className="scroll-mt-24 border-t border-hairline py-24 sm:py-28"
-    >
+    <section id="contact" aria-labelledby="contact-title" className="section-y scroll-mt-24">
       <div className="shell">
         <SectionHeading
           index="06"
           label="Contact"
-          title={<span id="contact-title">Hiring for an AI or backend internship?</span>}
+          title={
+            <span id="contact-title">
+              Hiring for an AI or backend internship? <span className="text-muted">Let’s talk.</span>
+            </span>
+          }
           lede="I reply to every message that is actually about work. The fastest route is email — the form below ends up in the same inbox."
         />
 
-        <div className="grid gap-5 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-8">
+        {/* ── The address, large ──────────────────────────────────────────── */}
+        <Reveal>
+          <div className="flex flex-col gap-6 border-y border-hairline py-10 sm:flex-row sm:items-end sm:justify-between sm:py-14">
+            <div className="min-w-0">
+              <StatusBadge label={profile.availability} />
+              <a
+                href={`mailto:${profile.email}`}
+                className="group mt-6 block break-all text-[1.625rem] font-medium leading-[1.05] tracking-[-0.035em] text-text transition-colors duration-600 ease-quiet hover:text-muted sm:text-[2.5rem] lg:text-[3.25rem]"
+              >
+                {profile.email}
+              </a>
+            </div>
+            <button
+              type="button"
+              onClick={() => void copy(profile.email, 'Email copied')}
+              className="inline-flex h-10 shrink-0 items-center gap-2 self-start rounded-lg border border-hairline px-4 text-sm text-muted transition-colors duration-400 ease-quiet hover:border-strong hover:text-text sm:self-auto"
+            >
+              <CopyIcon className="h-4 w-4" />
+              Copy address
+            </button>
+          </div>
+        </Reveal>
+
+        <div className="mt-14 grid gap-14 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-20">
           {/* ── Direct routes ────────────────────────────────────────────── */}
-          <Reveal>
-            <div className="panel flex h-full flex-col p-6 sm:p-7">
-              <StatusBadge label={profile.availability} className="self-start" />
+          <Reveal className="flex flex-col">
+            <p className="label">Elsewhere</p>
+            <p className="prose-body mt-5 text-[0.9375rem]">{profile.summary}</p>
 
-              <p className="mt-6 text-[0.9375rem] leading-relaxed text-muted">{profile.summary}</p>
+            <ul className="mt-8 divide-y divide-hairline border-y border-hairline">
+              {profile.socials
+                .filter((social) => social.icon !== 'mail')
+                .map((social) => {
+                  const Icon = socialIconMap[social.icon];
+                  return (
+                    <li key={social.label}>
+                      <a
+                        href={social.href}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="group flex items-center gap-4 py-4"
+                      >
+                        <Icon className="h-4 w-4 shrink-0 text-faint transition-colors duration-400 ease-quiet group-hover:text-text" />
+                        <span className="text-sm text-text">{social.label}</span>
+                        <span className="meta ml-auto truncate">{social.handle}</span>
+                        <ArrowUpRightIcon className="h-3.5 w-3.5 shrink-0 text-faint transition-[color,transform] duration-400 ease-quiet group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-text" />
+                      </a>
+                    </li>
+                  );
+                })}
+            </ul>
 
-              <div className="mt-7">
-                <p className="label">Email</p>
-                <div className="mt-2 flex flex-wrap items-center gap-2">
-                  <a
-                    href={`mailto:${profile.email}`}
-                    className="link-underline break-all font-mono text-sm text-text"
-                  >
-                    {profile.email}
-                  </a>
-                  <button
-                    type="button"
-                    onClick={() => void copy(profile.email, 'Email copied')}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-hairline px-2.5 py-1 font-mono text-[0.625rem] uppercase tracking-[0.1em] text-muted transition-colors hover:border-strong hover:text-text"
-                  >
-                    <CopyIcon className="h-3.5 w-3.5" />
-                    Copy
-                  </button>
-                </div>
-              </div>
-
-              <ul className="mt-7 grid gap-px overflow-hidden rounded-xl border border-hairline bg-[var(--border)] sm:grid-cols-2">
-                {profile.socials
-                  .filter((social) => social.icon !== 'mail')
-                  .map((social) => {
-                    const Icon = socialIconMap[social.icon];
-                    return (
-                      <li key={social.label} className="bg-surface">
-                        <a
-                          href={social.href}
-                          target="_blank"
-                          rel="noreferrer noopener"
-                          className="group flex items-center gap-3 p-4 transition-colors hover:bg-elevated"
-                        >
-                          <Icon className="h-4 w-4 shrink-0 text-muted transition-colors group-hover:text-text" />
-                          <span className="min-w-0 flex-1">
-                            <span className="block text-sm text-text">{social.label}</span>
-                            <span className="block truncate font-mono text-[0.6875rem] text-faint">
-                              {social.handle}
-                            </span>
-                          </span>
-                          <ArrowUpRightIcon className="h-3.5 w-3.5 shrink-0 text-faint transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-text" />
-                        </a>
-                      </li>
-                    );
-                  })}
-              </ul>
-
-              <div className="mt-auto pt-7">
-                <MagneticButton href={profile.resumePath} variant="outline" download>
-                  <DownloadIcon className="h-4 w-4" />
-                  Download résumé (PDF)
-                </MagneticButton>
-              </div>
+            <div className="mt-8">
+              <MagneticButton href={profile.resumePath} variant="outline" download>
+                <DownloadIcon className="h-4 w-4 text-muted" />
+                Download résumé (PDF)
+              </MagneticButton>
             </div>
           </Reveal>
 
           {/* ── Form ─────────────────────────────────────────────────────── */}
           <Reveal index={1}>
-            <form onSubmit={onSubmit} className="panel flex h-full flex-col p-6 sm:p-7" noValidate={false}>
+            <form onSubmit={onSubmit} className="relative flex h-full flex-col" noValidate={false}>
               <p className="label">Send a message</p>
 
-              <div className="mt-5 grid gap-4 sm:grid-cols-2">
+              <div className="mt-5 grid gap-5 sm:grid-cols-2">
                 <div>
-                  <label htmlFor="contact-name" className="block text-sm text-muted">
+                  <label htmlFor="contact-name" className="block text-[0.8125rem] text-muted">
                     Your name
                   </label>
                   <input
@@ -152,13 +151,13 @@ export function Contact() {
                     type="text"
                     required
                     autoComplete="name"
-                    className="mt-1.5 w-full rounded-lg border border-hairline bg-elevated px-3.5 py-2.5 text-sm text-text outline-none transition-colors placeholder:text-faint focus:border-strong"
+                    className={field}
                     placeholder="Alex Rivera"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="contact-email" className="block text-sm text-muted">
+                  <label htmlFor="contact-email" className="block text-[0.8125rem] text-muted">
                     Email
                   </label>
                   <input
@@ -167,14 +166,14 @@ export function Contact() {
                     type="email"
                     required
                     autoComplete="email"
-                    className="mt-1.5 w-full rounded-lg border border-hairline bg-elevated px-3.5 py-2.5 text-sm text-text outline-none transition-colors placeholder:text-faint focus:border-strong"
+                    className={field}
                     placeholder="alex@company.com"
                   />
                 </div>
               </div>
 
-              <div className="mt-4">
-                <label htmlFor="contact-message" className="block text-sm text-muted">
+              <div className="mt-5">
+                <label htmlFor="contact-message" className="block text-[0.8125rem] text-muted">
                   Message
                 </label>
                 <textarea
@@ -182,7 +181,7 @@ export function Contact() {
                   name="message"
                   required
                   rows={6}
-                  className="mt-1.5 w-full resize-y rounded-lg border border-hairline bg-elevated px-3.5 py-2.5 text-sm leading-relaxed text-text outline-none transition-colors placeholder:text-faint focus:border-strong"
+                  className={`${field} resize-y leading-relaxed`}
                   placeholder="What are you building, and what would I be working on?"
                 />
               </div>
@@ -195,11 +194,11 @@ export function Contact() {
 
               <div className="mt-6 flex flex-wrap items-center gap-4">
                 <MagneticButton type="submit" variant="solid">
-                  <SendIcon className="h-4 w-4" />
                   {state === 'sending' ? 'Sending…' : 'Send message'}
+                  <SendIcon className="h-4 w-4" />
                 </MagneticButton>
 
-                <p className="font-mono text-[0.6875rem] text-faint" role="status" aria-live="polite">
+                <p className="meta" role="status" aria-live="polite">
                   {state === 'sent' && 'Message sent. Thank you — I will reply soon.'}
                   {state === 'error' && 'That did not go through. Email me directly instead.'}
                   {state === 'idle' && !FORMSPREE_ID && 'Opens your mail client until a form key is set.'}
