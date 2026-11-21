@@ -14,7 +14,7 @@ Resume rule: read this file first, continue from the first unticked task, do not
 - [x] 10. Contact section + footer
 - [x] 11. Terminal mode restyle
 - [x] 12. Light mode pass
-- [ ] 13. Mobile pass (390px) + reduced-motion pass
+- [x] 13. Mobile pass (390px) + reduced-motion pass
 - [ ] 14. Playwright screenshots at 1440px and 390px, audit against banned list and references, fix
 - [ ] 15. npm run build, fix all warnings, final summary
 
@@ -31,3 +31,4 @@ Resume rule: read this file first, continue from the first unticked task, do not
 - 10: Contact leads with the email set large + copy button, social routes as hairline rows, transparent hairline form fields. Footer: 4-column index (numbered nav, socials, ⌘K/` shortcuts), live IST clock, huge wordmark fading to transparent (monochrome gradient).
 - 11: Terminal is a glass sheet with blur-in, hairline window dots (red/amber removed), $ prompt, grey tone scale, errors underlined instead of red; emojis removed from command output ([ok] instead of check marks). Ask widget and toasts moved to the same glass language.
 - 12: Light mode: ambient light pools moved to a --pool token (always white, so no grey smudges on #FAFAF9); elevation shadows tokenised per theme (much lighter in light mode); verified hero, bento, Audaxity, GitHub chart.
+- 13: 390px: verified zero horizontal overflow on home + case studies; hero facts wrap instead of truncating; stack caption no longer reserves height on phones; footer pairs columns 2-up. Reduced motion verified by script: no element left at opacity 0/blurred, no running animations, Lenis off, static 2D sphere only (no three.js).

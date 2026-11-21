@@ -35,7 +35,7 @@ function Group({ group, index }: { group: SkillGroup; index: number }) {
           <h3 className="mt-2 text-lg tracking-[-0.015em]">{group.title}</h3>
 
           {/* Fixed height so swapping the caption never shifts the grid. */}
-          <div className="mt-2 min-h-[3.75rem] sm:min-h-[4.25rem]">
+          <div className="mt-2 lg:min-h-[4.25rem]">
             {active ? (
               <p id={captionId} className="text-[0.8125rem] leading-relaxed text-muted" aria-live="polite">
                 <span className="label text-text">

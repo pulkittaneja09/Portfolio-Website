@@ -106,7 +106,7 @@ export function Hero() {
           {facts().map((fact) => (
             <div key={fact.label} className="min-w-0">
               <dt className="label text-faint">{fact.label}</dt>
-              <dd className="mt-2 truncate text-sm text-text/90">{fact.value}</dd>
+              <dd className="mt-2 text-sm text-text/90 sm:truncate">{fact.value}</dd>
             </div>
           ))}
         </dl>

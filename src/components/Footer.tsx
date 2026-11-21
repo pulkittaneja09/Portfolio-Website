@@ -14,8 +14,8 @@ export function Footer({ onOpenPalette, onOpenTerminal }: Props) {
   return (
     <footer className="relative overflow-hidden border-t border-hairline">
       <div className="shell pb-6 pt-16 sm:pt-20">
-        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
-          <div>
+        <div className="grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+          <div className="col-span-2 lg:col-span-1">
             <Link to="/" className="text-[0.9375rem] font-medium tracking-[-0.01em]">
               {profile.name}
             </Link>
@@ -62,7 +62,7 @@ export function Footer({ onOpenPalette, onOpenTerminal }: Props) {
             </ul>
           </div>
 
-          <div>
+          <div className="col-span-2 sm:col-span-1">
             <p className="label text-faint">Shortcuts</p>
             <ul className="mt-4 space-y-2.5">
               <li>
