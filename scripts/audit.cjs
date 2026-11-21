@@ -44,7 +44,13 @@ const MOCK_USER = {
   created_at: '2023-06-01T00:00:00Z',
 };
 const MOCK_REPOS = [
-  repo(1, 'parcelpilot', 'Python', 'Support-operations copilot grounded in order records and policy docs.', 3),
+  repo(
+    1,
+    'parcelpilot',
+    'Python',
+    'Support-operations copilot grounded in order records and policy docs.',
+    3,
+  ),
   repo(2, 'scrap-2-spark', 'Python', 'Battery RUL prediction and reuse triage.', 2),
   repo(3, 'knowledgehub-ai', 'Python', 'RAG over enterprise PDFs with cited answers.', 1),
   repo(4, 'ieee-recruitment-backend', 'Go', 'Gin + PostgreSQL recruitment API.', 2),

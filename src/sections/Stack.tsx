@@ -38,9 +38,7 @@ function Group({ group, index }: { group: SkillGroup; index: number }) {
           <div className="mt-2 lg:min-h-[4.25rem]">
             {active ? (
               <p id={captionId} className="text-[0.8125rem] leading-relaxed text-muted" aria-live="polite">
-                <span className="label text-text">
-                  {active.name}
-                </span>
+                <span className="label text-text">{active.name}</span>
                 <br />
                 Used in {active.usedIn.join(', ')}.
               </p>
@@ -87,11 +85,7 @@ function Group({ group, index }: { group: SkillGroup; index: number }) {
 
 export default function Stack() {
   return (
-    <section
-      id="stack"
-      aria-labelledby="stack-title"
-      className="section-y scroll-mt-24"
-    >
+    <section id="stack" aria-labelledby="stack-title" className="section-y scroll-mt-24">
       <div className="shell">
         <SectionHeading
           index="04"

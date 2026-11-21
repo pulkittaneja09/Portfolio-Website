@@ -176,7 +176,7 @@ src/
   hooks/            theme, reduced motion, media queries, count-up,
                     in-view, active section, clipboard, GitHub, shortcuts
   lib/              GitHub client, terminal commands, answer engine, helpers
-  three/            NeuralMesh — the lazy 3D hero element
+  three/            PointSphere — the lazy grayscale point-cloud hero
 ```
 
 ## Scripts
@@ -193,15 +193,26 @@ src/
 
 A few decisions that are not obvious from reading the files:
 
-**The 3D hero loads on the first pointer move.** `three.js` is ~220KB gzipped and the neural mesh
-exists to react to a cursor, so `HeroVisual` waits for a `pointermove` or `wheel` event before
-importing it. Touch devices, narrow viewports and anyone with `prefers-reduced-motion` get a static
-SVG node graph that ships in the main bundle and never loads three at all.
+**The visual layer is monochrome by design ("Quiet Futurism").** Every colour is a CSS variable in
+`index.css` (`--bg`, `--surface`, `--border`, `--text`, `--text-muted`, `--accent`…) and there is no
+hue anywhere: depth, light, Geist typography and motion carry the feel. Ambient light pools use a
+separate `--pool` token so they stay light in light mode, and elevation shadows are tokenised per
+theme.
+
+**The 3D hero loads on the first interaction.** `three.js` is ~220KB gzipped and the point cloud
+exists to bend away from a cursor, so `HeroVisual` waits for a `pointermove`, `wheel` or `keydown`
+before importing it, then crossfades from a static 2D-canvas sphere. The render loop pauses while the
+hero is off screen. Touch devices, narrow viewports and anyone with `prefers-reduced-motion` get only
+the static sphere and never load three at all.
+
+**Blur reveals clear their filter when they settle.** Any element with a `filter` becomes a backdrop
+root, which stops glass surfaces inside it from blurring what is behind them. `Reveal` and the overlay
+entrances therefore end on `filter: none`, not `blur(0px)`.
 
 **The hero entrance is CSS, and transform-only.** A Framer Motion fade holds its element at
 `opacity: 0` until React hydrates. Since the LCP element is the hero tagline, that put 87% of a 3.6s
-mobile LCP into render delay. The `.hero-rise` and `.hero-word` keyframes in `index.css` start at
-first paint instead and never hide the text.
+mobile LCP into render delay. The `.hero-rise` and `.hero-sharpen` (blur-to-sharp) keyframes in
+`index.css` start at first paint instead and never hide the text.
 
 **Framer Motion runs behind `LazyMotion`.** Components use `m.div`, not `motion.div`, and
 `main.tsx` loads only the `domAnimation` feature set — 28KB gzipped instead of 40KB. `strict` mode
@@ -215,17 +226,23 @@ height so `#stack` links still land and nothing shifts when it arrives.
 `x-ratelimit-remaining: 0` becomes a typed `RateLimitError` that renders an explanatory card with a
 link to the profile. The proof bar falls back to the repo count in `portfolio.ts`.
 
-**The contribution graph is colour-inverted in dark mode.** `ghchart.rshah.org` bakes a light
-`#eeeeee` ground into its SVG. Dark mode requests the _inverse_ of the accent (`3700d1`) and applies
-`filter: invert(1)`, so the ground lands on near-black and the cells come back out as lime.
+**The contribution graph is forced to a grey ramp.** `ghchart.rshah.org` bakes a light `#eeeeee`
+ground into its SVG. The chart is requested from a neutral near-black base and passed through
+`grayscale(1)`; dark mode adds `invert(1)`, so the ground lands on near-black and the busiest days come
+out brightest.
 
 **The answer widget has no model behind it.** `lib/ask.ts` scores a question against topics built
 from `portfolio.ts`. No API key, no network call, and no way for it to invent a credential. The file
 carries a TODO describing the serverless upgrade path, with the key kept off the client.
 
 **Everything respects `prefers-reduced-motion`.** The `Reveal` primitive renders a plain element,
-the rotating roles become a static list, count-ups jump to their final value, the custom cursor and
-the 3D mesh do not initialise, and a global rule collapses remaining animations.
+the rotating roles become a static list, count-ups jump to their final value, headings skip the
+scramble, Lenis smooth scroll and the card spotlights stay off, the 3D sphere does not initialise,
+and a global rule collapses remaining animations.
+
+**Visual audit.** With a preview server on port 4173, `node scripts/audit.cjs` captures every section,
+the palette, the terminal and a case study at 1440px and 390px in both themes (GitHub API mocked)
+into `.screenshots/audit`.
 
 ## Open TODOs
 

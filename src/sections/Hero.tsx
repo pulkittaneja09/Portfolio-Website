@@ -59,10 +59,7 @@ export function Hero() {
             AI agents · Backend systems
           </p>
 
-          <h1
-            id="hero-name"
-            className="mt-6 text-display-xl font-medium tracking-[-0.045em] sm:mt-8"
-          >
+          <h1 id="hero-name" className="mt-6 text-display-xl font-medium tracking-[-0.045em] sm:mt-8">
             {profile.name.split(' ').map((word, i) => (
               <span key={word} className="hero-sharpen block" style={delay(0.08 + i * 0.08)}>
                 {word}

@@ -130,7 +130,9 @@ export function ProjectCard({ project, className, variant = 'standard' }: Props)
       <div className={cn('flex flex-1 flex-col p-5 sm:p-6', (lead || banner) && 'lg:p-8')}>
         <p className="label text-faint">{projectMeta(project)}</p>
 
-        <h3 className={cn('mt-3 text-text', lead || banner ? 'text-display-sm' : 'text-lg tracking-[-0.02em]')}>
+        <h3
+          className={cn('mt-3 text-text', lead || banner ? 'text-display-sm' : 'text-lg tracking-[-0.02em]')}
+        >
           {/* The whole panel is clickable through this stretched link, while
               the demo and source links below sit above it. */}
           <Link

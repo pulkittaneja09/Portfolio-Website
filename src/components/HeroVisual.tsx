@@ -79,13 +79,7 @@ function SphereFallback({ color }: { color: string }) {
 
         ctx.globalAlpha = 0.08 + depth * 0.62 * (0.55 + (jitter(i + 11) + 0.5) * 0.45);
         ctx.beginPath();
-        ctx.arc(
-          centre + x * radius,
-          centre - y * shell * radius,
-          (0.5 + depth * 0.9) * unit,
-          0,
-          Math.PI * 2,
-        );
+        ctx.arc(centre + x * radius, centre - y * shell * radius, (0.5 + depth * 0.9) * unit, 0, Math.PI * 2);
         ctx.fill();
       }
     };

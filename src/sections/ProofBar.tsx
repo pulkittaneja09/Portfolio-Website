@@ -9,7 +9,17 @@ interface ProofBarProps {
   publicRepos?: number;
 }
 
-function StatCell({ stat, start, value, index }: { stat: Stat; start: boolean; value: number; index: number }) {
+function StatCell({
+  stat,
+  start,
+  value,
+  index,
+}: {
+  stat: Stat;
+  start: boolean;
+  value: number;
+  index: number;
+}) {
   const display = useCountUp({ to: value, decimals: stat.decimals ?? 0, start, durationMs: 1200 });
 
   return (
@@ -25,7 +35,9 @@ function StatCell({ stat, start, value, index }: { stat: Stat; start: boolean; v
       </div>
 
       <p className="mt-10 text-[2rem] font-medium leading-none tracking-[-0.04em] text-text tabular-nums sm:mt-14 sm:text-[2.5rem]">
-        {stat.prefix && <span className="mr-1 text-[0.55em] tracking-[-0.02em] text-muted">{stat.prefix.trim()}</span>}
+        {stat.prefix && (
+          <span className="mr-1 text-[0.55em] tracking-[-0.02em] text-muted">{stat.prefix.trim()}</span>
+        )}
         {display}
         {stat.suffix && <span className="text-muted">{stat.suffix}</span>}
       </p>

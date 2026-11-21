@@ -17,7 +17,11 @@ export function ThemeToggle({ className }: { className?: string }) {
       aria-label={`Switch to ${next} theme`}
       title={`Switch to ${next} theme`}
     >
-      {theme === 'dark' ? <SunIcon className="h-[15px] w-[15px]" /> : <MoonIcon className="h-[15px] w-[15px]" />}
+      {theme === 'dark' ? (
+        <SunIcon className="h-[15px] w-[15px]" />
+      ) : (
+        <MoonIcon className="h-[15px] w-[15px]" />
+      )}
     </button>
   );
 }

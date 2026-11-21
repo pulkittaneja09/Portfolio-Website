@@ -80,7 +80,10 @@ export function Experience() {
                         key={bullet.slice(0, 32)}
                         className="flex gap-4 text-[0.9375rem] leading-relaxed text-muted"
                       >
-                        <span className="mt-[0.7rem] h-px w-3 shrink-0 bg-[var(--border-hover)]" aria-hidden />
+                        <span
+                          className="mt-[0.7rem] h-px w-3 shrink-0 bg-[var(--border-hover)]"
+                          aria-hidden
+                        />
                         <span>{bullet}</span>
                       </li>
                     ))}
