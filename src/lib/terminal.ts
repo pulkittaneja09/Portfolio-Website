@@ -140,13 +140,13 @@ const EASTER_EGG: Line[] = [
   l('  │  OFFER PIPELINE — provisioning              │', 'accent'),
   l('  └─────────────────────────────────────────────┘', 'accent'),
   blank(),
-  l('  [✔] verifying shipped projects ............ 4 live'),
-  l('  [✔] checking production deploys ........... Vercel + Render'),
-  l('  [✔] auditing metrics ...................... all sourced'),
-  l('  [✔] measuring founder energy .............. DPIIT-recognised'),
-  l('  [✔] availability check .................... 2027 internships'),
+  l('  [ok] verifying shipped projects ............ 4 live'),
+  l('  [ok] checking production deploys ........... Vercel + Render'),
+  l('  [ok] auditing metrics ...................... all sourced'),
+  l('  [ok] measuring founder energy .............. DPIIT-recognised'),
+  l('  [ok] availability check .................... 2027 internships'),
   blank(),
-  l('  Pulkit has been hired. 🎉', 'accent'),
+  l('  Pulkit has been hired.', 'accent'),
   l('  (Pending one small formality on your end.)', 'muted'),
   blank(),
   l(`  → ${profile.email}`, 'accent', `mailto:${profile.email}`),
@@ -252,7 +252,7 @@ export function runCommand(raw: string): CommandResult {
       return { lines: [l('usage: sudo <command>   (try: sudo hire-pulkit)', 'muted')] };
 
     case 'rm -rf /':
-      return { lines: [l('Nice try. This terminal is read-only. 🙂', 'muted')] };
+      return { lines: [l('Nice try. This terminal is read-only.', 'muted')] };
 
     default:
       return {

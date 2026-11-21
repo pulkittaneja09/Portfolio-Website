@@ -12,7 +12,7 @@ Resume rule: read this file first, continue from the first unticked task, do not
 - [x] 8. Tech stack section
 - [x] 9. GitHub activity section
 - [x] 10. Contact section + footer
-- [ ] 11. Terminal mode restyle
+- [x] 11. Terminal mode restyle
 - [ ] 12. Light mode pass
 - [ ] 13. Mobile pass (390px) + reduced-motion pass
 - [ ] 14. Playwright screenshots at 1440px and 390px, audit against banned list and references, fix
@@ -29,3 +29,4 @@ Resume rule: read this file first, continue from the first unticked task, do not
 - 8: Stack groups are numbered rows (title + live 'used in' caption on the left), tools in a hairline cell grid with faint grayscale glyphs that light on hover; no % bars.
 - 9: GitHub language colours replaced by a 7-step white-opacity ramp (bar + legend + repo dots); contribution chart forced to a neutral grey ramp (grayscale + invert in dark); lime chart removed; large tabular profile numbers; repo grid on hairlines.
 - 10: Contact leads with the email set large + copy button, social routes as hairline rows, transparent hairline form fields. Footer: 4-column index (numbered nav, socials, ⌘K/` shortcuts), live IST clock, huge wordmark fading to transparent (monochrome gradient).
+- 11: Terminal is a glass sheet with blur-in, hairline window dots (red/amber removed), $ prompt, grey tone scale, errors underlined instead of red; emojis removed from command output ([ok] instead of check marks). Ask widget and toasts moved to the same glass language.

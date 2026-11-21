@@ -21,11 +21,12 @@ interface Block {
 }
 
 const toneClass: Record<NonNullable<Line['tone']>, string> = {
-  default: 'text-text/90',
+  default: 'text-muted',
   accent: 'text-text',
-  muted: 'text-muted',
-  error: 'text-red-400',
-  heading: 'text-text font-semibold',
+  muted: 'text-faint',
+  // No red: an error reads as an error from its wording and its weight.
+  error: 'text-text underline decoration-[var(--border-hover)] underline-offset-4',
+  heading: 'text-text font-medium',
 };
 
 /**
@@ -170,32 +171,32 @@ export function TerminalOverlay({ open, onClose }: Props) {
         >
           <button
             type="button"
-            className="absolute inset-0 cursor-default bg-bg/80 backdrop-blur-md"
+            className="absolute inset-0 cursor-default bg-bg/60 backdrop-blur-[2px]"
             onClick={onClose}
             aria-label="Close terminal"
             tabIndex={-1}
           />
 
           <m.div
-            className="relative flex h-full max-h-[min(42rem,88vh)] w-full max-w-3xl flex-col overflow-hidden rounded-xl border border-hairline bg-[var(--surface)] shadow-lift"
-            initial={reduced ? undefined : { opacity: 0, y: 16, scale: 0.985 }}
-            animate={reduced ? undefined : { opacity: 1, y: 0, scale: 1 }}
-            exit={reduced ? undefined : { opacity: 0, y: 10, scale: 0.99 }}
-            transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
+            className="glass relative flex h-full max-h-[min(42rem,88vh)] w-full max-w-3xl flex-col overflow-hidden rounded-xl shadow-float"
+            initial={reduced ? undefined : { opacity: 0, y: 12, scale: 0.985, filter: 'blur(6px)' }}
+            animate={reduced ? undefined : { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+            exit={reduced ? undefined : { opacity: 0, y: 8, scale: 0.99, filter: 'blur(4px)' }}
+            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
             onClick={() => inputRef.current?.focus()}
           >
             {/* Title bar */}
-            <div className="flex shrink-0 items-center gap-3 border-b border-hairline bg-elevated px-4 py-2.5">
+            <div className="flex shrink-0 items-center gap-3 border-b border-hairline px-4 py-3">
               <span className="flex gap-1.5" aria-hidden>
-                <span className="h-2.5 w-2.5 rounded-full bg-red-500/70" />
-                <span className="h-2.5 w-2.5 rounded-full bg-amber-400/70" />
-                <span className="h-2.5 w-2.5 rounded-full bg-light/[0.06]" />
+                <span className="h-2 w-2 rounded-full border border-[var(--border-hover)]" />
+                <span className="h-2 w-2 rounded-full border border-[var(--border-hover)]" />
+                <span className="h-2 w-2 rounded-full border border-[var(--border-hover)]" />
               </span>
-              <p className="flex-1 truncate font-mono text-xs text-faint">pulkit@portfolio — ~/about</p>
+              <p className="label flex-1 truncate text-center text-faint">pulkit@portfolio — ~/about</p>
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded p-1 text-faint transition-colors hover:text-text"
+                className="rounded p-1 text-faint transition-colors duration-400 ease-quiet hover:text-text"
                 aria-label="Close terminal"
               >
                 <CloseIcon className="h-4 w-4" />
@@ -206,14 +207,14 @@ export function TerminalOverlay({ open, onClose }: Props) {
             <div
               ref={scrollRef}
               data-lenis-prevent
-              className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 font-mono text-[0.8125rem] leading-relaxed sm:px-5"
+              className="flex-1 overflow-y-auto overscroll-contain px-4 py-5 font-mono text-[0.8125rem] leading-[1.7] sm:px-6"
             >
               {blocks.map((block) => (
                 <div key={block.id} className="mb-3 last:mb-0">
                   {block.input !== undefined && (
-                    <p className="flex gap-2 text-text">
-                      <span className="shrink-0 text-text" aria-hidden>
-                        ❯
+                    <p className="flex gap-2.5 text-text">
+                      <span className="shrink-0 text-faint" aria-hidden>
+                        $
                       </span>
                       <span className="break-all">{block.input}</span>
                     </p>
@@ -227,7 +228,7 @@ export function TerminalOverlay({ open, onClose }: Props) {
                           rel="noreferrer noopener"
                           className={cn(
                             toneClass[line.tone ?? 'default'],
-                            'underline decoration-dotted underline-offset-4 hover:text-text',
+                            'underline decoration-[var(--border-hover)] underline-offset-4 transition-colors duration-400 ease-quiet hover:text-text',
                           )}
                         >
                           {line.text}
@@ -248,8 +249,8 @@ export function TerminalOverlay({ open, onClose }: Props) {
 
               {/* Prompt */}
               <div className="flex items-center gap-2">
-                <span className="shrink-0 text-text" aria-hidden>
-                  ❯
+                <span className="shrink-0 text-faint" aria-hidden>
+                  $
                 </span>
                 <div className="relative flex-1">
                   <input
@@ -278,7 +279,7 @@ export function TerminalOverlay({ open, onClose }: Props) {
             </div>
 
             {/* Hint bar */}
-            <div className="shrink-0 border-t border-hairline bg-elevated px-4 py-2 font-mono text-[0.625rem] text-faint">
+            <div className="meta shrink-0 border-t border-hairline px-4 py-2.5 sm:px-6">
               <span className="hidden sm:inline">tab completes · ↑↓ history · ctrl+l clears · </span>
               esc closes
             </div>
