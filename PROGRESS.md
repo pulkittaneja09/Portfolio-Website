@@ -10,7 +10,7 @@ Resume rule: read this file first, continue from the first unticked task, do not
 - [x] 6. Experience timeline
 - [x] 7. Audaxity founder section
 - [x] 8. Tech stack section
-- [ ] 9. GitHub activity section
+- [x] 9. GitHub activity section
 - [ ] 10. Contact section + footer
 - [ ] 11. Terminal mode restyle
 - [ ] 12. Light mode pass
@@ -27,3 +27,4 @@ Resume rule: read this file first, continue from the first unticked task, do not
 - 6: Experience is a changelog timeline: mono date/location rail, hairline row dividers, pulsing white node on the current role, stack as mono metadata; education as a matching panel row.
 - 7: Audaxity is the single raised surface: elevated panel, one soft white top light + lit top hairline, dot matrix, scramble heading, credentials as numbered hairline rows, pipeline as a numbered vertical flow. Lime wash, spark icons and accent frame removed.
 - 8: Stack groups are numbered rows (title + live 'used in' caption on the left), tools in a hairline cell grid with faint grayscale glyphs that light on hover; no % bars.
+- 9: GitHub language colours replaced by a 7-step white-opacity ramp (bar + legend + repo dots); contribution chart forced to a neutral grey ramp (grayscale + invert in dark); lime chart removed; large tabular profile numbers; repo grid on hairlines.
