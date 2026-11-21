@@ -178,9 +178,13 @@ export function TerminalOverlay({ open, onClose }: Props) {
           />
 
           <m.div
-            className="glass relative flex h-full max-h-[min(42rem,88vh)] w-full max-w-3xl flex-col overflow-hidden rounded-xl shadow-float"
+            className="glass-strong relative flex h-full max-h-[min(42rem,88vh)] w-full max-w-3xl flex-col overflow-hidden rounded-xl shadow-float"
             initial={reduced ? undefined : { opacity: 0, y: 12, scale: 0.985, filter: 'blur(6px)' }}
-            animate={reduced ? undefined : { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+            animate={
+              reduced
+                ? undefined
+                : { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', transitionEnd: { filter: 'none' } }
+            }
             exit={reduced ? undefined : { opacity: 0, y: 8, scale: 0.99, filter: 'blur(4px)' }}
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
             onClick={() => inputRef.current?.focus()}

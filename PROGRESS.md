@@ -15,7 +15,7 @@ Resume rule: read this file first, continue from the first unticked task, do not
 - [x] 11. Terminal mode restyle
 - [x] 12. Light mode pass
 - [x] 13. Mobile pass (390px) + reduced-motion pass
-- [ ] 14. Playwright screenshots at 1440px and 390px, audit against banned list and references, fix
+- [x] 14. Playwright screenshots at 1440px and 390px, audit against banned list and references, fix
 - [ ] 15. npm run build, fix all warnings, final summary
 
 ## Notes
@@ -32,3 +32,4 @@ Resume rule: read this file first, continue from the first unticked task, do not
 - 11: Terminal is a glass sheet with blur-in, hairline window dots (red/amber removed), $ prompt, grey tone scale, errors underlined instead of red; emojis removed from command output ([ok] instead of check marks). Ask widget and toasts moved to the same glass language.
 - 12: Light mode: ambient light pools moved to a --pool token (always white, so no grey smudges on #FAFAF9); elevation shadows tokenised per theme (much lighter in light mode); verified hero, bento, Audaxity, GitHub chart.
 - 13: 390px: verified zero horizontal overflow on home + case studies; hero facts wrap instead of truncating; stack caption no longer reserves height on phones; footer pairs columns 2-up. Reduced motion verified by script: no element left at opacity 0/blurred, no running animations, Lenis off, static 2D sphere only (no three.js).
+- 14: scripts/audit.cjs captures 44 shots (8 sections + palette + terminal + case study, 1440/390, dark/light, GitHub API mocked) to .screenshots/audit; source sweep clean (no hues, glows, emojis, % bars). Fixes: blur-in animations now clear `filter` on settle (it made parents backdrop roots, so glass never blurred); denser glass-strong for overlays; lime og.png and apple-touch-icon regenerated in the monochrome style.

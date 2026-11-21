@@ -76,14 +76,18 @@ export function CommandPalette({ open, onClose, onOpenTerminal }: Props) {
           <m.div
             className="relative w-full max-w-xl"
             initial={reduced ? undefined : { opacity: 0, y: -8, scale: 0.985, filter: 'blur(6px)' }}
-            animate={reduced ? undefined : { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+            animate={
+              reduced
+                ? undefined
+                : { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', transitionEnd: { filter: 'none' } }
+            }
             exit={reduced ? undefined : { opacity: 0, y: -6, scale: 0.99, filter: 'blur(4px)' }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >
             <Command
               label="Command palette"
               loop
-              className="glass overflow-hidden rounded-xl shadow-float"
+              className="glass-strong overflow-hidden rounded-xl shadow-float"
             >
               <div className="flex items-center gap-3 border-b border-hairline px-4">
                 <SearchIcon className="h-4 w-4 shrink-0 text-faint" />
@@ -97,7 +101,10 @@ export function CommandPalette({ open, onClose, onOpenTerminal }: Props) {
                 </kbd>
               </div>
 
-              <Command.List data-lenis-prevent className="max-h-[min(24rem,52vh)] overflow-y-auto overscroll-contain p-2">
+              <Command.List
+                data-lenis-prevent
+                className="max-h-[min(24rem,52vh)] overflow-y-auto overscroll-contain p-2"
+              >
                 <Command.Empty className="px-3 py-10 text-center text-sm text-faint">
                   Nothing matches that. Try “projects” or “résumé”.
                 </Command.Empty>

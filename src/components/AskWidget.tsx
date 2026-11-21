@@ -78,17 +78,19 @@ export function AskWidget() {
             id="ask-panel"
             role="dialog"
             aria-label="Ask about Pulkit"
-            className="glass fixed bottom-20 right-4 z-[66] flex max-h-[min(30rem,70vh)] w-[min(24rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-xl shadow-float sm:bottom-[4.75rem] sm:right-6"
+            className="glass-strong fixed bottom-20 right-4 z-[66] flex max-h-[min(30rem,70vh)] w-[min(24rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-xl shadow-float sm:bottom-[4.75rem] sm:right-6"
             initial={reduced ? undefined : { opacity: 0, y: 10, scale: 0.985, filter: 'blur(6px)' }}
-            animate={reduced ? undefined : { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+            animate={
+              reduced
+                ? undefined
+                : { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', transitionEnd: { filter: 'none' } }
+            }
             exit={reduced ? undefined : { opacity: 0, y: 6, scale: 0.99, filter: 'blur(4px)' }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >
             <header className="flex shrink-0 items-center gap-2.5 border-b border-hairline px-4 py-3">
               <p className="flex-1 text-sm font-medium tracking-[-0.01em]">Ask about Pulkit</p>
-              <span className="label text-[0.625rem] text-faint">
-                offline · no API
-              </span>
+              <span className="label text-[0.625rem] text-faint">offline · no API</span>
             </header>
 
             <div

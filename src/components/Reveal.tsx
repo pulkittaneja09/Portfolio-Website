@@ -30,7 +30,9 @@ export function Reveal({ children, index = 0, className, as = 'div', y = 24 }: R
     <Component
       className={className}
       initial={{ opacity: 0, y, filter: 'blur(8px)' }}
-      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      // Clear the filter once settled: any `filter` makes this a backdrop root,
+      // which would stop glass inside it from blurring what is behind.
+      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)', transitionEnd: { filter: 'none' } }}
       viewport={{ once: true, margin: '0px 0px -12% 0px' }}
       transition={{
         duration: 0.7,

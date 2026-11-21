@@ -162,6 +162,15 @@
     -webkit-backdrop-filter: blur(16px) saturate(140%);
   }
 
+  /* Overlays sit over dense content, so their ground is nearly opaque and
+     the blur does the rest. Same tokens, more weight. */
+  .glass-strong {
+    background: linear-gradient(var(--surface), var(--surface)), rgb(var(--bg) / 0.9);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+  }
+
   .hairline {
     border: 1px solid var(--border);
   }
