@@ -5,12 +5,11 @@ import { AgentRun } from '@/components/AgentRun';
 import { Identity } from '@/components/Identity';
 import { MobileBar } from '@/components/MobileBar';
 import { ProfileLinks } from '@/components/ProfileLinks';
-import { SectionLabel } from '@/components/SectionLabel';
 import { SectionNav } from '@/components/SectionNav';
-import { nav, profile } from '@/data/portfolio';
+import { nav } from '@/data/portfolio';
 import { useActiveSection } from '@/hooks/useActiveSection';
 import { scrollToTarget } from '@/hooks/useLenis';
-import { stagger } from '@/lib/stagger';
+import { About } from '@/sections/About';
 import { Audaxity } from '@/sections/Audaxity';
 import { Contact } from '@/sections/Contact';
 import { Experience } from '@/sections/Experience';
@@ -65,12 +64,7 @@ export function Home({ onOpenTerminal, onOpenPalette }: HomeProps) {
 
           {/* ── Right: the scrolling column ─────────────────────────────── */}
           <main id="main" className="pb-24 pt-20 lg:pb-0 lg:pt-24">
-            <section id="about" aria-labelledby="about-title" className="section-anchor enter" style={stagger(2)}>
-              <SectionLabel id="about-title" className="mb-6 text-body">
-                About
-              </SectionLabel>
-              <p className="max-w-prose">{profile.summary}</p>
-            </section>
+            <About />
 
             <Experience />
             <Projects />

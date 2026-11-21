@@ -83,6 +83,30 @@ export const education: Education = {
   scoreLabel: 'CGPA / 10.0',
 };
 
+/**
+ * About, in two short paragraphs. `**phrase**` renders as a white highlight
+ * and `*word*` in the accent serif — one serif word per section, at most.
+ */
+export const about: string[] = [
+  'I build *agents* that actually ship. My work sits where language models meet real systems: **MCP servers** that expose enterprise tools, LangGraph workflows that route each request to the right one, and **RAG pipelines** that answer from documents instead of guessing.',
+  'Right now I am co-founding **Audaxity**, an academic intelligence platform incubated at V-NEST. Before that I built an MCP server with 10+ enterprise tools at SDG Corporation. The part I care about most is everything around the model: **access control before retrieval**, cited answers, and **FastAPI and Go backends** that keep working after the demo.',
+];
+
+/** The compact "Now" strip under About. */
+export const now: string[] = ['Co-founder @ Audaxity', "B.Tech CSE, VIT Chennai '28", 'CGPA 8.25'];
+
+/** One line at the end of About — the whole tech stack section, compressed. */
+export const dailyTools: string[] = [
+  'Python',
+  'Go',
+  'TypeScript',
+  'FastAPI',
+  'LangGraph',
+  'MCP',
+  'PostgreSQL',
+  'Docker',
+];
+
 /** Section anchors, in page order. Drives the left-column nav and ⌘K. */
 export const nav: NavItem[] = [
   { id: 'about', label: 'About' },

@@ -343,6 +343,21 @@
     animation: pulse-soft 2.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 
+  /* Scroll reveal (see lib/reveal.ts). Only ever applied to an element that
+     is off screen below the fold; shown the moment it enters, then the
+     attribute is removed so nothing lingers. */
+  [data-reveal='armed'] {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+
+  [data-reveal='shown'] {
+    transition:
+      opacity 0.6s var(--ease),
+      transform 0.6s var(--ease);
+    transition-delay: calc(var(--i, 0) * 60ms);
+  }
+
   /* Agent trace: each line settles in, each ✓ pops in. */
   @keyframes line-in {
     from {
@@ -380,6 +395,11 @@
     .line-in,
     .tick-in {
       animation: none;
+    }
+
+    [data-reveal] {
+      opacity: 1 !important;
+      transform: none !important;
     }
   }
 

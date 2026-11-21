@@ -1,46 +1,27 @@
-import { m } from 'framer-motion';
-import type { ReactNode } from 'react';
-import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { useEffect, useRef } from 'react';
+import type { CSSProperties, ElementType, ReactNode } from 'react';
+import { observeReveal } from '@/lib/reveal';
 
 interface RevealProps {
   children: ReactNode;
-  /** Stagger index — each step delays the reveal by 70ms. */
+  /** Stagger index — each step delays the entrance by 60ms. */
   index?: number;
   className?: string;
-  as?: 'div' | 'li' | 'section' | 'article';
-  y?: number;
+  as?: ElementType;
 }
 
 /**
- * The single scroll-reveal primitive for the site: blur 8px to 0 and 24px of
- * travel, on the house easing. One place to change the feel of every entrance.
- *
- * Collapses to a plain element under `prefers-reduced-motion`.
+ * Fades an element up 12px as it scrolls into view, once. Visible by default:
+ * see `lib/reveal.ts` for why this can never leave content hidden.
  */
-export function Reveal({ children, index = 0, className, as = 'div', y = 24 }: RevealProps) {
-  const reduced = useReducedMotion();
-  const Component = m[as];
+export function Reveal({ children, index = 0, className, as: Tag = 'div' }: RevealProps) {
+  const ref = useRef<HTMLElement>(null);
 
-  if (reduced) {
-    const Plain = as;
-    return <Plain className={className}>{children}</Plain>;
-  }
+  useEffect(() => observeReveal(ref.current), []);
 
   return (
-    <Component
-      className={className}
-      initial={{ opacity: 0, y, filter: 'blur(8px)' }}
-      // Clear the filter once settled: any `filter` makes this a backdrop root,
-      // which would stop glass inside it from blurring what is behind.
-      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)', transitionEnd: { filter: 'none' } }}
-      viewport={{ once: true, margin: '0px 0px -12% 0px' }}
-      transition={{
-        duration: 0.7,
-        delay: Math.min(index, 8) * 0.07,
-        ease: [0.16, 1, 0.3, 1],
-      }}
-    >
+    <Tag ref={ref} className={className} style={{ '--i': index } as CSSProperties}>
       {children}
-    </Component>
+    </Tag>
   );
 }
