@@ -58,13 +58,13 @@ export function Hero() {
 
             <h1
               id="hero-name"
-              className="mt-7 font-display text-display-xl font-semibold uppercase leading-[0.9]"
+              className="mt-7 text-display-xl font-semibold uppercase leading-[0.9]"
             >
               <AnimatedName name={profile.name} />
             </h1>
 
             <p
-              className="hero-rise mt-6 max-w-xl text-pretty text-lg leading-relaxed text-ink/85 sm:text-xl"
+              className="hero-rise mt-6 max-w-xl text-pretty text-lg leading-relaxed text-text/85 sm:text-xl"
               style={riseDelay(0.24)}
             >
               {profile.tagline}
@@ -94,7 +94,7 @@ export function Hero() {
 
             {/* ── Context line ───────────────────────────────────────────── */}
             <dl
-              className="hero-rise mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-line pt-6 font-mono text-xs text-faint"
+              className="hero-rise mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-hairline pt-6 font-mono text-xs text-faint"
               style={riseDelay(0.48)}
             >
               <div className="flex items-center gap-2">

@@ -69,16 +69,16 @@ export function ProjectDetail() {
       <div className="shell">
         <Link
           to="/#work"
-          className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-faint transition-colors hover:text-accent"
+          className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-faint transition-colors hover:text-text"
         >
           <ArrowLeftIcon className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-1" />
           All work
         </Link>
 
         {/* ── Header ───────────────────────────────────────────────────────── */}
-        <header className="mt-8 border-b border-line pb-10">
+        <header className="mt-8 border-b border-hairline pb-10">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="chip border-accent/40 text-accent">{project.year}</span>
+            <span className="chip border-strong text-text">{project.year}</span>
             {project.tags.map((tag) => (
               <span key={tag} className="chip">
                 {tag}
@@ -86,7 +86,7 @@ export function ProjectDetail() {
             ))}
           </div>
 
-          <h1 className="mt-5 max-w-3xl font-display text-display-lg">{project.name}</h1>
+          <h1 className="mt-5 max-w-3xl text-display-lg">{project.name}</h1>
           <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted">{project.problem}</p>
 
           <div className="mt-8 flex flex-wrap gap-3">
@@ -140,14 +140,14 @@ export function ProjectDetail() {
                   height={492}
                   loading="eager"
                   decoding="async"
-                  className="w-full rounded-card border border-line"
+                  className="w-full rounded-panel border border-hairline"
                 />
               </Reveal>
             )}
 
             <Reveal>
-              <h2 className="eyebrow">Overview</h2>
-              <div className="mt-4 space-y-4 text-[1.0625rem] leading-relaxed text-ink/85">
+              <h2 className="label">Overview</h2>
+              <div className="mt-4 space-y-4 text-[1.0625rem] leading-relaxed text-text/85">
                 {project.detail.overview.map((paragraph) => (
                   <p key={paragraph.slice(0, 24)}>{paragraph}</p>
                 ))}
@@ -155,21 +155,21 @@ export function ProjectDetail() {
             </Reveal>
 
             <Reveal className="mt-14">
-              <h2 className="eyebrow">Architecture</h2>
+              <h2 className="label">Architecture</h2>
               <div className="mt-4">
                 <ArchitectureDiagram architecture={project.detail.architecture} />
               </div>
             </Reveal>
 
             <Reveal className="mt-14">
-              <h2 className="eyebrow">What it does</h2>
+              <h2 className="label">What it does</h2>
               <ul className="mt-4 space-y-3">
                 {project.detail.highlights.map((highlight) => (
                   <li
                     key={highlight.slice(0, 24)}
-                    className="flex gap-3 text-[0.9375rem] leading-relaxed text-ink/85"
+                    className="flex gap-3 text-[0.9375rem] leading-relaxed text-text/85"
                   >
-                    <span className="mt-[0.45rem] h-1 w-3 shrink-0 bg-accent" aria-hidden />
+                    <span className="mt-[0.45rem] h-1 w-3 shrink-0 bg-text" aria-hidden />
                     {highlight}
                   </li>
                 ))}
@@ -177,11 +177,11 @@ export function ProjectDetail() {
             </Reveal>
 
             <Reveal className="mt-14">
-              <h2 className="eyebrow">What was hard</h2>
+              <h2 className="label">What was hard</h2>
               <div className="mt-4 space-y-5">
                 {project.detail.challenges.map((challenge) => (
-                  <div key={challenge.title} className="card p-5">
-                    <h3 className="font-display text-base">{challenge.title}</h3>
+                  <div key={challenge.title} className="panel p-5">
+                    <h3 className=" text-base">{challenge.title}</h3>
                     <p className="mt-2 text-[0.9375rem] leading-relaxed text-muted">{challenge.body}</p>
                   </div>
                 ))}
@@ -189,11 +189,11 @@ export function ProjectDetail() {
             </Reveal>
 
             <Reveal className="mt-14">
-              <h2 className="eyebrow">What I would do next</h2>
+              <h2 className="label">What I would do next</h2>
               <ul className="mt-4 space-y-2.5">
                 {project.detail.next.map((item) => (
                   <li key={item.slice(0, 24)} className="flex gap-3 text-[0.9375rem] text-muted">
-                    <RocketIcon className="mt-0.5 h-4 w-4 shrink-0 text-accent/70" />
+                    <RocketIcon className="mt-0.5 h-4 w-4 shrink-0 text-text" />
                     {item}
                   </li>
                 ))}
@@ -202,7 +202,7 @@ export function ProjectDetail() {
 
             {project.previewFrames && project.previewFrames.length > 0 && (
               <Reveal className="mt-14">
-                <h2 className="eyebrow">More screens</h2>
+                <h2 className="label">More screens</h2>
                 <div className="mt-4 grid gap-4 sm:grid-cols-2">
                   {project.previewFrames.map((frame) => (
                     <img
@@ -215,7 +215,7 @@ export function ProjectDetail() {
                       height={480}
                       loading="lazy"
                       decoding="async"
-                      className="w-full rounded-lg border border-line"
+                      className="w-full rounded-lg border border-hairline"
                     />
                   ))}
                 </div>
@@ -225,19 +225,19 @@ export function ProjectDetail() {
 
           {/* ── Sidebar ────────────────────────────────────────────────────── */}
           <aside className="lg:sticky lg:top-24 lg:self-start">
-            <div className="card p-5">
-              <p className="eyebrow">Result</p>
-              <p className="mt-2 font-display text-2xl text-accent">{project.metric.value}</p>
+            <div className="panel p-5">
+              <p className="label">Result</p>
+              <p className="mt-2 text-2xl text-text">{project.metric.value}</p>
               <p className="mt-1 text-sm text-muted">{project.metric.label}</p>
             </div>
 
-            <div className="mt-5 card p-5">
-              <p className="eyebrow">My role</p>
+            <div className="mt-5 panel p-5">
+              <p className="label">My role</p>
               <p className="mt-2 text-sm leading-relaxed text-muted">{project.role}</p>
             </div>
 
-            <div className="mt-5 card p-5">
-              <p className="eyebrow">Stack</p>
+            <div className="mt-5 panel p-5">
+              <p className="label">Stack</p>
               <ul className="mt-3 flex flex-wrap gap-1.5">
                 {project.stack.map((tech) => (
                   <li key={tech} className="chip">
@@ -252,15 +252,15 @@ export function ProjectDetail() {
         {/* ── Next project ─────────────────────────────────────────────────── */}
         <Link
           to={`/projects/${next.slug}`}
-          className="group flex flex-col gap-2 border-t border-line pt-8 transition-colors hover:border-accent/40 sm:flex-row sm:items-center sm:justify-between"
+          className="group flex flex-col gap-2 border-t border-hairline pt-8 transition-colors hover:border-strong sm:flex-row sm:items-center sm:justify-between"
         >
           <div>
-            <p className="eyebrow">Next project</p>
-            <p className="mt-1.5 font-display text-xl transition-colors group-hover:text-accent">
+            <p className="label">Next project</p>
+            <p className="mt-1.5 text-xl transition-colors group-hover:text-text">
               {next.name}
             </p>
           </div>
-          <ArrowRightIcon className="h-5 w-5 text-faint transition-all group-hover:translate-x-1.5 group-hover:text-accent" />
+          <ArrowRightIcon className="h-5 w-5 text-faint transition-all group-hover:translate-x-1.5 group-hover:text-text" />
         </Link>
       </div>
     </article>

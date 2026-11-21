@@ -9,12 +9,12 @@ export function Experience() {
     <section
       id="experience"
       aria-labelledby="experience-title"
-      className="scroll-mt-24 border-t border-line py-24 sm:py-28"
+      className="scroll-mt-24 border-t border-hairline py-24 sm:py-28"
     >
       <div className="shell">
         <SectionHeading
           index="02"
-          eyebrow="Experience"
+          label="Experience"
           title={<span id="experience-title">Three roles, all shipping to someone else’s deadline.</span>}
           lede="A founder seat and two engineering internships. Each bullet is the work, not the job description."
         />
@@ -22,7 +22,7 @@ export function Experience() {
         <ol className="relative">
           {/* The spine. Sits behind the markers, stops at the last entry. */}
           <span
-            className="absolute bottom-10 left-[7px] top-2 w-px bg-gradient-to-b from-accent/60 via-line to-transparent sm:left-[9px]"
+            className="absolute bottom-10 left-[7px] top-2 w-px bg-gradient-to-b from-accent/60 via-[var(--border)] to-transparent sm:left-[9px]"
             aria-hidden
           />
 
@@ -37,15 +37,15 @@ export function Experience() {
               <span
                 className={cn(
                   'absolute left-0 top-1.5 grid h-[15px] w-[15px] place-items-center rounded-full border-2 sm:h-[19px] sm:w-[19px]',
-                  item.kind === 'founder' ? 'border-accent bg-accent/20' : 'border-line bg-bg',
+                  item.kind === 'founder' ? 'border-strong bg-light/[0.06]' : 'border-hairline bg-bg',
                 )}
                 aria-hidden
               >
-                {item.kind === 'founder' && <span className="h-1.5 w-1.5 rounded-full bg-accent" />}
+                {item.kind === 'founder' && <span className="h-1.5 w-1.5 rounded-full bg-text" />}
               </span>
 
               <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                <h3 className="font-display text-xl sm:text-2xl">{item.role}</h3>
+                <h3 className=" text-xl sm:text-2xl">{item.role}</h3>
                 <span className="text-faint" aria-hidden>
                   /
                 </span>
@@ -54,13 +54,13 @@ export function Experience() {
                     href={item.href}
                     target="_blank"
                     rel="noreferrer noopener"
-                    className="group inline-flex items-center gap-1 text-lg text-accent"
+                    className="group inline-flex items-center gap-1 text-lg text-text"
                   >
                     {item.org}
                     <ArrowUpRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </a>
                 ) : (
-                  <span className="text-lg text-accent">{item.org}</span>
+                  <span className="text-lg text-text">{item.org}</span>
                 )}
               </div>
 
@@ -74,7 +74,7 @@ export function Experience() {
                   {item.location}
                 </span>
                 {item.kind === 'founder' && (
-                  <span className="rounded-full border border-accent/40 px-2 py-0.5 uppercase tracking-[0.1em] text-accent">
+                  <span className="rounded-full border border-strong px-2 py-0.5 uppercase tracking-[0.1em] text-text">
                     Founder
                   </span>
                 )}
@@ -84,9 +84,9 @@ export function Experience() {
                 {item.bullets.map((bullet) => (
                   <li
                     key={bullet.slice(0, 32)}
-                    className="flex gap-3 text-[0.9375rem] leading-relaxed text-ink/80"
+                    className="flex gap-3 text-[0.9375rem] leading-relaxed text-text/80"
                   >
-                    <span className="mt-[0.5rem] h-px w-4 shrink-0 bg-accent/70" aria-hidden />
+                    <span className="mt-[0.5rem] h-px w-4 shrink-0 bg-light/[0.06]" aria-hidden />
                     <span className="max-w-2xl">{bullet}</span>
                   </li>
                 ))}
@@ -105,10 +105,10 @@ export function Experience() {
 
         {/* ── Education ──────────────────────────────────────────────────── */}
         <Reveal index={3} className="mt-14">
-          <div className="card flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="panel flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="eyebrow">Education</p>
-              <h3 className="mt-2 font-display text-lg">{education.institution}</h3>
+              <p className="label">Education</p>
+              <h3 className="mt-2 text-lg">{education.institution}</h3>
               <p className="mt-1 text-sm text-muted">
                 {education.degree}, {education.field}
               </p>
@@ -116,13 +116,13 @@ export function Experience() {
 
             <div className="flex items-center gap-8 sm:text-right">
               <div>
-                <p className="font-display text-2xl text-accent">{education.score}</p>
+                <p className=" text-2xl text-text">{education.score}</p>
                 <p className="font-mono text-[0.625rem] uppercase tracking-[0.12em] text-faint">
                   {education.scoreLabel}
                 </p>
               </div>
               <div>
-                <p className="font-mono text-sm text-ink">
+                <p className="font-mono text-sm text-text">
                   {education.start} — {education.end.replace(' (expected)', '')}
                 </p>
                 <p className="font-mono text-[0.625rem] uppercase tracking-[0.12em] text-faint">Expected</p>

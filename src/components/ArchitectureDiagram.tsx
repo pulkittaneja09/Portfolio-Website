@@ -17,10 +17,10 @@ const toneStyles: Record<
   Architecture['nodes'][number]['tone'],
   { fill: string; stroke: string; label: string }
 > = {
-  client: { fill: 'rgb(var(--elevated))', stroke: 'rgb(var(--line))', label: 'rgb(var(--ink))' },
-  service: { fill: 'rgb(var(--elevated))', stroke: 'rgb(var(--accent) / 0.55)', label: 'rgb(var(--ink))' },
-  model: { fill: 'rgb(var(--accent) / 0.14)', stroke: 'rgb(var(--accent))', label: 'rgb(var(--ink))' },
-  store: { fill: 'rgb(var(--surface))', stroke: 'rgb(var(--line))', label: 'rgb(var(--ink))' },
+  client: { fill: 'rgb(var(--bg-elevated))', stroke: 'var(--border)', label: 'rgb(var(--text))' },
+  service: { fill: 'rgb(var(--bg-elevated))', stroke: 'rgb(var(--accent) / 0.55)', label: 'rgb(var(--text))' },
+  model: { fill: 'rgb(var(--accent) / 0.14)', stroke: 'rgb(var(--accent))', label: 'rgb(var(--text))' },
+  store: { fill: 'var(--surface)', stroke: 'var(--border)', label: 'rgb(var(--text))' },
 };
 
 export function ArchitectureDiagram({ architecture }: { architecture: Architecture }) {
@@ -43,7 +43,7 @@ export function ArchitectureDiagram({ architecture }: { architecture: Architectu
 
   return (
     <figure className="not-prose">
-      <div className="overflow-x-auto rounded-card border border-line bg-surface p-2 sm:p-4">
+      <div className="overflow-x-auto rounded-panel border border-hairline bg-surface p-2 sm:p-4">
         <svg
           viewBox={`0 0 ${layout.width} ${layout.height}`}
           className="h-auto w-full"
@@ -105,7 +105,7 @@ export function ArchitectureDiagram({ architecture }: { architecture: Architectu
                       textAnchor="middle"
                       className="font-mono"
                       fontSize="9.5"
-                      fill="rgb(var(--faint))"
+                      fill="rgb(var(--text-faint))"
                     >
                       {edge.label}
                     </text>
@@ -147,7 +147,7 @@ export function ArchitectureDiagram({ architecture }: { architecture: Architectu
                       textAnchor="middle"
                       className="font-mono"
                       fontSize="9"
-                      fill="rgb(var(--faint))"
+                      fill="rgb(var(--text-faint))"
                     >
                       {node.note}
                     </text>

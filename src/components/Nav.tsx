@@ -30,13 +30,13 @@ export function Nav({ onOpenPalette, onOpenTerminal, isHome }: NavProps) {
     <header
       className={cn(
         'fixed inset-x-0 top-0 z-50 transition-colors duration-500',
-        condensed && 'border-b border-line bg-bg/80 backdrop-blur-xl',
+        condensed && 'border-b border-hairline bg-bg/80 backdrop-blur-xl',
       )}
     >
       <nav className="shell flex h-[var(--nav-h)] items-center justify-between gap-4" aria-label="Main">
-        <Link to="/" className="group flex items-center gap-2.5 font-mono text-sm tracking-tight text-ink">
+        <Link to="/" className="group flex items-center gap-2.5 font-mono text-sm tracking-tight text-text">
           <span
-            className="grid h-7 w-7 place-items-center rounded-md border border-accent/40 bg-accent/[0.08] font-display text-xs font-semibold text-accent"
+            className="grid h-7 w-7 place-items-center rounded-md border border-strong bg-text/[0.08] text-xs font-semibold text-text"
             aria-hidden
           >
             PT
@@ -61,12 +61,12 @@ export function Nav({ onOpenPalette, onOpenTerminal, isHome }: NavProps) {
                   href={isHome ? `#${item.id}` : `/#${item.id}`}
                   className={cn(
                     'relative rounded-full px-3 py-1.5 text-sm transition-colors duration-300',
-                    isActive ? 'text-accent' : 'text-muted hover:text-ink',
+                    isActive ? 'text-text' : 'text-muted hover:text-text',
                   )}
                   aria-current={isActive ? 'true' : undefined}
                 >
                   {item.label}
-                  {isActive && <span className="absolute inset-x-3 -bottom-0.5 h-px bg-accent" aria-hidden />}
+                  {isActive && <span className="absolute inset-x-3 -bottom-0.5 h-px bg-text" aria-hidden />}
                 </a>
               </li>
             );
@@ -77,7 +77,7 @@ export function Nav({ onOpenPalette, onOpenTerminal, isHome }: NavProps) {
           <button
             type="button"
             onClick={onOpenTerminal}
-            className="hidden h-9 w-9 place-items-center rounded-full border border-line text-muted transition-colors duration-300 hover:border-accent/50 hover:text-accent sm:grid"
+            className="hidden h-9 w-9 place-items-center rounded-full border border-hairline text-muted transition-colors duration-300 hover:border-strong hover:text-text sm:grid"
             aria-label="Open terminal (backtick key)"
             title="Terminal — press `"
           >
@@ -87,14 +87,14 @@ export function Nav({ onOpenPalette, onOpenTerminal, isHome }: NavProps) {
           <button
             type="button"
             onClick={onOpenPalette}
-            className="group flex items-center gap-2 rounded-full border border-line py-1.5 pl-3 pr-2 text-sm text-muted transition-colors duration-300 hover:border-accent/50 hover:text-ink"
+            className="group flex items-center gap-2 rounded-full border border-hairline py-1.5 pl-3 pr-2 text-sm text-muted transition-colors duration-300 hover:border-strong hover:text-text"
           >
             {/* No aria-label here: it would hide the button's own visible
                 text from its accessible name. */}
             <span className="sr-only">Open command palette.</span>
             <CommandIcon className="h-3.5 w-3.5" />
             <span className="hidden xl:inline">Jump to…</span>
-            <kbd className="rounded border border-line bg-elevated px-1.5 py-0.5 font-mono text-[0.625rem] text-faint">
+            <kbd className="rounded border border-hairline bg-elevated px-1.5 py-0.5 font-mono text-[0.625rem] text-faint">
               ⌘K
             </kbd>
           </button>

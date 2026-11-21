@@ -62,12 +62,12 @@ export function Contact() {
     <section
       id="contact"
       aria-labelledby="contact-title"
-      className="scroll-mt-24 border-t border-line py-24 sm:py-28"
+      className="scroll-mt-24 border-t border-hairline py-24 sm:py-28"
     >
       <div className="shell">
         <SectionHeading
           index="06"
-          eyebrow="Contact"
+          label="Contact"
           title={<span id="contact-title">Hiring for an AI or backend internship?</span>}
           lede="I reply to every message that is actually about work. The fastest route is email — the form below ends up in the same inbox."
         />
@@ -75,24 +75,24 @@ export function Contact() {
         <div className="grid gap-5 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-8">
           {/* ── Direct routes ────────────────────────────────────────────── */}
           <Reveal>
-            <div className="card flex h-full flex-col p-6 sm:p-7">
+            <div className="panel flex h-full flex-col p-6 sm:p-7">
               <StatusBadge label={profile.availability} className="self-start" />
 
               <p className="mt-6 text-[0.9375rem] leading-relaxed text-muted">{profile.summary}</p>
 
               <div className="mt-7">
-                <p className="eyebrow">Email</p>
+                <p className="label">Email</p>
                 <div className="mt-2 flex flex-wrap items-center gap-2">
                   <a
                     href={`mailto:${profile.email}`}
-                    className="link-underline break-all font-mono text-sm text-ink"
+                    className="link-underline break-all font-mono text-sm text-text"
                   >
                     {profile.email}
                   </a>
                   <button
                     type="button"
                     onClick={() => void copy(profile.email, 'Email copied')}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-line px-2.5 py-1 font-mono text-[0.625rem] uppercase tracking-[0.1em] text-muted transition-colors hover:border-accent/50 hover:text-accent"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-hairline px-2.5 py-1 font-mono text-[0.625rem] uppercase tracking-[0.1em] text-muted transition-colors hover:border-strong hover:text-text"
                   >
                     <CopyIcon className="h-3.5 w-3.5" />
                     Copy
@@ -100,7 +100,7 @@ export function Contact() {
                 </div>
               </div>
 
-              <ul className="mt-7 grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2">
+              <ul className="mt-7 grid gap-px overflow-hidden rounded-xl border border-hairline bg-[var(--border)] sm:grid-cols-2">
                 {profile.socials
                   .filter((social) => social.icon !== 'mail')
                   .map((social) => {
@@ -113,14 +113,14 @@ export function Contact() {
                           rel="noreferrer noopener"
                           className="group flex items-center gap-3 p-4 transition-colors hover:bg-elevated"
                         >
-                          <Icon className="h-4 w-4 shrink-0 text-muted transition-colors group-hover:text-accent" />
+                          <Icon className="h-4 w-4 shrink-0 text-muted transition-colors group-hover:text-text" />
                           <span className="min-w-0 flex-1">
-                            <span className="block text-sm text-ink">{social.label}</span>
+                            <span className="block text-sm text-text">{social.label}</span>
                             <span className="block truncate font-mono text-[0.6875rem] text-faint">
                               {social.handle}
                             </span>
                           </span>
-                          <ArrowUpRightIcon className="h-3.5 w-3.5 shrink-0 text-faint transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent" />
+                          <ArrowUpRightIcon className="h-3.5 w-3.5 shrink-0 text-faint transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-text" />
                         </a>
                       </li>
                     );
@@ -138,8 +138,8 @@ export function Contact() {
 
           {/* ── Form ─────────────────────────────────────────────────────── */}
           <Reveal index={1}>
-            <form onSubmit={onSubmit} className="card flex h-full flex-col p-6 sm:p-7" noValidate={false}>
-              <p className="eyebrow">Send a message</p>
+            <form onSubmit={onSubmit} className="panel flex h-full flex-col p-6 sm:p-7" noValidate={false}>
+              <p className="label">Send a message</p>
 
               <div className="mt-5 grid gap-4 sm:grid-cols-2">
                 <div>
@@ -152,7 +152,7 @@ export function Contact() {
                     type="text"
                     required
                     autoComplete="name"
-                    className="mt-1.5 w-full rounded-lg border border-line bg-elevated px-3.5 py-2.5 text-sm text-ink outline-none transition-colors placeholder:text-faint focus:border-accent/60"
+                    className="mt-1.5 w-full rounded-lg border border-hairline bg-elevated px-3.5 py-2.5 text-sm text-text outline-none transition-colors placeholder:text-faint focus:border-strong"
                     placeholder="Alex Rivera"
                   />
                 </div>
@@ -167,7 +167,7 @@ export function Contact() {
                     type="email"
                     required
                     autoComplete="email"
-                    className="mt-1.5 w-full rounded-lg border border-line bg-elevated px-3.5 py-2.5 text-sm text-ink outline-none transition-colors placeholder:text-faint focus:border-accent/60"
+                    className="mt-1.5 w-full rounded-lg border border-hairline bg-elevated px-3.5 py-2.5 text-sm text-text outline-none transition-colors placeholder:text-faint focus:border-strong"
                     placeholder="alex@company.com"
                   />
                 </div>
@@ -182,7 +182,7 @@ export function Contact() {
                   name="message"
                   required
                   rows={6}
-                  className="mt-1.5 w-full resize-y rounded-lg border border-line bg-elevated px-3.5 py-2.5 text-sm leading-relaxed text-ink outline-none transition-colors placeholder:text-faint focus:border-accent/60"
+                  className="mt-1.5 w-full resize-y rounded-lg border border-hairline bg-elevated px-3.5 py-2.5 text-sm leading-relaxed text-text outline-none transition-colors placeholder:text-faint focus:border-strong"
                   placeholder="What are you building, and what would I be working on?"
                 />
               </div>

@@ -22,15 +22,15 @@ export function Projects() {
       <div className="shell">
         <SectionHeading
           index="01"
-          eyebrow="Selected work"
+          label="Selected work"
           title={<span id="work-title">Things I built that are running right now.</span>}
-          lede="Four projects, three of them live in production. Each card links to a case study with the architecture, what was hard, and what I would do next."
+          lede="Four projects, three of them live in production. Each panel links to a case study with the architecture, what was hard, and what I would do next."
           aside={
             <a
               href={`https://github.com/${GITHUB_USERNAME}?tab=repositories`}
               target="_blank"
               rel="noreferrer noopener"
-              className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-muted transition-colors hover:text-accent"
+              className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-muted transition-colors hover:text-text"
             >
               <GitHubIcon className="h-4 w-4" />
               All repositories
@@ -60,12 +60,12 @@ export function Projects() {
         <div className="mt-16">
           <Reveal>
             <div className="flex items-baseline gap-3">
-              <h3 className="eyebrow">Also on the shelf</h3>
-              <span className="h-px flex-1 bg-line" aria-hidden />
+              <h3 className="label">Also on the shelf</h3>
+              <span className="h-px flex-1 bg-[var(--border)]" aria-hidden />
             </div>
           </Reveal>
 
-          <ul className="mt-6 grid gap-px overflow-hidden rounded-card border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-6 grid gap-px overflow-hidden rounded-panel border border-hairline bg-[var(--border)] sm:grid-cols-2 lg:grid-cols-3">
             {sideProjects.map((item, index) => (
               <Reveal as="li" key={item.name} index={index} className="group bg-surface">
                 <a
@@ -75,16 +75,16 @@ export function Projects() {
                   className="flex h-full flex-col p-5 transition-colors hover:bg-elevated"
                 >
                   <div className="flex items-start justify-between gap-3">
-                    <h4 className="font-display text-base transition-colors group-hover:text-accent">
+                    <h4 className=" text-base transition-colors group-hover:text-text">
                       {item.name}
                     </h4>
-                    <ArrowUpRightIcon className="h-4 w-4 shrink-0 text-faint transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent" />
+                    <ArrowUpRightIcon className="h-4 w-4 shrink-0 text-faint transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-text" />
                   </div>
 
                   <p className="mt-2 flex-1 text-[0.875rem] leading-relaxed text-muted">{item.blurb}</p>
 
                   {item.metric && (
-                    <p className="mt-3 font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-accent">
+                    <p className="mt-3 font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-text">
                       {item.metric}
                     </p>
                   )}

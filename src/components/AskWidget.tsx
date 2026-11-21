@@ -62,11 +62,11 @@ export function AskWidget() {
       <button
         type="button"
         onClick={() => setOpen((current) => !current)}
-        className="fixed bottom-5 right-5 z-[65] inline-flex items-center gap-2 rounded-full border border-accent/40 bg-surface/95 py-2.5 pl-3.5 pr-4 text-sm text-ink shadow-lift backdrop-blur transition-colors hover:border-accent hover:bg-elevated sm:bottom-6 sm:right-6"
+        className="fixed bottom-5 right-5 z-[65] inline-flex items-center gap-2 rounded-full border border-strong bg-surface py-2.5 pl-3.5 pr-4 text-sm text-text shadow-lift backdrop-blur transition-colors hover:border-strong hover:bg-elevated sm:bottom-6 sm:right-6"
         aria-expanded={open}
         aria-controls="ask-panel"
       >
-        {open ? <CloseIcon className="h-4 w-4 text-accent" /> : <ChatIcon className="h-4 w-4 text-accent" />}
+        {open ? <CloseIcon className="h-4 w-4 text-text" /> : <ChatIcon className="h-4 w-4 text-text" />}
         <span className="hidden sm:inline">{open ? 'Close' : 'Ask about Pulkit'}</span>
         <span className="sm:hidden">{open ? 'Close' : 'Ask'}</span>
       </button>
@@ -78,15 +78,15 @@ export function AskWidget() {
             id="ask-panel"
             role="dialog"
             aria-label="Ask about Pulkit"
-            className="fixed bottom-20 right-4 z-[66] flex max-h-[min(30rem,70vh)] w-[min(24rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border border-line bg-surface/97 shadow-lift backdrop-blur-xl sm:bottom-[4.75rem] sm:right-6"
+            className="fixed bottom-20 right-4 z-[66] flex max-h-[min(30rem,70vh)] w-[min(24rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border border-hairline bg-surface shadow-lift backdrop-blur-xl sm:bottom-[4.75rem] sm:right-6"
             initial={reduced ? undefined : { opacity: 0, y: 12, scale: 0.98 }}
             animate={reduced ? undefined : { opacity: 1, y: 0, scale: 1 }}
             exit={reduced ? undefined : { opacity: 0, y: 8, scale: 0.99 }}
             transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
           >
-            <header className="flex shrink-0 items-center gap-2.5 border-b border-line px-4 py-3">
-              <SparkIcon className="h-4 w-4 text-accent" />
-              <p className="flex-1 font-display text-sm">Ask about Pulkit</p>
+            <header className="flex shrink-0 items-center gap-2.5 border-b border-hairline px-4 py-3">
+              <SparkIcon className="h-4 w-4 text-text" />
+              <p className="flex-1 text-sm">Ask about Pulkit</p>
               <span className="font-mono text-[0.5625rem] uppercase tracking-[0.12em] text-faint">
                 offline · no API
               </span>
@@ -102,8 +102,8 @@ export function AskWidget() {
                   <div
                     className={
                       message.from === 'visitor'
-                        ? 'ml-auto max-w-[85%] rounded-2xl rounded-br-sm border border-accent/40 bg-accent/[0.08] px-3.5 py-2.5 text-[0.8125rem] leading-relaxed text-ink'
-                        : 'max-w-[92%] rounded-2xl rounded-bl-sm border border-line bg-elevated px-3.5 py-2.5 text-[0.8125rem] leading-relaxed text-ink/85'
+                        ? 'ml-auto max-w-[85%] rounded-2xl rounded-br-sm border border-strong bg-text/[0.08] px-3.5 py-2.5 text-[0.8125rem] leading-relaxed text-text'
+                        : 'max-w-[92%] rounded-2xl rounded-bl-sm border border-hairline bg-elevated px-3.5 py-2.5 text-[0.8125rem] leading-relaxed text-text/85'
                     }
                   >
                     {message.text}
@@ -116,7 +116,7 @@ export function AskWidget() {
                           <button
                             type="button"
                             onClick={() => send(question)}
-                            className="rounded-full border border-line px-2.5 py-1 text-left text-[0.6875rem] text-muted transition-colors hover:border-accent/50 hover:text-accent"
+                            className="rounded-full border border-hairline px-2.5 py-1 text-left text-[0.6875rem] text-muted transition-colors hover:border-strong hover:text-text"
                           >
                             {question}
                           </button>
@@ -129,7 +129,7 @@ export function AskWidget() {
             </div>
 
             <form
-              className="flex shrink-0 items-center gap-2 border-t border-line p-3"
+              className="flex shrink-0 items-center gap-2 border-t border-hairline p-3"
               onSubmit={(event) => {
                 event.preventDefault();
                 send(value);
@@ -145,18 +145,18 @@ export function AskWidget() {
                 onChange={(event) => setValue(event.target.value)}
                 placeholder="What has he built?"
                 autoComplete="off"
-                className="min-w-0 flex-1 rounded-full border border-line bg-elevated px-3.5 py-2 text-[0.8125rem] text-ink outline-none transition-colors placeholder:text-faint focus:border-accent/60"
+                className="min-w-0 flex-1 rounded-full border border-hairline bg-elevated px-3.5 py-2 text-[0.8125rem] text-text outline-none transition-colors placeholder:text-faint focus:border-strong"
               />
               <button
                 type="submit"
-                className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent text-accent-ink transition-[filter] hover:brightness-110"
+                className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-text text-bg transition-[filter] hover:brightness-110"
                 aria-label="Send question"
               >
                 <SendIcon className="h-4 w-4" />
               </button>
             </form>
 
-            <p className="shrink-0 border-t border-line px-4 py-2 font-mono text-[0.5625rem] leading-relaxed text-faint">
+            <p className="shrink-0 border-t border-hairline px-4 py-2 font-mono text-[0.5625rem] leading-relaxed text-faint">
               Answers are matched against this page&rsquo;s data, not generated. For anything it cannot
               answer, email {profile.email}.
             </p>

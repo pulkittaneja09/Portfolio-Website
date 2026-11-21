@@ -5,52 +5,67 @@
 @tailwind utilities;
 
 /* ───────────────────────────────────────────────────────────────────────────
-   Design tokens. Dark is the default; `.light` on <html> swaps the palette.
-   Channel triplets (no rgb()) so Tailwind can apply its own alpha values.
+   Quiet Futurism tokens.
+
+   The palette is monochrome on purpose: depth, light, type and motion carry
+   the futuristic feel, not hue. `--accent` is a soft silver meant for under
+   5% of the surface area — a hairline, a dot, a single emphasised word.
+
+   Solid colours are stored as space-separated channels so Tailwind can apply
+   its own alpha (`text-muted/70`). The translucent tokens are full colour
+   values, because their alpha is part of the definition.
    ─────────────────────────────────────────────────────────────────────────── */
 @layer base {
   :root {
-    --bg: 10 11 10;
-    --surface: 17 19 17;
-    --elevated: 25 28 25;
-    --line: 40 44 40;
-    --ink: 237 241 236;
-    --muted: 152 160 152;
-    --faint: 134 142 134;
-    --accent: 200 255 46;
-    --accent-ink: 10 11 10;
+    --bg: 10 10 11;
+    --bg-elevated: 17 17 19;
+    --text: 237 237 237;
+    --text-muted: 138 138 143;
+    --text-faint: 85 85 90;
+    --accent: 201 206 214;
 
-    --shell-x: clamp(1.25rem, 5vw, 4.5rem);
-    --nav-h: 4rem;
+    --surface: rgba(255, 255, 255, 0.03);
+    --border: rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(255, 255, 255, 0.16);
+
+    /* Light that sits on top of the page: spotlights, grain, grid. */
+    --light: 255 255 255;
+    --grid-line: rgba(255, 255, 255, 0.045);
+    --grain-opacity: 0.025;
+
+    --shell-x: clamp(1.25rem, 5vw, 3rem);
+    --nav-h: 3.75rem;
 
     color-scheme: dark;
   }
 
   html.light {
-    --bg: 250 250 247;
-    --surface: 255 255 255;
-    --elevated: 243 244 238;
-    --line: 221 224 213;
-    --ink: 17 19 17;
-    --muted: 85 91 85;
-    --faint: 101 107 101;
-    /* Electric lime is unreadable on white, so light mode uses a deepened
-       lime that still clears AA for text and borders. */
-    --accent: 77 124 15;
-    --accent-ink: 255 255 255;
+    --bg: 250 250 249;
+    --bg-elevated: 255 255 255;
+    --text: 17 17 17;
+    --text-muted: 104 104 110;
+    --text-faint: 150 150 156;
+    --accent: 84 90 99;
+
+    --surface: rgba(0, 0, 0, 0.02);
+    --border: rgba(0, 0, 0, 0.08);
+    --border-hover: rgba(0, 0, 0, 0.16);
+
+    --light: 0 0 0;
+    --grid-line: rgba(0, 0, 0, 0.045);
+    --grain-opacity: 0.018;
 
     color-scheme: light;
   }
 
   html {
     -webkit-text-size-adjust: 100%;
-    scroll-behavior: smooth;
-    scroll-padding-top: calc(var(--nav-h) + 1.5rem);
+    scroll-padding-top: calc(var(--nav-h) + 2rem);
   }
 
   body {
-    @apply bg-bg font-sans text-ink antialiased;
-    font-feature-settings: 'cv11', 'ss01';
+    @apply bg-bg font-sans text-text antialiased;
+    font-synthesis-weight: none;
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
   }
@@ -59,7 +74,9 @@
   h2,
   h3,
   h4 {
-    @apply font-display font-medium text-ink;
+    @apply font-sans text-text;
+    font-weight: 500;
+    letter-spacing: -0.025em;
     text-wrap: balance;
   }
 
@@ -68,15 +85,15 @@
   }
 
   ::selection {
-    background-color: rgb(var(--accent) / 0.85);
-    color: rgb(var(--accent-ink));
+    background-color: rgb(var(--text) / 0.16);
+    color: rgb(var(--text));
   }
 
-  /* One visible focus treatment everywhere, keyboard-only. */
+  /* One focus treatment everywhere, keyboard-only. */
   :focus-visible {
-    outline: 2px solid rgb(var(--accent));
+    outline: 1px solid rgb(var(--accent) / 0.9);
     outline-offset: 3px;
-    border-radius: 4px;
+    border-radius: 3px;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -97,43 +114,194 @@
 @layer components {
   .shell {
     width: 100%;
-    max-width: 78rem;
+    max-width: 75rem; /* 1200px */
     margin-inline: auto;
     padding-inline: var(--shell-x);
   }
 
-  /* Faint engineering-grid backdrop. Sits behind content, never captures input. */
-  .grid-backdrop {
-    background-image:
-      linear-gradient(to right, rgb(var(--line) / 0.55) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(var(--line) / 0.55) 1px, transparent 1px);
-    background-size: 72px 72px;
-    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 20%, transparent 78%);
+  /* Generous vertical rhythm: 88px mobile up to 160px on a wide screen. */
+  .section-y {
+    padding-block: 5.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .section-y {
+      padding-block: 7.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .section-y {
+      padding-block: 10rem;
+    }
+  }
+
+  /* ── Surfaces ──────────────────────────────────────────────────────────── */
+  .panel {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 0.875rem;
+  }
+
+  .glass {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
   }
 
   .hairline {
-    @apply border border-line;
+    border: 1px solid var(--border);
   }
 
-  .card {
-    @apply relative overflow-hidden rounded-card border border-line bg-surface;
+  .rule {
+    height: 1px;
+    width: 100%;
+    background: var(--border);
+  }
+
+  /* ── Type ──────────────────────────────────────────────────────────────── */
+  .label {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 0.6875rem;
+    line-height: 1.2;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgb(var(--text-muted));
+    font-weight: 400;
+  }
+
+  .meta {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    color: rgb(var(--text-faint));
+  }
+
+  .prose-body {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: rgb(var(--text-muted));
+    max-width: 60ch;
+  }
+
+  @media (min-width: 768px) {
+    .prose-body {
+      font-size: 1.0625rem;
+    }
   }
 
   .chip {
-    @apply inline-flex items-center gap-1.5 rounded-full border border-line bg-elevated px-2.5 py-1 font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-muted;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    border: 1px solid var(--border);
+    border-radius: 0.375rem;
+    padding: 0.1875rem 0.5rem;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.02em;
+    color: rgb(var(--text-muted));
+    white-space: nowrap;
   }
 
-  .eyebrow {
-    @apply font-mono text-[0.6875rem] uppercase tracking-[0.22em] text-faint;
+  /* ── Backdrop ──────────────────────────────────────────────────────────── */
+  /* Dot matrix that dissolves toward the edges. */
+  .dot-matrix {
+    background-image: radial-gradient(circle at 1px 1px, var(--grid-line) 1px, transparent 0);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 35%, #000 10%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 35%, #000 10%, transparent 75%);
   }
 
+  .grid-lines {
+    background-image:
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 5%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 5%, transparent 80%);
+  }
+
+  /* ── Spotlight panel ───────────────────────────────────────────────────────
+     Two stacked radial gradients driven by --mx/--my (written by the
+     Spotlight component in a rAF, never through React state):
+       ::before  the light pool inside the card, ~6% white
+       ::after   the same gradient used as a border mask, so the 1px edge
+                 brightens near the cursor rather than the whole outline
+                 switching on at once. */
+  .spotlight {
+    isolation: isolate;
+    transition:
+      border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .spotlight::before,
+  .spotlight::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
+
+  .spotlight::before {
+    z-index: 0;
+    background: radial-gradient(
+      var(--spot-r, 340px) circle at var(--mx, 50%) var(--my, 50%),
+      rgb(var(--light) / 0.06),
+      transparent 70%
+    );
+  }
+
+  .spotlight::after {
+    z-index: 1;
+    padding: 1px;
+    background: radial-gradient(
+      calc(var(--spot-r, 340px) * 0.7) circle at var(--mx, 50%) var(--my, 50%),
+      rgb(var(--light) / 0.5),
+      transparent 65%
+    );
+    /* Mask to the 1px ring only. */
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+
+  .spotlight[data-spotlight='on']::before,
+  .spotlight[data-spotlight='on']::after {
+    opacity: 1;
+  }
+
+  /* Content sits above both light layers. */
+  .spotlight > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .spotlight::before,
+    .spotlight::after {
+      display: none;
+    }
+  }
+
+  /* ── Links ─────────────────────────────────────────────────────────────── */
   .link-underline {
-    @apply relative inline-block;
-    background-image: linear-gradient(rgb(var(--accent)), rgb(var(--accent)));
+    background-image: linear-gradient(rgb(var(--text)), rgb(var(--text)));
     background-size: 0% 1px;
     background-position: 0 100%;
     background-repeat: no-repeat;
-    transition: background-size 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: background-size 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .link-underline:hover,
@@ -141,15 +309,34 @@
     background-size: 100% 1px;
   }
 
+  /* ── Command palette (cmdk) ────────────────────────────────────────────── */
+  .cmd-group [cmdk-group-heading] {
+    @apply px-3 pb-1.5 pt-3;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 0.625rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgb(var(--text-faint));
+  }
+
+  .cmd-item {
+    @apply flex cursor-pointer select-none items-center gap-3 rounded-lg px-3 py-2.5 text-sm;
+    color: rgb(var(--text-muted));
+    transition: background-color 0.18s ease;
+  }
+
+  .cmd-item[data-selected='true'] {
+    background: rgb(var(--light) / 0.06);
+    color: rgb(var(--text));
+  }
+
   /* ── Hero entrance ───────────────────────────────────────────────────────
-     Deliberately CSS, and deliberately transform-only. A framer-motion fade
-     holds the element at opacity 0 until React has hydrated, which pushed
-     Largest Contentful Paint out by three seconds on a throttled phone. This
-     starts at first paint and never hides the text, so the LCP element is
-     painted as soon as it exists. */
+     CSS, and transform-only. A JS-driven fade holds its element at opacity 0
+     until React hydrates, and the hero copy contains the LCP element, so the
+     paint has to happen on the first frame. */
   @keyframes hero-rise {
     from {
-      transform: translate3d(0, 14px, 0);
+      transform: translate3d(0, 16px, 0);
     }
     to {
       transform: none;
@@ -157,20 +344,13 @@
   }
 
   .hero-rise {
-    animation: hero-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: hero-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
     will-change: transform;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .hero-rise {
-      animation: none;
-    }
-  }
-
-  /* Name words slide up out of their mask. Transform only, same reason. */
   @keyframes hero-word {
     from {
-      transform: translate3d(0, 102%, 0);
+      transform: translate3d(0, 104%, 0);
     }
     to {
       transform: none;
@@ -178,45 +358,58 @@
   }
 
   .hero-word {
-    animation: hero-word 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: hero-word 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
     will-change: transform;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .hero-word {
-      animation: none;
+  /* Blur-to-sharp, for headings below the fold. */
+  @keyframes sharpen {
+    from {
+      opacity: 0;
+      filter: blur(8px);
+      transform: translate3d(0, 10px, 0);
+    }
+    to {
+      opacity: 1;
+      filter: blur(0);
+      transform: none;
     }
   }
 
-  /* ── Command palette (cmdk) ───────────────────────────────────────────── */
-  .cmd-group [cmdk-group-heading] {
-    @apply px-3 pb-1.5 pt-3 font-mono text-[0.625rem] uppercase tracking-[0.18em] text-faint;
+  .sharpen {
+    animation: sharpen 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
-  .cmd-item {
-    @apply flex cursor-pointer select-none items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-muted;
+  @media (prefers-reduced-motion: reduce) {
+    .hero-rise,
+    .hero-word,
+    .sharpen {
+      animation: none;
+      opacity: 1;
+      filter: none;
+      transform: none;
+    }
   }
 
-  .cmd-item[data-selected='true'] {
-    @apply bg-accent/[0.1] text-ink;
-    box-shadow: inset 2px 0 0 0 rgb(var(--accent));
+  /* Soft white pulse for the availability dot. Opacity only — no glow. */
+  @keyframes soft-pulse {
+    0%,
+    100% {
+      opacity: 0.95;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.3;
+      transform: scale(0.82);
+    }
   }
 
-  .cmd-item[data-selected='true'] svg {
-    @apply text-accent;
-  }
-
-  /* Thin accent rule used to open sections. */
-  .rule {
-    @apply h-px w-full bg-gradient-to-r from-accent/60 via-line to-transparent;
+  .soft-pulse {
+    animation: soft-pulse 2.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
@@ -226,8 +419,9 @@
     scrollbar-width: none;
   }
 
-  /* Edge-fade for horizontally scrolling strips. */
-  .fade-x {
-    mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+  /* Monochrome fade, for the bottom of a scrollable area. */
+  .fade-b {
+    mask-image: linear-gradient(to bottom, #000 70%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent);
   }
 }

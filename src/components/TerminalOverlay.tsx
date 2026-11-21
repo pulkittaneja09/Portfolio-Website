@@ -21,11 +21,11 @@ interface Block {
 }
 
 const toneClass: Record<NonNullable<Line['tone']>, string> = {
-  default: 'text-ink/90',
-  accent: 'text-accent',
+  default: 'text-text/90',
+  accent: 'text-text',
   muted: 'text-muted',
   error: 'text-red-400',
-  heading: 'text-ink font-semibold',
+  heading: 'text-text font-semibold',
 };
 
 /**
@@ -177,7 +177,7 @@ export function TerminalOverlay({ open, onClose }: Props) {
           />
 
           <m.div
-            className="relative flex h-full max-h-[min(42rem,88vh)] w-full max-w-3xl flex-col overflow-hidden rounded-xl border border-line bg-[rgb(var(--surface))] shadow-lift"
+            className="relative flex h-full max-h-[min(42rem,88vh)] w-full max-w-3xl flex-col overflow-hidden rounded-xl border border-hairline bg-[var(--surface)] shadow-lift"
             initial={reduced ? undefined : { opacity: 0, y: 16, scale: 0.985 }}
             animate={reduced ? undefined : { opacity: 1, y: 0, scale: 1 }}
             exit={reduced ? undefined : { opacity: 0, y: 10, scale: 0.99 }}
@@ -185,17 +185,17 @@ export function TerminalOverlay({ open, onClose }: Props) {
             onClick={() => inputRef.current?.focus()}
           >
             {/* Title bar */}
-            <div className="flex shrink-0 items-center gap-3 border-b border-line bg-elevated px-4 py-2.5">
+            <div className="flex shrink-0 items-center gap-3 border-b border-hairline bg-elevated px-4 py-2.5">
               <span className="flex gap-1.5" aria-hidden>
                 <span className="h-2.5 w-2.5 rounded-full bg-red-500/70" />
                 <span className="h-2.5 w-2.5 rounded-full bg-amber-400/70" />
-                <span className="h-2.5 w-2.5 rounded-full bg-accent/70" />
+                <span className="h-2.5 w-2.5 rounded-full bg-light/[0.06]" />
               </span>
               <p className="flex-1 truncate font-mono text-xs text-faint">pulkit@portfolio — ~/about</p>
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded p-1 text-faint transition-colors hover:text-ink"
+                className="rounded p-1 text-faint transition-colors hover:text-text"
                 aria-label="Close terminal"
               >
                 <CloseIcon className="h-4 w-4" />
@@ -210,8 +210,8 @@ export function TerminalOverlay({ open, onClose }: Props) {
               {blocks.map((block) => (
                 <div key={block.id} className="mb-3 last:mb-0">
                   {block.input !== undefined && (
-                    <p className="flex gap-2 text-ink">
-                      <span className="shrink-0 text-accent" aria-hidden>
+                    <p className="flex gap-2 text-text">
+                      <span className="shrink-0 text-text" aria-hidden>
                         ❯
                       </span>
                       <span className="break-all">{block.input}</span>
@@ -226,7 +226,7 @@ export function TerminalOverlay({ open, onClose }: Props) {
                           rel="noreferrer noopener"
                           className={cn(
                             toneClass[line.tone ?? 'default'],
-                            'underline decoration-dotted underline-offset-4 hover:text-accent',
+                            'underline decoration-dotted underline-offset-4 hover:text-text',
                           )}
                         >
                           {line.text}
@@ -247,7 +247,7 @@ export function TerminalOverlay({ open, onClose }: Props) {
 
               {/* Prompt */}
               <div className="flex items-center gap-2">
-                <span className="shrink-0 text-accent" aria-hidden>
+                <span className="shrink-0 text-text" aria-hidden>
                   ❯
                 </span>
                 <div className="relative flex-1">
@@ -256,7 +256,7 @@ export function TerminalOverlay({ open, onClose }: Props) {
                     value={value}
                     onChange={(event) => setValue(event.target.value)}
                     onKeyDown={onKeyDown}
-                    className="w-full bg-transparent font-mono text-[0.8125rem] text-ink caret-accent outline-none"
+                    className="w-full bg-transparent font-mono text-[0.8125rem] text-text caret-text outline-none"
                     placeholder="help"
                     aria-label="Terminal input"
                     autoComplete="off"
@@ -277,7 +277,7 @@ export function TerminalOverlay({ open, onClose }: Props) {
             </div>
 
             {/* Hint bar */}
-            <div className="shrink-0 border-t border-line bg-elevated px-4 py-2 font-mono text-[0.625rem] text-faint">
+            <div className="shrink-0 border-t border-hairline bg-elevated px-4 py-2 font-mono text-[0.625rem] text-faint">
               <span className="hidden sm:inline">tab completes · ↑↓ history · ctrl+l clears · </span>
               esc closes
             </div>

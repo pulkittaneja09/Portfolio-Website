@@ -4,7 +4,7 @@ import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 interface RevealProps {
   children: ReactNode;
-  /** Stagger index — each step delays the reveal by 60ms. */
+  /** Stagger index — each step delays the reveal by 70ms. */
   index?: number;
   className?: string;
   as?: 'div' | 'li' | 'section' | 'article';
@@ -12,10 +12,12 @@ interface RevealProps {
 }
 
 /**
- * The single scroll-reveal primitive for the whole site, so timing stays
- * consistent. Collapses to a no-op under `prefers-reduced-motion`.
+ * The single scroll-reveal primitive for the site: blur 8px to 0 and 24px of
+ * travel, on the house easing. One place to change the feel of every entrance.
+ *
+ * Collapses to a plain element under `prefers-reduced-motion`.
  */
-export function Reveal({ children, index = 0, className, as = 'div', y = 18 }: RevealProps) {
+export function Reveal({ children, index = 0, className, as = 'div', y = 24 }: RevealProps) {
   const reduced = useReducedMotion();
   const Component = m[as];
 
@@ -27,12 +29,12 @@ export function Reveal({ children, index = 0, className, as = 'div', y = 18 }: R
   return (
     <Component
       className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '0px 0px -10% 0px' }}
+      initial={{ opacity: 0, y, filter: 'blur(8px)' }}
+      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      viewport={{ once: true, margin: '0px 0px -12% 0px' }}
       transition={{
-        duration: 0.62,
-        delay: Math.min(index, 8) * 0.06,
+        duration: 0.7,
+        delay: Math.min(index, 8) * 0.07,
         ease: [0.16, 1, 0.3, 1],
       }}
     >

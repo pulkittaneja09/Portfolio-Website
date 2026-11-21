@@ -1,9 +1,11 @@
 import { Suspense, lazy, useCallback, useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import { CustomCursor } from '@/components/CustomCursor';
+import { Backdrop } from '@/components/Backdrop';
+import { GrainOverlay } from '@/components/GrainOverlay';
 import { Nav } from '@/components/Nav';
 import { ScrollProgress } from '@/components/ScrollProgress';
 import { useGlobalShortcuts } from '@/hooks/useGlobalShortcuts';
+import { useLenis } from '@/hooks/useLenis';
 import { whenIdle } from '@/lib/idle';
 import { Home } from '@/pages/Home';
 import { NotFound } from '@/pages/NotFound';
@@ -41,6 +43,7 @@ export default function App() {
 
   const close = useCallback(() => setOverlay(null), []);
 
+  useLenis();
   useGlobalShortcuts({ onPalette: openPalette, onTerminal: openTerminal, onEscape: close });
 
   // Warm both chunks once the page is otherwise idle, so the first ⌘K is
@@ -57,11 +60,12 @@ export default function App() {
   return (
     <>
       <ScrollProgress />
-      <CustomCursor />
+      <Backdrop />
+      <GrainOverlay />
 
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:border focus:border-accent focus:bg-surface focus:px-4 focus:py-2 focus:text-sm"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:border focus:border-strong focus:bg-elevated focus:px-4 focus:py-2 focus:text-sm"
       >
         Skip to content
       </a>

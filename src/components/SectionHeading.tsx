@@ -1,11 +1,12 @@
 import type { ReactNode } from 'react';
 import { Reveal } from '@/components/Reveal';
+import { ScrambleText } from '@/components/ScrambleText';
 import { cn } from '@/lib/cn';
 
 interface Props {
-  /** Two-digit index shown in the eyebrow, e.g. "03". */
+  /** Two-digit index shown in the label, e.g. "03". */
   index: string;
-  eyebrow: string;
+  label: string;
   title: ReactNode;
   lede?: ReactNode;
   /** Pulled to the right on wide screens — usually a link or a count. */
@@ -13,22 +14,31 @@ interface Props {
   className?: string;
 }
 
-/** Shared section header so every section opens with the same rhythm. */
-export function SectionHeading({ index, eyebrow, title, lede, aside, className }: Props) {
+/**
+ * Shared section header: "03 — PROJECTS" in mono, a hairline, then a large
+ * quiet heading. String titles resolve with a short text scramble; anything
+ * richer falls back to the blur-to-sharp reveal.
+ */
+export function SectionHeading({ index, label, title, lede, aside, className }: Props) {
   return (
-    <header className={cn('mb-12 sm:mb-16', className)}>
+    <header className={cn('mb-14 sm:mb-20', className)}>
       <Reveal>
-        <div className="flex items-baseline gap-3">
-          <span className="font-mono text-[0.6875rem] tracking-[0.2em] text-accent">{index}</span>
-          <span className="eyebrow">{eyebrow}</span>
-          <span className="h-px flex-1 bg-line" aria-hidden />
+        <div className="flex items-center gap-4">
+          <span className="label whitespace-nowrap">
+            <span className="text-text">{index}</span>
+            <span className="mx-2 text-faint">—</span>
+            {label}
+          </span>
+          <span className="h-px flex-1 bg-[var(--border)]" aria-hidden />
         </div>
       </Reveal>
 
-      <div className="mt-5 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-        <Reveal index={1} className="max-w-2xl">
-          <h2 className="font-display text-display-md">{title}</h2>
-          {lede && <p className="mt-3 max-w-xl text-pretty leading-relaxed text-muted">{lede}</p>}
+      <div className="mt-8 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+        <Reveal index={1} className="max-w-3xl">
+          <h2 className="text-display-lg">
+            {typeof title === 'string' ? <ScrambleText text={title} /> : title}
+          </h2>
+          {lede && <p className="prose-body mt-5">{lede}</p>}
         </Reveal>
 
         {aside && (

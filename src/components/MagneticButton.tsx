@@ -35,9 +35,9 @@ type ButtonProps = BaseProps & {
 
 const variants: Record<Variant, string> = {
   solid:
-    'bg-accent text-accent-ink border-accent hover:brightness-[1.08] font-medium shadow-[0_0_28px_-10px_rgb(var(--accent)/0.7)]',
-  outline: 'border-accent/55 text-ink hover:border-accent hover:bg-accent/[0.07]',
-  ghost: 'border-line text-muted hover:text-ink hover:border-ink/35',
+    'bg-text text-bg border-strong hover:brightness-[1.08] font-medium shadow-[0_0_28px_-10px_rgb(var(--accent)/0.7)]',
+  outline: 'border-strong text-text hover:border-strong hover:bg-text/[0.07]',
+  ghost: 'border-hairline text-muted hover:text-text hover:border-strong',
 };
 
 /**

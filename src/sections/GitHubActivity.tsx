@@ -30,7 +30,7 @@ const LANGUAGE_COLORS: Record<string, string> = {
 };
 
 function colorFor(language: string): string {
-  return LANGUAGE_COLORS[language] ?? 'rgb(var(--faint))';
+  return LANGUAGE_COLORS[language] ?? 'rgb(var(--text-faint))';
 }
 
 function RepoRow({ repo }: { repo: GitHubData['repos'][number] }) {
@@ -43,10 +43,10 @@ function RepoRow({ repo }: { repo: GitHubData['repos'][number] }) {
         className="flex h-full flex-col p-4 sm:p-5"
       >
         <div className="flex items-start justify-between gap-3">
-          <h3 className="truncate font-mono text-sm text-ink transition-colors group-hover:text-accent">
+          <h3 className="truncate font-mono text-sm text-text transition-colors group-hover:text-text">
             {repo.name}
           </h3>
-          <ArrowUpRightIcon className="h-4 w-4 shrink-0 text-faint transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent" />
+          <ArrowUpRightIcon className="h-4 w-4 shrink-0 text-faint transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-text" />
         </div>
 
         <p className="mt-2 line-clamp-2 flex-1 text-[0.8125rem] leading-relaxed text-muted">
@@ -140,12 +140,12 @@ export function GitHubActivity({ state }: Props) {
     <section
       id="github"
       aria-labelledby="github-title"
-      className="scroll-mt-24 border-t border-line py-24 sm:py-28"
+      className="scroll-mt-24 border-t border-hairline py-24 sm:py-28"
     >
       <div className="shell">
         <SectionHeading
           index="05"
-          eyebrow="Activity"
+          label="Activity"
           title={<span id="github-title">Live from GitHub.</span>}
           lede="Pulled from the GitHub API when you load the page, then cached for the session — not a screenshot from six months ago."
           aside={
@@ -153,7 +153,7 @@ export function GitHubActivity({ state }: Props) {
               href={`https://github.com/${GITHUB_USERNAME}`}
               target="_blank"
               rel="noreferrer noopener"
-              className="group inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 font-mono text-xs text-muted transition-colors hover:border-accent/50 hover:text-ink"
+              className="group inline-flex items-center gap-2 rounded-full border border-hairline px-4 py-2 font-mono text-xs text-muted transition-colors hover:border-strong hover:text-text"
             >
               <GitHubIcon className="h-4 w-4" />@{GITHUB_USERNAME}
               <ArrowUpRightIcon className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -163,8 +163,8 @@ export function GitHubActivity({ state }: Props) {
 
         {/* ── Contribution graph ─────────────────────────────────────────── */}
         <Reveal>
-          <div className="card overflow-x-auto p-5 sm:p-6">
-            <p className="eyebrow">Contributions, last year</p>
+          <div className="panel overflow-x-auto p-5 sm:p-6">
+            <p className="label">Contributions, last year</p>
             <img
               // Third-party image service; a failure here must not break the
               // section, so it simply hides itself.
@@ -187,7 +187,7 @@ export function GitHubActivity({ state }: Props) {
         {state.status === 'loading' && (
           <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" aria-busy="true">
             {Array.from({ length: 6 }).map((_, index) => (
-              <div key={index} className="card h-36 animate-pulse bg-elevated/60" />
+              <div key={index} className="panel h-36 animate-pulse bg-elevated/60" />
             ))}
             <p className="sr-only">Loading GitHub activity…</p>
           </div>
@@ -195,8 +195,8 @@ export function GitHubActivity({ state }: Props) {
 
         {(state.status === 'rate-limited' || state.status === 'error') && (
           <Reveal className="mt-5">
-            <div className="card p-6">
-              <p className="font-display text-base">Live repository data is unavailable right now.</p>
+            <div className="panel p-6">
+              <p className=" text-base">Live repository data is unavailable right now.</p>
               <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted">
                 {state.error}{' '}
                 {state.status === 'rate-limited'
@@ -207,7 +207,7 @@ export function GitHubActivity({ state }: Props) {
                 href={`https://github.com/${GITHUB_USERNAME}?tab=repositories`}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="group mt-5 inline-flex items-center gap-2 rounded-full border border-accent/55 px-4 py-2 text-sm transition-colors hover:bg-accent/10"
+                className="group mt-5 inline-flex items-center gap-2 rounded-full border border-strong px-4 py-2 text-sm transition-colors hover:bg-light/[0.06]"
               >
                 Browse the repositories on GitHub
                 <ArrowUpRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -220,14 +220,14 @@ export function GitHubActivity({ state }: Props) {
           <>
             <Reveal className="mt-5">
               <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
-                <div className="card p-5 sm:p-6">
-                  <p className="eyebrow">Profile</p>
+                <div className="panel p-5 sm:p-6">
+                  <p className="label">Profile</p>
                   <dl className="mt-4 grid grid-cols-2 gap-4">
                     <div>
                       <dt className="font-mono text-[0.625rem] uppercase tracking-[0.12em] text-faint">
                         Public repos
                       </dt>
-                      <dd className="mt-1 font-display text-2xl text-accent">
+                      <dd className="mt-1 text-2xl text-text">
                         {state.data.user.public_repos}
                       </dd>
                     </div>
@@ -235,7 +235,7 @@ export function GitHubActivity({ state }: Props) {
                       <dt className="font-mono text-[0.625rem] uppercase tracking-[0.12em] text-faint">
                         Followers
                       </dt>
-                      <dd className="mt-1 font-display text-2xl text-ink">{state.data.user.followers}</dd>
+                      <dd className="mt-1 text-2xl text-text">{state.data.user.followers}</dd>
                     </div>
                     <div className="col-span-2">
                       <dt className="font-mono text-[0.625rem] uppercase tracking-[0.12em] text-faint">
@@ -251,8 +251,8 @@ export function GitHubActivity({ state }: Props) {
                   </dl>
                 </div>
 
-                <div className="card p-5 sm:p-6">
-                  <p className="eyebrow">Languages across {state.data.repos.length} repos</p>
+                <div className="panel p-5 sm:p-6">
+                  <p className="label">Languages across {state.data.repos.length} repos</p>
                   <div className="mt-5">
                     <LanguageBar languages={state.data.languages} />
                   </div>
@@ -261,7 +261,7 @@ export function GitHubActivity({ state }: Props) {
             </Reveal>
 
             <Reveal className="mt-5">
-              <ul className="grid gap-px overflow-hidden rounded-card border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+              <ul className="grid gap-px overflow-hidden rounded-panel border border-hairline bg-[var(--border)] sm:grid-cols-2 lg:grid-cols-3">
                 {topRepos(state.data.repos, 6).map((repo) => (
                   <RepoRow key={repo.id} repo={repo} />
                 ))}

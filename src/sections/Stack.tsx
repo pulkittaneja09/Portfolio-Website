@@ -31,13 +31,13 @@ function Group({ group, index }: { group: SkillGroup; index: number }) {
     <Reveal index={index}>
       <div className="grid gap-5 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-8">
         <div className="lg:pt-1">
-          <h3 className="font-display text-lg">{group.title}</h3>
+          <h3 className=" text-lg">{group.title}</h3>
 
           {/* Fixed height so swapping the caption never shifts the grid. */}
           <div className="mt-1 min-h-[3.5rem] sm:min-h-[4rem]">
             {active ? (
               <p id={captionId} className="text-[0.8125rem] leading-relaxed text-muted" aria-live="polite">
-                <span className="font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-accent">
+                <span className="font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-text">
                   {active.name}
                 </span>
                 <br />
@@ -64,13 +64,13 @@ function Group({ group, index }: { group: SkillGroup; index: number }) {
                 onBlur={() => setActive(null)}
                 onClick={() => setActive((current) => (current === item ? null : item))}
                 aria-describedby={captionId}
-                className="group flex w-full flex-col items-center gap-2.5 rounded-xl border border-line bg-surface px-2 py-4 transition-colors duration-300 hover:border-accent/40 hover:bg-elevated focus-visible:border-accent/40 aria-[current=true]:border-accent/40"
+                className="group flex w-full flex-col items-center gap-2.5 rounded-xl border border-hairline bg-surface px-2 py-4 transition-colors duration-300 hover:border-strong hover:bg-elevated focus-visible:border-strong aria-[current=true]:border-strong"
                 aria-current={active === item}
               >
-                <span className="text-muted transition-colors duration-300 group-hover:text-accent group-aria-[current=true]:text-accent">
+                <span className="text-muted transition-colors duration-300 group-hover:text-text group-aria-[current=true]:text-text">
                   <BrandIcon slug={item.icon} label={item.name} />
                 </span>
-                <span className="text-center text-[0.75rem] leading-tight text-muted transition-colors group-hover:text-ink">
+                <span className="text-center text-[0.75rem] leading-tight text-muted transition-colors group-hover:text-text">
                   {item.name}
                 </span>
                 {/* Always available to assistive tech, not only on hover. */}
@@ -89,12 +89,12 @@ export default function Stack() {
     <section
       id="stack"
       aria-labelledby="stack-title"
-      className="scroll-mt-24 border-t border-line py-24 sm:py-28"
+      className="scroll-mt-24 border-t border-hairline py-24 sm:py-28"
     >
       <div className="shell">
         <SectionHeading
           index="04"
-          eyebrow="Toolkit"
+          label="Toolkit"
           title={<span id="stack-title">What I reach for, and where I have actually used it.</span>}
           lede="Point at any tool and the caption beside it names the projects it shipped in. No percentage bars — a number next to a logo means nothing."
         />
@@ -106,8 +106,8 @@ export default function Stack() {
         </div>
 
         <Reveal index={5} className="mt-12">
-          <div className="flex flex-col gap-3 border-t border-line pt-6 sm:flex-row sm:items-center sm:gap-6">
-            <p className="eyebrow shrink-0">CS fundamentals</p>
+          <div className="flex flex-col gap-3 border-t border-hairline pt-6 sm:flex-row sm:items-center sm:gap-6">
+            <p className="label shrink-0">CS fundamentals</p>
             <ul className="flex flex-wrap gap-1.5">
               {fundamentals.map((item) => (
                 <li key={item} className="chip">

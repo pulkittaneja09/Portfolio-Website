@@ -27,7 +27,7 @@ export function RotatingRoles({ roles, intervalMs = 2600 }: Props) {
 
   return (
     <div className="flex items-center gap-2.5 font-mono text-sm text-muted">
-      <span className="text-accent" aria-hidden>
+      <span className="text-text" aria-hidden>
         ▸
       </span>
       {/* The live region announces each role once for screen readers. */}

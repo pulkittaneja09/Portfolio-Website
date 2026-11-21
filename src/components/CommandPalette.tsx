@@ -81,18 +81,18 @@ export function CommandPalette({ open, onClose, onOpenTerminal }: Props) {
             <Command
               label="Command palette"
               loop
-              className="overflow-hidden rounded-2xl border border-line bg-surface/95 shadow-lift backdrop-blur-xl"
+              className="overflow-hidden rounded-2xl border border-hairline bg-surface shadow-lift backdrop-blur-xl"
             >
-              <div className="flex items-center gap-3 border-b border-line px-4">
-                <span className="font-mono text-sm text-accent" aria-hidden>
+              <div className="flex items-center gap-3 border-b border-hairline px-4">
+                <span className="font-mono text-sm text-text" aria-hidden>
                   ❯
                 </span>
                 <Command.Input
                   autoFocus
                   placeholder="Jump to a section, open a project, copy my email…"
-                  className="h-14 w-full bg-transparent font-sans text-[0.9375rem] text-ink outline-none placeholder:text-faint"
+                  className="h-14 w-full bg-transparent font-sans text-[0.9375rem] text-text outline-none placeholder:text-faint"
                 />
-                <kbd className="hidden shrink-0 rounded border border-line bg-elevated px-1.5 py-0.5 font-mono text-[0.625rem] text-faint sm:block">
+                <kbd className="hidden shrink-0 rounded border border-hairline bg-elevated px-1.5 py-0.5 font-mono text-[0.625rem] text-faint sm:block">
                   esc
                 </kbd>
               </div>
@@ -176,7 +176,7 @@ export function CommandPalette({ open, onClose, onOpenTerminal }: Props) {
                   >
                     <TerminalIcon className="h-4 w-4 text-faint" />
                     Open terminal
-                    <kbd className="ml-auto rounded border border-line bg-elevated px-1.5 py-0.5 font-mono text-[0.625rem] text-faint">
+                    <kbd className="ml-auto rounded border border-hairline bg-elevated px-1.5 py-0.5 font-mono text-[0.625rem] text-faint">
                       `
                     </kbd>
                   </Command.Item>

@@ -8,7 +8,7 @@ import { cn } from '@/lib/cn';
 import { previewSrcSet } from '@/lib/images';
 
 /**
- * Cycles a project's screenshots while the card is hovered — the "looping
+ * Cycles a project's screenshots while the panel is hovered — the "looping
  * preview" without shipping a video file.
  */
 function usePreviewFrames(project: Project, active: boolean): string | null {
@@ -42,7 +42,7 @@ function PreviewPlaceholder({ project }: { project: Project }) {
         className="pointer-events-none absolute inset-0 opacity-[0.35]"
         style={{
           backgroundImage:
-            'linear-gradient(to right, rgb(var(--line)) 1px, transparent 1px), linear-gradient(to bottom, rgb(var(--line)) 1px, transparent 1px)',
+            'linear-gradient(to right, var(--border) 1px, transparent 1px), linear-gradient(to bottom, var(--border) 1px, transparent 1px)',
           backgroundSize: '28px 28px',
         }}
         aria-hidden
@@ -89,8 +89,8 @@ export function ProjectCard({ project, className, variant = 'standard' }: Props)
     <article
       ref={cardRef}
       className={cn(
-        'card group/card flex transition-[transform,border-color,box-shadow] duration-500 ease-out',
-        'hover:border-accent/40 hover:shadow-lift focus-within:border-accent/40',
+        'panel group/card flex transition-[transform,border-color,box-shadow] duration-500 ease-quiet',
+        'hover:border-strong hover:shadow-lift focus-within:border-strong',
         banner ? 'flex-col lg:flex-row' : 'flex-col',
         className,
       )}
@@ -106,8 +106,8 @@ export function ProjectCard({ project, className, variant = 'standard' }: Props)
         className={cn(
           'relative overflow-hidden bg-elevated',
           banner
-            ? 'aspect-[16/9] border-b border-line lg:aspect-auto lg:w-[38%] lg:shrink-0 lg:border-b-0 lg:border-r'
-            : cn('border-b border-line', lead ? 'aspect-[16/9]' : 'aspect-[16/10]'),
+            ? 'aspect-[16/9] border-b border-hairline lg:aspect-auto lg:w-[38%] lg:shrink-0 lg:border-b-0 lg:border-r'
+            : cn('border-b border-hairline', lead ? 'aspect-[16/9]' : 'aspect-[16/10]'),
         )}
       >
         {frame ? (
@@ -120,7 +120,7 @@ export function ProjectCard({ project, className, variant = 'standard' }: Props)
             height={lead ? 576 : 640}
             loading="lazy"
             decoding="async"
-            className="h-full w-full object-cover object-top transition-transform duration-[900ms] ease-out group-hover/card:scale-[1.035]"
+            className="h-full w-full object-cover object-top transition-transform duration-[900ms] ease-quiet group-hover/card:scale-[1.035]"
           />
         ) : (
           <PreviewPlaceholder project={project} />
@@ -136,7 +136,7 @@ export function ProjectCard({ project, className, variant = 'standard' }: Props)
           aria-hidden
         />
 
-        <span className="absolute left-3 top-3 chip border-accent/40 bg-bg/70 text-accent backdrop-blur">
+        <span className="absolute left-3 top-3 chip border-strong bg-bg/70 text-text backdrop-blur">
           {project.metric.value}
         </span>
       </div>
@@ -145,9 +145,9 @@ export function ProjectCard({ project, className, variant = 'standard' }: Props)
       <div className={cn('flex flex-1 flex-col p-5', (lead || banner) && 'sm:p-6')}>
         <div className="flex items-start justify-between gap-4">
           <h3
-            className={cn('font-display leading-tight', lead || banner ? 'text-xl sm:text-2xl' : 'text-lg')}
+            className={cn(' leading-tight', lead || banner ? 'text-xl sm:text-2xl' : 'text-lg')}
           >
-            {/* The whole card is clickable through this stretched link, while
+            {/* The whole panel is clickable through this stretched link, while
                 the demo and source buttons below stay independently clickable. */}
             <Link
               to={`/projects/${project.slug}`}
@@ -162,10 +162,10 @@ export function ProjectCard({ project, className, variant = 'standard' }: Props)
         <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-muted">{project.problem}</p>
 
         {(lead || banner) && (
-          <p className="mt-3 text-[0.9375rem] leading-relaxed text-ink/70">{project.built}</p>
+          <p className="mt-3 text-[0.9375rem] leading-relaxed text-text/70">{project.built}</p>
         )}
 
-        <p className="mt-3 border-l-2 border-accent/50 pl-3 text-[0.8125rem] leading-relaxed text-ink/70">
+        <p className="mt-3 border-l-2 border-strong pl-3 text-[0.8125rem] leading-relaxed text-text/70">
           <span className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-faint">
             My role ·{' '}
           </span>
@@ -190,9 +190,9 @@ export function ProjectCard({ project, className, variant = 'standard' }: Props)
               href={project.links.demo}
               target="_blank"
               rel="noreferrer noopener"
-              className="inline-flex items-center gap-1.5 rounded-full border border-accent/50 px-3 py-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-ink transition-colors hover:bg-accent/10"
+              className="inline-flex items-center gap-1.5 rounded-full border border-strong px-3 py-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-text transition-colors hover:bg-light/[0.06]"
             >
-              <PlayIcon className="h-3.5 w-3.5 text-accent" />
+              <PlayIcon className="h-3.5 w-3.5 text-text" />
               Live demo
             </a>
           )}
@@ -202,14 +202,14 @@ export function ProjectCard({ project, className, variant = 'standard' }: Props)
               href={project.links.repo}
               target="_blank"
               rel="noreferrer noopener"
-              className="inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-muted transition-colors hover:border-ink/35 hover:text-ink"
+              className="inline-flex items-center gap-1.5 rounded-full border border-hairline px-3 py-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-muted transition-colors hover:border-strong hover:text-text"
             >
               <GitHubIcon className="h-3.5 w-3.5" />
               Code
             </a>
           )}
 
-          <span className="ml-auto inline-flex items-center gap-1 font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-faint transition-colors group-hover/card:text-accent">
+          <span className="ml-auto inline-flex items-center gap-1 font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-faint transition-colors group-hover/card:text-text">
             Case study
             <ArrowUpRightIcon className="h-3.5 w-3.5 transition-transform duration-300 group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5" />
           </span>
