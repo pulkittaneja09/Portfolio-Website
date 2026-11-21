@@ -1,36 +1,87 @@
-# Quiet Futurism redesign — progress
+# Portfolio redesign v3 — split layout, champagne accent, agent-run signature
 
-Resume rule: read this file first, continue from the first unticked task, do not redo finished work.
+Resume rule: read this file first, then continue from the first unticked task in the checklist at the
+bottom. Do not redo finished work. (The previous "Quiet Futurism" redesign log is in git history.)
 
-- [x] 1. Set up design tokens, fonts, background grid/grain, and remove all old styles
-- [x] 2. Navbar + command palette restyle
-- [x] 3. Hero with the grayscale point-cloud sphere
-- [x] 4. Proof bar / stats
-- [x] 5. Projects bento grid with spotlight cards + project detail view
-- [x] 6. Experience timeline
-- [x] 7. Audaxity founder section
-- [x] 8. Tech stack section
-- [x] 9. GitHub activity section
-- [x] 10. Contact section + footer
-- [x] 11. Terminal mode restyle
-- [x] 12. Light mode pass
-- [x] 13. Mobile pass (390px) + reduced-motion pass
-- [x] 14. Playwright screenshots at 1440px and 390px, audit against banned list and references, fix
-- [x] 15. npm run build, fix all warnings, final summary
+## Reference notes
 
-## Notes
-- 1: Monochrome token set (CSS vars + Tailwind), self-hosted Geist/Geist Mono (old Inter/Space Grotesk/JetBrains removed), fixed dot-matrix backdrop + SVG film grain, Lenis, blur reveal, scramble headings, numbered SectionHeading, lime favicon/theme-colour replaced, custom cursor and /design page removed, all legacy tokens migrated.
-- 2: Nav is a floating glass bar (16px blur, --surface, hairline) that condenses on scroll; palette is a glass sheet with blur-in, hairline selected rows, search icon; quiet button variants; programmatic scroll routed through Lenis; nested scrollers marked data-lenis-prevent.
-- 3: Hero rebuilt: 120px Geist name with blur-to-sharp (no opacity, LCP-safe), live IST clock, white-dot pill, facts row; grayscale R3F point sphere lazy-loaded on first interaction, fixed cursor-bend (window pointer tracking), paused offscreen, crossfades from a 2D-canvas static fallback used on mobile/reduced motion.
-- 4: Proof bar is a hairline 6-cell grid: mono index, 40px tabular numerals with muted units, live marker on the GitHub count, label cross-fades to its source on hover.
-- 5: Asymmetric 12-col bento (lead 7x2, two 5-col, full-width banner); Spotlight cards (6% cursor light pool + border ring brightening near cursor, layered at z -1 so stretched links work); mono meta line (year · stack · tag, deduped); metric plates instead of 'screenshot coming'; grayscale screenshots that colour on hover; tilt removed. Case study page restyled; architecture diagram now monochrome.
-- 6: Experience is a changelog timeline: mono date/location rail, hairline row dividers, pulsing white node on the current role, stack as mono metadata; education as a matching panel row.
-- 7: Audaxity is the single raised surface: elevated panel, one soft white top light + lit top hairline, dot matrix, scramble heading, credentials as numbered hairline rows, pipeline as a numbered vertical flow. Lime wash, spark icons and accent frame removed.
-- 8: Stack groups are numbered rows (title + live 'used in' caption on the left), tools in a hairline cell grid with faint grayscale glyphs that light on hover; no % bars.
-- 9: GitHub language colours replaced by a 7-step white-opacity ramp (bar + legend + repo dots); contribution chart forced to a neutral grey ramp (grayscale + invert in dark); lime chart removed; large tabular profile numbers; repo grid on hairlines.
-- 10: Contact leads with the email set large + copy button, social routes as hairline rows, transparent hairline form fields. Footer: 4-column index (numbered nav, socials, ⌘K/` shortcuts), live IST clock, huge wordmark fading to transparent (monochrome gradient).
-- 11: Terminal is a glass sheet with blur-in, hairline window dots (red/amber removed), $ prompt, grey tone scale, errors underlined instead of red; emojis removed from command output ([ok] instead of check marks). Ask widget and toasts moved to the same glass language.
-- 12: Light mode: ambient light pools moved to a --pool token (always white, so no grey smudges on #FAFAF9); elevation shadows tokenised per theme (much lighter in light mode); verified hero, bento, Audaxity, GitHub chart.
-- 13: 390px: verified zero horizontal overflow on home + case studies; hero facts wrap instead of truncating; stack caption no longer reserves height on phones; footer pairs columns 2-up. Reduced motion verified by script: no element left at opacity 0/blurred, no running animations, Lenis off, static 2D sphere only (no three.js).
-- 14: scripts/audit.cjs captures 44 shots (8 sections + palette + terminal + case study, 1440/390, dark/light, GitHub API mocked) to .screenshots/audit; source sweep clean (no hues, glows, emojis, % bars). Fixes: blur-in animations now clear `filter` on settle (it made parents backdrop roots, so glass never blurred); denser glass-strong for overlays; lime og.png and apple-touch-icon regenerated in the monochrome style.
-- 15: Clean `npm run build` (no warnings), `npm run lint` passes at --max-warnings 0, Prettier formatting applied (format:check clean). README design notes updated for the new visual layer.
+Studied live in Chrome via Playwright (1440×900 + 390px), with computed styles pulled from each page.
+
+**brittanychiang.com** — the layout reference
+
+- 1280px container, 96px gutters; the left `<header>` is 48% wide, `sticky top-0 max-h-screen`,
+  `flex-col justify-between` with 96px vertical padding. The right column is 52% and just scrolls. The
+  whole page is only ~3,900px tall, so you can scan it in seconds.
+- Hierarchy comes from two greys, not size: body is slate-400 16/26px, and names, titles and key phrases
+  are slate-200, medium weight. The name is only 48px/700 with -1.2px tracking. Restraint reads as confidence.
+- Rows are a single stretched link (an absolutely positioned span inside the `<a>`). On hover the row
+  gets a soft panel and an inset 1px top highlight, while every _other_ row drops to `opacity-50`
+  (`group-hover/list`). The arrow moves 4px up-right. All transitions are 150ms, so it feels instant.
+- The nav is a 1px line + 12px bold uppercase label, and the line grows 32→64px when active. The page
+  spotlight is a fixed `radial-gradient(600px at x y, rgba(29,78,216,.15), transparent 80%)`, the only
+  "effect" on the page.
+
+**rauno.me** — restraint plus one bold idea
+
+- One big gesture per screen: an oversized, deliberately indented sentence ("is an Estonian / interaction
+  designer…") with a single flat shape behind it. Nothing else competes.
+- Tiny instrument-like details carry the craft: a tick-mark minimap at the top for scroll position, and a
+  crosshair cursor.
+- A single typeface (a custom grotesk) at a handful of sizes. Spacing is exact and generous, with no
+  decoration.
+
+**emilkowal.ski** — calm, intentional micro-detail
+
+- A 692px column, 14–16px type, line-height ~1.65, near-black on warm off-white. Two weights at most.
+- Sections are a plain small label ("Today", "Projects") followed by name + one-line description pairs.
+  There are huge vertical gaps, and no cards, borders or icons.
+- Links are underlined in a soft grey (`rgb(188,187,181)`), so emphasis comes from the underline, not
+  from colour. The craft shows in the interactions rather than in the static layout.
+
+**paco.me** — confidence through minimalism
+
+- Dark `#1A1A1A` and a text-only page. The name is set at 16px, the same size as the body: the work speaks.
+- One italic serif (Newsreader) appears only on the emphasised phrase ("_Crafting interfaces._",
+  "_everything around me is someone's life work_"). That is exactly the personality-without-colour move.
+- Links keep a dim 2.5px-offset underline that brightens on hover (`text-decoration-color .24s`). Lists are
+  laid out in three quiet columns (Building / Projects / Writing) under 14px grey labels, plus a "Now" note.
+
+**leerob.com** — simple, fast, clear writing
+
+- A warm near-black (`#1B1A19`) with warm off-white text (`#E8E5DF`) and a single serif. It feels like
+  paper, not a dashboard.
+- A Bio with a "Default / Long" toggle: one small, useful interaction instead of decoration.
+- Blog rows are title-left, date-right, hairline-separated. The whole page fits in about 1.3 screens.
+
+**What I'm taking from them (not copying)**
+
+1. A short, scannable page: a sticky identity column plus one scrolling column of rows. No stack of
+   identical full-bleed sections.
+2. Two text tones do the hierarchy (`#F2F2F2` vs `#A1A1AA`). Size changes only for the name.
+3. Exactly two memorable details: the live "agent run" trace card and the page-wide champagne
+   spotlight. Everything else is quiet.
+4. Interactions are fast (150–300ms) and specific: dim-the-others list hover, growing nav lines,
+   2px arrow nudges, and underlines drawn from the left.
+5. One italic serif accent word per section for voice, the way Paco uses Newsreader.
+
+## Task notes
+
+- 1: Studied all five sites live (screenshots + computed styles); notes above. Brittany's 48/52 sticky split, 150ms transitions and opacity-50 sibling dimming set the interaction baseline.
+
+## Checklist
+
+- [x] 1. Study the 5 reference sites and write notes
+- [ ] 2. Remove light theme entirely + remove sphere, stack grid, GitHub section, old headings
+- [ ] 3. New tokens, fonts (add Instrument Serif), cursor spotlight
+- [ ] 4. Split layout + sticky left column (name on one line, nav with scroll-spy, socials, clock)
+- [ ] 5. Agent-run signature card
+- [ ] 6. About + Now strip + daily tools line
+- [ ] 7. Experience rows with dim-others hover
+- [ ] 8. Project rows with thumbnails, metrics, dim-others hover, "More" list, GitHub line
+- [ ] 9. Founder card with SVG pipeline
+- [ ] 10. Contact + footer
+- [ ] 11. Restyle command palette, terminal and Ask widget to match (champagne accent, no light-mode entries)
+- [ ] 12. Mobile layout (390px) + reduced-motion pass
+- [ ] 13. Fix/verify the reveal bug: nothing stuck blurred or invisible
+- [ ] 14. Playwright QA at 1440, 1280, 1024 and 390px (one-line name, no theme toggle, no stuck opacity/blur, body contrast ≥ 7:1, not template-like)
+- [ ] 15. npm run build, fix all warnings, final summary
