@@ -1,0 +1,13 @@
+{
+  "name": "Pulkit Taneja — AI Agents & Backend Engineer",
+  "short_name": "Pulkit Taneja",
+  "description": "I build AI agents and the backends that run them.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0b0a",
+  "theme_color": "#0a0b0a",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}
