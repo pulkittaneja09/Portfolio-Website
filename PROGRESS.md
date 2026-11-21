@@ -7,7 +7,7 @@ Resume rule: read this file first, continue from the first unticked task, do not
 - [x] 3. Hero with the grayscale point-cloud sphere
 - [x] 4. Proof bar / stats
 - [x] 5. Projects bento grid with spotlight cards + project detail view
-- [ ] 6. Experience timeline
+- [x] 6. Experience timeline
 - [ ] 7. Audaxity founder section
 - [ ] 8. Tech stack section
 - [ ] 9. GitHub activity section
@@ -24,3 +24,4 @@ Resume rule: read this file first, continue from the first unticked task, do not
 - 3: Hero rebuilt: 120px Geist name with blur-to-sharp (no opacity, LCP-safe), live IST clock, white-dot pill, facts row; grayscale R3F point sphere lazy-loaded on first interaction, fixed cursor-bend (window pointer tracking), paused offscreen, crossfades from a 2D-canvas static fallback used on mobile/reduced motion.
 - 4: Proof bar is a hairline 6-cell grid: mono index, 40px tabular numerals with muted units, live marker on the GitHub count, label cross-fades to its source on hover.
 - 5: Asymmetric 12-col bento (lead 7x2, two 5-col, full-width banner); Spotlight cards (6% cursor light pool + border ring brightening near cursor, layered at z -1 so stretched links work); mono meta line (year · stack · tag, deduped); metric plates instead of 'screenshot coming'; grayscale screenshots that colour on hover; tilt removed. Case study page restyled; architecture diagram now monochrome.
+- 6: Experience is a changelog timeline: mono date/location rail, hairline row dividers, pulsing white node on the current role, stack as mono metadata; education as a matching panel row.
