@@ -9,7 +9,7 @@ Resume rule: read this file first, continue from the first unticked task, do not
 - [x] 5. Projects bento grid with spotlight cards + project detail view
 - [x] 6. Experience timeline
 - [x] 7. Audaxity founder section
-- [ ] 8. Tech stack section
+- [x] 8. Tech stack section
 - [ ] 9. GitHub activity section
 - [ ] 10. Contact section + footer
 - [ ] 11. Terminal mode restyle
@@ -26,3 +26,4 @@ Resume rule: read this file first, continue from the first unticked task, do not
 - 5: Asymmetric 12-col bento (lead 7x2, two 5-col, full-width banner); Spotlight cards (6% cursor light pool + border ring brightening near cursor, layered at z -1 so stretched links work); mono meta line (year · stack · tag, deduped); metric plates instead of 'screenshot coming'; grayscale screenshots that colour on hover; tilt removed. Case study page restyled; architecture diagram now monochrome.
 - 6: Experience is a changelog timeline: mono date/location rail, hairline row dividers, pulsing white node on the current role, stack as mono metadata; education as a matching panel row.
 - 7: Audaxity is the single raised surface: elevated panel, one soft white top light + lit top hairline, dot matrix, scramble heading, credentials as numbered hairline rows, pipeline as a numbered vertical flow. Lime wash, spark icons and accent frame removed.
+- 8: Stack groups are numbered rows (title + live 'used in' caption on the left), tools in a hairline cell grid with faint grayscale glyphs that light on hover; no % bars.
