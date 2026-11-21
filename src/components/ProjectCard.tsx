@@ -1,11 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRightIcon, GitHubIcon, PlayIcon } from '@/components/icons';
+import { Spotlight } from '@/components/Spotlight';
+import { ArrowUpRightIcon, GitHubIcon } from '@/components/icons';
 import type { Project } from '@/data/types';
 import { useIsDesktopPointer } from '@/hooks/useMediaQuery';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { cn } from '@/lib/cn';
 import { previewSrcSet } from '@/lib/images';
+import { projectMeta } from '@/lib/projectMeta';
 
 /**
  * Cycles a project's screenshots while the panel is hovered — the "looping
@@ -28,25 +30,33 @@ function usePreviewFrames(project: Project, active: boolean): string | null {
   return frames[index] ?? null;
 }
 
-/** Placeholder shown for projects that have no screenshot yet. */
-function PreviewPlaceholder({ project }: { project: Project }) {
+/**
+ * For projects without a screenshot: the headline number set as type on a
+ * dot field. A number is a better picture of an ML or backend project than a
+ * stock mock-up would be.
+ */
+function MetricPlate({ project, large }: { project: Project; large: boolean }) {
   return (
-    <div className="grid h-full w-full place-items-center bg-elevated">
-      <div className="relative z-10 px-6 text-center">
-        <p className="font-mono text-[0.625rem] uppercase tracking-[0.2em] text-faint">
-          {project.tags.join(' · ')}
-        </p>
-        <p className="mt-2 font-mono text-[0.6875rem] text-faint/70">Screenshot coming</p>
-      </div>
+    <div className="relative flex h-full w-full flex-col justify-end p-5 sm:p-6">
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.35]"
+        className="pointer-events-none absolute inset-0"
         style={{
-          backgroundImage:
-            'linear-gradient(to right, var(--border) 1px, transparent 1px), linear-gradient(to bottom, var(--border) 1px, transparent 1px)',
-          backgroundSize: '28px 28px',
+          backgroundImage: 'radial-gradient(circle at 1px 1px, var(--grid-line) 1px, transparent 0)',
+          backgroundSize: '16px 16px',
+          maskImage: 'radial-gradient(ellipse 90% 90% at 80% 10%, #000, transparent 70%)',
+          WebkitMaskImage: 'radial-gradient(ellipse 90% 90% at 80% 10%, #000, transparent 70%)',
         }}
         aria-hidden
       />
+      <p
+        className={cn(
+          'relative font-medium leading-none tracking-[-0.04em] text-text',
+          large ? 'text-[2.75rem] sm:text-[3.5rem]' : 'text-[2rem] sm:text-[2.25rem]',
+        )}
+      >
+        {project.metric.value}
+      </p>
+      <p className="meta relative mt-3 uppercase tracking-[0.08em]">{project.metric.label}</p>
     </div>
   );
 }
@@ -56,8 +66,8 @@ interface Props {
   /** Bento placement classes from the parent grid. */
   className?: string;
   /**
-   * `lead` is the tall feature tile, `banner` lays the preview beside the copy
-   * across the full width, `standard` is the regular stacked card.
+   * `lead` is the tall feature tile, `banner` lays the visual beside the copy
+   * across the full width, `standard` is the compact stacked card.
    */
   variant?: 'lead' | 'standard' | 'banner';
 }
@@ -67,133 +77,105 @@ export function ProjectCard({ project, className, variant = 'standard' }: Props)
   const banner = variant === 'banner';
   const [hovered, setHovered] = useState(false);
   const isDesktop = useIsDesktopPointer();
-  const reduced = useReducedMotion();
   const frame = usePreviewFrames(project, hovered && isDesktop);
-  const cardRef = useRef<HTMLElement>(null);
-  const chipLimit = lead || banner ? 8 : 5;
-
-  // Subtle tilt toward the cursor. Transform-only, desktop-only.
-  const onMouseMove = (event: React.MouseEvent) => {
-    if (!isDesktop || reduced || !cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = (event.clientX - rect.left) / rect.width - 0.5;
-    const y = (event.clientY - rect.top) / rect.height - 0.5;
-    cardRef.current.style.transform = `perspective(1100px) rotateX(${-y * 2.4}deg) rotateY(${x * 2.8}deg) translateZ(0)`;
-  };
-
-  const resetTilt = () => {
-    if (cardRef.current) cardRef.current.style.transform = '';
-  };
+  const chipLimit = lead || banner ? 7 : 4;
 
   return (
-    <article
-      ref={cardRef}
+    <Spotlight
+      as="article"
+      radius={lead ? 460 : 340}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       className={cn(
-        'panel group/card flex transition-[transform,border-color,box-shadow] duration-500 ease-quiet',
-        'hover:border-strong hover:shadow-lift focus-within:border-strong',
+        'group/card flex rounded-panel bg-bg transition-[border-color,transform] duration-600 ease-quiet',
+        'hover:border-strong focus-within:border-strong',
         banner ? 'flex-col lg:flex-row' : 'flex-col',
         className,
       )}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => {
-        setHovered(false);
-        resetTilt();
-      }}
-      onMouseMove={onMouseMove}
     >
-      {/* ── Preview ──────────────────────────────────────────────────────── */}
+      {/* ── Visual ───────────────────────────────────────────────────────── */}
       <div
         className={cn(
-          'relative overflow-hidden bg-elevated',
+          'relative overflow-hidden border-hairline bg-elevated',
           banner
-            ? 'aspect-[16/9] border-b border-hairline lg:aspect-auto lg:w-[38%] lg:shrink-0 lg:border-b-0 lg:border-r'
-            : cn('border-b border-hairline', lead ? 'aspect-[16/9]' : 'aspect-[16/10]'),
+            ? 'rounded-t-[calc(0.875rem-1px)] border-b lg:order-2 lg:w-[40%] lg:shrink-0 lg:rounded-none lg:rounded-r-[calc(0.875rem-1px)] lg:border-b-0 lg:border-l'
+            : 'rounded-t-[calc(0.875rem-1px)] border-b',
+          lead ? 'aspect-[16/10]' : banner ? 'min-h-[11rem]' : 'aspect-[16/7]',
         )}
       >
         {frame ? (
-          <img
-            src={frame}
-            srcSet={previewSrcSet(frame)}
-            sizes="(min-width: 1024px) 45vw, (min-width: 640px) 90vw, 100vw"
-            alt={`${project.name} interface`}
-            width={1024}
-            height={lead ? 576 : 640}
-            loading="lazy"
-            decoding="async"
-            className="h-full w-full object-cover object-top transition-transform duration-[900ms] ease-quiet group-hover/card:scale-[1.035]"
-          />
+          <>
+            <img
+              src={frame}
+              srcSet={previewSrcSet(frame)}
+              sizes="(min-width: 1024px) 680px, (min-width: 640px) 90vw, 100vw"
+              alt={`${project.name} interface`}
+              width={1024}
+              height={640}
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-cover object-top grayscale transition-[transform,filter] duration-800 ease-quiet group-hover/card:scale-[1.02] group-hover/card:grayscale-0"
+            />
+            <span className="glass absolute bottom-3 left-3 rounded-md px-2.5 py-1 font-mono text-[0.6875rem] tracking-[0.02em] text-text">
+              {project.metric.value}
+              <span className="ml-2 text-muted">{project.metric.label}</span>
+            </span>
+          </>
         ) : (
-          <PreviewPlaceholder project={project} />
+          <MetricPlate project={project} large={lead || banner} />
         )}
-
-        <div
-          className={cn(
-            'pointer-events-none absolute inset-0 from-surface via-surface/10 to-transparent opacity-80',
-            banner
-              ? 'bg-gradient-to-t lg:bg-gradient-to-r lg:from-transparent lg:to-surface'
-              : 'bg-gradient-to-t',
-          )}
-          aria-hidden
-        />
-
-        <span className="absolute left-3 top-3 chip border-strong bg-bg/70 text-text backdrop-blur">
-          {project.metric.value}
-        </span>
       </div>
 
       {/* ── Body ─────────────────────────────────────────────────────────── */}
-      <div className={cn('flex flex-1 flex-col p-5', (lead || banner) && 'sm:p-6')}>
-        <div className="flex items-start justify-between gap-4">
-          <h3
-            className={cn(' leading-tight', lead || banner ? 'text-xl sm:text-2xl' : 'text-lg')}
-          >
-            {/* The whole panel is clickable through this stretched link, while
-                the demo and source buttons below stay independently clickable. */}
-            <Link
-              to={`/projects/${project.slug}`}
-              className="after:absolute after:inset-0 after:content-[''] focus-visible:outline-none"
-            >
-              {project.name}
-            </Link>
-          </h3>
-          <span className="shrink-0 font-mono text-[0.6875rem] text-faint">{project.year}</span>
-        </div>
+      <div className={cn('flex flex-1 flex-col p-5 sm:p-6', (lead || banner) && 'lg:p-8')}>
+        <p className="label text-faint">{projectMeta(project)}</p>
 
-        <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-muted">{project.problem}</p>
+        <h3 className={cn('mt-3 text-text', lead || banner ? 'text-display-sm' : 'text-lg tracking-[-0.02em]')}>
+          {/* The whole panel is clickable through this stretched link, while
+              the demo and source links below sit above it. */}
+          <Link
+            to={`/projects/${project.slug}`}
+            className="after:absolute after:inset-0 after:rounded-panel after:content-[''] focus-visible:outline-none focus-visible:after:outline focus-visible:after:outline-1 focus-visible:after:outline-offset-4 focus-visible:after:outline-[rgb(var(--accent))]"
+          >
+            {project.name}
+          </Link>
+        </h3>
+
+        <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted">{project.problem}</p>
 
         {(lead || banner) && (
-          <p className="mt-3 text-[0.9375rem] leading-relaxed text-text/70">{project.built}</p>
+          <p className="mt-3 max-w-[60ch] text-[0.9375rem] leading-relaxed text-muted">{project.built}</p>
         )}
 
-        <p className="mt-3 border-l-2 border-strong pl-3 text-[0.8125rem] leading-relaxed text-text/70">
-          <span className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-faint">
-            My role ·{' '}
-          </span>
-          {project.role}
-        </p>
+        {lead && (
+          <p className="mt-5 text-[0.875rem] leading-relaxed text-text/80">
+            <span className="label mr-2 text-faint">Role</span>
+            {project.role}
+          </p>
+        )}
 
-        <ul className="mt-4 flex flex-wrap gap-1.5">
+        <ul className="mt-6 flex flex-wrap gap-1.5">
           {project.stack.slice(0, chipLimit).map((tech) => (
             <li key={tech} className="chip">
               {tech}
             </li>
           ))}
           {project.stack.length > chipLimit && (
-            <li className="chip border-transparent">+{project.stack.length - chipLimit}</li>
+            <li className="chip border-transparent text-faint">+{project.stack.length - chipLimit}</li>
           )}
         </ul>
 
         {/* ── Actions ────────────────────────────────────────────────────── */}
-        <div className="relative z-10 mt-auto flex flex-wrap items-center gap-2 pt-5">
+        <div className="relative z-10 mt-auto flex flex-wrap items-center gap-x-5 gap-y-2 pt-7">
           {project.links.demo && (
             <a
               href={project.links.demo}
               target="_blank"
               rel="noreferrer noopener"
-              className="inline-flex items-center gap-1.5 rounded-full border border-strong px-3 py-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-text transition-colors hover:bg-light/[0.06]"
+              className="link-underline inline-flex items-center gap-1.5 text-[0.8125rem] text-text"
             >
-              <PlayIcon className="h-3.5 w-3.5 text-text" />
               Live demo
+              <ArrowUpRightIcon className="h-3.5 w-3.5 text-muted" />
             </a>
           )}
 
@@ -202,19 +184,24 @@ export function ProjectCard({ project, className, variant = 'standard' }: Props)
               href={project.links.repo}
               target="_blank"
               rel="noreferrer noopener"
-              className="inline-flex items-center gap-1.5 rounded-full border border-hairline px-3 py-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-muted transition-colors hover:border-strong hover:text-text"
+              className="inline-flex items-center gap-1.5 text-[0.8125rem] text-muted transition-colors duration-400 ease-quiet hover:text-text"
             >
               <GitHubIcon className="h-3.5 w-3.5" />
-              Code
+              Source
             </a>
           )}
 
-          <span className="ml-auto inline-flex items-center gap-1 font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-faint transition-colors group-hover/card:text-text">
+          <span
+            className="label ml-auto inline-flex items-center gap-1.5 text-faint transition-colors duration-400 ease-quiet group-hover/card:text-text"
+            aria-hidden
+          >
             Case study
-            <ArrowUpRightIcon className="h-3.5 w-3.5 transition-transform duration-300 group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5" />
+            <span className="inline-block transition-transform duration-400 ease-quiet group-hover/card:translate-x-1">
+              →
+            </span>
           </span>
         </div>
       </div>
-    </article>
+    </Spotlight>
   );
 }

@@ -17,10 +17,11 @@ const toneStyles: Record<
   Architecture['nodes'][number]['tone'],
   { fill: string; stroke: string; label: string }
 > = {
-  client: { fill: 'rgb(var(--bg-elevated))', stroke: 'var(--border)', label: 'rgb(var(--text))' },
-  service: { fill: 'rgb(var(--bg-elevated))', stroke: 'rgb(var(--accent) / 0.55)', label: 'rgb(var(--text))' },
-  model: { fill: 'rgb(var(--accent) / 0.14)', stroke: 'rgb(var(--accent))', label: 'rgb(var(--text))' },
-  store: { fill: 'var(--surface)', stroke: 'var(--border)', label: 'rgb(var(--text))' },
+  // Monochrome: role is carried by how much light a node holds.
+  client: { fill: 'rgb(var(--bg))', stroke: 'var(--border)', label: 'rgb(var(--text-muted))' },
+  service: { fill: 'rgb(var(--bg-elevated))', stroke: 'var(--border-hover)', label: 'rgb(var(--text))' },
+  model: { fill: 'rgb(var(--light) / 0.07)', stroke: 'rgb(var(--accent) / 0.7)', label: 'rgb(var(--text))' },
+  store: { fill: 'rgb(var(--bg))', stroke: 'var(--border-hover)', label: 'rgb(var(--text-muted))' },
 };
 
 export function ArchitectureDiagram({ architecture }: { architecture: Architecture }) {
@@ -43,11 +44,18 @@ export function ArchitectureDiagram({ architecture }: { architecture: Architectu
 
   return (
     <figure className="not-prose">
-      <div className="overflow-x-auto rounded-panel border border-hairline bg-surface p-2 sm:p-4">
+      <div
+        className="overflow-x-auto rounded-panel border border-hairline p-2 sm:p-6"
+        style={{
+          backgroundColor: 'var(--surface)',
+          backgroundImage: 'radial-gradient(circle at 1px 1px, var(--grid-line) 1px, transparent 0)',
+          backgroundSize: '18px 18px',
+        }}
+      >
         <svg
           viewBox={`0 0 ${layout.width} ${layout.height}`}
           className="h-auto w-full"
-          style={{ minWidth: `${Math.min(layout.width, 760)}px` }}
+          style={{ minWidth: `${Math.min(layout.width, 600)}px` }}
           role="img"
           aria-label={caption}
         >
@@ -61,7 +69,7 @@ export function ArchitectureDiagram({ architecture }: { architecture: Architectu
               markerHeight="6"
               orient="auto-start-reverse"
             >
-              <path d="M 0 1 L 9 5 L 0 9 z" fill="rgb(var(--accent) / 0.8)" />
+              <path d="M 0 1 L 9 5 L 0 9 z" fill="rgb(var(--text-muted))" />
             </marker>
           </defs>
 
@@ -94,8 +102,8 @@ export function ArchitectureDiagram({ architecture }: { architecture: Architectu
                   <path
                     d={path}
                     fill="none"
-                    stroke="rgb(var(--accent) / 0.4)"
-                    strokeWidth="1.4"
+                    stroke="rgb(var(--text-muted) / 0.45)"
+                    strokeWidth="1"
                     markerEnd="url(#arch-arrow)"
                   />
                   {edge.label && (
@@ -125,10 +133,10 @@ export function ArchitectureDiagram({ architecture }: { architecture: Architectu
                     y={node.y}
                     width={BOX_W}
                     height={BOX_H}
-                    rx="9"
+                    rx="8"
                     fill={tone.fill}
                     stroke={tone.stroke}
-                    strokeWidth="1.2"
+                    strokeWidth="1"
                   />
                   <text
                     x={node.x + BOX_W / 2}
@@ -159,7 +167,7 @@ export function ArchitectureDiagram({ architecture }: { architecture: Architectu
         </svg>
       </div>
 
-      <figcaption className="mt-3 font-mono text-xs text-faint">{caption}</figcaption>
+      <figcaption className="meta mt-3">{caption}</figcaption>
     </figure>
   );
 }

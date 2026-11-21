@@ -7,6 +7,9 @@ interface Props {
   children: ReactNode;
   className?: string;
   as?: ElementType;
+  /** Forwarded to the root, for parents that need hover state. */
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
   /** Radius of the light pool, in px. */
   radius?: number;
 }
@@ -23,7 +26,14 @@ interface Props {
  * React state — a card re-rendering on every mouse move would be the single
  * most expensive thing on the page.
  */
-export function Spotlight({ children, className, as: Tag = 'div', radius = 340 }: Props) {
+export function Spotlight({
+  children,
+  className,
+  as: Tag = 'div',
+  radius = 340,
+  onMouseEnter,
+  onMouseLeave,
+}: Props) {
   const ref = useRef<HTMLElement | null>(null);
   const frame = useRef(0);
   const isDesktop = useIsDesktopPointer();
@@ -48,12 +58,14 @@ export function Spotlight({ children, className, as: Tag = 'div', radius = 340 }
 
   const onEnter = useCallback(() => {
     if (isDesktop) setActive(true);
-  }, [isDesktop]);
+    onMouseEnter?.();
+  }, [isDesktop, onMouseEnter]);
 
   const onLeave = useCallback(() => {
     cancelAnimationFrame(frame.current);
     setActive(false);
-  }, []);
+    onMouseLeave?.();
+  }, [onMouseLeave]);
 
   return (
     <Tag
