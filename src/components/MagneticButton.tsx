@@ -34,10 +34,9 @@ type ButtonProps = BaseProps & {
 };
 
 const variants: Record<Variant, string> = {
-  solid:
-    'bg-text text-bg border-strong hover:brightness-[1.08] font-medium shadow-[0_0_28px_-10px_rgb(var(--accent)/0.7)]',
-  outline: 'border-strong text-text hover:border-strong hover:bg-text/[0.07]',
-  ghost: 'border-hairline text-muted hover:text-text hover:border-strong',
+  solid: 'bg-text text-bg border-transparent font-medium hover:opacity-90',
+  outline: 'border-hairline text-text hover:border-strong hover:bg-light/[0.03]',
+  ghost: 'border-transparent text-muted hover:text-text hover:border-hairline',
 };
 
 /**
@@ -45,7 +44,7 @@ const variants: Record<Variant, string> = {
  * work) and is disabled on touch devices and under reduced motion.
  */
 export function MagneticButton(props: AnchorProps | ButtonProps) {
-  const { children, variant = 'outline', className, strength = 7 } = props;
+  const { children, variant = 'outline', className, strength = 4 } = props;
   const reduced = useReducedMotion();
   const isDesktop = useIsDesktopPointer();
   const ref = useRef<HTMLElement | null>(null);
@@ -76,7 +75,7 @@ export function MagneticButton(props: AnchorProps | ButtonProps) {
           : 'transform 0.09s linear',
     },
     className: cn(
-      'group inline-flex items-center justify-center gap-2 rounded-full border px-5 py-2.5 text-sm transition-colors duration-300 will-change-transform',
+      'group inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-lg border px-4 text-sm transition-[color,background-color,border-color,opacity] duration-400 ease-quiet will-change-transform',
       variants[variant],
       className,
     ),

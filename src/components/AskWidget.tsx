@@ -94,6 +94,7 @@ export function AskWidget() {
 
             <div
               ref={logRef}
+              data-lenis-prevent
               className="flex-1 space-y-3 overflow-y-auto overscroll-contain p-4"
               aria-live="polite"
             >

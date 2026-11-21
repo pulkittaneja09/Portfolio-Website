@@ -3,6 +3,7 @@ import { AnimatePresence, m } from 'framer-motion';
 import { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
+  ArrowRightIcon,
   ArrowUpRightIcon,
   CopyIcon,
   DownloadIcon,
@@ -10,12 +11,13 @@ import {
   LinkedInIcon,
   MailIcon,
   MoonIcon,
-  PlayIcon,
+  SearchIcon,
   SunIcon,
   TerminalIcon,
 } from '@/components/icons';
 import { nav, profile, projects } from '@/data/portfolio';
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
+import { scrollToTarget } from '@/hooks/useLenis';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { useTheme } from '@/hooks/useTheme';
 
@@ -65,7 +67,7 @@ export function CommandPalette({ open, onClose, onOpenTerminal }: Props) {
         >
           <button
             type="button"
-            className="absolute inset-0 cursor-default bg-bg/75 backdrop-blur-md"
+            className="absolute inset-0 cursor-default bg-bg/60 backdrop-blur-[2px]"
             onClick={onClose}
             aria-label="Close command palette"
             tabIndex={-1}
@@ -73,32 +75,30 @@ export function CommandPalette({ open, onClose, onOpenTerminal }: Props) {
 
           <m.div
             className="relative w-full max-w-xl"
-            initial={reduced ? undefined : { opacity: 0, y: -10, scale: 0.985 }}
-            animate={reduced ? undefined : { opacity: 1, y: 0, scale: 1 }}
-            exit={reduced ? undefined : { opacity: 0, y: -8, scale: 0.99 }}
-            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+            initial={reduced ? undefined : { opacity: 0, y: -8, scale: 0.985, filter: 'blur(6px)' }}
+            animate={reduced ? undefined : { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+            exit={reduced ? undefined : { opacity: 0, y: -6, scale: 0.99, filter: 'blur(4px)' }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >
             <Command
               label="Command palette"
               loop
-              className="overflow-hidden rounded-2xl border border-hairline bg-surface shadow-lift backdrop-blur-xl"
+              className="glass overflow-hidden rounded-xl shadow-float"
             >
               <div className="flex items-center gap-3 border-b border-hairline px-4">
-                <span className="font-mono text-sm text-text" aria-hidden>
-                  ❯
-                </span>
+                <SearchIcon className="h-4 w-4 shrink-0 text-faint" />
                 <Command.Input
                   autoFocus
-                  placeholder="Jump to a section, open a project, copy my email…"
+                  placeholder="Type a command or search…"
                   className="h-14 w-full bg-transparent font-sans text-[0.9375rem] text-text outline-none placeholder:text-faint"
                 />
-                <kbd className="hidden shrink-0 rounded border border-hairline bg-elevated px-1.5 py-0.5 font-mono text-[0.625rem] text-faint sm:block">
+                <kbd className="hidden shrink-0 rounded border border-hairline px-1.5 py-0.5 font-mono text-[0.625rem] uppercase tracking-[0.06em] text-faint sm:block">
                   esc
                 </kbd>
               </div>
 
-              <Command.List className="max-h-[min(24rem,52vh)] overflow-y-auto overscroll-contain p-2">
-                <Command.Empty className="px-3 py-8 text-center font-mono text-xs text-faint">
+              <Command.List data-lenis-prevent className="max-h-[min(24rem,52vh)] overflow-y-auto overscroll-contain p-2">
+                <Command.Empty className="px-3 py-10 text-center text-sm text-faint">
                   Nothing matches that. Try “projects” or “résumé”.
                 </Command.Empty>
 
@@ -110,14 +110,16 @@ export function CommandPalette({ open, onClose, onOpenTerminal }: Props) {
                       onSelect={() =>
                         run(() => {
                           navigate('/');
-                          document
-                            .getElementById(section.id)
-                            ?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+                          // A frame later, so the home route has mounted if we
+                          // were navigating back to it.
+                          requestAnimationFrame(() =>
+                            scrollToTarget(document.getElementById(section.id), !reduced),
+                          );
                         })
                       }
                       className="cmd-item"
                     >
-                      <ArrowUpRightIcon className="h-4 w-4 text-faint" />
+                      <ArrowRightIcon className="h-4 w-4 text-faint" />
                       {section.label}
                     </Command.Item>
                   ))}
@@ -131,7 +133,7 @@ export function CommandPalette({ open, onClose, onOpenTerminal }: Props) {
                       onSelect={() => run(() => navigate(`/projects/${project.slug}`))}
                       className="cmd-item"
                     >
-                      <PlayIcon className="h-4 w-4 text-faint" />
+                      <ArrowUpRightIcon className="h-4 w-4 text-faint" />
                       <span className="truncate">{project.name}</span>
                       <span className="ml-auto hidden font-mono text-[0.625rem] text-faint sm:block">
                         {project.year}
@@ -176,7 +178,7 @@ export function CommandPalette({ open, onClose, onOpenTerminal }: Props) {
                   >
                     <TerminalIcon className="h-4 w-4 text-faint" />
                     Open terminal
-                    <kbd className="ml-auto rounded border border-hairline bg-elevated px-1.5 py-0.5 font-mono text-[0.625rem] text-faint">
+                    <kbd className="ml-auto rounded border border-hairline px-1.5 py-0.5 font-mono text-[0.625rem] text-faint">
                       `
                     </kbd>
                   </Command.Item>

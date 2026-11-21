@@ -205,6 +205,7 @@ export function TerminalOverlay({ open, onClose }: Props) {
             {/* Scrollback */}
             <div
               ref={scrollRef}
+              data-lenis-prevent
               className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 font-mono text-[0.8125rem] leading-relaxed sm:px-5"
             >
               {blocks.map((block) => (

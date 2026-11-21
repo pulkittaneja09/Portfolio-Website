@@ -12,7 +12,7 @@ const base: IconProps = {
   viewBox: '0 0 24 24',
   fill: 'none',
   stroke: 'currentColor',
-  strokeWidth: 1.6,
+  strokeWidth: 1.5,
   strokeLinecap: 'round',
   strokeLinejoin: 'round',
   'aria-hidden': true,
@@ -106,6 +106,15 @@ export function TerminalIcon(props: IconProps) {
     <svg {...base} {...props}>
       <rect x="2.75" y="4" width="18.5" height="16" rx="2.5" />
       <path d="m7 10 2.5 2L7 14M12.5 14.5h4.5" />
+    </svg>
+  );
+}
+
+export function SearchIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <circle cx="11" cy="11" r="6.5" />
+      <path d="m20 20-4.2-4.2" />
     </svg>
   );
 }

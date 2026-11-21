@@ -9,6 +9,19 @@ import { useReducedMotion } from '@/hooks/useReducedMotion';
  * exactly the kind of motion that setting is asking you not to do. Anchor
  * links are routed through Lenis so in-page jumps use the same curve.
  */
+let instance: Lenis | null = null;
+
+/**
+ * Scroll to an element on the shared curve when Lenis is running, natively
+ * otherwise. Anything that scrolls programmatically should go through this,
+ * or it ends up fighting Lenis' own interpolation.
+ */
+export function scrollToTarget(target: HTMLElement | null, smooth = true): void {
+  if (!target) return;
+  if (instance) instance.scrollTo(target, { offset: -96, immediate: !smooth });
+  else target.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto' });
+}
+
 export function useLenis(): void {
   const reduced = useReducedMotion();
 
@@ -25,6 +38,8 @@ export function useLenis(): void {
       syncTouch: false,
       touchMultiplier: 1.6,
     });
+
+    instance = lenis;
 
     let frame = 0;
     const raf = (time: number) => {
@@ -55,6 +70,7 @@ export function useLenis(): void {
       document.removeEventListener('click', onClick);
       cancelAnimationFrame(frame);
       lenis.destroy();
+      instance = null;
     };
   }, [reduced]);
 }
