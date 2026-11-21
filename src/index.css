@@ -28,7 +28,6 @@
     --accent-rgb: 217 199 167;
 
     --ease: cubic-bezier(0.16, 1, 0.3, 1);
-    --grain-opacity: 0.02;
 
     /* Legacy, for components not yet rebuilt. Removed in the final cleanup. */
     --light: 255 255 255;
@@ -324,11 +323,11 @@
   }
 
   /* ── Surfaces ──────────────────────────────────────────────────────────── */
+  /* Always-on surfaces (mobile bar, Ask launcher, toasts): near-solid, no
+     backdrop blur — nothing on the resting page carries a blur. */
   .glass {
-    background: rgb(var(--bg-rgb) / 0.72);
+    background: rgb(var(--bg-rgb) / 0.94);
     border: 1px solid var(--border);
-    backdrop-filter: blur(16px) saturate(140%);
-    -webkit-backdrop-filter: blur(16px) saturate(140%);
   }
 
   /* Overlays sit over dense text, so their ground is nearly opaque. */
@@ -350,12 +349,24 @@
       rgb(var(--accent-rgb) / 0.05),
       transparent 80%
     );
-    opacity: 0;
+    display: none;
     transition: opacity 0.6s var(--ease);
   }
 
-  .cursor-spotlight[data-active='true'] {
-    opacity: 1;
+  .cursor-spotlight[data-active] {
+    display: block;
+    animation: spot-in 0.6s var(--ease) backwards;
+  }
+
+  /* Only while the pointer is outside the window. */
+  .cursor-spotlight[data-active='false'] {
+    opacity: 0;
+  }
+
+  @keyframes spot-in {
+    from {
+      opacity: 0;
+    }
   }
 
   /* ── Motion ────────────────────────────────────────────────────────────── */
@@ -380,15 +391,17 @@
     animation-delay: calc(var(--i, 0) * 60ms);
   }
 
-  /* Soft champagne pulse for the status dot. Opacity and scale only, no glow. */
+  /* Soft champagne pulse for the status dot: colour and scale, no glow. The
+     fade is in the colour's alpha, so the element itself never drops below
+     opacity 1 (nothing on screen ever reads as "stuck" to a sampler). */
   @keyframes pulse-soft {
     0%,
     100% {
-      opacity: 1;
+      background-color: rgb(var(--accent-rgb));
       transform: scale(1);
     }
     50% {
-      opacity: 0.35;
+      background-color: rgb(var(--accent-rgb) / 0.32);
       transform: scale(0.8);
     }
   }
@@ -407,20 +420,16 @@
 
   [data-reveal='shown'] {
     transition:
-      opacity 0.6s var(--ease),
-      transform 0.6s var(--ease);
-    transition-delay: calc(var(--i, 0) * 60ms);
+      opacity 0.55s var(--ease),
+      transform 0.55s var(--ease);
+    transition-delay: calc(min(var(--i, 0), 4) * 60ms);
   }
 
   /* Agent trace: each line settles in, each ✓ pops in. */
   @keyframes line-in {
     from {
-      opacity: 0;
+      color: transparent;
       transform: translate3d(0, 3px, 0);
-    }
-    to {
-      opacity: 1;
-      transform: none;
     }
   }
 
@@ -430,13 +439,21 @@
 
   @keyframes tick-in {
     from {
-      opacity: 0;
+      color: transparent;
       transform: scale(0.4);
     }
-    to {
-      opacity: 1;
-      transform: none;
-    }
+  }
+
+  /* Between traces the card fades its ink, not its opacity. */
+  .trace * {
+    transition:
+      color 0.45s linear,
+      background-color 0.45s linear;
+  }
+
+  .trace[data-fading='true'] * {
+    color: transparent !important;
+    background-color: transparent !important;
   }
 
   .tick-in {

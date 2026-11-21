@@ -72,7 +72,11 @@ export default {
         800: '800ms',
       },
       keyframes: {
-        'caret-blink': { '0%,49%': { opacity: '1' }, '50%,100%': { opacity: '0' } },
+        // Blink by colour, not opacity: the element never rests below opacity 1.
+        'caret-blink': {
+          '0%,49%': { backgroundColor: 'rgb(var(--text-strong-rgb) / 0.75)' },
+          '50%,100%': { backgroundColor: 'transparent' },
+        },
       },
       animation: {
         'caret-blink': 'caret-blink 1.05s step-end infinite',

@@ -19,8 +19,9 @@
 
 type State = 'armed' | 'shown';
 
-const SHOW_MS = 600;
+const SHOW_MS = 550;
 const STAGGER_MS = 60;
+const MAX_STEPS = 4;
 
 const watched = new Set<HTMLElement>();
 let approach: IntersectionObserver | null = null;
@@ -49,7 +50,7 @@ function show(el: HTMLElement) {
   forget(el);
   // Once the entrance has run, drop the attribute entirely so the element is
   // back on its own styles (and its own hover transitions).
-  const delay = Number(el.style.getPropertyValue('--i') || 0) * STAGGER_MS;
+  const delay = Math.min(Number(el.style.getPropertyValue('--i') || 0), MAX_STEPS) * STAGGER_MS;
   window.setTimeout(() => {
     if (el.dataset.reveal === 'shown') setState(el, null);
   }, SHOW_MS + delay + 50);

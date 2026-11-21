@@ -72,5 +72,6 @@ export function CursorSpotlight() {
   }, [enabled]);
 
   if (!enabled) return null;
-  return <div ref={ref} className="cursor-spotlight" data-active="false" aria-hidden />;
+  // No data-active until the first move: the layer is display: none until then.
+  return <div ref={ref} className="cursor-spotlight" aria-hidden />;
 }

@@ -222,13 +222,7 @@ export function AgentRun({ className }: { className?: string }) {
         <span className="sr-only">{spoken}</span>
       </figcaption>
 
-      <div
-        className={cn(
-          'px-4 py-3 leading-[1.7]',
-          frame.fading && 'opacity-0 transition-opacity duration-[450ms] ease-linear',
-        )}
-        aria-hidden
-      >
+      <div className="trace px-4 py-3 leading-[1.7]" data-fading={frame.fading} aria-hidden>
         {/* The prompt types out character by character. */}
         <div className="flex h-[1.7em] items-center whitespace-pre">
           <span className="text-faint">{'> '}</span>
