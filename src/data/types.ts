@@ -136,6 +136,8 @@ export interface Project {
   name: string;
   /** One line: what was broken before this existed. */
   problem: string;
+  /** The same problem in ~50 characters, for the project row. */
+  oneLiner: string;
   /** What was built, and the role in building it. */
   built: string;
   role: string;

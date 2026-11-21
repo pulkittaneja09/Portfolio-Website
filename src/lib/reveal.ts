@@ -2,10 +2,11 @@
  * Scroll reveal that can never leave content invisible.
  *
  * Content is visible by default. An element is only hidden ("armed") while it
- * is off screen *below* the viewport and about to scroll in, and it is shown
- * the moment it enters. So:
+ * is off screen *below* the viewport and about to scroll in, and only once
+ * the visitor has actually started scrolling; it is shown the moment it
+ * enters. So:
  *
- *  - anything on screen at load is never hidden or animated;
+ *  - nothing is hidden at load — not even content just below the fold;
  *  - a full-page screenshot, a print, or a crawler that never scrolls sees
  *    every element at full opacity;
  *  - a jump that skips the approach zone (anchor link, End key) simply shows
@@ -26,6 +27,7 @@ let approach: IntersectionObserver | null = null;
 let enter: IntersectionObserver | null = null;
 let sweepTimer = 0;
 let listening = false;
+let scrolled = false;
 
 function setState(el: HTMLElement, state: State | null) {
   if (state) el.dataset.reveal = state;
@@ -65,9 +67,33 @@ function sweep() {
   });
 }
 
-function onScroll() {
+function scheduleSweep() {
   window.clearTimeout(sweepTimer);
   sweepTimer = window.setTimeout(sweep, 120);
+}
+
+/** Hide an element that is fully below the fold, then wait for it to enter. */
+function arm(el: HTMLElement) {
+  setState(el, 'armed');
+  approach?.unobserve(el);
+  enter?.observe(el);
+}
+
+function onScroll() {
+  if (!scrolled) {
+    // First scroll: only now is it safe to hide what is coming up. Anything
+    // still fully below the fold within the approach distance is armed;
+    // anything already on screen is left alone for good.
+    scrolled = true;
+    const reach = window.innerHeight * 1.25;
+    watched.forEach((el) => {
+      if (el.dataset.reveal) return;
+      const top = el.getBoundingClientRect().top;
+      if (top >= window.innerHeight && top < reach) arm(el);
+      else if (top < window.innerHeight) forget(el);
+    });
+  }
+  scheduleSweep();
 }
 
 function revealAll() {
@@ -84,15 +110,15 @@ function ensureObservers(): boolean {
       entries.forEach((entry) => {
         const el = entry.target as HTMLElement;
         if (!entry.isIntersecting || el.dataset.reveal) return;
-        if (entry.boundingClientRect.top >= window.innerHeight) {
-          // Still fully below the fold: safe to hide, it is about to enter.
-          setState(el, 'armed');
-          approach?.unobserve(el);
-          enter?.observe(el);
-        } else {
+        if (entry.boundingClientRect.top < window.innerHeight) {
           // Already on screen (at load, or after a jump): leave it alone.
           forget(el);
+        } else if (scrolled) {
+          // Still fully below the fold, and the page is moving: safe to hide.
+          arm(el);
         }
+        // Below the fold before any scroll: stay visible; the first scroll
+        // decides (see onScroll).
       });
     },
     { rootMargin: '0px 0px 25% 0px', threshold: 0 },
@@ -111,7 +137,10 @@ function ensureObservers(): boolean {
     listening = true;
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('scrollend', sweep);
-    window.addEventListener('resize', onScroll);
+    // A resize is not a scroll: it only re-checks what is now in view. (Tools
+    // that capture a full page resize the viewport; treating that as the
+    // first scroll would hide content just below the fold mid-capture.)
+    window.addEventListener('resize', scheduleSweep);
     window.addEventListener('beforeprint', revealAll);
   }
   return true;

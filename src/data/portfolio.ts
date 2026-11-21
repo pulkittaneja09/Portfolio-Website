@@ -206,6 +206,7 @@ export const projects: Project[] = [
     name: 'ParcelPilot AI Support Copilot',
     problem:
       'Support agents lose minutes per ticket digging through policy PDFs and escalation runbooks before they can answer a customer.',
+    oneLiner: 'Agents lose minutes per ticket in policy PDFs.',
     built:
       'A support-operations copilot where agents ask questions in plain English and get answers grounded in the actual order record, company policy documents and the conversation so far — with every action confirmed before it fires.',
     role: 'Sole engineer — FastAPI backend, RAG pipeline, agent routing, access-control layer, React/TS frontend and both deployments.',
@@ -285,6 +286,7 @@ export const projects: Project[] = [
     name: 'Scrap 2 Spark',
     problem:
       'An EV battery retired from a car may still hold years of useful life, but deciding reuse versus recycling means reading thousands of telemetry cycles by hand.',
+    oneLiner: 'Retired EV batteries get scrapped with life left.',
     built:
       'A battery-intelligence platform that ingests telemetry CSVs, predicts remaining useful life with a trained Random Forest, grades cell health and risk, and recommends a second-life deployment path with a sustainability estimate.',
     role: 'Built the FastAPI service, the ML integration and inference endpoints, and shipped both halves to production (Vercel + Render) during the SDG hackathon.',
@@ -296,9 +298,9 @@ export const projects: Project[] = [
       repo: 'https://github.com/pulkittaneja09/sdg-hackthon',
       api: 'https://sdg-hackathon.onrender.com/',
     },
-    // TODO(pulkit): drop a screenshot of the analytics dashboard into
-    // public/previews/ as scrap-2-spark.webp and set it here.
-    preview: null,
+    // Captured from the live demo. TODO(pulkit): an analytics-dashboard view
+    // (after a CSV upload) would show the ML output better than the landing page.
+    preview: '/previews/scrap-2-spark.webp',
     emphasis: 'standard',
     tags: ['Machine learning', 'Backend', 'Sustainability'],
     detail: {
@@ -361,6 +363,7 @@ export const projects: Project[] = [
     name: 'KnowledgeHub AI',
     problem:
       'Enterprise knowledge is locked inside PDFs nobody reads, and a plain LLM asked about them confidently invents answers.',
+    oneLiner: 'Plain LLMs invent answers about your documents.',
     built:
       'A RAG assistant that ingests enterprise PDFs, embeds and indexes them in ChromaDB, and answers natural-language questions with cited, retrieval-grounded responses from Gemini 2.5 Flash.',
     role: 'Built the end-to-end LangChain ingestion and retrieval pipeline, the FastAPI service and the React client, then deployed across Render and Vercel.',
@@ -371,9 +374,9 @@ export const projects: Project[] = [
       demo: 'https://knowledgehub-ai-pulkit.vercel.app/',
       repo: 'https://github.com/pulkittaneja09/Enterprise-Knowledge-Assistant',
     },
-    // TODO(pulkit): add public/previews/knowledgehub-ai.webp (a screenshot of a
-    // cited answer makes the strongest thumbnail) and set it here.
-    preview: null,
+    // Captured from the live demo. TODO(pulkit): a screenshot of a cited answer
+    // would make an even stronger thumbnail.
+    preview: '/previews/knowledgehub-ai.webp',
     emphasis: 'standard',
     tags: ['RAG', 'LangChain', 'Backend'],
     detail: {
@@ -429,6 +432,7 @@ export const projects: Project[] = [
     name: 'IEEE Recruitment Backend',
     problem:
       'The IEEE Computer Society VIT Chennai recruitment cycle needed to take in a thousand-plus applications without losing one or leaking an applicant’s data.',
+    oneLiner: 'One application window, no lost or leaked data.',
     built:
       'A Go service (Gin + PostgreSQL) exposing the recruitment portal’s REST API: JWT authentication, request validation, structured error handling, SQL migrations and Docker deployment.',
     role: 'Backend developer on the society team — built and reviewed API routes, middleware and CLI tooling through pull requests.',

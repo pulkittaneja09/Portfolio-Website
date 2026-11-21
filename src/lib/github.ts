@@ -1,21 +1,6 @@
 import { GITHUB_USERNAME } from '@/data/portfolio';
 
-/** Shapes trimmed to the fields the UI actually renders. */
-export interface GitHubRepo {
-  id: number;
-  name: string;
-  description: string | null;
-  html_url: string;
-  homepage: string | null;
-  language: string | null;
-  stargazers_count: number;
-  forks_count: number;
-  updated_at: string;
-  fork: boolean;
-  archived: boolean;
-  topics?: string[];
-}
-
+/** Trimmed to the fields the UI actually renders. */
 export interface GitHubUser {
   login: string;
   name: string | null;
@@ -28,13 +13,10 @@ export interface GitHubUser {
 
 export interface GitHubData {
   user: GitHubUser;
-  repos: GitHubRepo[];
-  /** Repo count per language, highest first. */
-  languages: { name: string; count: number }[];
   fetchedAt: number;
 }
 
-const CACHE_KEY = 'pt-github-v1';
+const CACHE_KEY = 'pt-github-v2';
 const CACHE_TTL_MS = 1000 * 60 * 60 * 6; // six hours: the data barely moves.
 const API = 'https://api.github.com';
 
@@ -100,37 +82,17 @@ async function get<T>(path: string, signal?: AbortSignal): Promise<T> {
   return (await response.json()) as T;
 }
 
-function summariseLanguages(repos: GitHubRepo[]): GitHubData['languages'] {
-  const counts = new Map<string, number>();
-  repos.forEach((repo) => {
-    if (!repo.language) return;
-    counts.set(repo.language, (counts.get(repo.language) ?? 0) + 1);
-  });
-
-  return [...counts.entries()].map(([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count);
-}
-
 /**
- * Fetches the profile and repositories, falling back to a cached copy first.
- * Rate limits surface as a typed error so the UI can degrade rather than break.
+ * Fetches the public profile (one request), falling back to a cached copy
+ * first. Rate limits surface as a typed error so the UI can degrade quietly
+ * to the repo count in `portfolio.ts`.
  */
 export async function fetchGitHubData(signal?: AbortSignal): Promise<GitHubData> {
   const cached = readCache();
   if (cached) return cached;
 
-  const [user, repos] = await Promise.all([
-    get<GitHubUser>(`/users/${GITHUB_USERNAME}`, signal),
-    get<GitHubRepo[]>(`/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`, signal),
-  ]);
-
-  const visible = repos.filter((repo) => !repo.fork && !repo.archived);
-
-  const data: GitHubData = {
-    user,
-    repos: visible,
-    languages: summariseLanguages(visible),
-    fetchedAt: Date.now(),
-  };
+  const user = await get<GitHubUser>(`/users/${GITHUB_USERNAME}`, signal);
+  const data: GitHubData = { user, fetchedAt: Date.now() };
 
   writeCache(data);
   return data;
