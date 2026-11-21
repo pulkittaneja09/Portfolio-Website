@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Footer } from '@/components/Footer';
 import { AgentRun } from '@/components/AgentRun';
 import { Identity } from '@/components/Identity';
 import { MobileBar } from '@/components/MobileBar';
 import { ProfileLinks } from '@/components/ProfileLinks';
 import { SectionNav } from '@/components/SectionNav';
+import { SiteFooter } from '@/components/SiteFooter';
 import { nav } from '@/data/portfolio';
 import { useActiveSection } from '@/hooks/useActiveSection';
 import { scrollToTarget } from '@/hooks/useLenis';
@@ -64,14 +64,14 @@ export function Home({ onOpenTerminal, onOpenPalette }: HomeProps) {
           </header>
 
           {/* ── Right: the scrolling column ─────────────────────────────── */}
-          <main id="main" className="pb-24 pt-20 lg:pb-0 lg:pt-24">
+          <main id="main" className="pt-20 lg:pt-24">
             <About />
 
             <Experience />
             <Projects />
             <Founder />
             <Contact />
-            <Footer onOpenPalette={onOpenPalette} onOpenTerminal={onOpenTerminal} />
+            <SiteFooter onOpenPalette={onOpenPalette} onOpenTerminal={onOpenTerminal} />
           </main>
         </div>
       </div>
