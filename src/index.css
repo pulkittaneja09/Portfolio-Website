@@ -316,6 +316,13 @@
     }
   }
 
+  /* The founder card: a hairline box lit from its top edge, white 6% → 0. */
+  .founder-card {
+    background:
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0) 45%),
+      rgba(255, 255, 255, 0.012);
+  }
+
   /* ── Surfaces ──────────────────────────────────────────────────────────── */
   .glass {
     background: rgb(var(--bg-rgb) / 0.72);

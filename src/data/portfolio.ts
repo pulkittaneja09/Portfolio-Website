@@ -607,6 +607,11 @@ export const venture: Venture = {
   since: 'March 2026',
   pitch:
     'An AI-powered Academic Intelligence Platform for higher-education institutions — turning what happens in a lecture hall into structured, searchable, syllabus-mapped knowledge.',
+  mission: 'Lectures in, syllabus-mapped *knowledge* out.',
+  pipeline: {
+    stages: ['Lecture', 'Transcript', 'Knowledge', 'Syllabus coverage'],
+    steps: ['whisper', 'llm', 'map'],
+  },
   badges: [
     {
       label: 'Incubated at V-NEST',

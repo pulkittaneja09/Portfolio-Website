@@ -10,9 +10,10 @@ import { nav } from '@/data/portfolio';
 import { useActiveSection } from '@/hooks/useActiveSection';
 import { scrollToTarget } from '@/hooks/useLenis';
 import { About } from '@/sections/About';
-import { Audaxity } from '@/sections/Audaxity';
+
 import { Contact } from '@/sections/Contact';
 import { Experience } from '@/sections/Experience';
+import { Founder } from '@/sections/Founder';
 import { Projects } from '@/sections/Projects';
 
 const SECTION_IDS = nav.map((item) => item.id);
@@ -68,7 +69,7 @@ export function Home({ onOpenTerminal, onOpenPalette }: HomeProps) {
 
             <Experience />
             <Projects />
-            <Audaxity />
+            <Founder />
             <Contact />
             <Footer onOpenPalette={onOpenPalette} onOpenTerminal={onOpenTerminal} />
           </main>

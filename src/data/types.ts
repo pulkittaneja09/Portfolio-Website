@@ -178,6 +178,10 @@ export interface Venture {
   name: string;
   role: string;
   pitch: string;
+  /** One line for the founder card. `*word*` renders in the accent serif. */
+  mission: string;
+  /** The product pipeline: stages, and the step that turns each into the next. */
+  pipeline: { stages: string[]; steps: string[] };
   since: string;
   badges: { label: string; detail: string }[];
   building: { title: string; body: string }[];
