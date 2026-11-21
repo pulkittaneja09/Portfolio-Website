@@ -3,7 +3,6 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
-import { ThemeProvider } from '@/hooks/useTheme';
 import { ToastProvider } from '@/components/Toaster';
 import './index.css';
 
@@ -20,11 +19,9 @@ createRoot(container).render(
         throw in development rather than silently pulling the full bundle back in.
       */}
       <LazyMotion features={domAnimation} strict>
-        <ThemeProvider>
-          <ToastProvider>
-            <App />
-          </ToastProvider>
-        </ThemeProvider>
+        <ToastProvider>
+          <App />
+        </ToastProvider>
       </LazyMotion>
     </BrowserRouter>
   </StrictMode>,

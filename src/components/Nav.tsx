@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ThemeToggle } from '@/components/ThemeToggle';
 import { TerminalIcon } from '@/components/icons';
 import { nav, profile } from '@/data/portfolio';
 import { useActiveSection } from '@/hooks/useActiveSection';
@@ -87,7 +86,6 @@ export function Nav({ onOpenPalette, onOpenTerminal, isHome }: NavProps) {
             <TerminalIcon className="h-[15px] w-[15px]" />
           </button>
 
-          <ThemeToggle />
 
           <button
             type="button"

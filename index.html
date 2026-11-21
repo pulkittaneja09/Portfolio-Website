@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0A0A0B" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#FAFAF9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0B0C0E" />
+    <meta name="color-scheme" content="dark" />
 
     <title>Pulkit Taneja — AI Agents & Backend Engineer</title>
     <meta
@@ -83,18 +83,6 @@
       }
     </script>
 
-    <script>
-      // Resolve the theme before first paint so there is no light/dark flash.
-      (function () {
-        try {
-          var stored = localStorage.getItem('pt-theme');
-          var dark = stored ? stored === 'dark' : !window.matchMedia('(prefers-color-scheme: light)').matches;
-          document.documentElement.classList.toggle('light', !dark);
-        } catch (e) {
-          /* private mode: keep the dark default */
-        }
-      })();
-    </script>
   </head>
   <body>
     <div id="root"></div>

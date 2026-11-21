@@ -132,7 +132,7 @@ async function capture(browser, { width, light }) {
   const browser = await chromium.launch({ channel: 'chrome' });
   const errors = [];
   for (const width of [1440, 390]) {
-    for (const light of [false, true]) errors.push(...(await capture(browser, { width, light })));
+    errors.push(...(await capture(browser, { width, light: false })));
   }
   await browser.close();
   console.log(`wrote ${fs.readdirSync(OUT).length} screenshots to ${OUT}`);

@@ -10,16 +10,13 @@ import {
   GitHubIcon,
   LinkedInIcon,
   MailIcon,
-  MoonIcon,
   SearchIcon,
-  SunIcon,
   TerminalIcon,
 } from '@/components/icons';
 import { nav, profile, projects } from '@/data/portfolio';
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
 import { scrollToTarget } from '@/hooks/useLenis';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
-import { useTheme } from '@/hooks/useTheme';
 
 interface Props {
   open: boolean;
@@ -34,7 +31,6 @@ interface Props {
 export function CommandPalette({ open, onClose, onOpenTerminal }: Props) {
   const navigate = useNavigate();
   const copy = useCopyToClipboard();
-  const { theme, toggle } = useTheme();
   const reduced = useReducedMotion();
 
   // Lock the page behind the palette so the background cannot scroll away.
@@ -188,19 +184,6 @@ export function CommandPalette({ open, onClose, onOpenTerminal }: Props) {
                     <kbd className="ml-auto rounded border border-hairline px-1.5 py-0.5 font-mono text-[0.625rem] text-faint">
                       `
                     </kbd>
-                  </Command.Item>
-
-                  <Command.Item
-                    value={`toggle ${theme === 'dark' ? 'light' : 'dark'} theme`}
-                    onSelect={() => run(toggle)}
-                    className="cmd-item"
-                  >
-                    {theme === 'dark' ? (
-                      <SunIcon className="h-4 w-4 text-faint" />
-                    ) : (
-                      <MoonIcon className="h-4 w-4 text-faint" />
-                    )}
-                    Switch to {theme === 'dark' ? 'light' : 'dark'} theme
                   </Command.Item>
                 </Command.Group>
 

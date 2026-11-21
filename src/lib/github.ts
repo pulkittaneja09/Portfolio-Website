@@ -136,39 +136,3 @@ export async function fetchGitHubData(signal?: AbortSignal): Promise<GitHubData>
   return data;
 }
 
-/**
- * How substantial a repo looks to someone skimming: a written description and
- * a deployed demo are the signals that it is a real project rather than a
- * scratch pad. Without this, sorting by recency alone leads the section with
- * whatever was touched last — often coursework with no description.
- */
-function substance(repo: GitHubRepo): number {
-  let score = 0;
-  if (repo.description) score += 2;
-  if (repo.homepage) score += 2;
-  if (repo.topics && repo.topics.length > 0) score += 1;
-  return score;
-}
-
-/** Repos worth showing: substance first, then stars, then recency. */
-export function topRepos(repos: GitHubRepo[], limit = 6): GitHubRepo[] {
-  return [...repos]
-    .sort((a, b) => {
-      const bySubstance = substance(b) - substance(a);
-      if (bySubstance !== 0) return bySubstance;
-      if (b.stargazers_count !== a.stargazers_count) return b.stargazers_count - a.stargazers_count;
-      return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
-    })
-    .slice(0, limit);
-}
-
-export function formatRelativeDate(iso: string): string {
-  const then = new Date(iso).getTime();
-  const days = Math.floor((Date.now() - then) / 86_400_000);
-  if (days < 1) return 'today';
-  if (days === 1) return 'yesterday';
-  if (days < 30) return `${days}d ago`;
-  const months = Math.floor(days / 30);
-  if (months < 12) return `${months}mo ago`;
-  return `${Math.floor(months / 12)}y ago`;
-}

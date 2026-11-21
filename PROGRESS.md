@@ -67,11 +67,12 @@ Studied live in Chrome via Playwright (1440×900 + 390px), with computed styles 
 ## Task notes
 
 - 1: Studied all five sites live (screenshots + computed styles); notes above. Brittany's 48/52 sticky split, 150ms transitions and opacity-50 sibling dimming set the interaction baseline.
+- 2: Dark only: ThemeProvider/useTheme, ThemeToggle, the pre-paint theme script, light tokens, light theme-color, the palette entry and the terminal `theme` command are gone. Removed the 3D sphere (three.js deps uninstalled, ~219KB gzip chunk gone), stack grid, GitHub section, proof bar, hero, scramble headings and SectionHeading; sections now open with a plain SectionLabel.
 
 ## Checklist
 
 - [x] 1. Study the 5 reference sites and write notes
-- [ ] 2. Remove light theme entirely + remove sphere, stack grid, GitHub section, old headings
+- [x] 2. Remove light theme entirely + remove sphere, stack grid, GitHub section, old headings
 - [ ] 3. New tokens, fonts (add Instrument Serif), cursor spotlight
 - [ ] 4. Split layout + sticky left column (name on one line, nav with scroll-spy, socials, clock)
 - [ ] 5. Agent-run signature card

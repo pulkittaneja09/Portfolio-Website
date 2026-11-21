@@ -1,5 +1,5 @@
 import { Reveal } from '@/components/Reveal';
-import { SectionHeading } from '@/components/SectionHeading';
+import { SectionLabel } from '@/components/SectionLabel';
 import { ArrowUpRightIcon } from '@/components/icons';
 import { education, experience } from '@/data/portfolio';
 import { cn } from '@/lib/cn';
@@ -13,16 +13,9 @@ export function Experience() {
   return (
     <section id="experience" aria-labelledby="experience-title" className="section-y scroll-mt-24">
       <div className="shell">
-        <SectionHeading
-          index="02"
-          label="Experience"
-          title={
-            <span id="experience-title">
-              Three roles, all shipping to <span className="text-muted">someone else’s deadline.</span>
-            </span>
-          }
-          lede="A founder seat and two engineering internships. Each bullet is the work, not the job description."
-        />
+        <SectionLabel id="experience-title" className="mb-10">
+          Experience
+        </SectionLabel>
 
         <ol className="relative">
           {experience.map((item, index) => {

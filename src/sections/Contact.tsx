@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { MagneticButton } from '@/components/MagneticButton';
 import { Reveal } from '@/components/Reveal';
-import { SectionHeading } from '@/components/SectionHeading';
+import { SectionLabel } from '@/components/SectionLabel';
 import { StatusBadge } from '@/components/StatusBadge';
 import { ArrowUpRightIcon, CopyIcon, DownloadIcon, SendIcon, socialIconMap } from '@/components/icons';
 import { useToast } from '@/components/Toaster';
@@ -64,16 +64,9 @@ export function Contact() {
   return (
     <section id="contact" aria-labelledby="contact-title" className="section-y scroll-mt-24">
       <div className="shell">
-        <SectionHeading
-          index="06"
-          label="Contact"
-          title={
-            <span id="contact-title">
-              Hiring for an AI or backend internship? <span className="text-muted">Let’s talk.</span>
-            </span>
-          }
-          lede="I reply to every message that is actually about work. The fastest route is email — the form below ends up in the same inbox."
-        />
+        <SectionLabel id="contact-title" className="mb-10">
+          Contact
+        </SectionLabel>
 
         {/* ── The address, large ──────────────────────────────────────────── */}
         <Reveal>

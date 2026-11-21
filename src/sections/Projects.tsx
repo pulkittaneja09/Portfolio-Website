@@ -1,9 +1,9 @@
 import { ProjectCard } from '@/components/ProjectCard';
 import { Reveal } from '@/components/Reveal';
-import { SectionHeading } from '@/components/SectionHeading';
+import { SectionLabel } from '@/components/SectionLabel';
 import { Spotlight } from '@/components/Spotlight';
-import { ArrowUpRightIcon, GitHubIcon } from '@/components/icons';
-import { GITHUB_USERNAME, projects, sideProjects } from '@/data/portfolio';
+import { ArrowUpRightIcon } from '@/components/icons';
+import { projects, sideProjects } from '@/data/portfolio';
 import type { Project } from '@/data/types';
 
 /**
@@ -21,28 +21,9 @@ export function Projects() {
   return (
     <section id="work" aria-labelledby="work-title" className="section-y scroll-mt-24">
       <div className="shell">
-        <SectionHeading
-          index="01"
-          label="Selected work"
-          title={
-            <span id="work-title">
-              Things I built that are <span className="text-muted">running right now.</span>
-            </span>
-          }
-          lede="Four projects, three of them live in production. Each panel links to a case study with the architecture, what was hard, and what I would do next."
-          aside={
-            <a
-              href={`https://github.com/${GITHUB_USERNAME}?tab=repositories`}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="label group inline-flex items-center gap-2 transition-colors duration-400 ease-quiet hover:text-text"
-            >
-              <GitHubIcon className="h-3.5 w-3.5" />
-              All repositories
-              <ArrowUpRightIcon className="h-3.5 w-3.5 transition-transform duration-400 ease-quiet group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </a>
-          }
-        />
+        <SectionLabel id="work-title" className="mb-10">
+          Projects
+        </SectionLabel>
 
         <div className="grid gap-3 sm:gap-4 lg:grid-cols-12">
           {projects.map((project, index) => (

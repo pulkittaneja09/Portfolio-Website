@@ -3,7 +3,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { CloseIcon } from '@/components/icons';
 import { profile } from '@/data/portfolio';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
-import { useTheme } from '@/hooks/useTheme';
 import { COMMANDS, WELCOME, runCommand } from '@/lib/terminal';
 import type { Line } from '@/lib/terminal';
 import { cn } from '@/lib/cn';
@@ -35,7 +34,6 @@ const toneClass: Record<NonNullable<Line['tone']>, string> = {
  */
 export function TerminalOverlay({ open, onClose }: Props) {
   const reduced = useReducedMotion();
-  const { toggle } = useTheme();
   const [blocks, setBlocks] = useState<Block[]>([{ id: 0, lines: WELCOME }]);
   const [value, setValue] = useState('');
   const [history, setHistory] = useState<string[]>([]);
@@ -96,9 +94,6 @@ export function TerminalOverlay({ open, onClose }: Props) {
         case 'close':
           window.setTimeout(onClose, 180);
           break;
-        case 'theme':
-          toggle();
-          break;
         case 'download-resume': {
           const link = document.createElement('a');
           link.href = profile.resumePath;
@@ -110,7 +105,7 @@ export function TerminalOverlay({ open, onClose }: Props) {
           break;
       }
     },
-    [onClose, toggle],
+    [onClose],
   );
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {

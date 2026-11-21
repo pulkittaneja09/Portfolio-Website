@@ -1,5 +1,4 @@
 import { Reveal } from '@/components/Reveal';
-import { ScrambleText } from '@/components/ScrambleText';
 import { ArrowUpRightIcon } from '@/components/icons';
 import { venture } from '@/data/portfolio';
 
@@ -52,7 +51,7 @@ export function Audaxity() {
                 </p>
 
                 <h2 id="audaxity-title" className="mt-5 text-display-lg">
-                  <ScrambleText text={venture.name} />
+                  {venture.name}
                 </h2>
 
                 <p className="mt-6 max-w-[52ch] text-pretty text-[1.0625rem] leading-[1.65] text-muted sm:text-lg">

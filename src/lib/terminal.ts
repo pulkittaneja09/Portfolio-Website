@@ -21,7 +21,7 @@ export interface Line {
 export interface CommandResult {
   lines: Line[];
   /** Side effects the overlay performs after printing. */
-  effect?: 'clear' | 'close' | 'download-resume' | 'theme' | 'easter-egg';
+  effect?: 'clear' | 'close' | 'download-resume' | 'easter-egg';
 }
 
 const l = (text: string, tone: Line['tone'] = 'default', href?: string): Line =>
@@ -40,7 +40,6 @@ export const COMMANDS = [
   'startup',
   'resume',
   'contact',
-  'theme',
   'clear',
   'exit',
   'sudo hire-pulkit',
@@ -58,7 +57,6 @@ function helpOutput(): Line[] {
     ['startup', 'Audaxity Technologies'],
     ['resume', 'download the PDF'],
     ['contact', 'how to reach me'],
-    ['theme', 'flip dark / light'],
     ['clear', 'wipe the screen'],
     ['exit', 'close the terminal'],
   ];
@@ -232,9 +230,6 @@ export function runCommand(raw: string): CommandResult {
     case 'contact':
     case 'email':
       return { lines: contactOutput() };
-
-    case 'theme':
-      return { lines: [l('Flipping the lights.', 'muted')], effect: 'theme' };
 
     case 'clear':
     case 'cls':
