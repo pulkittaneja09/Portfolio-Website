@@ -8,7 +8,7 @@ Resume rule: read this file first, continue from the first unticked task, do not
 - [x] 4. Proof bar / stats
 - [x] 5. Projects bento grid with spotlight cards + project detail view
 - [x] 6. Experience timeline
-- [ ] 7. Audaxity founder section
+- [x] 7. Audaxity founder section
 - [ ] 8. Tech stack section
 - [ ] 9. GitHub activity section
 - [ ] 10. Contact section + footer
@@ -25,3 +25,4 @@ Resume rule: read this file first, continue from the first unticked task, do not
 - 4: Proof bar is a hairline 6-cell grid: mono index, 40px tabular numerals with muted units, live marker on the GitHub count, label cross-fades to its source on hover.
 - 5: Asymmetric 12-col bento (lead 7x2, two 5-col, full-width banner); Spotlight cards (6% cursor light pool + border ring brightening near cursor, layered at z -1 so stretched links work); mono meta line (year · stack · tag, deduped); metric plates instead of 'screenshot coming'; grayscale screenshots that colour on hover; tilt removed. Case study page restyled; architecture diagram now monochrome.
 - 6: Experience is a changelog timeline: mono date/location rail, hairline row dividers, pulsing white node on the current role, stack as mono metadata; education as a matching panel row.
+- 7: Audaxity is the single raised surface: elevated panel, one soft white top light + lit top hairline, dot matrix, scramble heading, credentials as numbered hairline rows, pipeline as a numbered vertical flow. Lime wash, spark icons and accent frame removed.
