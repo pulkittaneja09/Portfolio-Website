@@ -61,7 +61,7 @@ export default function App() {
 
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:border focus:border-strong focus:bg-bg focus:px-4 focus:py-2 focus:text-sm focus:text-strong"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:border focus:border-white/[0.14] focus:bg-bg focus:px-4 focus:py-2 focus:text-sm focus:text-strong"
       >
         Skip to content
       </a>

@@ -205,16 +205,18 @@ export function AgentRun({ className }: { className?: string }) {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <figcaption className="flex items-center gap-3 border-b border-white/[0.06] px-4 py-2.5">
-        <span className="flex gap-1.5" aria-hidden>
+      <figcaption className="flex items-center gap-2.5 whitespace-nowrap border-b border-white/[0.06] px-3.5 py-2.5">
+        <span className="flex shrink-0 gap-1.5" aria-hidden>
           <span className="h-1.5 w-1.5 rounded-full bg-white/[0.14]" />
           <span className="h-1.5 w-1.5 rounded-full bg-white/[0.14]" />
           <span className="h-1.5 w-1.5 rounded-full bg-white/[0.14]" />
         </span>
-        <span className="text-body">
+        <span className="shrink-0 text-body">
           agent.run <span className="text-faint">— example trace</span>
         </span>
-        <span className="ml-auto text-faint" aria-hidden>
+        {/* One line, always: the slug truncates before the header ever wraps,
+            so the card keeps its height across traces. */}
+        <span className="ml-auto min-w-0 truncate text-faint" aria-hidden>
           {paused && !reduced ? 'paused' : trace.project}
         </span>
         <span className="sr-only">{spoken}</span>

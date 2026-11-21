@@ -47,7 +47,7 @@ export function MobileBar({ active, onOpenPalette }: Props) {
       >
         <a href="#about" className="flex min-w-0 items-center gap-3" aria-label="Back to top">
           <span
-            className="grid h-7 w-7 shrink-0 place-items-center rounded-md border border-strong text-[0.625rem] font-semibold tracking-tight text-strong"
+            className="grid h-7 w-7 shrink-0 place-items-center rounded-md border border-white/[0.14] text-[0.625rem] font-semibold tracking-tight text-strong"
             aria-hidden
           >
             PT
@@ -66,7 +66,7 @@ export function MobileBar({ active, onOpenPalette }: Props) {
         <button
           type="button"
           onClick={onOpenPalette}
-          className="inline-flex h-9 items-center gap-2 rounded-lg border border-hairline px-3 text-[0.8125rem] text-strong transition-colors duration-300 hover:border-strong"
+          className="inline-flex h-9 items-center gap-2 rounded-lg border border-white/[0.08] px-3 text-[0.8125rem] text-strong transition-colors duration-300 hover:border-white/[0.16]"
         >
           Menu
           <kbd className="hidden font-mono text-[0.6875rem] text-faint [@media(hover:hover)]:inline">⌘K</kbd>

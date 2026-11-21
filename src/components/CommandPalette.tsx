@@ -15,7 +15,7 @@ import {
 } from '@/components/icons';
 import { nav, profile, projects } from '@/data/portfolio';
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
-import { scrollToTarget } from '@/hooks/useLenis';
+import { scrollToTarget, scrollToTop } from '@/hooks/useLenis';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 interface Props {
@@ -49,7 +49,7 @@ export function CommandPalette({ open, onClose, onOpenTerminal }: Props) {
     window.setTimeout(action, 60);
   };
 
-  const sections = useMemo(() => [{ id: 'hero', label: 'Top' }, ...nav], []);
+  const sections = useMemo(() => [{ id: 'top', label: 'Top' }, ...nav], []);
 
   return (
     <AnimatePresence>
@@ -71,28 +71,28 @@ export function CommandPalette({ open, onClose, onOpenTerminal }: Props) {
 
           <m.div
             className="relative w-full max-w-xl"
-            initial={reduced ? undefined : { opacity: 0, y: -8, scale: 0.985, filter: 'blur(6px)' }}
+            initial={reduced ? undefined : { opacity: 0, y: -8, scale: 0.985 }}
             animate={
               reduced
                 ? undefined
-                : { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', transitionEnd: { filter: 'none' } }
+                : { opacity: 1, y: 0, scale: 1 }
             }
-            exit={reduced ? undefined : { opacity: 0, y: -6, scale: 0.99, filter: 'blur(4px)' }}
+            exit={reduced ? undefined : { opacity: 0, y: -6, scale: 0.99 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >
             <Command
               label="Command palette"
               loop
-              className="glass-strong overflow-hidden rounded-xl shadow-float"
+              className="glass-strong overflow-hidden rounded-xl shadow-[0_24px_64px_-24px_rgba(0,0,0,0.7)]"
             >
-              <div className="flex items-center gap-3 border-b border-hairline px-4">
+              <div className="flex items-center gap-3 border-b border-white/[0.07] px-4">
                 <SearchIcon className="h-4 w-4 shrink-0 text-faint" />
                 <Command.Input
                   autoFocus
                   placeholder="Type a command or search…"
-                  className="h-14 w-full bg-transparent font-sans text-[0.9375rem] text-text outline-none placeholder:text-faint"
+                  className="h-14 w-full bg-transparent font-sans text-[0.9375rem] text-strong outline-none placeholder:text-faint"
                 />
-                <kbd className="hidden shrink-0 rounded border border-hairline px-1.5 py-0.5 font-mono text-[0.625rem] uppercase tracking-[0.06em] text-faint sm:block">
+                <kbd className="hidden shrink-0 rounded border border-white/[0.07] px-1.5 py-0.5 font-mono text-[0.625rem] uppercase tracking-[0.06em] text-faint sm:block">
                   esc
                 </kbd>
               </div>
@@ -116,7 +116,9 @@ export function CommandPalette({ open, onClose, onOpenTerminal }: Props) {
                           // A frame later, so the home route has mounted if we
                           // were navigating back to it.
                           requestAnimationFrame(() =>
-                            scrollToTarget(document.getElementById(section.id), !reduced),
+                            section.id === 'top'
+                              ? scrollToTop(!reduced)
+                              : scrollToTarget(document.getElementById(section.id), !reduced),
                           );
                         })
                       }
@@ -181,7 +183,7 @@ export function CommandPalette({ open, onClose, onOpenTerminal }: Props) {
                   >
                     <TerminalIcon className="h-4 w-4 text-faint" />
                     Open terminal
-                    <kbd className="ml-auto rounded border border-hairline px-1.5 py-0.5 font-mono text-[0.625rem] text-faint">
+                    <kbd className="ml-auto rounded border border-white/[0.07] px-1.5 py-0.5 font-mono text-[0.625rem] text-faint">
                       `
                     </kbd>
                   </Command.Item>

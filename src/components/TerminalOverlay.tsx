@@ -20,12 +20,12 @@ interface Block {
 }
 
 const toneClass: Record<NonNullable<Line['tone']>, string> = {
-  default: 'text-muted',
-  accent: 'text-text',
+  default: 'text-body',
+  accent: 'text-accent',
   muted: 'text-faint',
   // No red: an error reads as an error from its wording and its weight.
-  error: 'text-text underline decoration-[var(--border-hover)] underline-offset-4',
-  heading: 'text-text font-medium',
+  error: 'text-strong underline decoration-white/20 underline-offset-4',
+  heading: 'text-strong font-medium',
 };
 
 /**
@@ -173,29 +173,29 @@ export function TerminalOverlay({ open, onClose }: Props) {
           />
 
           <m.div
-            className="glass-strong relative flex h-full max-h-[min(42rem,88vh)] w-full max-w-3xl flex-col overflow-hidden rounded-xl shadow-float"
-            initial={reduced ? undefined : { opacity: 0, y: 12, scale: 0.985, filter: 'blur(6px)' }}
+            className="glass-strong relative flex h-full max-h-[min(42rem,88vh)] w-full max-w-3xl flex-col overflow-hidden rounded-xl shadow-[0_24px_64px_-24px_rgba(0,0,0,0.7)]"
+            initial={reduced ? undefined : { opacity: 0, y: 12, scale: 0.985 }}
             animate={
               reduced
                 ? undefined
-                : { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', transitionEnd: { filter: 'none' } }
+                : { opacity: 1, y: 0, scale: 1 }
             }
-            exit={reduced ? undefined : { opacity: 0, y: 8, scale: 0.99, filter: 'blur(4px)' }}
+            exit={reduced ? undefined : { opacity: 0, y: 8, scale: 0.99 }}
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
             onClick={() => inputRef.current?.focus()}
           >
             {/* Title bar */}
-            <div className="flex shrink-0 items-center gap-3 border-b border-hairline px-4 py-3">
+            <div className="flex shrink-0 items-center gap-3 border-b border-white/[0.07] px-4 py-3">
               <span className="flex gap-1.5" aria-hidden>
-                <span className="h-2 w-2 rounded-full border border-[var(--border-hover)]" />
-                <span className="h-2 w-2 rounded-full border border-[var(--border-hover)]" />
-                <span className="h-2 w-2 rounded-full border border-[var(--border-hover)]" />
+                <span className="h-2 w-2 rounded-full border border-white/[0.14]" />
+                <span className="h-2 w-2 rounded-full border border-white/[0.14]" />
+                <span className="h-2 w-2 rounded-full border border-white/[0.14]" />
               </span>
               <p className="label flex-1 truncate text-center text-faint">pulkit@portfolio — ~/about</p>
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded p-1 text-faint transition-colors duration-400 ease-quiet hover:text-text"
+                className="rounded p-1 text-faint transition-colors duration-400 hover:text-strong"
                 aria-label="Close terminal"
               >
                 <CloseIcon className="h-4 w-4" />
@@ -211,7 +211,7 @@ export function TerminalOverlay({ open, onClose }: Props) {
               {blocks.map((block) => (
                 <div key={block.id} className="mb-3 last:mb-0">
                   {block.input !== undefined && (
-                    <p className="flex gap-2.5 text-text">
+                    <p className="flex gap-2.5 text-strong">
                       <span className="shrink-0 text-faint" aria-hidden>
                         $
                       </span>
@@ -227,7 +227,7 @@ export function TerminalOverlay({ open, onClose }: Props) {
                           rel="noreferrer noopener"
                           className={cn(
                             toneClass[line.tone ?? 'default'],
-                            'underline decoration-[var(--border-hover)] underline-offset-4 transition-colors duration-400 ease-quiet hover:text-text',
+                            'underline decoration-white/20 underline-offset-4 transition-colors duration-400 hover:text-strong',
                           )}
                         >
                           {line.text}
@@ -257,7 +257,7 @@ export function TerminalOverlay({ open, onClose }: Props) {
                     value={value}
                     onChange={(event) => setValue(event.target.value)}
                     onKeyDown={onKeyDown}
-                    className="w-full bg-transparent font-mono text-[0.8125rem] text-text caret-text outline-none"
+                    className="w-full bg-transparent font-mono text-[0.8125rem] text-strong caret-text outline-none"
                     placeholder="help"
                     aria-label="Terminal input"
                     autoComplete="off"
@@ -278,7 +278,7 @@ export function TerminalOverlay({ open, onClose }: Props) {
             </div>
 
             {/* Hint bar */}
-            <div className="meta shrink-0 border-t border-hairline px-4 py-2.5 sm:px-6">
+            <div className="meta shrink-0 border-t border-white/[0.07] px-4 py-2.5 sm:px-6">
               <span className="hidden sm:inline">tab completes · ↑↓ history · ctrl+l clears · </span>
               esc closes
             </div>

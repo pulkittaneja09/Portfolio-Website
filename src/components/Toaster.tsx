@@ -38,13 +38,13 @@ export function ToastProvider({ children }: { children: ReactNode }) {
           {toasts.map((t) => (
             <m.div
               key={t.id}
-              initial={{ opacity: 0, y: 12, filter: 'blur(6px)' }}
-              animate={{ opacity: 1, y: 0, filter: 'blur(0px)', transitionEnd: { filter: 'none' } }}
-              exit={{ opacity: 0, y: 6, filter: 'blur(4px)' }}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 6 }}
               transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-              className="glass flex items-center gap-2.5 rounded-lg px-4 py-2.5 text-[0.8125rem] text-text shadow-float"
+              className="glass flex items-center gap-2.5 rounded-lg px-4 py-2.5 text-[0.8125rem] text-strong shadow-[0_24px_64px_-24px_rgba(0,0,0,0.7)]"
             >
-              <CheckIcon className="h-3.5 w-3.5 text-muted" />
+              <CheckIcon className="h-3.5 w-3.5 text-body" />
               {t.message}
             </m.div>
           ))}

@@ -27,6 +27,12 @@ export function scrollToTarget(target: HTMLElement | null, smooth = true): void 
   else target.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto' });
 }
 
+/** Back to the very top, on the same curve. */
+export function scrollToTop(smooth = true): void {
+  if (instance) instance.scrollTo(0, { immediate: !smooth });
+  else window.scrollTo({ top: 0, behavior: smooth ? 'smooth' : 'auto' });
+}
+
 export function useLenis(): void {
   const reduced = useReducedMotion();
 

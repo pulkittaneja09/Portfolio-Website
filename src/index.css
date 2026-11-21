@@ -531,13 +531,30 @@
   }
 
   .cmd-item {
-    @apply flex cursor-pointer select-none items-center gap-3 rounded-lg px-3 py-2.5 text-sm;
+    @apply relative flex cursor-pointer select-none items-center gap-3 rounded-lg px-3 py-2.5 text-sm;
     color: var(--text);
     transition: background-color 0.18s ease;
   }
 
+  /* The selected command carries the same champagne line as the active nav
+     item, so "where am I" reads the same everywhere. */
   .cmd-item[data-selected='true'] {
     background: rgba(255, 255, 255, 0.05);
+    color: var(--text-strong);
+  }
+
+  .cmd-item[data-selected='true']::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 28%;
+    bottom: 28%;
+    width: 2px;
+    border-radius: 2px;
+    background: var(--accent);
+  }
+
+  .cmd-item[data-selected='true'] svg {
     color: var(--text-strong);
   }
 }
