@@ -68,12 +68,13 @@ Studied live in Chrome via Playwright (1440×900 + 390px), with computed styles 
 
 - 1: Studied all five sites live (screenshots + computed styles); notes above. Brittany's 48/52 sticky split, 150ms transitions and opacity-50 sibling dimming set the interaction baseline.
 - 2: Dark only: ThemeProvider/useTheme, ThemeToggle, the pre-paint theme script, light tokens, light theme-color, the palette entry and the terminal `theme` command are gone. Removed the 3D sphere (three.js deps uninstalled, ~219KB gzip chunk gone), stack grid, GitHub section, proof bar, hero, scramble headings and SectionHeading; sections now open with a plain SectionLabel.
+- 3: New dark tokens exactly as specified (hex vars + -rgb twins for alpha), champagne #D9C7A7 accent, body 16/1.65 at 7.6:1 contrast. Instrument Serif italic self-hosted from Google Fonts and preloaded with Geist + Geist Mono. Page-wide 600px champagne cursor spotlight (fixed layer behind content, rAF-eased CSS vars, fine pointers only, off under reduced motion). Grain at 2%, dot grid and scroll bar removed. Legacy aliases kept only for not-yet-rebuilt components.
 
 ## Checklist
 
 - [x] 1. Study the 5 reference sites and write notes
 - [x] 2. Remove light theme entirely + remove sphere, stack grid, GitHub section, old headings
-- [ ] 3. New tokens, fonts (add Instrument Serif), cursor spotlight
+- [x] 3. New tokens, fonts (add Instrument Serif), cursor spotlight
 - [ ] 4. Split layout + sticky left column (name on one line, nav with scroll-spy, socials, clock)
 - [ ] 5. Agent-run signature card
 - [ ] 6. About + Now strip + daily tools line

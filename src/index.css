@@ -5,53 +5,55 @@
 @tailwind utilities;
 
 /* ───────────────────────────────────────────────────────────────────────────
-   Quiet Futurism tokens.
+   Tokens. Dark only.
 
-   The palette is monochrome on purpose: depth, light, type and motion carry
-   the futuristic feel, not hue. `--accent` is a soft silver meant for under
-   5% of the surface area — a hairline, a dot, a single emphasised word.
-
-   Solid colours are stored as space-separated channels so Tailwind can apply
-   its own alpha (`text-muted/70`). The translucent tokens are full colour
-   values, because their alpha is part of the definition.
+   The named hex values are the design tokens; the `-rgb` channel twins exist
+   so Tailwind can apply alpha (`text-accent/60`) without a second palette.
+   Champagne is the only colour on the page, used on under 5% of it.
    ─────────────────────────────────────────────────────────────────────────── */
 @layer base {
   :root {
-    --bg: 10 10 11;
-    --bg-elevated: 17 17 19;
-    --text: 237 237 237;
-    --text-muted: 138 138 143;
-    --text-faint: 85 85 90;
-    --accent: 201 206 214;
-
+    --bg: #0b0c0e;
     --surface: rgba(255, 255, 255, 0.03);
-    --border: rgba(255, 255, 255, 0.08);
-    --border-hover: rgba(255, 255, 255, 0.16);
+    --border: rgba(255, 255, 255, 0.07);
+    --text-strong: #f2f2f2;
+    --text: #a1a1aa;
+    --text-faint: #5c5c66;
+    --accent: #d9c7a7;
 
-    /* Light that sits on top of the page: spotlights, grain, grid. */
+    --bg-rgb: 11 12 14;
+    --text-strong-rgb: 242 242 242;
+    --text-rgb: 161 161 170;
+    --text-faint-rgb: 92 92 102;
+    --accent-rgb: 217 199 167;
+
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --grain-opacity: 0.02;
+
+    /* Legacy, for components not yet rebuilt. Removed in the final cleanup. */
     --light: 255 255 255;
-    --grid-line: rgba(255, 255, 255, 0.045);
-    --grain-opacity: 0.025;
-    /* Ambient light pools: always light, in either theme. */
-    --pool: 255 255 255;
-    --pool-strength: 0.045;
-    --shadow-lift: 0 1px 2px rgb(0 0 0 / 0.2), 0 12px 32px -12px rgb(0 0 0 / 0.45);
-    --shadow-float: 0 1px 2px rgb(0 0 0 / 0.25), 0 24px 64px -24px rgb(0 0 0 / 0.6);
-
-    --shell-x: clamp(1.25rem, 5vw, 3rem);
-    --nav-h: 3.75rem;
+    --bg-elevated: 17 18 21;
+    --border-hover: rgba(255, 255, 255, 0.14);
+    --grid-line: rgba(255, 255, 255, 0.04);
 
     color-scheme: dark;
   }
 
-
   html {
     -webkit-text-size-adjust: 100%;
-    scroll-padding-top: calc(var(--nav-h) + 2rem);
+    scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
   }
 
+  /* The ground lives on <body> only, so it propagates to the canvas and the
+     fixed spotlight layer at z-index -10 can sit between it and the content. */
   body {
-    @apply bg-bg font-sans text-text antialiased;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: Geist, ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     font-synthesis-weight: none;
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
@@ -61,9 +63,8 @@
   h2,
   h3,
   h4 {
-    @apply font-sans text-text;
+    color: var(--text-strong);
     font-weight: 500;
-    letter-spacing: -0.025em;
     text-wrap: balance;
   }
 
@@ -72,229 +73,211 @@
   }
 
   ::selection {
-    background-color: rgb(var(--text) / 0.16);
-    color: rgb(var(--text));
+    background-color: rgb(var(--accent-rgb) / 0.28);
+    color: var(--text-strong);
   }
 
-  /* One focus treatment everywhere, keyboard-only. */
+  /* One focus treatment everywhere, keyboard only. */
   :focus-visible {
-    outline: 1px solid rgb(var(--accent) / 0.9);
+    outline: 1px solid rgb(var(--accent-rgb) / 0.85);
     outline-offset: 3px;
-    border-radius: 3px;
+    border-radius: 4px;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-
     *,
     *::before,
     *::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
+      transition-delay: 0ms !important;
     }
   }
 }
 
 @layer components {
-  .shell {
-    width: 100%;
-    max-width: 75rem; /* 1200px */
-    margin-inline: auto;
-    padding-inline: var(--shell-x);
-  }
-
-  /* Generous vertical rhythm: 88px mobile up to 160px on a wide screen. */
-  .section-y {
-    padding-block: 5.5rem;
-  }
-
-  @media (min-width: 768px) {
-    .section-y {
-      padding-block: 7.5rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .section-y {
-      padding-block: 10rem;
-    }
-  }
-
-  /* ── Surfaces ──────────────────────────────────────────────────────────── */
-  .panel {
-    position: relative;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 0.875rem;
-  }
-
-  /* Light glass. --surface over a translucent ground, so text behind the
-     bar is blurred into silence rather than showing through. */
-  .glass {
-    background: linear-gradient(var(--surface), var(--surface)), rgb(var(--bg) / 0.72);
-    border: 1px solid var(--border);
-    backdrop-filter: blur(16px) saturate(140%);
-    -webkit-backdrop-filter: blur(16px) saturate(140%);
-  }
-
-  /* Overlays sit over dense content, so their ground is nearly opaque and
-     the blur does the rest. Same tokens, more weight. */
-  .glass-strong {
-    background: linear-gradient(var(--surface), var(--surface)), rgb(var(--bg) / 0.9);
-    border: 1px solid var(--border);
-    backdrop-filter: blur(16px) saturate(140%);
-    -webkit-backdrop-filter: blur(16px) saturate(140%);
-  }
-
-  .hairline {
-    border: 1px solid var(--border);
-  }
-
-  .rule {
-    height: 1px;
-    width: 100%;
-    background: var(--border);
-  }
-
   /* ── Type ──────────────────────────────────────────────────────────────── */
+
+  /* Section labels and nav items: 12px mono caps, wide tracking. */
   .label {
     font-family: 'Geist Mono', ui-monospace, monospace;
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     line-height: 1.2;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: rgb(var(--text-muted));
     font-weight: 400;
   }
 
+  /* Dates and metadata. */
   .meta {
     font-family: 'Geist Mono', ui-monospace, monospace;
-    font-size: 0.6875rem;
-    letter-spacing: 0.04em;
-    color: rgb(var(--text-faint));
+    font-size: 0.75rem;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+    color: var(--text-faint);
   }
 
-  .prose-body {
-    font-size: 1rem;
-    line-height: 1.65;
-    color: rgb(var(--text-muted));
-    max-width: 60ch;
-  }
-
-  @media (min-width: 768px) {
-    .prose-body {
-      font-size: 1.0625rem;
-    }
+  /* The accent serif: one emphasised word per section, never more. Instrument
+     Serif runs small next to Geist, so it is optically scaled up to match. */
+  .serif {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.14em;
+    line-height: 1;
+    letter-spacing: -0.005em;
+    color: var(--text-strong);
   }
 
   .chip {
     display: inline-flex;
     align-items: center;
-    gap: 0.375rem;
     border: 1px solid var(--border);
-    border-radius: 0.375rem;
-    padding: 0.1875rem 0.5rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 0.125rem 0.5rem;
     font-family: 'Geist Mono', ui-monospace, monospace;
     font-size: 0.6875rem;
-    letter-spacing: 0.02em;
-    color: rgb(var(--text-muted));
+    line-height: 1.45;
+    letter-spacing: 0.01em;
+    color: var(--text);
     white-space: nowrap;
   }
 
-  /* ── Backdrop ──────────────────────────────────────────────────────────── */
-  /* Dot matrix that dissolves toward the edges. */
-  .dot-matrix {
-    background-image: radial-gradient(circle at 1px 1px, var(--grid-line) 1px, transparent 0);
-    background-size: 32px 32px;
-    mask-image: radial-gradient(ellipse 70% 60% at 50% 35%, #000 10%, transparent 75%);
-    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 35%, #000 10%, transparent 75%);
+  /* Underline drawn in from the left, in champagne. Works across line breaks. */
+  .link {
+    color: var(--text-strong);
+    background-image: linear-gradient(var(--accent), var(--accent));
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0% 1px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    transition: background-size 0.35s var(--ease);
   }
 
-  .grid-lines {
-    background-image:
-      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-    background-size: 80px 80px;
-    mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 5%, transparent 80%);
-    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 5%, transparent 80%);
+  .link:hover,
+  .link:focus-visible,
+  .group:hover .link-on-group {
+    background-size: 100% 1px;
   }
 
-  /* ── Spotlight panel ───────────────────────────────────────────────────────
-     Two radial gradients driven by --mx/--my (written by the Spotlight
-     component in a rAF, never through React state):
-       ::before  the light pool inside the card, ~6% white
-       ::after   the same gradient masked to the 1px border ring, so the edge
-                 brightens near the cursor rather than the whole outline
-                 switching on at once.
-     Both sit at z-index -1 inside an isolated stacking context: above the
-     card's own background, below its content, and without forcing every child
-     to be positioned (which would break stretched links). */
-  .spotlight {
-    isolation: isolate;
-    transition: border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  /* ── Surfaces ──────────────────────────────────────────────────────────── */
+  .glass {
+    background: rgb(var(--bg-rgb) / 0.72);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
   }
 
-  .spotlight::before,
-  .spotlight::after {
-    content: '';
-    position: absolute;
-    z-index: -1;
-    border-radius: inherit;
-    opacity: 0;
-    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    pointer-events: none;
+  /* Overlays sit over dense text, so their ground is nearly opaque. */
+  .glass-strong {
+    background: rgb(15 16 19 / 0.94);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
   }
 
-  .spotlight::before {
+  /* ── The page-wide cursor spotlight ────────────────────────────────────── */
+  .cursor-spotlight {
+    position: fixed;
     inset: 0;
+    z-index: -10;
+    pointer-events: none;
     background: radial-gradient(
-      var(--spot-r, 340px) circle at var(--mx, 50%) var(--my, 50%),
-      rgb(var(--light) / 0.06),
-      transparent 70%
+      600px circle at var(--spot-x, 50%) var(--spot-y, -20%),
+      rgb(var(--accent-rgb) / 0.05),
+      transparent 80%
     );
+    opacity: 0;
+    transition: opacity 0.6s var(--ease);
   }
 
-  /* inset: -1px puts the ring on the border itself, not inside it. */
-  .spotlight::after {
-    inset: -1px;
-    padding: 1px;
-    background: radial-gradient(
-      calc(var(--spot-r, 340px) * 0.75) circle at calc(var(--mx, 50%) + 1px) calc(var(--my, 50%) + 1px),
-      rgb(var(--light) / 0.42),
-      transparent 70%
-    );
-    -webkit-mask:
-      linear-gradient(#000 0 0) content-box,
-      linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask:
-      linear-gradient(#000 0 0) content-box,
-      linear-gradient(#000 0 0);
-    mask-composite: exclude;
-  }
-
-  .spotlight[data-spotlight='on']::before,
-  .spotlight[data-spotlight='on']::after {
+  .cursor-spotlight[data-active='true'] {
     opacity: 1;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .spotlight::before,
-    .spotlight::after {
-      display: none;
+  /* ── Motion ────────────────────────────────────────────────────────────── */
+
+  /* Load entrance for whatever is on screen at first paint: a short fade and
+     12px of travel, staggered 60ms by `--i`. `backwards`, not `both`: once it
+     ends the element is back on its own styles, so hover transitions on the
+     same element (row dimming, for one) are never pinned by the animation. */
+  @keyframes enter {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 12px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: none;
     }
   }
 
-  /* ── Links ─────────────────────────────────────────────────────────────── */
+  .enter {
+    animation: enter 0.6s var(--ease) backwards;
+    animation-delay: calc(var(--i, 0) * 60ms);
+  }
+
+  /* Soft champagne pulse for the status dot. Opacity and scale only, no glow. */
+  @keyframes pulse-soft {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.35;
+      transform: scale(0.8);
+    }
+  }
+
+  .pulse-soft {
+    animation: pulse-soft 2.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .enter,
+    .pulse-soft {
+      animation: none;
+    }
+  }
+
+  /* ── Legacy component classes ──────────────────────────────────────────────
+     Kept only until the components using them are rebuilt; deleted in the
+     final cleanup task. */
+  .shell {
+    width: 100%;
+    max-width: 75rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 5vw, 3rem);
+  }
+
+  .section-y {
+    padding-block: 5rem;
+  }
+
+  .panel {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+  }
+
+  .prose-body {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--text);
+    max-width: 62ch;
+  }
+
   .link-underline {
-    background-image: linear-gradient(rgb(var(--text)), rgb(var(--text)));
+    background-image: linear-gradient(var(--accent), var(--accent));
     background-size: 0% 1px;
     background-position: 0 100%;
     background-repeat: no-repeat;
-    transition: background-size 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: background-size 0.35s var(--ease);
   }
 
   .link-underline:hover,
@@ -302,111 +285,41 @@
     background-size: 100% 1px;
   }
 
-  /* ── Command palette (cmdk) ────────────────────────────────────────────── */
+  .soft-pulse {
+    animation: pulse-soft 2.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .sharpen {
+    animation: enter 0.6s var(--ease) backwards;
+  }
+
+  .dot-matrix {
+    background-image: radial-gradient(circle at 1px 1px, var(--grid-line) 1px, transparent 0);
+    background-size: 32px 32px;
+  }
+
+  .spotlight {
+    isolation: isolate;
+  }
+
   .cmd-group [cmdk-group-heading] {
     @apply px-3 pb-1.5 pt-3;
     font-family: 'Geist Mono', ui-monospace, monospace;
     font-size: 0.625rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: rgb(var(--text-faint));
+    color: var(--text-faint);
   }
 
   .cmd-item {
     @apply flex cursor-pointer select-none items-center gap-3 rounded-lg px-3 py-2.5 text-sm;
-    color: rgb(var(--text-muted));
+    color: var(--text);
     transition: background-color 0.18s ease;
   }
 
   .cmd-item[data-selected='true'] {
-    background: rgb(var(--light) / 0.05);
-    color: rgb(var(--text));
-    box-shadow: inset 0 0 0 1px var(--border);
-  }
-
-  .cmd-item[data-selected='true'] svg {
-    color: rgb(var(--text));
-  }
-
-  /* ── Hero entrance ───────────────────────────────────────────────────────
-     CSS, and transform-only. A JS-driven fade holds its element at opacity 0
-     until React hydrates, and the hero copy contains the LCP element, so the
-     paint has to happen on the first frame. */
-  @keyframes hero-rise {
-    from {
-      transform: translate3d(0, 16px, 0);
-    }
-    to {
-      transform: none;
-    }
-  }
-
-  .hero-rise {
-    animation: hero-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
-    will-change: transform;
-  }
-
-  /* Blur-to-sharp for the name. No opacity: the text is painted, and so
-     counted for LCP, from the very first frame. */
-  @keyframes hero-sharpen {
-    from {
-      filter: blur(14px);
-      transform: translate3d(0, 0.08em, 0);
-    }
-    to {
-      filter: blur(0);
-      transform: none;
-    }
-  }
-
-  .hero-sharpen {
-    animation: hero-sharpen 0.56s cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
-
-  /* Blur-to-sharp, for headings below the fold. */
-  @keyframes sharpen {
-    from {
-      opacity: 0;
-      filter: blur(8px);
-      transform: translate3d(0, 10px, 0);
-    }
-    to {
-      opacity: 1;
-      filter: blur(0);
-      transform: none;
-    }
-  }
-
-  .sharpen {
-    animation: sharpen 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .hero-rise,
-    .hero-sharpen,
-    .sharpen {
-      animation: none;
-      opacity: 1;
-      filter: none;
-      transform: none;
-    }
-  }
-
-  /* Soft white pulse for the availability dot. Opacity only — no glow. */
-  @keyframes soft-pulse {
-    0%,
-    100% {
-      opacity: 0.95;
-      transform: scale(1);
-    }
-    50% {
-      opacity: 0.3;
-      transform: scale(0.82);
-    }
-  }
-
-  .soft-pulse {
-    animation: soft-pulse 2.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-strong);
   }
 }
 
@@ -418,11 +331,5 @@
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
-  }
-
-  /* Monochrome fade, for the bottom of a scrollable area. */
-  .fade-b {
-    mask-image: linear-gradient(to bottom, #000 70%, transparent);
-    -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent);
   }
 }

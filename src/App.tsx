@@ -1,9 +1,8 @@
 import { Suspense, lazy, useCallback, useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import { Backdrop } from '@/components/Backdrop';
+import { CursorSpotlight } from '@/components/CursorSpotlight';
 import { GrainOverlay } from '@/components/GrainOverlay';
 import { Nav } from '@/components/Nav';
-import { ScrollProgress } from '@/components/ScrollProgress';
 import { useGlobalShortcuts } from '@/hooks/useGlobalShortcuts';
 import { useLenis } from '@/hooks/useLenis';
 import { whenIdle } from '@/lib/idle';
@@ -59,8 +58,7 @@ export default function App() {
 
   return (
     <>
-      <ScrollProgress />
-      <Backdrop />
+      <CursorSpotlight />
       <GrainOverlay />
 
       <a

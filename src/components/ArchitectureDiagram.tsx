@@ -4,7 +4,7 @@ import type { Architecture } from '@/data/types';
 /**
  * Renders a project's architecture as an SVG flow from its node/edge data.
  * Hand-drawn SVG rather than a diagramming library: it is a few hundred bytes,
- * it inherits the theme tokens, and it has no runtime to load.
+ * it inherits the colour tokens, and it has no runtime to load.
  */
 
 const COL_W = 168;
@@ -18,10 +18,10 @@ const toneStyles: Record<
   { fill: string; stroke: string; label: string }
 > = {
   // Monochrome: role is carried by how much light a node holds.
-  client: { fill: 'rgb(var(--bg))', stroke: 'var(--border)', label: 'rgb(var(--text-muted))' },
-  service: { fill: 'rgb(var(--bg-elevated))', stroke: 'var(--border-hover)', label: 'rgb(var(--text))' },
-  model: { fill: 'rgb(var(--light) / 0.07)', stroke: 'rgb(var(--accent) / 0.7)', label: 'rgb(var(--text))' },
-  store: { fill: 'rgb(var(--bg))', stroke: 'var(--border-hover)', label: 'rgb(var(--text-muted))' },
+  client: { fill: 'var(--bg)', stroke: 'var(--border)', label: 'var(--text)' },
+  service: { fill: 'rgb(var(--bg-elevated))', stroke: 'var(--border-hover)', label: 'var(--text-strong)' },
+  model: { fill: 'rgb(var(--light) / 0.07)', stroke: 'rgb(var(--accent-rgb) / 0.7)', label: 'var(--text-strong)' },
+  store: { fill: 'var(--bg)', stroke: 'var(--border-hover)', label: 'var(--text)' },
 };
 
 export function ArchitectureDiagram({ architecture }: { architecture: Architecture }) {
@@ -69,7 +69,7 @@ export function ArchitectureDiagram({ architecture }: { architecture: Architectu
               markerHeight="6"
               orient="auto-start-reverse"
             >
-              <path d="M 0 1 L 9 5 L 0 9 z" fill="rgb(var(--text-muted))" />
+              <path d="M 0 1 L 9 5 L 0 9 z" fill="var(--text)" />
             </marker>
           </defs>
 
@@ -102,7 +102,7 @@ export function ArchitectureDiagram({ architecture }: { architecture: Architectu
                   <path
                     d={path}
                     fill="none"
-                    stroke="rgb(var(--text-muted) / 0.45)"
+                    stroke="rgb(var(--text-rgb) / 0.45)"
                     strokeWidth="1"
                     markerEnd="url(#arch-arrow)"
                   />
@@ -113,7 +113,7 @@ export function ArchitectureDiagram({ architecture }: { architecture: Architectu
                       textAnchor="middle"
                       className="font-mono"
                       fontSize="9.5"
-                      fill="rgb(var(--text-faint))"
+                      fill="var(--text-faint)"
                     >
                       {edge.label}
                     </text>
@@ -155,7 +155,7 @@ export function ArchitectureDiagram({ architecture }: { architecture: Architectu
                       textAnchor="middle"
                       className="font-mono"
                       fontSize="9"
-                      fill="rgb(var(--text-faint))"
+                      fill="var(--text-faint)"
                     >
                       {node.note}
                     </text>
