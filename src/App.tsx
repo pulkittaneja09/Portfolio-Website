@@ -17,11 +17,13 @@ const CommandPalette = lazy(() =>
 const TerminalOverlay = lazy(() =>
   import('@/components/TerminalOverlay').then((m) => ({ default: m.TerminalOverlay })),
 );
+const AskWidget = lazy(() => import('@/components/AskWidget').then((m) => ({ default: m.AskWidget })));
 
 type Overlay = 'palette' | 'terminal' | null;
 
 export default function App() {
   const [overlay, setOverlay] = useState<Overlay>(null);
+  const [widgetReady, setWidgetReady] = useState(false);
   // Once an overlay has been opened it stays mounted, so its exit animation
   // has something to animate out of.
   const [loaded, setLoaded] = useState({ palette: false, terminal: false });
@@ -47,6 +49,7 @@ export default function App() {
     const warm = () => {
       void import('@/components/CommandPalette');
       void import('@/components/TerminalOverlay');
+      setWidgetReady(true);
     };
     return whenIdle(warm, 4000);
   }, []);
@@ -76,6 +79,8 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
+
+      <Suspense fallback={null}>{widgetReady && <AskWidget />}</Suspense>
 
       <Suspense fallback={null}>
         {loaded.palette && (

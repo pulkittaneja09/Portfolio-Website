@@ -25,7 +25,7 @@ export default {
         mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       fontSize: {
-        'display-xl': ['clamp(2.75rem, 9vw, 6.5rem)', { lineHeight: '0.92', letterSpacing: '-0.035em' }],
+        'display-xl': ['clamp(2.35rem, 9vw, 6.5rem)', { lineHeight: '0.92', letterSpacing: '-0.035em' }],
         'display-lg': ['clamp(2rem, 5.5vw, 3.75rem)', { lineHeight: '0.98', letterSpacing: '-0.03em' }],
         'display-md': ['clamp(1.5rem, 3.5vw, 2.25rem)', { lineHeight: '1.08', letterSpacing: '-0.02em' }],
       },

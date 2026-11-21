@@ -53,8 +53,9 @@ export function Nav({ onOpenPalette, onOpenTerminal, isHome }: NavProps) {
           </span>
         </Link>
 
-        {/* Section links: desktop only — mobile navigates via ⌘K and scrolling. */}
-        <ul className="hidden items-center gap-1 md:flex">
+        {/* Section links appear once there is room for them beside the
+            controls; below that, ⌘K and scrolling do the navigating. */}
+        <ul className="hidden items-center gap-1 lg:flex">
           {nav.map((item) => {
             const isActive = isHome && active === item.id;
             return (
@@ -98,7 +99,7 @@ export function Nav({ onOpenPalette, onOpenTerminal, isHome }: NavProps) {
             aria-label="Open command palette"
           >
             <CommandIcon className="h-3.5 w-3.5" />
-            <span className="hidden lg:inline">Jump to…</span>
+            <span className="hidden xl:inline">Jump to…</span>
             <kbd className="rounded border border-line bg-elevated px-1.5 py-0.5 font-mono text-[0.625rem] text-faint">
               ⌘K
             </kbd>

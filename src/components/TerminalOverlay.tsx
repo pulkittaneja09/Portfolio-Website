@@ -233,7 +233,8 @@ export function TerminalOverlay({ open, onClose }: Props) {
                         key={i}
                         className={cn('whitespace-pre-wrap break-words', toneClass[line.tone ?? 'default'])}
                       >
-                        {line.text || ' '}
+                        {/* U+00A0 keeps blank output lines at full line height. */}
+                        {line.text || '\u00a0'}
                       </p>
                     ),
                   )}

@@ -19,16 +19,19 @@ function AnimatedName({ name }: { name: string }) {
   return (
     <>
       {words.map((word, i) => (
-        <span key={word} className="inline-block overflow-hidden pb-[0.06em] align-bottom">
-          <motion.span
-            className="inline-block"
-            initial={{ y: '102%' }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.85, delay: 0.08 + i * 0.09, ease: [0.16, 1, 0.3, 1] }}
-          >
-            {word}
-            {i < words.length - 1 ? ' ' : ''}
-          </motion.span>
+        <span key={word}>
+          <span className="inline-block overflow-hidden pb-[0.06em] align-bottom">
+            <motion.span
+              className="inline-block"
+              initial={{ y: '102%' }}
+              animate={{ y: 0 }}
+              transition={{ duration: 0.85, delay: 0.08 + i * 0.09, ease: [0.16, 1, 0.3, 1] }}
+            >
+              {word}
+            </motion.span>
+          </span>
+          {/* A plain breaking space between the blocks, so the name wraps. */}
+          {i < words.length - 1 ? ' ' : null}
         </span>
       ))}
     </>
@@ -57,7 +60,7 @@ export function Hero() {
       <div className="shell">
         <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16">
           {/* ── Copy ─────────────────────────────────────────────────────── */}
-          <div className="max-w-2xl">
+          <div className="min-w-0 max-w-2xl">
             <motion.div {...fade(0)}>
               <StatusBadge label={profile.availability} />
             </motion.div>
@@ -132,7 +135,7 @@ export function Hero() {
                   animate: { opacity: 1, scale: 1 },
                   transition: { duration: 1.1, delay: 0.3, ease: [0.16, 1, 0.3, 1] as const },
                 })}
-            className="relative mx-auto w-full max-w-md lg:max-w-none"
+            className="relative mx-auto w-full min-w-0 max-w-md lg:max-w-none"
           >
             <HeroVisual />
 
