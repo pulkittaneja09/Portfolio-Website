@@ -21,7 +21,13 @@ const ink = (last: boolean) => (last ? 'var(--text-strong)' : 'var(--text)');
 
 function Arrow({ d, head }: { d: string; head: string }) {
   return (
-    <g stroke="rgba(255,255,255,0.28)" strokeWidth="1" fill="none" strokeLinecap="round" strokeLinejoin="round">
+    <g
+      stroke="rgba(255,255,255,0.28)"
+      strokeWidth="1"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <path d={d} />
       <path d={head} />
     </g>

@@ -51,7 +51,12 @@ function Block({ label, children }: { label: string; children: ReactNode }) {
 
 function ExternalLink({ href, children }: { href: string; children: string }) {
   return (
-    <a href={href} target="_blank" rel="noreferrer noopener" className="group inline-flex items-center gap-1.5 text-strong">
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer noopener"
+      className="group inline-flex items-center gap-1.5 text-strong"
+    >
       <span className="link link-on-group">{children}</span>
       <ArrowUpRightIcon
         className="h-3.5 w-3.5 text-body transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"

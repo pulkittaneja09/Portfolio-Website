@@ -29,7 +29,10 @@ function inPage() {
   const parse = (c) => {
     const m = c.match(/rgba?\(([^)]+)\)/);
     if (!m) return { r: 0, g: 0, b: 0, a: 0 };
-    const [r, g, b, a = 1] = m[1].split(/[\s,/]+/).filter(Boolean).map(Number);
+    const [r, g, b, a = 1] = m[1]
+      .split(/[\s,/]+/)
+      .filter(Boolean)
+      .map(Number);
     return { r, g, b, a };
   };
   const over = (top, bottom) => ({
@@ -53,7 +56,8 @@ function inPage() {
 
   const backgroundOf = (el, extra) => {
     const chain = [];
-    for (let node = el; node && node !== document.documentElement; node = node.parentElement) chain.unshift(node);
+    for (let node = el; node && node !== document.documentElement; node = node.parentElement)
+      chain.unshift(node);
     let bg = { ...ground };
     if (extra) bg = over(extra, bg);
     chain.forEach((node) => {
@@ -63,8 +67,7 @@ function inPage() {
     return bg;
   };
 
-  const ownText = (el) =>
-    [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim().length > 1);
+  const ownText = (el) => [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim().length > 1);
 
   return {
     nameLines() {
@@ -72,13 +75,19 @@ function inPage() {
       const range = document.createRange();
       range.selectNodeContents(h1);
       const lines = new Set([...range.getClientRects()].map((r) => Math.round(r.top))).size;
-      return { lines, textW: Math.round(range.getBoundingClientRect().width), boxW: Math.round(h1.getBoundingClientRect().width), font: getComputedStyle(h1).fontSize };
+      return {
+        lines,
+        textW: Math.round(range.getBoundingClientRect().width),
+        boxW: Math.round(h1.getBoundingClientRect().width),
+        font: getComputedStyle(h1).fontSize,
+      };
     },
     themeToggles() {
       const hits = [];
       document.querySelectorAll('button, a, [role="switch"], input').forEach((el) => {
         const text = `${el.textContent} ${el.getAttribute('aria-label') || ''} ${el.getAttribute('title') || ''}`;
-        if (/\btheme\b|light mode|dark mode|toggle (light|dark)|switch to (light|dark)/i.test(text)) hits.push(text.trim().slice(0, 60));
+        if (/\btheme\b|light mode|dark mode|toggle (light|dark)|switch to (light|dark)/i.test(text))
+          hits.push(text.trim().slice(0, 60));
       });
       if (document.documentElement.classList.contains('light')) hits.push('html.light class present');
       for (const sheet of document.styleSheets) {
@@ -90,7 +99,8 @@ function inPage() {
         }
         for (const rule of rules) {
           const text = rule.cssText;
-          if (/html\.light|\.light\s*\{|prefers-color-scheme:\s*light/.test(text)) hits.push(`CSS: ${text.slice(0, 60)}`);
+          if (/html\.light|\.light\s*\{|prefers-color-scheme:\s*light/.test(text))
+            hits.push(`CSS: ${text.slice(0, 60)}`);
         }
       }
       return hits;
@@ -101,11 +111,15 @@ function inPage() {
       const vw = window.innerWidth;
       document.querySelectorAll('body *').forEach((el) => {
         const r = el.getBoundingClientRect();
-        if (r.width < 1 || r.height < 1 || r.bottom <= 0 || r.top >= vh || r.right <= 0 || r.left >= vw) return;
+        if (r.width < 1 || r.height < 1 || r.bottom <= 0 || r.top >= vh || r.right <= 0 || r.left >= vw)
+          return;
         const cs = getComputedStyle(el);
         if (cs.display === 'none' || cs.visibility === 'hidden') return;
         const blur = /blur\(/.test(cs.filter) || /blur\(/.test(cs.backdropFilter || '');
-        if (parseFloat(cs.opacity) < 1 || blur) out.push(`${el.tagName.toLowerCase()}.${String(el.className).slice(0, 40)} op=${cs.opacity}${blur ? ' BLUR' : ''}`);
+        if (parseFloat(cs.opacity) < 1 || blur)
+          out.push(
+            `${el.tagName.toLowerCase()}.${String(el.className).slice(0, 40)} op=${cs.opacity}${blur ? ' BLUR' : ''}`,
+          );
       });
       return out;
     },
@@ -123,7 +137,13 @@ function inPage() {
         const r = el.getBoundingClientRect();
         if (r.width < 1) return;
         const fg = parse(cs.color);
-        if (!(Math.abs(fg.r - body.r) < 2 && Math.abs(fg.g - body.g) < 2 && Math.abs(fg.b - body.b) < 2 && fg.a > 0.99)) return;
+        if (!(
+          Math.abs(fg.r - body.r) < 2 &&
+          Math.abs(fg.g - body.g) < 2 &&
+          Math.abs(fg.b - body.b) < 2 &&
+          fg.a > 0.99
+        ))
+          return;
         const bg = backgroundOf(el, spot);
         const value = ratio(fg, bg);
         count += 1;
@@ -160,7 +180,6 @@ function inPage() {
 async function call(page, name, arg) {
   return page.evaluate(
     ({ source, name, arg }) => {
-      // eslint-disable-next-line no-new-func
       const api = new Function(`return (${source})()`)();
       return api[name](arg);
     },
@@ -195,7 +214,11 @@ async function settle(page) {
       hasTouch: mobile,
     });
     await context.route('https://api.github.com/**', (route) =>
-      route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ public_repos: 22, login: 'pulkittaneja09' }) }),
+      route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({ public_repos: 22, login: 'pulkittaneja09' }),
+      }),
     );
     const page = await context.newPage();
     const errors = [];
@@ -227,7 +250,9 @@ async function settle(page) {
     // Hover a project row (desktop) and re-check its contrast with the light on it.
     let hovered = null;
     if (!mobile) {
-      await page.evaluate(() => document.querySelector('#projects .row-card').scrollIntoView({ block: 'center' }));
+      await page.evaluate(() =>
+        document.querySelector('#projects .row-card').scrollIntoView({ block: 'center' }),
+      );
       await settle(page);
       const box = await page.locator('#projects .row-card').first().boundingBox();
       await page.mouse.move(box.x + box.width * 0.6, box.y + box.height * 0.3, { steps: 6 });

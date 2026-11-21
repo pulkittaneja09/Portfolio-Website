@@ -29,12 +29,6 @@
 
     --ease: cubic-bezier(0.16, 1, 0.3, 1);
 
-    /* Legacy, for components not yet rebuilt. Removed in the final cleanup. */
-    --light: 255 255 255;
-    --bg-elevated: 17 18 21;
-    --border-hover: rgba(255, 255, 255, 0.14);
-    --grid-line: rgba(255, 255, 255, 0.04);
-
     color-scheme: dark;
   }
 
@@ -48,7 +42,12 @@
   body {
     background-color: var(--bg);
     color: var(--text);
-    font-family: Geist, ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-family:
+      Geist,
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      sans-serif;
     font-size: 16px;
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
@@ -319,17 +318,13 @@
      over an opaque ground so the cursor spotlight never shines through behind
      its text (that would cost contrast). */
   .founder-card {
-    background:
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0) 45%),
-      var(--bg);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0) 45%), var(--bg);
   }
 
   /* 2% white, but opaque: the agent card looks exactly like rgba(255,255,255,
      .02) on the page, while blocking the spotlight behind its trace text. */
   .surface-solid {
-    background:
-      linear-gradient(rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02)),
-      var(--bg);
+    background: linear-gradient(rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02)), var(--bg);
   }
 
   /* Inside a hovered row the panel, a chip's own fill and the spotlight stack
@@ -494,70 +489,7 @@
     }
   }
 
-  /* ── Legacy component classes ──────────────────────────────────────────────
-     Kept only until the components using them are rebuilt; deleted in the
-     final cleanup task. */
-  .shell {
-    width: 100%;
-    max-width: 75rem;
-    margin-inline: auto;
-    padding-inline: clamp(1.25rem, 5vw, 3rem);
-  }
-
-  /* Old sections nested in the new right column: no second gutter. */
-  main .shell {
-    max-width: none;
-    padding-inline: 0;
-  }
-
-  .section-y {
-    padding-block: 5rem;
-  }
-
-  .panel {
-    position: relative;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 0.75rem;
-  }
-
-  .prose-body {
-    font-size: 1rem;
-    line-height: 1.65;
-    color: var(--text);
-    max-width: 62ch;
-  }
-
-  .link-underline {
-    background-image: linear-gradient(var(--accent), var(--accent));
-    background-size: 0% 1px;
-    background-position: 0 100%;
-    background-repeat: no-repeat;
-    transition: background-size 0.35s var(--ease);
-  }
-
-  .link-underline:hover,
-  .link-underline:focus-visible {
-    background-size: 100% 1px;
-  }
-
-  .soft-pulse {
-    animation: pulse-soft 2.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-
-  .sharpen {
-    animation: enter 0.6s var(--ease) backwards;
-  }
-
-  .dot-matrix {
-    background-image: radial-gradient(circle at 1px 1px, var(--grid-line) 1px, transparent 0);
-    background-size: 32px 32px;
-  }
-
-  .spotlight {
-    isolation: isolate;
-  }
-
+  /* ── Command palette (cmdk) ──────────────────────────────────────────── */
   .cmd-group [cmdk-group-heading] {
     @apply px-3 pb-1.5 pt-3;
     font-family: 'Geist Mono', ui-monospace, monospace;

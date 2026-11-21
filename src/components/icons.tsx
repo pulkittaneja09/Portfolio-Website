@@ -127,8 +127,6 @@ export function CommandIcon(props: IconProps) {
   );
 }
 
-
-
 export function CopyIcon(props: IconProps) {
   return (
     <svg {...base} {...props}>

@@ -237,7 +237,10 @@ export function AgentRun({ className }: { className?: string }) {
           const done = frame.resolved > i;
           const active = frame.shown === i + 1 && !reduced;
           return (
-            <div key={`${frame.trace}-${i}`} className={cn(row, 'grid-cols-[5ch_minmax(0,1fr)_auto_0.75rem]')}>
+            <div
+              key={`${frame.trace}-${i}`}
+              className={cn(row, 'grid-cols-[5ch_minmax(0,1fr)_auto_0.75rem]')}
+            >
               {visible && (
                 <>
                   <span className="line-in text-faint">{step.kind}</span>

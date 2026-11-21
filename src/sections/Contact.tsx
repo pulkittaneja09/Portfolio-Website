@@ -34,8 +34,8 @@ export function Contact() {
           Let&rsquo;s build <em className="serif">something</em>.
         </p>
         <p className="mt-5 max-w-prose text-body">
-          I&rsquo;m looking for AI/ML and backend internships for 2027. Email is the fastest way to reach
-          me, and I reply to everything that is about work.
+          I&rsquo;m looking for AI/ML and backend internships for 2027. Email is the fastest way to reach me,
+          and I reply to everything that is about work.
         </p>
       </Reveal>
 
@@ -51,7 +51,9 @@ export function Contact() {
           </span>
         </button>
         <p className="meta mt-3 flex flex-wrap items-center gap-x-2" aria-live="polite">
-          <span className={copied ? 'text-accent' : undefined}>{copied ? 'Copied to clipboard' : 'Click to copy'}</span>
+          <span className={copied ? 'text-accent' : undefined}>
+            {copied ? 'Copied to clipboard' : 'Click to copy'}
+          </span>
           <span aria-hidden>·</span>
           <a href={`mailto:${profile.email}`} className="group inline-flex items-center gap-1 text-body">
             <span className="link link-on-group text-body">open in your mail app</span>

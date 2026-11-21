@@ -80,11 +80,7 @@ export function AskWidget() {
             aria-label="Ask about Pulkit"
             className="glass-strong fixed bottom-20 right-4 z-[66] flex max-h-[min(30rem,70vh)] w-[min(24rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-xl shadow-[0_24px_64px_-24px_rgba(0,0,0,0.7)] sm:bottom-[4.75rem] sm:right-6"
             initial={reduced ? undefined : { opacity: 0, y: 10, scale: 0.985 }}
-            animate={
-              reduced
-                ? undefined
-                : { opacity: 1, y: 0, scale: 1 }
-            }
+            animate={reduced ? undefined : { opacity: 1, y: 0, scale: 1 }}
             exit={reduced ? undefined : { opacity: 0, y: 6, scale: 0.99 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >

@@ -72,11 +72,7 @@ export function CommandPalette({ open, onClose, onOpenTerminal }: Props) {
           <m.div
             className="relative w-full max-w-xl"
             initial={reduced ? undefined : { opacity: 0, y: -8, scale: 0.985 }}
-            animate={
-              reduced
-                ? undefined
-                : { opacity: 1, y: 0, scale: 1 }
-            }
+            animate={reduced ? undefined : { opacity: 1, y: 0, scale: 1 }}
             exit={reduced ? undefined : { opacity: 0, y: -6, scale: 0.99 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >

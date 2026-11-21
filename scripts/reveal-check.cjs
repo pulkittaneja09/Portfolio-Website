@@ -125,15 +125,25 @@ async function wheelTo(page, target, step = 300) {
     const page = await context.newPage();
     await page.goto(BASE + '/', { waitUntil: 'networkidle' });
     await page.waitForTimeout(1500);
-    await page.screenshot({ path: require('path').join(__dirname, '..', '.screenshots', 'reveal-fullpage.png'), fullPage: true });
+    await page.screenshot({
+      path: require('path').join(__dirname, '..', '.screenshots', 'reveal-fullpage.png'),
+      fullPage: true,
+    });
     const armed = await page.evaluate(() => document.querySelectorAll('[data-reveal]').length);
-    results.push({ label: 'full-page capture without scrolling', found: armed ? [`${armed} element(s) hidden`] : [] });
+    results.push({
+      label: 'full-page capture without scrolling',
+      found: armed ? [`${armed} element(s) hidden`] : [],
+    });
     await context.close();
   }
 
   // ── Mobile, touch scrolling ──────────────────────────────────────────────
   {
-    const context = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+    const context = await browser.newContext({
+      viewport: { width: 390, height: 844 },
+      isMobile: true,
+      hasTouch: true,
+    });
     const page = await context.newPage();
     await page.goto(BASE + '/', { waitUntil: 'networkidle' });
     await page.waitForTimeout(1500);

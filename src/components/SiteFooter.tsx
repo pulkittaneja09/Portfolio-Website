@@ -14,11 +14,21 @@ export function SiteFooter({ onOpenPalette, onOpenTerminal }: Props) {
   return (
     <footer className="meta max-w-prose pb-16 leading-relaxed lg:pb-24">
       Designed &amp; built by Pulkit in React + TypeScript. Press{' '}
-      <button type="button" onClick={onOpenPalette} className={key} aria-label="Open the command palette (⌘K)">
+      <button
+        type="button"
+        onClick={onOpenPalette}
+        className={key}
+        aria-label="Open the command palette (⌘K)"
+      >
         ⌘K
       </button>{' '}
       to navigate, or{' '}
-      <button type="button" onClick={onOpenTerminal} className={key} aria-label="Open the terminal (backtick)">
+      <button
+        type="button"
+        onClick={onOpenTerminal}
+        className={key}
+        aria-label="Open the terminal (backtick)"
+      >
         `
       </button>{' '}
       for terminal.

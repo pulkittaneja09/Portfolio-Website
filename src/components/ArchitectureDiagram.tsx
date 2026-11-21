@@ -20,7 +20,11 @@ const toneStyles: Record<
   // Role is carried by how much light a node holds; champagne marks the model.
   client: { fill: 'var(--bg)', stroke: 'rgba(255, 255, 255, 0.08)', label: 'var(--text)' },
   service: { fill: '#121316', stroke: 'rgba(255, 255, 255, 0.14)', label: 'var(--text-strong)' },
-  model: { fill: 'rgb(var(--accent-rgb) / 0.08)', stroke: 'rgb(var(--accent-rgb) / 0.6)', label: 'var(--text-strong)' },
+  model: {
+    fill: 'rgb(var(--accent-rgb) / 0.08)',
+    stroke: 'rgb(var(--accent-rgb) / 0.6)',
+    label: 'var(--text-strong)',
+  },
   store: { fill: 'var(--bg)', stroke: 'rgba(255, 255, 255, 0.14)', label: 'var(--text)' },
 };
 

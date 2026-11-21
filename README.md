@@ -1,9 +1,10 @@
 # pulkittaneja.dev
 
-Personal portfolio for **Pulkit Taneja** — AI/backend engineer, co-founder of Audaxity Technologies.
+Personal portfolio for **Pulkit Taneja** — AI agents & backend engineer, co-founder of Audaxity
+Technologies.
 
-Built with Vite, React 18, TypeScript (strict), Tailwind CSS, Framer Motion and React Three Fiber.
-Deploys to Vercel.
+Built with Vite, React 18, TypeScript (strict), Tailwind CSS, Framer Motion (overlays only) and Lenis.
+Deploys to Vercel. Dark only.
 
 ```bash
 npm install
@@ -32,24 +33,26 @@ npm run dev      # http://localhost:5173
 component, so you can change the whole site without opening any JSX. Every field is typed in
 [`src/data/types.ts`](src/data/types.ts), so if you break a shape, `npm run build` tells you where.
 
-| What you want to change                                                    | Export to edit |
-| -------------------------------------------------------------------------- | -------------- |
-| Name, tagline, rotating roles, summary, email, socials, availability badge | `profile`      |
-| Degree, institution, CGPA, dates                                           | `education`    |
-| The nav links and their order                                              | `nav`          |
-| The animated numbers in the proof bar                                      | `stats`        |
-| The four flagship projects and their case studies                          | `projects`     |
-| The smaller "also on the shelf" repos                                      | `sideProjects` |
-| The experience timeline                                                    | `experience`   |
-| The Audaxity founder section                                               | `venture`      |
-| The tech-stack grid                                                        | `skillGroups`  |
-| The CS fundamentals chips                                                  | `fundamentals` |
+| What you want to change                                               | Export to edit      |
+| --------------------------------------------------------------------- | ------------------- |
+| Name, title, one-liner, email, socials, availability line             | `profile`           |
+| The two About paragraphs (`**phrase**` = highlight, `*word*` = serif) | `about`             |
+| The "Now" strip and the "Daily tools" line                            | `now`, `dailyTools` |
+| The left-column agent-run card (example traces, not metrics)          | `agentTraces`       |
+| Degree, institution, CGPA, dates                                      | `education`         |
+| The section nav and its order                                         | `nav`               |
+| The experience rows (`impact` = the two short lines on the page)      | `experience`        |
+| The four flagship projects and their case studies                     | `projects`          |
+| The one-line "More" list                                              | `sideProjects`      |
+| The founder card, its mission and pipeline                            | `venture`           |
+| Sourced numbers, used by the terminal and the Ask widget              | `stats`             |
+| Skills, used by the terminal's `skills` command                       | `skillGroups`       |
 
 Two rules worth keeping:
 
-1. **Every number needs a `source`.** Each entry in `stats` carries a `source` string explaining
-   where the figure comes from. It is shown on hover and read out to screen readers. If you add a
-   number you cannot source, do not add it.
+1. **Every number needs a `source`.** Each entry in `stats` explains where the figure comes from. If
+   you cannot source a number, do not add it. The agent traces are labelled "example trace" on the
+   page for the same reason: they are illustrations, not measurements.
 2. **`siteUrl` drives canonical URLs, the sitemap, Open Graph and JSON-LD.** Set it to your real
    domain after the first deploy, and update the matching URLs in [`index.html`](index.html) and
    [`public/sitemap.xml`](public/sitemap.xml).
@@ -60,46 +63,38 @@ it searchable in all three without extra work.
 
 ## Adding a project
 
-Append an object to `projects` in `src/data/portfolio.ts`. The required shape is in
-`types.ts`, but the parts that matter:
+Append an object to `projects` in `src/data/portfolio.ts`. The required shape is in `types.ts`, but
+the parts that matter:
 
 ```ts
 {
   slug: 'my-project',          // becomes /projects/my-project
   name: 'My Project',
-  problem: 'One line: what was broken before this existed.',
+  problem: 'What was broken before this existed (case study).',
+  oneLiner: 'The same problem in ~50 characters (project row).',
   built: 'What you built.',
   role: 'What you personally did.',
   year: '2026',
   stack: ['FastAPI', 'React'],
   metric: { value: 'R² = 0.9', label: 'what the number measures' },
   links: { demo: '…', repo: '…', api: '…' },   // all optional
-  preview: '/previews/my-project.webp',         // or null
-  emphasis: 'standard',                          // see below
+  preview: '/previews/my-project.webp',         // or null → architecture schematic
   tags: ['Backend'],
   detail: { overview, highlights, challenges, next, architecture },
 }
 ```
 
-**`emphasis` drives the bento layout**, so reordering the data reflows the grid with no CSS changes:
-
-| Value      | Placement                                          |
-| ---------- | -------------------------------------------------- |
-| `lead`     | Tall 7-column feature tile                         |
-| `standard` | 5-column tile, stacks beside the lead              |
-| `wide`     | Full-width banner with the preview beside the copy |
-
-**`detail.architecture`** renders as an SVG flow diagram — no diagramming library. Give each node a
-`col` (left to right) and `row` (top to bottom), plus a `tone` of `client`, `service`, `model` or
-`store`, then list the `edges` between them. See `ArchitectureDiagram.tsx` if you need to understand
-the layout maths.
+**`detail.architecture`** renders as an SVG flow diagram on the case study — no diagramming library.
+Give each node a `col` (left to right) and `row` (top to bottom), plus a `tone` of `client`,
+`service`, `model` or `store`, then list the `edges`. A project without a screenshot uses the same
+nodes for its row thumbnail, so it never shows an empty frame.
 
 After adding a project, add its URL to `public/sitemap.xml`.
 
 ## Screenshots
 
 Previews live in `public/previews/` as WebP, at two sizes: `name.webp` (1024px wide) and
-`name-sm.webp` (640px). The card and detail page pick the right one via `srcset`. To add a pair:
+`name-sm.webp` (640px), picked via `srcset`. Thumbnails are 16:10. To add a pair:
 
 ```bash
 python -c "
@@ -107,58 +102,38 @@ from PIL import Image
 im = Image.open('shot.png').convert('RGB')
 for w in (1024, 640):
     out = im.resize((w, round(im.height * w / im.width)), Image.LANCZOS)
-    out.save(f'public/previews/my-project{\"\" if w == 1024 else \"-sm\"}.webp', 'WEBP', quality=78, method=6)
+    out.save(f'public/previews/my-project{\"\" if w == 1024 else \"-sm\"}.webp', 'WEBP', quality=80, method=6)
 "
 ```
 
-Then set `preview: '/previews/my-project.webp'` on the project. Extra frames listed in
-`previewFrames` are cycled while the card is hovered.
-
-A project with `preview: null` falls back to a labelled placeholder tile, so a missing screenshot
-never leaves a hole.
-
 ## Environment variables
 
-Copy `.env.example` to `.env`. Both variables are optional.
+Copy `.env.example` to `.env`. The one variable is optional.
 
-| Variable            | What it does                                                                                                                                                                                                                            |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `VITE_FORMSPREE_ID` | The ID from a [Formspree](https://formspree.io) endpoint (`https://formspree.io/f/XXXXXXXX` → `XXXXXXXX`). Without it, the contact form falls back to opening the visitor's mail client with the message pre-filled, so it still works. |
-| `VITE_GITHUB_TOKEN` | Raises the GitHub API rate limit **for local development only**.                                                                                                                                                                        |
+| Variable            | What it does                                                     |
+| ------------------- | ---------------------------------------------------------------- |
+| `VITE_GITHUB_TOKEN` | Raises the GitHub API rate limit **for local development only**. |
 
 > **Do not set `VITE_GITHUB_TOKEN` in Vercel.** Anything prefixed `VITE_` is inlined into the client
-> bundle and is readable by anyone who views source. The unauthenticated limit (60 requests/hour per
-> IP) is plenty in production, and the GitHub section degrades to an explanatory card when it is hit.
+> bundle. The site makes one cached request (the public repo count under Projects) and falls back to
+> the number in `portfolio.ts` if the unauthenticated limit is ever hit.
 
 ## Deploying to Vercel
 
 1. Push the repository to GitHub.
 2. In Vercel, **Add New → Project** and import it. The framework preset is detected as **Vite**;
    build command `npm run build`, output directory `dist`.
-3. Add `VITE_FORMSPREE_ID` under **Settings → Environment Variables** if you are using the form.
-4. Deploy.
+3. Deploy.
 
-[`vercel.json`](vercel.json) is already set up with:
-
-- A rewrite sending all non-`/api` paths to `index.html`, so `/projects/parcelpilot` resolves on a
-  hard refresh instead of 404ing.
-- Immutable year-long caching for `/assets/*` and `/fonts/*` (both are content-hashed or stable).
-- `X-Content-Type-Options`, `Referrer-Policy` and `X-Frame-Options`.
-
-After the first deploy, point `profile.siteUrl` at the real domain and update the absolute URLs in
-`index.html` and `public/sitemap.xml`.
-
-Or from the CLI:
-
-```bash
-npx vercel --prod
-```
+[`vercel.json`](vercel.json) already rewrites non-`/api` paths to `index.html` (so
+`/projects/parcelpilot` survives a hard refresh), caches `/assets/*` and `/fonts/*` for a year, and
+sets `X-Content-Type-Options`, `Referrer-Policy` and `X-Frame-Options`.
 
 ## Project structure
 
 ```
 public/
-  fonts/            self-hosted variable woff2, latin subsets
+  fonts/            self-hosted woff2: Geist, Geist Mono, Instrument Serif italic
   previews/         project screenshots, WebP at 1024 and 640
   Pulkit_Taneja_Resume.pdf
   og.png            1200x630 social card
@@ -168,81 +143,70 @@ src/
   data/
     portfolio.ts    ← all content lives here
     types.ts        the shape of it
-  sections/         Hero, ProofBar, Projects, Experience, Audaxity,
-                    Stack, GitHubActivity, Contact
-  components/       reusable UI: cards, nav, palette, terminal, widget,
-                    icons, brand glyphs, architecture diagram
-  pages/            Home, ProjectDetail, NotFound
-  hooks/            theme, reduced motion, media queries, count-up,
-                    in-view, active section, clipboard, GitHub, shortcuts
-  lib/              GitHub client, terminal commands, answer engine, helpers
-  three/            PointSphere — the lazy grayscale point-cloud hero
+  sections/         About, Experience, Projects, Founder, Contact
+  components/       identity rail (Identity, SectionNav, ProfileLinks, AgentRun),
+                    MobileBar, rows and thumbnails, PipelineFlow, palette,
+                    terminal, Ask widget, cursor spotlight, architecture diagram
+  pages/            Home (the split layout), ProjectDetail, NotFound
+  hooks/            reduced motion, media queries, scroll-spy, Lenis,
+                    clipboard, GitHub, shortcuts
+  lib/              reveal, GitHub client, terminal commands, answer engine, helpers
+scripts/
+  qa.cjs            design QA at 1440 / 1280 / 1024 / 390
+  reveal-check.cjs  strict "nothing stuck invisible" regression check
 ```
 
 ## Scripts
 
-| Command           | What it does                                    |
-| ----------------- | ----------------------------------------------- |
-| `npm run dev`     | Dev server with HMR on port 5173                |
-| `npm run build`   | Type-check with `tsc -b`, then build to `dist/` |
-| `npm run preview` | Serve the production build locally              |
-| `npm run lint`    | ESLint, zero warnings tolerated                 |
-| `npm run format`  | Prettier over `src/`                            |
+| Command                | What it does                                                                                                                                                          |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run dev`          | Dev server with HMR on port 5173                                                                                                                                      |
+| `npm run build`        | Type-check with `tsc -b`, then build to `dist/`                                                                                                                       |
+| `npm run preview`      | Serve the production build locally                                                                                                                                    |
+| `npm run lint`         | ESLint, zero warnings tolerated                                                                                                                                       |
+| `npm run format`       | Prettier over `src/`                                                                                                                                                  |
+| `npm run qa`           | With a preview server on :4173: one-line name, no theme toggle, nothing hidden after scrolling, body contrast ≥ 7:1, at four widths; screenshots to `.screenshots/qa` |
+| `npm run check:reveal` | With a preview server on :4173: 33 strict snapshots across scrolls, jumps, deep links, resize, a no-scroll full-page capture and mobile                               |
 
 ## How it is put together
 
 A few decisions that are not obvious from reading the files:
 
-**The visual layer is monochrome by design ("Quiet Futurism").** Every colour is a CSS variable in
-`index.css` (`--bg`, `--surface`, `--border`, `--text`, `--text-muted`, `--accent`…) and there is no
-hue anywhere: depth, light, Geist typography and motion carry the feel. Ambient light pools use a
-separate `--pool` token so they stay light in light mode, and elevation shadows are tokenised per
-theme.
+**A split layout.** On desktop the left column is a sticky, full-height rail (name, title, one-liner,
+status, the section nav, the agent-run card, links and a live Chennai clock); the right column
+scrolls. Its spacing steps down in height tiers (roomy above 780px tall, compact to 680, tight to 620,
+static below) so the rail fits real laptop viewports without ever squeezing the card. Below 1024px
+the rail becomes the page header and a thin bar carries the current section and a Menu/⌘K button.
 
-**The 3D hero loads on the first interaction.** `three.js` is ~220KB gzipped and the point cloud
-exists to bend away from a cursor, so `HeroVisual` waits for a `pointermove`, `wheel` or `keydown`
-before importing it, then crossfades from a static 2D-canvas sphere. The render loop pauses while the
-hero is off screen. Touch devices, narrow viewports and anyone with `prefers-reduced-motion` get only
-the static sphere and never load three at all.
+**Two greys and one colour.** Body text is `#A1A1AA` (7.6:1 on `#0B0C0E`), names and highlights
+`#F2F2F2`, metadata `#5C5C66`. Champagne `#D9C7A7` appears only on the active nav line, hover titles,
+metrics, the status dot, ✓ marks and link underlines. The page-wide cursor spotlight peaks at 4.5%
+champagne — measured to keep every word above 7:1 even directly under the pointer.
 
-**Blur reveals clear their filter when they settle.** Any element with a `filter` becomes a backdrop
-root, which stops glass surfaces inside it from blurring what is behind them. `Reveal` and the overlay
-entrances therefore end on `filter: none`, not `blur(0px)`.
+**The agent-run card** is driven by one elapsed-time clock in a rAF loop: the prompt types out, a
+line lands every 350ms, timings resolve with a ✓, the result holds for 4s, then the next example
+plays. Hover pauses it; the loop stops when it is off screen or the tab is hidden; reduced motion shows
+one complete trace. The traces are plain ASCII on purpose — the mono font's latin subset has no
+arrow glyphs.
 
-**The hero entrance is CSS, and transform-only.** A Framer Motion fade holds its element at
-`opacity: 0` until React hydrates. Since the LCP element is the hero tagline, that put 87% of a 3.6s
-mobile LCP into render delay. The `.hero-rise` and `.hero-sharpen` (blur-to-sharp) keyframes in
-`index.css` start at first paint instead and never hide the text.
+**Reveals can never leave content hidden.** `lib/reveal.ts` keeps everything visible by default. An
+element is only hidden after the visitor has actually scrolled, only while it is fully below the fold,
+and it is shown the moment it enters; a sweep after every scroll catches anything else. Full-page
+screenshots, prints and crawlers see every element. Decorative motion (status pulse, caret, trace
+lines, grain) is done with colour, so nothing on screen ever rests below opacity 1, and nothing
+carries a blur.
 
-**Framer Motion runs behind `LazyMotion`.** Components use `m.div`, not `motion.div`, and
-`main.tsx` loads only the `domAnimation` feature set — 28KB gzipped instead of 40KB. `strict` mode
-makes a stray `motion.*` import throw rather than quietly pulling the full bundle back in.
+**Rows dim their siblings with `:has()`.** Hovering an experience or project row lifts it onto a 3%
+panel and fades the others to 50%; hovering the gap between rows dims nothing.
 
-**The stack section mounts on approach.** Its ~30 inlined brand glyphs across five sub-grids cost
-more in style recalculation than in bytes. `DeferredSection` holds the anchor id and a reserved
-height so `#stack` links still land and nothing shifts when it arrives.
-
-**GitHub data degrades instead of breaking.** `lib/github.ts` caches per session, and a 403 with
-`x-ratelimit-remaining: 0` becomes a typed `RateLimitError` that renders an explanatory card with a
-link to the profile. The proof bar falls back to the repo count in `portfolio.ts`.
-
-**The contribution graph is forced to a grey ramp.** `ghchart.rshah.org` bakes a light `#eeeeee`
-ground into its SVG. The chart is requested from a neutral near-black base and passed through
-`grayscale(1)`; dark mode adds `invert(1)`, so the ground lands on near-black and the busiest days come
-out brightest.
+**Framer Motion runs behind `LazyMotion`** and is only used by the overlays (palette, terminal, Ask
+widget, toasts), which are themselves lazy chunks warmed once the page is idle.
 
 **The answer widget has no model behind it.** `lib/ask.ts` scores a question against topics built
-from `portfolio.ts`. No API key, no network call, and no way for it to invent a credential. The file
-carries a TODO describing the serverless upgrade path, with the key kept off the client.
+from `portfolio.ts`. No API key, no network call, and no way for it to invent a credential.
 
-**Everything respects `prefers-reduced-motion`.** The `Reveal` primitive renders a plain element,
-the rotating roles become a static list, count-ups jump to their final value, headings skip the
-scramble, Lenis smooth scroll and the card spotlights stay off, the 3D sphere does not initialise,
-and a global rule collapses remaining animations.
-
-**Visual audit.** With a preview server on port 4173, `node scripts/audit.cjs` captures every section,
-the palette, the terminal and a case study at 1440px and 390px in both themes (GitHub API mocked)
-into `.screenshots/audit`.
+**Everything respects `prefers-reduced-motion`.** No Lenis, no spotlight, no entrances or reveals, a
+static agent trace, and a global rule collapses any remaining animation.
 
 ## Open TODOs
 
@@ -251,14 +215,8 @@ Search the codebase for `TODO(pulkit)`. At the time of writing:
 - `profile.siteUrl` — set to the real domain after the first deploy.
 - LeetCode profile URL in `profile.socials` (the résumé only states "120+").
 - The DPIIT recognition number and date in `venture.badges`.
-- The Audaxity site URL, once it is live.
-- Screenshots for Scrap 2 Spark, KnowledgeHub AI and the IEEE backend —
-  only ParcelPilot has real ones so far.
+- The Audaxity site URL, once it is live (the Audaxity row links to the founder card meanwhile).
+- Company URLs for SDG Corporation and Dezors, which turn those experience rows into links.
+- A dashboard screenshot for Scrap 2 Spark and a cited-answer screenshot for KnowledgeHub AI (the
+  current thumbnails are the live demos' landing screens), and an IEEE preview if one exists.
 - A live URL for the IEEE recruitment portal, if it is still public.
-- `VITE_FORMSPREE_ID` in `.env` to switch the contact form off the mailto fallback.
-
-Not a code TODO, but worth doing: **add a description and topics to the
-`parcelpilot-ai-agent` repo on GitHub.** The "Live from GitHub" section ranks
-repos by how substantial they look — description, deployed demo, topics — and
-your strongest project currently has no description, so it ranks below two
-others. Same for `S2S-Frontend` and `Fake-Job-Detector-Deploy`.

@@ -51,9 +51,12 @@ function show(el: HTMLElement) {
   // Once the entrance has run, drop the attribute entirely so the element is
   // back on its own styles (and its own hover transitions).
   const delay = Math.min(Number(el.style.getPropertyValue('--i') || 0), MAX_STEPS) * STAGGER_MS;
-  window.setTimeout(() => {
-    if (el.dataset.reveal === 'shown') setState(el, null);
-  }, SHOW_MS + delay + 50);
+  window.setTimeout(
+    () => {
+      if (el.dataset.reveal === 'shown') setState(el, null);
+    },
+    SHOW_MS + delay + 50,
+  );
 }
 
 function inView(el: HTMLElement): boolean {

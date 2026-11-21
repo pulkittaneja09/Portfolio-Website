@@ -16,11 +16,3 @@ export function useMediaQuery(query: string): boolean {
 
   return matches;
 }
-
-/**
- * True for devices with a real pointer and a wide viewport — the only places
- * the 3D hero and the custom cursor are worth their cost.
- */
-export function useIsDesktopPointer(): boolean {
-  return useMediaQuery('(min-width: 1024px) and (hover: hover) and (pointer: fine)');
-}

@@ -29,8 +29,7 @@ export function useActiveSection(ids: readonly string[], lineRatio = 0.33): stri
         if (section && section.getBoundingClientRect().top <= line) current = id;
       }
 
-      const atBottom =
-        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
       if (atBottom) current = list[list.length - 1];
       // Before any scrolling, the page is about its first section, full stop.
       if (window.scrollY < 8) current = list[0];

@@ -97,4 +97,3 @@ export async function fetchGitHubData(signal?: AbortSignal): Promise<GitHubData>
   writeCache(data);
   return data;
 }
-

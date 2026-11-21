@@ -268,7 +268,9 @@ const TOPICS: Topic[] = [
       `Email ${profile.email}. ${profile.socials
         .filter((social) => social.icon !== 'mail')
         .map((social) => `${social.label}: ${social.href}`)
-        .join('. ')}. The résumé PDF is linked at the bottom of the left column, after the experience list, and in the contact section.`,
+        .join(
+          '. ',
+        )}. The résumé PDF is linked at the bottom of the left column, after the experience list, and in the contact section.`,
     related: ['Is he available for internships?', 'Where is he based?', 'What has he built?'],
   },
   {

@@ -80,6 +80,47 @@ Studied live in Chrome via Playwright (1440×900 + 390px), with computed styles 
 - 12: 390px: zero horizontal overflow; header → links → agent card → sections; glass top bar shows the current section once past the header (mounted, not opacity-hidden); project thumbnails tuck under their text; pipeline stacks vertically; Now strip and tools line wrap after dots. Name measured on one line at 360/375/390/414/768/1024/1280/1440/1920. 404 page rebuilt (it had lost its gutters). Reduced motion verified by script at 1440 and 390: no running animations, Lenis and spotlight off, nothing armed or hidden, complete static trace with no caret. Thumbnails now dim with brightness instead of opacity, so nothing on screen rests below opacity 1.
 - 13: Reveal bug fixed at the root and verified. Cause of stuck content: hiding was keyed to load/IntersectionObserver state, so anything below the fold stayed invisible in captures that never scroll, and a capture's viewport resize looked like a scroll. Now: visible by default, hidden only after a real scroll and only while fully below the fold, shown on entry, swept after every scroll; no blur anywhere. Decorative motion (status pulse, caret, trace lines, trace fade, grain) moved to colour/alpha-in-filter so no element ever rests below opacity 1; always-on surfaces lost their backdrop blur. `npm run check:reveal` (scripts/reveal-check.cjs): 33 strict snapshots — load, slow wheel scroll, nav jumps, instant jump to bottom and scroll back up, resize, /#projects deep link, full-page capture without scrolling, mobile touch scroll — 0 violations.
 - 14: `npm run qa` (scripts/qa.cjs) at 1440×900, 1280×800, 1024×768, 390×844 — all PASS: (a) name one line, measured from line boxes (340px of 444 at 1440; 243 of 350 at 390); (b) no theme toggle in the DOM, no `html.light` / light-scheme CSS; (c) nothing hidden or blurred in view after scrolling; (d) body text 7.64:1 at rest, 7.16:1 directly under the spotlight, 9.74:1 inside a hovered row. To get (d) there: spotlight peak 5%→4.5% (5% measured 6.95:1 under the cursor), opaque grounds under the agent and founder cards, chips and More blurbs lift on hover. (e) Reviewed the captures against the references: Brittany's skeleton by request, but the agent trace, champagne-on-warm-dark, serif accents, date-column thumbnails, schematic thumb and founder pipeline are specific to this site; ~4,300px tall at 1440. Old audit.cjs (targeted removed sections) deleted.
+- 15: Legacy aliases, CSS classes and variables removed (all verified unused first); dead projectMeta.ts and useIsDesktopPointer deleted; Formspree var dropped from .env.example; og.png regenerated in the new identity (name, title, serif line, example trace with champagne ✓). `npm run build`: no warnings (largest chunk react 46KB gzip; three.js gone). `npm run lint`: 0 warnings. Prettier clean. README rewritten for the new design. Final `npm run qa` all PASS and `npm run check:reveal` 0/33 violations after cleanup.
+
+## Final summary
+
+**What changed**
+
+- **Layout.** Brittany-style split inside a 1240px container: a sticky, full-height identity rail
+  (one-line name, title, one-liner, champagne status pulse, line + label scroll-spy nav, the agent-run
+  card, GitHub / LinkedIn / copy-email, Résumé ↗, live "Chennai · HH:MM IST") beside one scrolling
+  column. Height tiers keep the rail fitting real laptop viewports down to 620px tall.
+- **Signature element.** The "agent.run — example trace" card plays three illustrative traces (Audaxity,
+  Scrap 2 Spark, ParcelPilot) line by line with timings and champagne ✓, holds 4s, fades, replays;
+  hover pauses; reduced motion shows one complete trace.
+- **Sections.** About (two first-person paragraphs, serif *agents*, Now strip, daily tools) →
+  Experience rows → Projects rows with 16:10 thumbnails (real screenshots captured from the live demos;
+  an architecture schematic for IEEE), metrics in champagne mono, a one-line More list and a live repo
+  count → Founder card with an inline SVG pipeline → Contact ("Let's build *something*.", copy-on-click
+  email) → one-line footer whose ⌘K and ` are buttons.
+- **Visual system.** Dark only; the exact tokens requested; Geist + Geist Mono + Instrument Serif
+  italic (self-hosted, preloaded); champagne limited to the listed uses; page-wide cursor spotlight;
+  2% grain; no grid, no glows, no blur reveals, no emojis.
+- **Removed.** Light theme (toggle, tokens, provider, palette entry, terminal command), the 3D sphere
+  and three.js, the stack logo grid, the GitHub section, the proof bar, scramble headings and the long
+  section titles, the contact form.
+- **Kept and restyled.** All data, the ⌘K palette, terminal mode (including the easter egg), the Ask
+  widget, toasts and the case-study pages.
+
+**Verification:** `npm run qa` passes (a)–(d) at 1440, 1280, 1024 and 390; `npm run check:reveal`
+reports 0 violations in 33 strict snapshots; build, lint and format are clean.
+
+**Judgement calls worth knowing**
+
+- Spotlight peak is 4.5%, not 5%: at 5%, body text directly under the cursor measured 6.95:1.
+- The agent and founder cards keep their specified translucent fills over an opaque ground, so the
+  spotlight cannot lower the contrast of their text.
+- Footer and timing text use the `--text-faint` token (#5C5C66) rather than a second near-identical
+  grey (#55555A).
+- SDG and Dezors rows are cards, not links, until real company URLs are added (TODO(pulkit) in data);
+  the Audaxity row links to the Founder card.
+- The agent card cycles three traces rather than two, adding a ParcelPilot "403 before retrieval" run.
+- The Formspree contact form was dropped: the spec defines Contact as the email plus socials.
 
 ## Checklist
 
@@ -97,4 +138,4 @@ Studied live in Chrome via Playwright (1440×900 + 390px), with computed styles 
 - [x] 12. Mobile layout (390px) + reduced-motion pass
 - [x] 13. Fix/verify the reveal bug: nothing stuck blurred or invisible
 - [x] 14. Playwright QA at 1440, 1280, 1024 and 390px (one-line name, no theme toggle, no stuck opacity/blur, body contrast ≥ 7:1, not template-like)
-- [ ] 15. npm run build, fix all warnings, final summary
+- [x] 15. npm run build, fix all warnings, final summary

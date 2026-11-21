@@ -15,7 +15,11 @@ interface Props {
  */
 export function Section({ id, label, children, className }: Props) {
   return (
-    <section id={id} aria-labelledby={`${id}-label`} className={cn('section-anchor mb-24 lg:mb-28', className)}>
+    <section
+      id={id}
+      aria-labelledby={`${id}-label`}
+      className={cn('section-anchor mb-24 lg:mb-28', className)}
+    >
       <SectionLabel id={`${id}-label`} className="mb-8 text-strong">
         {label}
       </SectionLabel>
