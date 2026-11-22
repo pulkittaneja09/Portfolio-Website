@@ -320,8 +320,8 @@ nowhere; build without warnings.
 ### Round 4: remove Notes, premium palette, finishing touches (layout, content and features unchanged)
 
 - [x] C1. Remove Notes completely — route, section, nav, ⌘K, terminal, feed and sitemap gone; 3 outlines in `_drafts/`; `marked` uninstalled; build + lint clean
-- [ ] C2a. Research palettes: top GitHub portfolio repos' tokens + reference sites; findings below
-- [ ] C2b. Shortlist 3 palette directions with full tokens for both themes
+- [x] C2a. Research palettes — 10 repos' theme files + 10 live sites read with Playwright; findings in "Round 4 research"
+- [x] C2b. Shortlist — Midnight+Glacier, Slate+Teal, Graphite+Indigo; full tokens, all pass contrast
 - [ ] C2c. Temporary /palette page on real components, Playwright screenshots, scorecard, pick a winner
 - [ ] C2d. Implement the winner site-wide in both themes (aurora, spotlight, serif gradient, agent-run syntax, chip tints, count-up metrics, accent UI); delete /palette
 - [ ] C3a. Project colour identity: per-project tint, hover glow + 3D tilt on thumbnails, tinted case-study header
@@ -332,3 +332,69 @@ nowhere; build without warnings.
 - [ ] C3f. First-visit "PT" monogram intro (<1.2s, sessionStorage, skipped for reduced-motion)
 - [ ] C3g. Polish: selection colour, thin scrollbar, accent focus rings, circular-reveal theme switch
 - [ ] C4. Final QA (both themes, 1440/1024/390), greps, contrast, Lighthouse 90+, build with no warnings, summary
+
+## Round 4 research: colour
+
+**Method.** GitHub search API (`q=portfolio` and `q=personal website`, sorted by stars), then the theme
+files read raw from each repo. Live sites read with Playwright in Chrome (computed colours of every
+visible text node and link, in both `prefers-color-scheme` modes). WebFetch strips CSS, so it was not
+used for colour. vercel.com failed TLS verification from this machine and was skipped.
+
+**Repo tokens (exact values from the theme files)**
+
+| Repo (stars) | Ground / text | Accent | Notes |
+| --- | --- | --- | --- |
+| bchiang7/v4 (8.3k) | navy #0A192F, #112240 / slate #8892B0, #CCD6F6 | mint #64FFDA (tint at 10%) | one accent; ground tinted to the accent's hue |
+| brittanychiang.com (live) | slate-900 #0F172A / #E2E8F0, #94A3B8, #64748B | teal-300 #5EEAD4 | dark only; accent on labels, chips (teal/10 fill) and hover titles |
+| leerob/site | #1B1A19 warm dark, #FFFFFF light / #AAA59E, #676767 | none in UI; code is Tokyo Night (#7AA2F7 fn, #9ECE6A string, #BB9AF7 keyword) | colour only in code blocks |
+| HamishMW/portfolio (3.6k) | oklch(17.8% 0 0) / neutral | cyan oklch(84% 0.19 202) | one accent, same in both themes |
+| ncdai/chanhdai.com (2.4k) | zinc oklch(0.141 0.005 286) | link blue oklch(0.488 0.243 264) | neutrals carry a hint of the accent hue (h≈286) |
+| once-ui/magic-portfolio (1.4k) | neutral | brand blue scale #5071CC → #8DB3FF | blue ramp, light step for dark mode |
+| cobiwave/simplefolio (14k) | white / #272341 | teal #02AAB0 → #00CDAC gradient | gradient reads template-like |
+| codewithsadee/vcard (8.2k) | #121212 | gold hsl(45 100% 72%) | banned direction |
+| soumyajit4419/Portfolio (6.5k) | purple gradient | #C770F0 | banned direction |
+| theodorusclarence.com | #0E1111 | #DBFF00 → #00E887 → #00C4FD | neon, banned |
+
+**Live sites (computed)**
+
+- linear.app: #08090A ground; text ramp #F7F8F8 / #D0D6E0 / #8A8F98 / #62666D; colour appears only in
+  one highlighted hero phrase. Four greys do all the work.
+- stripe.com: navy #061B31 headings, slate #50617A body, blurple #533AFD on links and CTAs only.
+- raycast.com: #07080A ground, white / #9C9C9D / #6A6B6C; brand red #FF6363 used once.
+- rauno.me, emilkowal.ski: pure greyscale, light only (#EDEDED / #171717; #FDFDFC / #21201C).
+- karpathy.ai: default link blue #0000EE on white. huyenchip.com: link blue #4D74EB on #FDFDFD.
+  eugeneyan.com: warm #302F2C dark / #F4F1E6 text, white light theme; no accent.
+
+**What makes colour feel premium**
+
+1. **One accent, one optional secondary, everything else a neutral ramp of 3–4 steps.** No site above
+   uses more than two hues in its UI chrome.
+2. **The neutrals are tinted toward the accent hue** (Brittany's slate under teal, chanhdai's zinc at
+   h≈286 under blue). That is what stops a dark page reading as "black and white" without adding colour.
+3. **Accent on small, high-signal things only**: links, active state, a label, a metric, a ✓. Large
+   areas of accent read as a template (simplefolio's gradient).
+4. **Saturation:** in dark mode the accent is light and moderately saturated (L≈80–85%, pastel:
+   #8DB3FF, #5EEAD4); in light mode the same hue is darker and more saturated (#533AFD, #4D74EB) so it
+   keeps 4.5:1 on white. Grounds: dark ≈ #08–#0F, light ≈ #F7–#FD, never pure #000.
+5. **Code is where richer colour is allowed** (leerob's Tokyo Night): a syntax theme can use 3–4 hues
+   without making the page loud.
+6. **Developer and AI sites converge on blue/teal**; the differentiator is tone (how muted, how tinted
+   the ground), not hue novelty.
+
+## Round 4 shortlist (contrast vs ground, WCAG)
+
+All three: one accent + one secondary (strings in code, secondary tints), neutrals tinted toward the
+accent hue. `accent-soft` = accent at 12% (dark) / 8% (light); `surface` = text-strong at 3% (dark) /
+white (light); `border` = the tinted line at 9% (dark) / 8% (light).
+
+| Token | A · Midnight + Glacier dark | light | B · Slate + Teal dark | light | C · Graphite + Indigo dark | light |
+| --- | --- | --- | --- | --- | --- | --- |
+| bg | #0A0E14 | #F8FAFC | #0A1112 | #F7FAF9 | #0C0C10 | #FAFAFC |
+| bg-elevated | #10151D | #FFFFFF | #0F1819 | #FFFFFF | #131319 | #FFFFFF |
+| text-strong | #EEF2F8 (17.2) | #0B1220 (17.9) | #ECF3F2 (16.9) | #0A1716 (17.4) | #F0F0F5 (17.2) | #0E0E14 (18.5) |
+| text | #A3ADBD (8.5) | #475467 (7.4) | #9FB0AE (8.4) | #445452 (7.6) | #A5A6B4 (8.1) | #4D4F60 (7.7) |
+| text-faint | #5E6878 (3.4) | #8792A2 (3.0) | #5A6A69 (3.4) | #83918F (3.1) | #5F6070 (3.2) | #8A8B9A (3.2) |
+| accent | #8FB4FF (9.3) | #2F5BD3 (5.6) | #5ED4BE (10.6) | #0B7A6A (5.0) | #A5ADFF (9.3) | #4A50C9 (6.1) |
+| secondary | #7DD3C0 (11.0) | #0E7C6C (4.9) | #9CB8FF (9.7) | #3157C9 (6.0) | #7FD6C2 (11.4) | #0F7F6C (4.7) |
+
+(text-faint is for dates and metadata only, as today, and stays non-essential.)
