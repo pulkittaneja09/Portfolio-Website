@@ -16,7 +16,7 @@ function ExperienceRow({ item }: { item: ExperienceItem }) {
         <p className="font-mono text-xs uppercase leading-snug tracking-[0.04em] text-faint [text-wrap:balance]">
           {formatRange(item.start, item.end)}
         </p>
-        <p className="meta mt-1.5 hidden sm:block">{item.location}</p>
+        <p className="meta mt-2 hidden sm:block">{item.location}</p>
       </div>
 
       <div className="min-w-0">
@@ -40,7 +40,7 @@ function ExperienceRow({ item }: { item: ExperienceItem }) {
           ))}
         </ul>
 
-        <ul className="mt-3.5 flex flex-wrap gap-1.5" aria-label="Technologies used">
+        <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="Technologies used">
           {item.stack.map((tech) => (
             <li key={tech} className="chip">
               {tech}
@@ -79,7 +79,7 @@ export function Experience() {
 
   return (
     <Section id="experience" label="Experience">
-      <ol ref={list} className="row-list relative space-y-3">
+      <ol ref={list} className="row-list relative -mt-4 space-y-3 sm:-mt-5">
         {experience.map((item) => (
           <li
             key={`${item.org}-${item.role}`}

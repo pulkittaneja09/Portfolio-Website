@@ -605,9 +605,26 @@ Also removed: an orphaned `.note-prose` stylesheet left over from Notes.
 
 - [x] E1. One 18px circle glued to the pointer — transform written inside pointermove (0.00px offset over 25 random moves, both themes); 40px over links/chips, 64px + "View" (ground-colour fill so it reads on thumbnails) over cards, hidden over selectable text and inputs (native text cursor), 0.85 on press, fades off-window; 180ms ease-out on size/fill/opacity only. Chose the 1.5px accent ring over the white difference disc, which turned the blue CTAs gold. Touch: none; reduced motion: no size animation
 - [x] E2. Highlights = 1 startup founded · 1,000+ applicants served · R² 0.879 battery-life model (all sourced in `stats` and on the résumé); "10+ MCP tools" out of the strip, `stats` (terminal / Ask) and the About paragraph, kept in the SDG role; the public-repo count left `stats` (a profile fact, not an achievement) but still feeds the GitHub line; strip drops to 2 columns if a figure is missing
-- [ ] E3a. Visual consistency: spacing scale, radii, borders, chips/buttons, type levels, alignment, both themes
+- [x] E3a. Consistency pass — 4px layout grid, three hairline levels, one radius scale, one pill chip style (baseline-aligned), documented type ramp; Experience label gap fixed (60px → 32px like every section); compared against brittanychiang.com / rauno.me / emilkowal.ski at 1440
 - [ ] E3b. Copy and links: proofread, date and dash formats, every link checked, no CGPA / TODO / placeholders
 - [ ] E3c. Interaction: hover/focus/active consistency, full keyboard pass, ⌘K / terminal / Esc
 - [ ] E3d. Responsive: 1440 / 1280 / 1024 / 768 / 390 / 360, no horizontal scroll, name on one line, 44px tap targets
 - [ ] E3e. Launch readiness: Lighthouse 95+, images, fonts, bundle, meta / OG / icons / sitemap / robots / JSON-LD, 404, vercel.json, README
 - [ ] E4. Final QA (every section, both themes, 1440 / 390), build clean, final report with deploy steps
+
+## Round 6: the system after the consistency pass (E3a)
+
+- **Spacing:** layout spacing (between blocks, headings and content) is on the 4px grid: half-steps
+  `mt-1.5 / 2.5 / 3.5`, `mb-1.5` and `space-y-*.5` became 8 / 12 / 16px. Component insets (inside
+  chips and buttons, icon gaps, 2px optical nudges) keep 2px steps by design. Rhythm: section label
+  → content 32px, sections 96px apart (112px on desktop), dividers centred in that gap.
+- **Hairlines:** three levels: 0.06 (dividers inside a surface), 0.08 (cards, chips, rows,
+  thumbnails), 0.14 (interactive borders: keys, buttons, inputs). The 0.07 / 0.1 / 0.12 / 0.16 / 0.2
+  strays were folded in.
+- **Radii:** 6px icon buttons, 8px thumbnails and rows, 12px small cards (agent card, highlight
+  tiles), 16px large cards (project, founder), pills for chips and CTAs. Skill chips became pills
+  too (one chip style site-wide) and now share one baseline whether or not they have a logo.
+- **Type ramp:** 10 micro mono · 12 labels and metadata · 13 overlay UI · 14 row text · 15 dense
+  reading rows · 16 body · 18 / 20 / 24 subheads · display. Headings balance, paragraphs `pretty`.
+- **Fixed:** the Experience list carried its rows' 20px hover padding above the first role (~60px
+  under the label against 32px elsewhere). It is pulled up by exactly that padding.

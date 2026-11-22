@@ -193,7 +193,7 @@ export function ProjectDetail() {
         </Block>
 
         <Block label="What I would do next">
-          <ul className="space-y-2.5">
+          <ul className="space-y-3">
             {project.detail.next.map((item) => (
               <li key={item.slice(0, 24)} className="flex gap-4 text-body">
                 <span className="font-mono text-xs leading-[1.65rem] text-faint" aria-hidden>
@@ -230,7 +230,7 @@ export function ProjectDetail() {
       {/* Next project */}
       <TransitionLink
         to={`/projects/${next.slug}`}
-        className="group mt-24 flex items-end justify-between gap-6 border-t border-line/[0.07] pt-8"
+        className="group mt-24 flex items-end justify-between gap-6 border-t border-line/[0.08] pt-8"
       >
         <span>
           <span className="label block text-faint">Next project</span>
@@ -239,7 +239,7 @@ export function ProjectDetail() {
           </span>
         </span>
         <ArrowRightIcon
-          className="mb-1.5 h-5 w-5 shrink-0 text-body transition-[transform,color] duration-300 group-hover:translate-x-0.5 group-hover:text-accent"
+          className="mb-2 h-5 w-5 shrink-0 text-body transition-[transform,color] duration-300 group-hover:translate-x-0.5 group-hover:text-accent"
           aria-hidden
         />
       </TransitionLink>

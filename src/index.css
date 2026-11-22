@@ -262,16 +262,20 @@
     white-space: nowrap;
   }
 
-  /* Skill chips: smaller corners than the tag chips, a tiny monochrome logo,
-     and on chips with evidence a hover, a selected state and a tooltip. */
+  /* Skill chips: the same pill as the tag chips (one chip style site-wide),
+     plus a tiny logo, and on chips with evidence a hover, a selected state
+     and a tooltip. */
   .skill-chip {
     display: inline-flex;
     align-items: center;
     gap: 0.375rem;
     border: 1px solid var(--border);
-    border-radius: 6px;
+    border-radius: 999px;
     background: var(--chip-bg);
-    padding: 0.1875rem 0.5rem;
+    padding: 0.1875rem 0.625rem;
+    /* Logo or not, every chip sits on the same line (an inline-flex button
+       otherwise aligns to a baseline that shifts when an icon comes first). */
+    vertical-align: top;
     font-family: 'Geist Mono', ui-monospace, monospace;
     font-size: 0.75rem;
     line-height: 1.45;

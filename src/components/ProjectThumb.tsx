@@ -63,7 +63,7 @@ function ThumbFace({ project, parallax }: Omit<ThumbProps, 'className'>) {
     <div
       className={cn(
         frame,
-        'flex flex-col justify-center px-3.5 font-mono text-[0.625rem] leading-[1.5] transition-colors duration-300 group-hover/row:border-line/[0.12]',
+        'flex flex-col justify-center px-3.5 font-mono text-[0.625rem] leading-[1.5] transition-colors duration-300 group-hover/row:border-line/[0.14]',
       )}
       role="img"
       aria-label={`${project.name} architecture: ${nodes.map((node) => node.label).join(', ')}`}

@@ -81,7 +81,7 @@ export function MobileBar({ active, onOpenPalette, onOpenAsk }: Props) {
           <button
             type="button"
             onClick={onOpenPalette}
-            className="inline-flex h-9 items-center gap-2 rounded-lg border border-line/[0.08] px-3 text-sm text-strong transition-colors duration-300 hover:border-line/[0.16]"
+            className="inline-flex h-9 items-center gap-2 rounded-lg border border-line/[0.08] px-3 text-sm text-strong transition-colors duration-300 hover:border-line/[0.14]"
           >
             Menu
             <kbd className="hidden font-mono text-xs text-faint [@media(hover:hover)]:inline">

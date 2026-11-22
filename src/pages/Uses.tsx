@@ -55,7 +55,7 @@ export function Uses() {
           <div key={group.title} className="grid gap-1 py-4 sm:grid-cols-[27%_minmax(0,1fr)] sm:gap-6">
             <dt className="label pt-1 text-faint">{group.title}</dt>
             <dd>
-              <ul className="space-y-1.5">
+              <ul className="space-y-2">
                 {group.items.map((item) => (
                   <li key={item.name} className="text-[0.9375rem] text-body">
                     <span className="text-strong">{item.name}</span>

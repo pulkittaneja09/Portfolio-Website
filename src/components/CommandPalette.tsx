@@ -91,14 +91,14 @@ export function CommandPalette({ open, onClose, onOpenTerminal, onOpenAsk }: Pro
               loop
               className="glass-strong overflow-hidden rounded-xl shadow-overlay"
             >
-              <div className="flex items-center gap-3 border-b border-line/[0.07] px-4">
+              <div className="flex items-center gap-3 border-b border-line/[0.08] px-4">
                 <SearchIcon className="h-4 w-4 shrink-0 text-faint" />
                 <Command.Input
                   autoFocus
                   placeholder="Type a command or search…"
                   className="h-14 w-full bg-transparent font-sans text-[0.9375rem] text-strong outline-none placeholder:text-faint"
                 />
-                <kbd className="hidden shrink-0 rounded border border-line/[0.07] px-1.5 py-0.5 font-mono text-[0.625rem] uppercase tracking-[0.06em] text-faint sm:block">
+                <kbd className="hidden shrink-0 rounded border border-line/[0.08] px-1.5 py-0.5 font-mono text-[0.625rem] uppercase tracking-[0.06em] text-faint sm:block">
                   esc
                 </kbd>
               </div>
@@ -214,7 +214,7 @@ export function CommandPalette({ open, onClose, onOpenTerminal, onOpenAsk }: Pro
                   >
                     <TerminalIcon className="h-4 w-4 text-faint" />
                     Open terminal
-                    <kbd className="ml-auto rounded border border-line/[0.07] px-1.5 py-0.5 font-mono text-[0.625rem] text-faint">
+                    <kbd className="ml-auto rounded border border-line/[0.08] px-1.5 py-0.5 font-mono text-[0.625rem] text-faint">
                       `
                     </kbd>
                   </Command.Item>

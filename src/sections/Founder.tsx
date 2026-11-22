@@ -41,7 +41,7 @@ export function Founder() {
             <PipelineFlow />
           </div>
 
-          <ul className="mt-8 space-y-3.5 border-t border-line/[0.06] pt-6">
+          <ul className="mt-8 space-y-4 border-t border-line/[0.06] pt-6">
             {venture.badges.map((badge) => (
               <li key={badge.label} className="flex gap-3">
                 <Check />

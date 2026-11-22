@@ -8,7 +8,7 @@ interface Props {
 }
 
 const key =
-  'mx-0.5 inline-flex items-center rounded border border-line/[0.1] px-1.5 py-px text-faint transition-colors duration-300 hover:border-line/[0.2] hover:text-strong';
+  'mx-0.5 inline-flex items-center rounded border border-line/[0.08] px-1.5 py-px text-faint transition-colors duration-300 hover:border-line/[0.14] hover:text-strong';
 
 /**
  * One small mono line. The two shortcuts it mentions are also buttons, for

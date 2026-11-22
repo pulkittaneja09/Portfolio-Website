@@ -34,14 +34,14 @@ export function NotFound() {
         <span className="link link-on-group">Back to the start</span>
       </Link>
 
-      <div className="enter mt-14 border-t border-line/[0.07] pt-6" style={stagger(4)}>
+      <div className="enter mt-14 border-t border-line/[0.08] pt-6" style={stagger(4)}>
         <p className="label text-faint">Or jump to a project</p>
         <ul className="mt-4 flex flex-wrap gap-2">
           {projects.map((project) => (
             <li key={project.slug}>
               <Link
                 to={`/projects/${project.slug}`}
-                className="chip transition-colors duration-300 hover:border-line/[0.16] hover:text-strong"
+                className="chip transition-colors duration-300 hover:border-line/[0.14] hover:text-strong"
               >
                 {project.name}
               </Link>

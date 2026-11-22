@@ -196,7 +196,7 @@ export function TerminalOverlay({ open, onClose }: Props) {
             onClick={() => inputRef.current?.focus()}
           >
             {/* Title bar */}
-            <div className="flex shrink-0 items-center gap-3 border-b border-line/[0.07] px-4 py-3">
+            <div className="flex shrink-0 items-center gap-3 border-b border-line/[0.08] px-4 py-3">
               <span className="flex gap-1.5" aria-hidden>
                 <span className="h-2 w-2 rounded-full border border-line/[0.14]" />
                 <span className="h-2 w-2 rounded-full border border-line/[0.14]" />
@@ -289,7 +289,7 @@ export function TerminalOverlay({ open, onClose }: Props) {
             </div>
 
             {/* Hint bar */}
-            <div className="meta shrink-0 border-t border-line/[0.07] px-4 py-2.5 sm:px-6">
+            <div className="meta shrink-0 border-t border-line/[0.08] px-4 py-2.5 sm:px-6">
               <span className="hidden sm:inline">tab completes · ↑↓ history · ctrl+l clears · </span>
               esc closes
             </div>

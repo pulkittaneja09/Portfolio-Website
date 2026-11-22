@@ -85,14 +85,14 @@ function ProjectCard({ project, motion }: { project: Project; motion?: CardMotio
             />
           </h3>
 
-          <p className="mt-1.5 text-sm leading-relaxed text-body">{project.oneLiner}</p>
+          <p className="mt-2 text-sm leading-relaxed text-body">{project.oneLiner}</p>
 
-          <p className="mt-2.5 text-sm leading-relaxed [text-wrap:pretty]">
+          <p className="mt-3 text-sm leading-relaxed [text-wrap:pretty]">
             <CountUp value={project.metric.value} className="font-mono text-xs text-accent" />
             <span className="text-faint"> · {project.metric.label}</span>
           </p>
 
-          <ul className="mt-3.5 flex flex-wrap gap-1.5" aria-label="Technologies used">
+          <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="Technologies used">
             {project.stack.slice(0, CHIP_LIMIT).map((tech) => (
               <li key={tech} className="chip">
                 {tech}

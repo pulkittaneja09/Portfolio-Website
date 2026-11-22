@@ -53,7 +53,7 @@ export function ArchitectureDiagram({ architecture }: { architecture: Architectu
   return (
     <figure className="not-prose">
       <div
-        className="overflow-x-auto rounded-xl border border-line/[0.07] bg-line/[0.02] p-3 sm:p-6"
+        className="overflow-x-auto rounded-xl border border-line/[0.08] bg-line/[0.02] p-3 sm:p-6"
         data-lenis-prevent
       >
         <svg
