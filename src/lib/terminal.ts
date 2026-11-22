@@ -7,7 +7,6 @@ import {
   skillGroups,
   venture,
 } from '@/data/portfolio';
-import { formatNoteDate, notes } from '@/lib/notes';
 import { liveStats as stats } from '@/lib/siteStats';
 
 /** One line of terminal output. `tone` drives the colour, nothing else. */
@@ -42,7 +41,6 @@ export const COMMANDS = [
   'startup',
   'resume',
   'contact',
-  'notes',
   'theme',
   'clear',
   'exit',
@@ -61,7 +59,6 @@ function helpOutput(): Line[] {
     ['startup', 'Audaxity Technologies'],
     ['resume', 'download the PDF'],
     ['contact', 'how to reach me'],
-    ['notes', 'what I have written'],
     ['theme', 'switch light / dark (or: theme light)'],
     ['clear', 'wipe the screen'],
     ['exit', 'close the terminal'],
@@ -98,17 +95,6 @@ function skillsOutput(): Line[] {
   skillGroups.forEach((group) => {
     lines.push(l(`  ${group.title}`, 'accent'));
     lines.push(l(`    ${group.items.map((item) => item.name).join(' · ')}`, 'muted'));
-    lines.push(blank());
-  });
-  return lines;
-}
-
-function notesOutput(): Line[] {
-  if (!notes.length) return [l('No notes published yet.', 'muted')];
-  const lines: Line[] = [l('Notes', 'heading'), blank()];
-  notes.forEach((note) => {
-    lines.push(l(`  ${note.title}`, 'accent', `/notes/${note.slug}`));
-    lines.push(l(`  ${formatNoteDate(note.date)}`, 'muted'));
     lines.push(blank());
   });
   return lines;
@@ -251,11 +237,6 @@ export function runCommand(raw: string): CommandResult {
     case 'contact':
     case 'email':
       return { lines: contactOutput() };
-
-    case 'notes':
-    case 'blog':
-    case 'writing':
-      return { lines: notesOutput() };
 
     case 'clear':
     case 'cls':

@@ -15,11 +15,6 @@ export default defineConfig(({ mode }) => ({
       // All variables, not only VITE_*: GITHUB_TOKEN stays in this Node
       // process and is never inlined into the client bundle.
       githubToken: loadEnv(mode, process.cwd(), '').GITHUB_TOKEN || undefined,
-      notesDir: 'content/notes',
-      feed: {
-        title: `Notes · ${profile.name}`,
-        description: 'Notes on building AI agents, RAG systems and the backends that run them.',
-      },
     }),
   ],
   resolve: {

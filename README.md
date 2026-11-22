@@ -52,7 +52,6 @@ component, so you can change the whole site without opening any JSX. Every field
 | The Skills section (also the terminal and Ask); evidence is computed  | `skillGroups`           |
 | How an AI project was evaluated, shown on its case study              | `projects[].evaluation` |
 | The /uses page (`null` slots stay hidden until filled)                | `uses`                  |
-| Notes (writing)                                                       | `content/notes/*.md`    |
 
 Two rules worth keeping:
 
@@ -96,29 +95,6 @@ Give each node a `col` (left to right) and `row` (top to bottom), plus a `tone` 
 nodes for its row thumbnail, so it never shows an empty frame.
 
 The generated sitemap picks up the new case study automatically.
-
-## Writing a note
-
-Notes are Markdown files in [`content/notes/`](content/notes), rendered to HTML at build time, so
-Markdown costs nothing in the browser. Each starts with a small frontmatter block:
-
-```md
----
-title: RAG that cites its sources
-date: 2026-12-01
-summary: One sentence for the notes list, the RSS feed and the meta description.
-draft: true
----
-```
-
-- **While `draft: true` is set, the note is not published.** It is left out of production builds
-  entirely (not in the bundle, the feed or the sitemap). `npm run dev` shows drafts, marked as such,
-  so you can read them as you write; `NOTES_DRAFTS=1 npm run build` makes a preview build with them.
-- **Publishing is deleting `draft: true`.** The first published note switches on everything at once:
-  the Notes section and nav item on the home page, `/notes` and `/notes/<file-name>`, `/rss.xml`
-  (with a feed `<link>` in the page), sitemap entries, ⌘K entries and the terminal's `notes` command.
-- Three outlines are waiting in `content/notes`, built only from facts in `portfolio.ts`, with
-  TODO(pulkit) wherever you need to add something. They are notes to you, not posts written as you.
 
 ## Screenshots
 
@@ -175,10 +151,8 @@ public/
 
 config/
   site-plugin.ts    build-time LeetCode + GitHub counts, last-updated date, the
-                    site URL in index.html, sitemap.xml, robots.txt and the notes
-  notes.ts          Markdown notes: frontmatter, rendering, the RSS feed
-content/
-  notes/            your notes, one Markdown file each
+                    site URL in index.html, sitemap.xml and robots.txt
+_drafts/            writing outlines, kept outside the build
 
 src/
   data/
@@ -295,7 +269,6 @@ the fixed chrome; reveals are forced visible on `beforeprint`.
 Search the codebase for `TODO(pulkit)`. At the time of writing:
 
 - `profile.siteUrl` — change it if you add a custom domain or rename the Vercel project.
-- Write and publish the three draft notes in `content/notes`.
 - Evaluation details: the held-out split for Scrap 2 Spark, answer quality for ParcelPilot, and any
   evaluation for KnowledgeHub AI (`projects[].evaluation`).
 - The empty slots on `/uses` (machine, editor, AI assistants).

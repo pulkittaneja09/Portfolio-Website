@@ -13,7 +13,6 @@ import { About } from '@/sections/About';
 import { Contact } from '@/sections/Contact';
 import { Experience } from '@/sections/Experience';
 import { Founder } from '@/sections/Founder';
-import { Notes } from '@/sections/Notes';
 import { Projects } from '@/sections/Projects';
 import { Skills } from '@/sections/Skills';
 import { sections } from '@/lib/sections';
@@ -73,7 +72,6 @@ export function Home({ onOpenTerminal, onOpenPalette, onOpenAsk }: HomeProps) {
             <Experience />
             <Skills />
             <Projects />
-            <Notes />
             <Founder />
             <Contact />
             <SiteFooter onOpenPalette={onOpenPalette} onOpenTerminal={onOpenTerminal} />

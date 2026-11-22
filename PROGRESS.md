@@ -316,3 +316,19 @@ nowhere; build without warnings.
 - [x] R2. Skills section between Experience and Projects (grouped rows, chips with tiny monochrome logos, "Used in" tooltips and click-to-filter from real tags), in nav and ⌘K; drop the Daily tools line
 - [x] R3. Study top AI engineers' portfolios + design refs; gap list; implement what fits with real content (notes infrastructure with drafts, evaluation lines, research if real, /uses)
 - [x] R4. Final QA: every section in both themes at 1440 / 1024 / 390; no theme flash, persistence, contrast, skills filter, drafts hidden; build with no warnings; final summary
+
+### Round 4: remove Notes, premium palette, finishing touches (layout, content and features unchanged)
+
+- [x] C1. Remove Notes completely — route, section, nav, ⌘K, terminal, feed and sitemap gone; 3 outlines in `_drafts/`; `marked` uninstalled; build + lint clean
+- [ ] C2a. Research palettes: top GitHub portfolio repos' tokens + reference sites; findings below
+- [ ] C2b. Shortlist 3 palette directions with full tokens for both themes
+- [ ] C2c. Temporary /palette page on real components, Playwright screenshots, scorecard, pick a winner
+- [ ] C2d. Implement the winner site-wide in both themes (aurora, spotlight, serif gradient, agent-run syntax, chip tints, count-up metrics, accent UI); delete /palette
+- [ ] C3a. Project colour identity: per-project tint, hover glow + 3D tilt on thumbnails, tinted case-study header
+- [ ] C3b. Founder card animated hairline gradient border
+- [ ] C3c. Highlight strip under About: 3 real stat tiles with count-up
+- [ ] C3d. Magnetic CTAs with accent fill-sweep
+- [ ] C3e. Section dividers with travelling accent dot
+- [ ] C3f. First-visit "PT" monogram intro (<1.2s, sessionStorage, skipped for reduced-motion)
+- [ ] C3g. Polish: selection colour, thin scrollbar, accent focus rings, circular-reveal theme switch
+- [ ] C4. Final QA (both themes, 1440/1024/390), greps, contrast, Lighthouse 90+, build with no warnings, summary
