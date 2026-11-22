@@ -33,7 +33,7 @@ function pick(name: string) {
   scrollToTarget(document.getElementById(target));
 }
 
-function SkillChip({ skill, selected }: { skill: Skill; selected: boolean }) {
+export function SkillChip({ skill, selected }: { skill: Skill; selected: boolean }) {
   const tipId = useId();
   const [alignEnd, setAlignEnd] = useState(false);
   const evidence = evidenceFor(skill.name);
@@ -113,7 +113,7 @@ export function Skills() {
             className="grid gap-y-2 sm:grid-cols-[27%_minmax(0,1fr)] sm:gap-x-6"
           >
             <dt className="label pt-[0.4rem] text-faint">{group.title}</dt>
-            <dd>
+            <dd data-tone={group.id}>
               <ul className="flex flex-wrap gap-1.5">
                 {group.items.map((skill) => (
                   <li key={skill.name}>

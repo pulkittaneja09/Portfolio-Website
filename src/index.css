@@ -16,40 +16,51 @@
    as before and the light one can swap glows for soft shadows.
    ─────────────────────────────────────────────────────────────────────────── */
 @layer base {
-  :root {
-    --bg: #0b0c0e;
-    --surface: rgba(255, 255, 255, 0.03);
-    --border: rgba(255, 255, 255, 0.07);
-    --text-strong: #f2f2f2;
-    --text: #a1a1aa;
-    --text-faint: #5c5c66;
-    --accent: #d9c7a7;
+  :root,
+  [data-palette] {
+    --bg: rgb(var(--bg-rgb));
+    --bg-elevated: rgb(var(--bg-elevated-rgb));
+    --surface: rgb(var(--line-rgb) / 0.03);
+    --border: rgb(var(--line-rgb) / 0.09);
+    --text-strong: rgb(var(--text-strong-rgb));
+    --text: rgb(var(--text-rgb));
+    --text-faint: rgb(var(--text-faint-rgb));
+    --accent: rgb(var(--accent-rgb));
+    --accent-soft: rgb(var(--accent-rgb) / 0.12);
+    --secondary: rgb(var(--secondary-rgb));
 
-    --bg-rgb: 11 12 14;
-    --text-strong-rgb: 242 242 242;
-    --text-rgb: 161 161 170;
-    --text-faint-rgb: 92 92 102;
-    --accent-rgb: 217 199 167;
+    /* PALETTE:dark-start */
+    --bg-rgb: 10 14 20;
+    --bg-elevated-rgb: 16 21 29;
+    --text-strong-rgb: 238 242 248;
+    --text-rgb: 163 173 189;
+    --text-faint-rgb: 94 104 120;
+    --accent-rgb: 143 180 255;
+    --secondary-rgb: 125 211 192;
+    --ok-rgb: 134 214 158;
+    --tone-3-rgb: 180 194 218;
+    --tone-4-rgb: 154 208 232;
+    --line-rgb: 196 212 240; /* hairlines and faint fills, tinted toward the accent */
+    /* PALETTE:dark-end */
 
     /* Plumbing */
-    --line-rgb: 255 255 255; /* hairlines and faint fills: white in dark, black in light */
     --trace: var(--text);
-    --row-hover-bg: rgba(255, 255, 255, 0.03);
-    --row-hover-border: rgba(255, 255, 255, 0.06);
-    --chip-bg: rgba(255, 255, 255, 0.02);
-    --node-fill: rgba(255, 255, 255, 0.025);
-    --diagram-service: #121316;
-    --card-bg: linear-gradient(rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02)), var(--bg);
+    --row-hover-bg: rgb(var(--line-rgb) / 0.03);
+    --row-hover-border: rgb(var(--line-rgb) / 0.07);
+    --chip-bg: rgb(var(--line-rgb) / 0.02);
+    --node-fill: rgb(var(--line-rgb) / 0.025);
+    --diagram-service: var(--bg-elevated);
+    --card-bg: linear-gradient(rgb(var(--line-rgb) / 0.02), rgb(var(--line-rgb) / 0.02)), var(--bg);
     --founder-bg:
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0) 45%), var(--bg);
+      linear-gradient(to bottom, rgb(var(--line-rgb) / 0.06), rgb(var(--line-rgb) / 0) 45%), var(--bg);
     --glass-bg: rgb(var(--bg-rgb) / 0.94);
-    --overlay-bg: rgb(15 16 19 / 0.94);
+    --overlay-bg: rgb(var(--bg-elevated-rgb) / 0.94);
     --shadow-card: none;
     --shadow-float: 0 12px 32px -12px rgba(0, 0, 0, 0.6);
     --shadow-overlay: 0 24px 64px -24px rgba(0, 0, 0, 0.7);
     --selection: rgb(var(--accent-rgb) / 0.28);
-    --scrollbar: rgba(255, 255, 255, 0.12);
-    --tip-bg: #17181b;
+    --scrollbar: rgb(var(--line-rgb) / 0.14);
+    --tip-bg: var(--bg-elevated);
 
     --ease: cubic-bezier(0.16, 1, 0.3, 1);
 
@@ -59,23 +70,27 @@
   /* Light: a clean, corporate page. Warm off-white ground, pure-white
      surfaces, black hairlines, and depth from soft shadows instead of glows.
      Body #52525B is 7.4:1 on the ground; bronze #7A5C2E is 5.9:1. */
-  :root[data-theme='light'] {
-    --bg: #fafaf9;
-    --surface: #ffffff;
-    --border: rgba(0, 0, 0, 0.08);
-    --text-strong: #0f0f10;
-    --text: #52525b;
-    --text-faint: #8a8a93;
-    --accent: #7a5c2e;
+  :root[data-theme='light'],
+  [data-palette][data-theme='light'] {
+    --surface: var(--bg-elevated);
+    --border: rgb(var(--line-rgb) / 0.08);
+    --accent-soft: rgb(var(--accent-rgb) / 0.08);
 
-    --bg-rgb: 250 250 249;
-    --text-strong-rgb: 15 15 16;
-    --text-rgb: 82 82 91;
-    --text-faint-rgb: 138 138 147;
-    --accent-rgb: 122 92 46;
+    /* PALETTE:light-start */
+    --bg-rgb: 248 250 252;
+    --bg-elevated-rgb: 255 255 255;
+    --text-strong-rgb: 11 18 32;
+    --text-rgb: 71 84 103;
+    --text-faint-rgb: 135 146 162;
+    --accent-rgb: 47 91 211;
+    --secondary-rgb: 14 124 108;
+    --ok-rgb: 31 138 84;
+    --tone-3-rgb: 84 102 134;
+    --tone-4-rgb: 22 120 160;
+    --line-rgb: 15 23 42;
+    /* PALETTE:light-end */
 
-    --line-rgb: 0 0 0;
-    --trace: #3f3f46;
+    --trace: rgb(var(--text-strong-rgb) / 0.8);
     --row-hover-bg: #ffffff;
     --row-hover-border: rgba(0, 0, 0, 0.06);
     --chip-bg: #ffffff;
@@ -188,7 +203,19 @@
     font-size: 1.14em;
     line-height: 1;
     letter-spacing: -0.005em;
-    color: var(--text-strong);
+    color: var(--accent);
+    /* A subtle accent gradient: the accent easing toward the secondary. The
+       padding keeps the italic overhang inside the clipped background. */
+    background-image: linear-gradient(
+      100deg,
+      var(--accent) 20%,
+      color-mix(in srgb, var(--accent) 55%, var(--secondary)) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-right: 0.08em;
+    margin-right: -0.08em;
   }
 
   .chip {
@@ -243,13 +270,65 @@
     color: var(--text-strong);
   }
 
-  .skill-chip[data-selected] {
-    color: var(--accent);
-    border-color: rgb(var(--accent-rgb) / 0.55);
+  /* Each skill group carries a tone (accent, secondary, two quieter steps, or
+     the neutral line): a soft wash behind the chip and the logo in the tone. */
+  [data-tone] .skill-chip {
+    background: rgb(var(--tone) / var(--tone-fill, 0.07));
+    border-color: rgb(var(--tone) / 0.16);
   }
 
-  .skill-chip[data-selected] svg {
+  [data-tone] .skill-chip svg {
+    color: rgb(var(--tone));
+  }
+
+  [data-tone='ai'] {
+    --tone: var(--accent-rgb);
+  }
+  [data-tone='backend'] {
+    --tone: var(--secondary-rgb);
+  }
+  [data-tone='languages'] {
+    --tone: var(--tone-3-rgb);
+  }
+  [data-tone='infra'] {
+    --tone: var(--tone-4-rgb);
+  }
+  [data-tone='frontend'] {
+    --tone: var(--tone-3-rgb);
+    --tone-fill: 0.05;
+  }
+  [data-tone='core'] {
+    --tone: var(--line-rgb);
+    --tone-fill: 0.04;
+  }
+
+  button.skill-chip:hover,
+  button.skill-chip:focus-visible {
+    border-color: rgb(var(--tone, var(--line-rgb)) / 0.4);
+  }
+
+  /* The active filter: solid accent. */
+  .skill-chip[data-selected],
+  [data-tone] .skill-chip[data-selected] {
+    color: var(--bg);
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .skill-chip[data-selected] svg,
+  [data-tone] .skill-chip[data-selected] svg {
+    color: var(--bg);
+  }
+
+  /* Editor-style syntax colours in the agent-run card. */
+  .syn-fn {
     color: var(--accent);
+  }
+  .syn-str {
+    color: var(--secondary);
+  }
+  .syn-ok {
+    color: rgb(var(--ok-rgb));
   }
 
   .skill-tip {

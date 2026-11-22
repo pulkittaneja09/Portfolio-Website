@@ -322,7 +322,7 @@ nowhere; build without warnings.
 - [x] C1. Remove Notes completely — route, section, nav, ⌘K, terminal, feed and sitemap gone; 3 outlines in `_drafts/`; `marked` uninstalled; build + lint clean
 - [x] C2a. Research palettes — 10 repos' theme files + 10 live sites read with Playwright; findings in "Round 4 research"
 - [x] C2b. Shortlist — Midnight+Glacier, Slate+Teal, Graphite+Indigo; full tokens, all pass contrast
-- [ ] C2c. Temporary /palette page on real components, Playwright screenshots, scorecard, pick a winner
+- [x] C2c. /palette compare page, 6 screenshots, scorecard — A · Midnight + Glacier wins 29/30
 - [ ] C2d. Implement the winner site-wide in both themes (aurora, spotlight, serif gradient, agent-run syntax, chip tints, count-up metrics, accent UI); delete /palette
 - [ ] C3a. Project colour identity: per-project tint, hover glow + 3D tilt on thumbnails, tinted case-study header
 - [ ] C3b. Founder card animated hairline gradient border
@@ -398,3 +398,27 @@ white (light); `border` = the tinted line at 9% (dark) / 8% (light).
 | secondary | #7DD3C0 (11.0) | #0E7C6C (4.9) | #9CB8FF (9.7) | #3157C9 (6.0) | #7FD6C2 (11.4) | #0F7F6C (4.7) |
 
 (text-faint is for dates and metadata only, as today, and stays non-essential.)
+
+## Round 4 palette scorecard (C2c)
+
+Built `/palette`: each candidate in dark and light, with the real Identity text, the agent-run card
+(with the new syntax colours), an experience row, a project row, tinted skill chips (one selected), a
+CTA, a hovered link and a metric. Screenshots in `.screenshots/r5/palette/`. Contrast measured from
+rendered pixels' computed colours: body text and the mono metric against each panel's ground.
+
+| | A · Midnight + Glacier | B · Slate + Teal | C · Graphite + Indigo |
+| --- | --- | --- | --- |
+| Premium feel | 5: navy-black ground reads deep, not flat; blue + seafoam in code looks like a paid editor theme | 4: clean, but the mint-teal accent is bright against slate | 4: elegant in dark, Linear-like |
+| Minimal / restrained | 5: accent recedes; tints barely there | 4: teal draws the eye more than the others | 4 |
+| Distinctive | 4: the hue is common, the tinted ground and seafoam secondary are not | 2: almost exactly brittanychiang.com (teal-300 on slate-900), the most-copied portfolio | 3: periwinkle sits close to the "AI purple" look the brief bans |
+| Fits AI/backend engineer | 5: Stripe / Linear / infra-tool vocabulary | 4 | 4 |
+| Contrast (body / accent) | dark 8.54 / 9.34 · light 7.35 / 5.64 ✓ | dark 8.44 / 10.56 · light 7.59 / 4.99 ✓ (accent thinnest margin) | dark 8.10 / 9.32 · light 7.74 / 6.14 ✓ |
+| Recruiter first glance | 5: trustworthy, corporate-clean in light, calm in dark | 3: reads "template" to anyone who has seen v4 | 4: in light the indigo leans violet |
+| **Total /30** | **29** | **21** | **23** |
+
+**Winner: A · Midnight + Glacier.** It fixes "too black and white" in the quietest way: the neutrals
+take on a cool navy tint, so the page has a colour identity before any accent appears, and the accent
+itself (#8FB4FF dark / #2F5BD3 light) can stay on small things. It is the only candidate that is
+equally at home in both themes: B's teal is derivative and its light accent barely clears 4.5:1, and
+C's indigo drifts toward the purple "AI" look the brief bans. Blue for function names and seafoam for
+strings also gives the agent-run card the most convincing code-editor look of the three.

@@ -8,7 +8,7 @@ import { stagger } from '@/lib/stagger';
 /**
  * The signature element: a small card that plays an agent run line by line,
  * like a live trace — the prompt types out, each step lands ~350ms after the
- * last with its timing and a champagne ✓, the result holds for four seconds,
+ * last with its timing and a soft green ✓, the result holds for four seconds,
  * then the card fades and plays the next example.
  *
  * Everything derives from one elapsed-time clock advanced in a rAF loop.
@@ -39,6 +39,42 @@ interface Frame {
 
 function promptOf(trace: AgentTrace) {
   return { head: 'agent.run(', arg: `"${trace.task}"`, tail: ')' };
+}
+
+/**
+ * Editor-style highlighting, one rule per colour: function and method names
+ * in the accent, strings and paths in the secondary, everything else in the
+ * trace colour. Timings stay faint and the ✓ is the soft green.
+ */
+type Token = { text: string; tone?: 'fn' | 'str' };
+
+const TOKEN = /([A-Za-z_]\w*)(?=\()|\.([A-Za-z_]\w*)$|((?:mcp:\/\/|\/)[\w./-]+)/g;
+
+function tokenize(detail: string): Token[] {
+  const out: Token[] = [];
+  let last = 0;
+  for (const match of detail.matchAll(TOKEN)) {
+    const index = match.index ?? 0;
+    // `.name` at the end: keep the dot in the plain text.
+    const start = match[2] ? index + 1 : index;
+    if (start > last) out.push({ text: detail.slice(last, start) });
+    out.push({ text: match[1] ?? match[2] ?? match[3], tone: match[3] ? 'str' : 'fn' });
+    last = index + match[0].length;
+  }
+  if (last < detail.length) out.push({ text: detail.slice(last) });
+  return out;
+}
+
+function Tokens({ tokens }: { tokens: Token[] }) {
+  return (
+    <>
+      {tokens.map((token, i) => (
+        <span key={i} className={token.tone ? `syn-${token.tone}` : undefined}>
+          {token.text}
+        </span>
+      ))}
+    </>
+  );
 }
 
 function timeline(trace: AgentTrace) {
@@ -99,7 +135,7 @@ function Caret() {
 
 function Check() {
   return (
-    <svg viewBox="0 0 12 12" className="tick-in h-3 w-3 text-accent" aria-hidden focusable="false">
+    <svg viewBox="0 0 12 12" className="tick-in syn-ok h-3 w-3" aria-hidden focusable="false">
       <path
         d="M2.5 6.4 5 8.9l4.5-5.8"
         fill="none"
@@ -190,6 +226,12 @@ export function AgentRun({ className }: { className?: string }) {
   const trace = agentTraces[frame.trace];
   const { head, arg, tail } = promptOf(trace);
   const typedHead = head.slice(0, frame.typed);
+  // `agent.` + `run` + `(`: the method name lands in the accent as it types.
+  const headTokens: Token[] = [
+    { text: typedHead.slice(0, 6) },
+    { text: typedHead.slice(6, 9), tone: 'fn' },
+    { text: typedHead.slice(9) },
+  ];
   const typedArg = arg.slice(0, Math.max(0, frame.typed - head.length));
   const typedTail = tail.slice(0, Math.max(0, frame.typed - head.length - arg.length));
   const steps = trace.steps.length;
@@ -234,8 +276,10 @@ export function AgentRun({ className }: { className?: string }) {
         {/* The prompt types out character by character. */}
         <div className="flex h-[1.7em] items-center whitespace-pre">
           <span className="text-faint">{'> '}</span>
-          <span className="text-trace">{typedHead}</span>
-          <span className="text-strong">{typedArg}</span>
+          <span className="text-trace">
+            <Tokens tokens={headTokens} />
+          </span>
+          <span className="syn-str">{typedArg}</span>
           <span className="text-trace">{typedTail}</span>
           {frame.shown === 0 && !reduced && <Caret />}
         </div>
@@ -255,7 +299,7 @@ export function AgentRun({ className }: { className?: string }) {
                   <span
                     className={cn('line-in truncate whitespace-pre text-trace', !step.time && 'col-span-3')}
                   >
-                    {step.detail}
+                    <Tokens tokens={tokenize(step.detail)} />
                     {active && <Caret />}
                   </span>
                   {step.time && (

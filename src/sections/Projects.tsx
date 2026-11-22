@@ -30,7 +30,7 @@ function InlineLink({ href, children, label }: { href: string; children: string;
   );
 }
 
-function ProjectRow({ project }: { project: Project }) {
+export function ProjectRow({ project }: { project: Project }) {
   return (
     <article className="row-card group/row grid gap-y-4 sm:grid-cols-[27%_minmax(0,1fr)] sm:gap-x-6">
       <ProjectThumb project={project} className="order-2 w-52 max-w-full sm:order-none sm:w-auto" />
