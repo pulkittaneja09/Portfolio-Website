@@ -236,6 +236,53 @@ leerob.com again.
 - R1: Light theme as a second token set under `html[data-theme='light']`, with the exact tokens requested; depth from soft shadows on hovered rows, the agent card (white, #3F3F46 trace, bronze ✓), the founder card, thumbnails (no dimming), toasts and overlays. Spotlight off in light (it read as a smudge and would have pulled body text to 6.99:1); grain was already gone. Hardcoded white alphas became a `line` colour (white in dark, black in light) and the rest became tokens, so dark is pixel-identical (diffed home + case study at 1440 and 390: only the new toggle differs). An inline head script sets the theme before any CSS (saved choice, else system, followed live until chosen) and syncs theme-color. The toggle sits beside the socials (top bar on phones), plus ⌘K 'Toggle theme' and terminal `theme [light|dark]`, with a 500ms circular View Transition from the toggle (instant under reduced motion). At 1024 the link row needed 6px more, so its gaps tighten there only. Every component checked in light: palette, terminal, Ask, toasts, case study, 404, focus ring, scrollbar, selection; the OG image stays the dark brand card. `npm run qa` now runs both themes at four widths (body 7.64:1 dark / 7.4:1 light, accent 10.35 / 5.92, no flash): all PASS; `check:reveal` 0/32.
 - R2: Skills section between Experience and Projects (in the rail nav, the scroll-spy and ⌘K): the six groups as asked, cross-checked against the résumé's Technical Skills and the data, plus the real ones that were missing (Embeddings, Whisper, Pandas, NumPy, NLP (TF-IDF), Express, MongoDB, SQLite, Postman). True tags were added to stacks so the evidence is complete (Python on Scrap 2 Spark and KnowledgeHub; Vercel on the three Vercel-hosted demos). Chips: mono, 6px radius, hairline, a tiny monochrome logo from one Simple Icons sprite (`public/skills.svg`, 16KB gzipped, `npm run icons`). Evidence comes from the real stack/tags via aliases (`lib/skills.ts`), nothing typed: 28 of 40 chips have tagged work and get a 'Used in: … · at …' tooltip; a click highlights the matching roles, projects and side projects (others 0.4), scrolls to Projects (or Experience for role-only skills) and shows a sticky 'Showing work with FastAPI · Clear ✕' pill; Escape or a second click clears. The 12 with no tagged work (Node.js, Java, DSA…) are listed but not clickable. Hover dimming yields to the filter, so matches never fade. Daily tools removed from About. The sixth nav item meant shifting the rail tiers (compact below 840px tall, tight below 720px): it fits from 1280×621 to 1440×900. QA all PASS in both themes; `check:reveal` 0/35.
 - R3: Gap list above. Built: Markdown notes in `content/notes` (frontmatter, rendered to HTML at build time by `config/notes.ts`; `marked` is a dev dependency and costs nothing in the browser) with `/notes`, `/notes/:slug` (reading time, note typography in both themes), a one-line home list, an RSS feed with full content, sitemap entries, a feed `<link>`, a Notes nav item, ⌘K entries and a terminal `notes` command — all only once a note is published. Drafts are never in a production build (verified: no draft text anywhere in `dist/`), and the dev server shows them marked as drafts. Three outlines from real projects (MCP server, KnowledgeHub RAG, battery RUL), facts and TODO(pulkit) only. The published path was tested with a temporary fixture (one RSS item, valid XML, sitemap, nav, both themes) and the fixture deleted. A seven-item nav scrolls with the page below 650px tall. Evaluation lines on case studies (Scrap 2 Spark, ParcelPilot; KnowledgeHub TODO); /uses from real tools with hidden TODO slots, footer link only. Skipped Research (nothing on the résumé), talks, photo, newsletter and search, with reasons above.
+- R4: Final QA. 66 screenshots: every section plus header and footer, the case study, /uses and the 404, in both themes at 1440 / 1024 / 390 (`.screenshots/r4`). Hard reload after toggling, both directions: no flash, the choice persists. All 40 skill chips checked against evidence recomputed independently from portfolio.ts (28 tooltips, 0 mismatches); filter → clear verified for FastAPI, MCP and scikit-learn, by Escape and by the pill. Drafts are absent from `dist/`, the nav, the home page, the routes and the feed. No console errors or failed requests on any route or overlay in either theme. `npm run qa` all PASS (8 runs); `check:reveal` 0/35; build 0 warnings; lint and Prettier clean.
+
+## Round 3 summary
+
+**What changed**
+
+- **Light theme, designed as a corporate counterpart.** A second token set under
+  `html[data-theme="light"]` with the exact tokens requested: warm off-white ground, pure-white
+  surfaces, black hairlines, body #52525B and deep bronze #7A5C2E in the same places as the champagne.
+  Depth comes from soft shadows on rows, cards, thumbnails, overlays, toasts and tooltips, and the
+  spotlight is off. Dark is pixel-identical apart from the new toggle. An inline head script sets the
+  theme before any CSS (the saved choice, else the system setting, followed live until chosen). The
+  toggle sits beside the socials and in the phone bar, with ⌘K "Toggle theme" and terminal
+  `theme [light|dark]`; the switch is a 500ms circular reveal from the toggle.
+- **Skills.** Grouped rows between Experience and Projects (in the nav, the scroll-spy and ⌘K): your
+  six groups plus the real skills that were missing, with tiny monochrome logos from one Simple Icons
+  sprite. The "Used in" tooltips and click-to-filter (others fade to 0.4, with a "Showing work with …
+  · Clear" pill) are computed from the real tags in portfolio.ts. Daily tools is gone from About.
+- **AI-engineer pass.** Notes are ready but hidden: Markdown rendered at build time, `/notes`,
+  `/notes/:slug`, a home list, RSS, sitemap, nav, ⌘K and terminal, all switched on by the first
+  published note. Three draft outlines from your real projects are waiting in `content/notes`.
+  Evaluation lines on case studies (real numbers only), and a `/uses` page from real tools, linked in
+  the footer. No Research list: the résumé has none.
+
+**Verification (R4):** 66 screenshots in both themes at three widths; no flash on hard reload and the
+choice persists, both ways; body text 7.64:1 dark (7.16 under the spotlight) and 7.4:1 light, accent
+10.35:1 and 5.92:1; all 28 skill tooltips match the evidence recomputed from the data, and filter →
+clear works; name on one line, nothing faded or blurred after scrolling, no console errors, drafts
+nowhere; build without warnings.
+
+**Judgement calls worth knowing**
+
+- Spotlight off in light (the brief allowed it): at 4% bronze it read as a smudge and pulled body text
+  to 6.99:1 under the cursor.
+- The toggle needed 6px more at 1024–1279px, so the link row's gaps tighten there only. Six nav items
+  shifted the rail spacing tiers (compact below 840px tall, tight below 720px); a seventh (Notes, once
+  published) makes the rail scroll with the page below 650px tall.
+- The OG image stays the dark brand card: link previews do not follow a visitor's theme.
+- Twelve skills with no tagged work (Node.js, Express, MongoDB, Java, C / C++, Git, Postman, Tailwind
+  CSS and the CS Core four) are listed but not clickable, rather than given invented evidence. True tags
+  were added so the evidence is complete: Python on two projects, Vercel on the three Vercel-hosted demos.
+- "LLM APIs (Claude, Gemini)" has no logo, since no single logo fits it, and Simple Icons has none for
+  ChromaDB or Whisper.
+- `/uses` hides its TODO slots rather than showing "TODO" to visitors.
+- `npm audit` reports two moderate react-router advisories (an open redirect through user-supplied link
+  targets, and SSR hydration). Neither applies here: every navigation target is static and the site
+  renders only in the browser. The fix is a major upgrade to React Router 7, left as a follow-up.
 
 ## Checklist
 
@@ -268,4 +315,4 @@ leerob.com again.
 - [x] R1. Light mode as a clean "corporate" theme (exact tokens, soft shadows, every component), system default + saved choice, no flash, toggle in rail / phone bar / ⌘K / terminal, circular View Transition reveal
 - [x] R2. Skills section between Experience and Projects (grouped rows, chips with tiny monochrome logos, "Used in" tooltips and click-to-filter from real tags), in nav and ⌘K; drop the Daily tools line
 - [x] R3. Study top AI engineers' portfolios + design refs; gap list; implement what fits with real content (notes infrastructure with drafts, evaluation lines, research if real, /uses)
-- [ ] R4. Final QA: every section in both themes at 1440 / 1024 / 390; no theme flash, persistence, contrast, skills filter, drafts hidden; build with no warnings; final summary
+- [x] R4. Final QA: every section in both themes at 1440 / 1024 / 390; no theme flash, persistence, contrast, skills filter, drafts hidden; build with no warnings; final summary
