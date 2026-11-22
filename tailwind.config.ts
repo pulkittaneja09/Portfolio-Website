@@ -60,7 +60,7 @@ export default {
         DEFAULT: 'cubic-bezier(0.16, 1, 0.3, 1)',
       },
       transitionDuration: {
-        DEFAULT: '250ms',
+        DEFAULT: '200ms',
         400: '400ms',
       },
       keyframes: {

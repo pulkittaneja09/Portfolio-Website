@@ -7,7 +7,7 @@ import { useMagnetic } from '@/hooks/useMagnetic';
 import { cn } from '@/lib/cn';
 
 const iconLink =
-  'grid h-8 w-8 place-items-center rounded-md text-body transition-colors duration-300 hover:text-strong';
+  'grid h-8 w-8 place-items-center rounded-md text-body transition-colors duration-200 hover:text-strong';
 
 /** Profiles shown as icons, in this order. Email gets its own copy button. */
 const ICON_PROFILES = ['github', 'linkedin', 'leetcode'] as const;

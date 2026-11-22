@@ -31,7 +31,7 @@ function InlineLink({ href, children, label }: { href: string; children: string;
     >
       <span className="link group-hover/link:bg-[length:100%_1px]">{children}</span>
       <ArrowUpRightIcon
-        className="h-3 w-3 text-body transition-transform duration-300 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 group-hover/link:text-accent"
+        className="h-3 w-3 text-body transition-transform duration-200 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 group-hover/link:text-accent"
         aria-hidden
       />
     </a>
@@ -69,7 +69,7 @@ function ProjectCard({ project, motion }: { project: Project; motion?: CardMotio
         <ProjectThumb project={project} parallax={motion?.parallax} className="order-2 sm:order-none" />
 
         <div className="min-w-0">
-          <h3 className="font-medium leading-snug text-strong transition-colors duration-300 group-hover/row:text-accent">
+          <h3 className="font-medium leading-snug text-strong transition-colors duration-200 group-hover/row:text-accent">
             {/* The whole card opens the case study through this stretched
                 link; the Live and Code links below sit above it. */}
             <TransitionLink
@@ -80,7 +80,7 @@ function ProjectCard({ project, motion }: { project: Project; motion?: CardMotio
               {project.name}
             </TransitionLink>
             <ArrowUpRightIcon
-              className="ml-1 inline-block h-3.5 w-3.5 -translate-y-px transition-transform duration-300 group-hover/row:-translate-y-[3px] group-hover/row:translate-x-0.5"
+              className="ml-1 inline-block h-3.5 w-3.5 -translate-y-px transition-transform duration-200 group-hover/row:-translate-y-[3px] group-hover/row:translate-x-0.5"
               aria-hidden
             />
           </h3>
@@ -297,19 +297,19 @@ function MoreProjects() {
               href={item.repo}
               target="_blank"
               rel="noreferrer noopener"
-              className="group/more -mx-3 flex items-baseline gap-3 rounded-lg px-3 py-2.5 transition-[background-color,box-shadow] duration-300 hover:bg-[var(--row-hover-bg)] hover:shadow-card"
+              className="group/more -mx-3 flex items-baseline gap-3 rounded-lg px-3 py-2.5 transition-[background-color,box-shadow] duration-200 hover:bg-[var(--row-hover-bg)] hover:shadow-card"
               title={item.blurb}
             >
-              <span className="shrink-0 text-sm font-medium text-strong transition-colors duration-300 group-hover/more:text-accent">
+              <span className="shrink-0 text-sm font-medium text-strong transition-colors duration-200 group-hover/more:text-accent">
                 {item.name}
               </span>
-              <span className="hidden min-w-0 flex-1 truncate text-sm text-body transition-colors duration-300 group-hover/more:text-strong/80 sm:block">
+              <span className="hidden min-w-0 flex-1 truncate text-sm text-body transition-colors duration-200 group-hover/more:text-strong/80 sm:block">
                 {item.oneLiner}
               </span>
               <span className="ml-auto flex shrink-0 items-baseline gap-3 sm:ml-0">
                 {item.metric && <CountUp value={item.metric} className="font-mono text-xs text-accent" />}
                 <ArrowUpRightIcon
-                  className="h-3.5 w-3.5 translate-y-0.5 self-center text-faint transition-[transform,color] duration-300 group-hover/more:-translate-y-0 group-hover/more:translate-x-0.5 group-hover/more:text-accent"
+                  className="h-3.5 w-3.5 translate-y-0.5 self-center text-faint transition-[transform,color] duration-200 group-hover/more:-translate-y-0 group-hover/more:translate-x-0.5 group-hover/more:text-accent"
                   aria-hidden
                 />
               </span>

@@ -86,7 +86,7 @@ export function AskWidget({ open, onOpenChange }: Props) {
       <button
         type="button"
         onClick={() => onOpenChange(!open)}
-        className="group glass fixed bottom-6 right-3 z-[65] hidden h-9 w-9 print:!hidden place-items-center rounded-full text-body shadow-float transition-[border-color,color] duration-300 hover:border-line/[0.14] hover:text-strong lg:grid xl:right-6"
+        className="group glass fixed bottom-6 right-3 z-[65] hidden h-9 w-9 print:!hidden place-items-center rounded-full text-body shadow-float transition-[border-color,color] duration-200 hover:border-line/[0.14] hover:text-strong lg:grid xl:right-6"
         aria-expanded={open}
         aria-controls="ask-panel"
         aria-label={open ? 'Close the Ask about Pulkit panel' : 'Ask about Pulkit'}
@@ -120,7 +120,7 @@ export function AskWidget({ open, onOpenChange }: Props) {
               <button
                 type="button"
                 onClick={() => onOpenChange(false)}
-                className="grid h-8 w-8 place-items-center rounded-md text-faint transition-colors duration-300 hover:text-strong"
+                className="grid h-8 w-8 place-items-center rounded-md text-faint transition-colors duration-200 hover:text-strong"
                 aria-label="Close"
               >
                 <CloseIcon className="h-3.5 w-3.5" />
@@ -152,7 +152,7 @@ export function AskWidget({ open, onOpenChange }: Props) {
                           <button
                             type="button"
                             onClick={() => send(question)}
-                            className="rounded-md border border-line/[0.08] px-2.5 py-1 text-left text-[0.6875rem] text-body transition-colors duration-400 hover:border-line/[0.14] hover:text-strong"
+                            className="rounded-md border border-line/[0.08] px-2.5 py-1 text-left text-[0.6875rem] text-body transition-colors duration-300 hover:border-line/[0.14] hover:text-strong"
                           >
                             {question}
                           </button>
@@ -181,11 +181,11 @@ export function AskWidget({ open, onOpenChange }: Props) {
                 onChange={(event) => setValue(event.target.value)}
                 placeholder="What has he built?"
                 autoComplete="off"
-                className="min-w-0 flex-1 rounded-lg border border-line/[0.08] bg-transparent px-3.5 py-2 text-[0.8125rem] text-strong outline-none transition-colors duration-400 placeholder:text-faint focus:border-line/[0.14]"
+                className="min-w-0 flex-1 rounded-lg border border-line/[0.08] bg-transparent px-3.5 py-2 text-[0.8125rem] text-strong outline-none transition-colors duration-300 placeholder:text-faint focus:border-line/[0.14]"
               />
               <button
                 type="submit"
-                className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-strong text-bg transition-opacity duration-400 hover:opacity-90"
+                className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-strong text-bg transition-opacity duration-300 hover:opacity-90"
                 aria-label="Send question"
               >
                 <SendIcon className="h-4 w-4" />

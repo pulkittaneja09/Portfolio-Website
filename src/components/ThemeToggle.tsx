@@ -21,7 +21,7 @@ export function ThemeToggle({ className }: { className?: string }) {
         toggleTheme({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
       }}
       className={cn(
-        'grid h-8 w-8 place-items-center rounded-md text-body transition-colors duration-300 hover:text-strong',
+        'grid h-8 w-8 place-items-center rounded-md text-body transition-colors duration-200 hover:text-strong',
         className,
       )}
       aria-label={`Switch to the ${next} theme`}

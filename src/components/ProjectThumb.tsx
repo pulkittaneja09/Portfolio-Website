@@ -49,7 +49,7 @@ function ThumbFace({ project, parallax }: Omit<ThumbProps, 'className'>) {
           height={640}
           loading="lazy"
           decoding="async"
-          className="h-full w-full object-cover object-left-top brightness-[0.8] saturate-[0.85] transition-[filter] duration-300 group-hover/row:brightness-100 group-hover/row:saturate-100 light:brightness-100 light:saturate-100"
+          className="h-full w-full object-cover object-left-top brightness-[0.8] saturate-[0.85] transition-[filter] duration-200 group-hover/row:brightness-100 group-hover/row:saturate-100 light:brightness-100 light:saturate-100"
         />
       </div>
     );
@@ -63,7 +63,7 @@ function ThumbFace({ project, parallax }: Omit<ThumbProps, 'className'>) {
     <div
       className={cn(
         frame,
-        'flex flex-col justify-center px-3.5 font-mono text-[0.625rem] leading-[1.5] transition-colors duration-300 group-hover/row:border-line/[0.14]',
+        'flex flex-col justify-center px-3.5 font-mono text-[0.625rem] leading-[1.5] transition-colors duration-200 group-hover/row:border-line/[0.14]',
       )}
       role="img"
       aria-label={`${project.name} architecture: ${nodes.map((node) => node.label).join(', ')}`}

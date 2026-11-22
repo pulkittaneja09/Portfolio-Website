@@ -398,7 +398,7 @@
     background-size: 0% 1px;
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
-    transition: background-size 0.35s var(--ease);
+    transition: background-size 0.25s var(--ease);
   }
 
   .link:hover,
@@ -572,9 +572,9 @@
     border: 1px solid transparent;
     border-radius: 0.75rem;
     transition:
-      background-color 0.3s var(--ease),
-      border-color 0.3s var(--ease),
-      box-shadow 0.3s var(--ease);
+      background-color 0.2s var(--ease),
+      border-color 0.2s var(--ease),
+      box-shadow 0.2s var(--ease);
   }
 
   /* Dark: a 3% panel with a 6% hairline. Light: pure white with a soft shadow. */
@@ -845,7 +845,7 @@
       linear-gradient(140deg, rgb(var(--tint) / 0.08), rgb(var(--tint) / 0) 55%), var(--bg-elevated);
     box-shadow: var(--shadow-card);
     transform-origin: 50% 0%;
-    transition: border-color 0.3s var(--ease);
+    transition: border-color 0.2s var(--ease);
   }
 
   .project-card:hover,

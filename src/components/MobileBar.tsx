@@ -47,7 +47,7 @@ export function MobileBar({ active, onOpenPalette, onOpenAsk }: Props) {
     <div className="fixed inset-x-0 top-0 z-50 lg:hidden print:hidden">
       <div
         className={cn(
-          'flex h-14 items-center justify-between border-b px-5 transition-[background-color,border-color,backdrop-filter] duration-300 sm:px-8',
+          'flex h-14 items-center justify-between border-b px-5 transition-[background-color,border-color,backdrop-filter] duration-200 sm:px-8',
           scrolled ? 'glass border-x-0 border-t-0' : 'border-transparent',
         )}
       >
@@ -71,7 +71,7 @@ export function MobileBar({ active, onOpenPalette, onOpenAsk }: Props) {
           <button
             type="button"
             onClick={onOpenAsk}
-            className="inline-flex h-9 items-center gap-1.5 rounded-lg px-2.5 text-sm text-body transition-colors duration-300 hover:text-strong"
+            className="inline-flex h-9 items-center gap-1.5 rounded-lg px-2.5 text-sm text-body transition-colors duration-200 hover:text-strong"
             aria-label="Ask about Pulkit"
           >
             <ChatIcon className="h-4 w-4" />
@@ -81,7 +81,7 @@ export function MobileBar({ active, onOpenPalette, onOpenAsk }: Props) {
           <button
             type="button"
             onClick={onOpenPalette}
-            className="inline-flex h-9 items-center gap-2 rounded-lg border border-line/[0.08] px-3 text-sm text-strong transition-colors duration-300 hover:border-line/[0.14]"
+            className="inline-flex h-9 items-center gap-2 rounded-lg border border-line/[0.08] px-3 text-sm text-strong transition-colors duration-200 hover:border-line/[0.14]"
           >
             Menu
             <kbd className="hidden font-mono text-xs text-faint [@media(hover:hover)]:inline">

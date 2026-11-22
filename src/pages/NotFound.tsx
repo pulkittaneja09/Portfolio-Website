@@ -45,7 +45,7 @@ export function NotFound() {
         style={stagger(3)}
       >
         <ArrowLeftIcon
-          className="h-3.5 w-3.5 text-body transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:text-accent"
+          className="h-3.5 w-3.5 text-body transition-transform duration-200 group-hover:-translate-x-0.5 group-hover:text-accent"
           aria-hidden
         />
         <span className="link link-on-group">Back to the start</span>
@@ -58,7 +58,7 @@ export function NotFound() {
             <li key={project.slug}>
               <Link
                 to={`/projects/${project.slug}`}
-                className="chip transition-colors duration-300 hover:border-line/[0.14] hover:text-strong"
+                className="chip transition-colors duration-200 hover:border-line/[0.14] hover:text-strong"
               >
                 {project.name}
               </Link>

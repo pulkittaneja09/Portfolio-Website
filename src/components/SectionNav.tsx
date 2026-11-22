@@ -22,7 +22,7 @@ export function SectionNav({ active, className }: { active: string | null; class
               >
                 <span
                   className={cn(
-                    'h-px transition-[width,background-color] duration-300 motion-reduce:transition-none',
+                    'h-px transition-[width,background-color] duration-200 motion-reduce:transition-none',
                     isActive
                       ? 'w-16 bg-accent'
                       : 'w-8 bg-faint group-hover:w-16 group-hover:bg-accent group-focus-visible:w-16 group-focus-visible:bg-accent',
@@ -31,7 +31,7 @@ export function SectionNav({ active, className }: { active: string | null; class
                 />
                 <span
                   className={cn(
-                    'label transition-colors duration-300',
+                    'label transition-colors duration-200',
                     isActive
                       ? 'text-strong'
                       : 'text-body/80 group-hover:text-strong group-focus-visible:text-strong',

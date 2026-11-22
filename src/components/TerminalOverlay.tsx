@@ -206,7 +206,7 @@ export function TerminalOverlay({ open, onClose }: Props) {
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded p-1 text-faint transition-colors duration-400 hover:text-strong"
+                className="rounded p-1 text-faint transition-colors duration-300 hover:text-strong"
                 aria-label="Close terminal"
               >
                 <CloseIcon className="h-4 w-4" />
@@ -238,7 +238,7 @@ export function TerminalOverlay({ open, onClose }: Props) {
                           rel="noreferrer noopener"
                           className={cn(
                             toneClass[line.tone ?? 'default'],
-                            'underline decoration-line/20 underline-offset-4 transition-colors duration-400 hover:text-strong',
+                            'underline decoration-line/20 underline-offset-4 transition-colors duration-300 hover:text-strong',
                           )}
                         >
                           {line.text}

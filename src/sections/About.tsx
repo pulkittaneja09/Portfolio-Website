@@ -18,14 +18,14 @@ function FactItem({ item }: { item: NowItem }) {
   return (
     <a
       href={item.href}
-      className="group inline-flex items-baseline gap-1 text-body transition-colors duration-300 hover:text-strong"
+      className="group inline-flex items-baseline gap-1 text-body transition-colors duration-200 hover:text-strong"
       {...(external ? { target: '_blank', rel: 'noreferrer noopener' } : {})}
     >
       <span className="link link-on-group">{item.label}</span>
       {external && (
         <>
           <ArrowUpRightIcon
-            className="h-3 w-3 self-center transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
+            className="h-3 w-3 self-center transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
             aria-hidden
           />
           <span className="sr-only">(opens in a new tab)</span>

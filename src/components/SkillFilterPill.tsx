@@ -15,7 +15,7 @@ export function SkillFilterPill() {
       <button
         type="button"
         onClick={() => setActiveSkill(null)}
-        className="glass group inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm text-body shadow-float transition-colors duration-300 hover:text-strong"
+        className="glass group inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm text-body shadow-float transition-colors duration-200 hover:text-strong"
       >
         <span>
           Showing work with <span className="font-medium text-strong">{skill}</span>
@@ -25,7 +25,7 @@ export function SkillFilterPill() {
         </span>
         <span className="inline-flex items-center gap-1">
           Clear
-          <CloseIcon className="h-3.5 w-3.5 transition-colors duration-300 group-hover:text-accent" />
+          <CloseIcon className="h-3.5 w-3.5 transition-colors duration-200 group-hover:text-accent" />
         </span>
       </button>
     </div>

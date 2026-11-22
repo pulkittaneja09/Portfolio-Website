@@ -20,21 +20,21 @@ function ExperienceRow({ item }: { item: ExperienceItem }) {
       </div>
 
       <div className="min-w-0">
-        <h3 className="font-medium leading-snug text-strong transition-colors duration-300 group-hover/row:text-accent">
+        <h3 className="font-medium leading-snug text-strong transition-colors duration-200 group-hover/row:text-accent">
           {item.role}
           <span className="text-faint"> · </span>
           <span className="whitespace-nowrap">
             {item.org}
             {item.href && (
               <ArrowUpRightIcon
-                className="ml-1 inline-block h-3.5 w-3.5 -translate-y-px transition-transform duration-300 group-hover/row:-translate-y-[3px] group-hover/row:translate-x-0.5"
+                className="ml-1 inline-block h-3.5 w-3.5 -translate-y-px transition-transform duration-200 group-hover/row:-translate-y-[3px] group-hover/row:translate-x-0.5"
                 aria-hidden
               />
             )}
           </span>
         </h3>
 
-        <ul className="mt-2 space-y-1 text-sm leading-relaxed text-body transition-colors duration-300 group-hover/row:text-strong/80">
+        <ul className="mt-2 space-y-1 text-sm leading-relaxed text-body transition-colors duration-200 group-hover/row:text-strong/80">
           {item.impact.map((line) => (
             <li key={line}>{line}</li>
           ))}
@@ -105,7 +105,7 @@ export function Experience() {
         >
           <span className="link link-on-group">View full résumé</span>
           <ArrowUpRightIcon
-            className="h-3.5 w-3.5 text-body transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
+            className="h-3.5 w-3.5 text-body transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
             aria-hidden
           />
           <span className="sr-only">(PDF, opens in a new tab)</span>

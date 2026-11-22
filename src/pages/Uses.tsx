@@ -26,10 +26,10 @@ export function Uses() {
     <main id="main" className="mx-auto max-w-[46rem] px-5 pb-24 pt-12 sm:px-8 sm:pb-32 sm:pt-20">
       <TransitionLink
         to="/"
-        className="enter group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.1em] text-body transition-colors duration-300 hover:text-strong"
+        className="enter group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.1em] text-body transition-colors duration-200 hover:text-strong"
       >
         <ArrowLeftIcon
-          className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-x-0.5"
+          className="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-x-0.5"
           aria-hidden
         />
         {profile.name}

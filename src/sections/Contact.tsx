@@ -61,7 +61,7 @@ export function Contact() {
           <a href={`mailto:${profile.email}`} className="group inline-flex items-center gap-1 text-body">
             <span className="link link-on-group text-body">open in your mail app</span>
             <ArrowUpRightIcon
-              className="h-3 w-3 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
+              className="h-3 w-3 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
               aria-hidden
             />
           </a>
@@ -91,7 +91,7 @@ export function Contact() {
               >
                 <span className="link link-on-group">{social.label}</span>
                 <ArrowUpRightIcon
-                  className="h-3.5 w-3.5 text-body transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
+                  className="h-3.5 w-3.5 text-body transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
                   aria-hidden
                 />
                 <span className="sr-only">(opens in a new tab)</span>

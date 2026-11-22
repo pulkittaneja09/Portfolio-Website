@@ -33,7 +33,7 @@ function ExternalLink({ href, children }: { href: string; children: string }) {
     >
       <span className="link link-on-group">{children}</span>
       <ArrowUpRightIcon
-        className="h-3.5 w-3.5 text-body transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
+        className="h-3.5 w-3.5 text-body transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
         aria-hidden
       />
       <span className="sr-only">(opens in a new tab)</span>
@@ -69,10 +69,10 @@ export function ProjectDetail() {
     <main id="main" className="mx-auto max-w-[46rem] px-5 pb-24 pt-12 sm:px-8 sm:pb-32 sm:pt-20">
       <TransitionLink
         to="/#projects"
-        className="enter group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.1em] text-body transition-colors duration-300 hover:text-strong"
+        className="enter group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.1em] text-body transition-colors duration-200 hover:text-strong"
       >
         <ArrowLeftIcon
-          className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-x-0.5"
+          className="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-x-0.5"
           aria-hidden
         />
         {profile.name}
@@ -234,12 +234,12 @@ export function ProjectDetail() {
       >
         <span>
           <span className="label block text-faint">Next project</span>
-          <span className="mt-3 block text-2xl font-medium tracking-[-0.02em] text-strong transition-colors duration-300 group-hover:text-accent">
+          <span className="mt-3 block text-2xl font-medium tracking-[-0.02em] text-strong transition-colors duration-200 group-hover:text-accent">
             {next.name}
           </span>
         </span>
         <ArrowRightIcon
-          className="mb-2 h-5 w-5 shrink-0 text-body transition-[transform,color] duration-300 group-hover:translate-x-0.5 group-hover:text-accent"
+          className="mb-2 h-5 w-5 shrink-0 text-body transition-[transform,color] duration-200 group-hover:translate-x-0.5 group-hover:text-accent"
           aria-hidden
         />
       </TransitionLink>
