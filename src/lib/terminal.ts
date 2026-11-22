@@ -52,7 +52,7 @@ function helpOutput(): Line[] {
     ['projects', 'what I have shipped, with links'],
     ['skills', 'languages, AI/ML, backend, infra'],
     ['experience', 'roles and what I did in them'],
-    ['education', 'degree, institution, CGPA'],
+    ['education', 'degree and institution'],
     ['stats', 'the numbers, with their sources'],
     ['startup', 'Audaxity Technologies'],
     ['resume', 'download the PDF'],
@@ -197,7 +197,6 @@ export function runCommand(raw: string): CommandResult {
           l(`  ${education.institution}`, 'accent'),
           l(`  ${education.degree}, ${education.field}`),
           l(`  ${education.start} – ${education.end}`, 'muted'),
-          l(`  ${education.score} ${education.scoreLabel}`, 'muted'),
         ],
       };
 

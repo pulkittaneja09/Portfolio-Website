@@ -239,15 +239,13 @@ const TOPICS: Topic[] = [
       'college',
       'university',
       'degree',
-      'cgpa',
-      'gpa',
       'vit',
       'graduate',
       'graduation',
       'school',
     ],
     answer: () =>
-      `${education.degree} in ${education.field} at ${education.institution}, ${education.start} to ${education.end}. ${education.score} ${education.scoreLabel}. He has also solved 120+ problems on LeetCode.`,
+      `${education.degree} in ${education.field} at ${education.institution}, ${education.start} to ${education.end}. He has also solved 120+ problems on LeetCode.`,
     related: ['Is he available for internships?', 'What has he built?', 'Where is he based?'],
   },
   {

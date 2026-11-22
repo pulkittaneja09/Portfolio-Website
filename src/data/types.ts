@@ -70,8 +70,6 @@ export interface Education {
   field: string;
   start: string;
   end: string;
-  score: string;
-  scoreLabel: string;
 }
 
 /** A single animated figure in the proof bar. */

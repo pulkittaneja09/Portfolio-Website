@@ -41,7 +41,7 @@ component, so you can change the whole site without opening any JSX. Every field
 | The two About paragraphs (`**phrase**` = highlight, `*word*` = serif) | `about`             |
 | The "Now" strip and the "Daily tools" line                            | `now`, `dailyTools` |
 | The left-column agent-run card (example traces, not metrics)          | `agentTraces`       |
-| Degree, institution, CGPA, dates                                      | `education`         |
+| Degree, institution, dates                                            | `education`         |
 | The section nav and its order                                         | `nav`               |
 | The experience rows (`impact` = the two short lines on the page)      | `experience`        |
 | The four flagship projects and their case studies                     | `projects`          |

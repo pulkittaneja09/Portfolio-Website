@@ -11,7 +11,7 @@ You are building my personal portfolio. The main audience is **technical recruit
 5. Show me the extracted data and the planned section order before you write UI code.
 
 ### What you already know about me (cross-check against the resume)
-- **Pulkit Taneja**: CS undergrad at VIT Chennai (2028), CGPA 8.25
+- **Pulkit Taneja**: CS undergrad at VIT Chennai (2028)
 - **Co-founder & CEO, Audaxity Technologies**: AI-powered Academic Intelligence Platform for universities. Incubated at V-NEST (VIT Chennai), DPIIT-recognised
 - **AI & Hyper Automation Intern, SDG Corporation** (Jun–Jul 2026): backend, Model Context Protocol (MCP), AI workflows, enterprise automation
 - **Backend & AI/LLM Engineer Intern, Dezors** (remote, Nov 2025 – Apr 2026)

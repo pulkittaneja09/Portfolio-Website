@@ -78,8 +78,6 @@ export const education: Education = {
   field: 'Computer Science and Engineering',
   start: 'Aug 2024',
   end: 'May 2028 (expected)',
-  score: '8.25',
-  scoreLabel: 'CGPA / 10.0',
 };
 
 /**
@@ -92,7 +90,7 @@ export const about: string[] = [
 ];
 
 /** The compact "Now" strip under About. */
-export const now: string[] = ['Co-founder @ Audaxity', "B.Tech CSE, VIT Chennai '28", 'CGPA 8.25'];
+export const now: string[] = ['Co-founder @ Audaxity', "B.Tech CSE, VIT Chennai '28"];
 
 /** One line at the end of About — the whole tech stack section, compressed. */
 export const dailyTools: string[] = [
