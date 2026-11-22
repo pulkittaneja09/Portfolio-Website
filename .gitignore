@@ -9,4 +9,5 @@ dist-ssr
 .DS_Store
 *.log
 .eslintcache
+*.tsbuildinfo
 .screenshots
