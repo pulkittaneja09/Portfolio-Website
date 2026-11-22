@@ -1,8 +1,11 @@
+import { m, useScroll } from 'framer-motion';
+import { useRef } from 'react';
 import { Reveal } from '@/components/Reveal';
 import { Section } from '@/components/Section';
 import { ArrowUpRightIcon } from '@/components/icons';
 import { experience, profile } from '@/data/portfolio';
 import type { ExperienceItem } from '@/data/types';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { formatRange } from '@/lib/dates';
 import { filterState, useActiveSkill } from '@/lib/skills';
 
@@ -71,10 +74,13 @@ function ExperienceRow({ item }: { item: ExperienceItem }) {
  */
 export function Experience() {
   const skill = useActiveSkill();
+  const reduced = useReducedMotion();
+  const list = useRef<HTMLOListElement>(null);
+  const { scrollYProgress: fill } = useScroll({ target: list, offset: ['start 70%', 'end 55%'] });
 
   return (
     <Section id="experience" label="Experience">
-      <ol className="row-list space-y-3">
+      <ol ref={list} className="row-list relative space-y-3">
         {experience.map((item, index) => (
           <li
             key={`${item.org}-${item.role}`}
@@ -86,6 +92,11 @@ export function Experience() {
             </Reveal>
           </li>
         ))}
+        {/* The one moving thing here: a hairline that fills with the accent
+            as you read down the roles. Transform only (scaleY). */}
+        <li className="exp-track" aria-hidden role="presentation">
+          {!reduced && <m.span className="exp-fill" style={{ scaleY: fill }} />}
+        </li>
       </ol>
 
       <Reveal index={3}>

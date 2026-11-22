@@ -480,7 +480,7 @@ accessibility, best practices and SEO 100.
 - [x] D2. Skills = résumé (7 groups, 39 skills): Vercel / Render / Vite / Tailwind CSS / SQLite out; SQL, C, JavaScript, TF-IDF, Claude in; official names (Golang, Express.js, Object-Oriented Programming, Data Structures & Algorithms…); full list in "Round 5: skills changelog"; mapping verified
 - [x] D3a. Lenis lerp 0.1, wheel 1:1 (a 400px wheel step: 246px in 120ms, settled by ~0.8s); nav and ⌘K jumps on one eased 1s curve, every section lands at 96px via scroll-margin; not created under reduced motion or on touch-first devices (verified absent in mobile emulation)
 - [x] D3b. Projects 3D stack (≥ 1024px, full motion) — large tinted cards, sticky at 96 + 16px·i; covered cards go to 0.92 scale, 8° tilt back (1200px perspective) and 60% (a ground-colour overlay, opacity only); thumbnail drifts ±10px; ranges measured from static layout, motion values only; will-change only while in view; uniform card height so nothing peeks below; non-sticky spacers carry the scroll distance; "dim the other rows" removed from Projects (kept for Experience); hover tilt dropped (the card already tilts on scroll); click opens the case study; < 1024px and reduced motion get plain cards with one fade-up
-- [ ] D3c. Experience: a thin progress line that fills with the accent as you scroll
+- [x] D3c. Experience progress line — 1px track in the gutter (≥ 640px), accent fill by scaleY from useScroll (start 70% → end 55%); static track under reduced motion; nothing else in Experience moves
 - [ ] D3d. Animation audit: list everything, keep only the agreed set, one moving thing per viewport
 - [ ] D4. Final QA: stack at 0–100% scroll, 1024 / 390, cursor on desktop only, spelling greps, perf trace, build with no warnings, summary
 
