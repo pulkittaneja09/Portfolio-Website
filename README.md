@@ -1,293 +1,87 @@
-# pulkittaneja.dev
+# Pulkit Taneja — portfolio
 
-Personal portfolio for **Pulkit Taneja** — AI agents & backend engineer, co-founder of Audaxity
-Technologies.
+Personal site of **Pulkit Taneja**, AI agents & backend engineer and co-founder of Audaxity
+Technologies. **Live:** <https://portfolio-website-pi-blush-92.vercel.app>
 
-Built with Vite, React 18, TypeScript (strict), Tailwind CSS, Framer Motion (overlays, the cursor and the project stack) and Lenis.
-Deploys to Vercel. Dark and light themes.
+**Stack:** Vite 6 · React 18 · TypeScript (strict) · Tailwind CSS 3 · Lenis (smooth scroll on
+desktop) · Framer Motion (lazy-loaded: overlays, toasts and the desktop project stack) · cmdk (⌘K).
+Self-hosted Geist, Geist Mono and Instrument Serif. Dark and light themes (Midnight + Glacier).
 
-**Live:** <https://portfolio-website-pi-blush-92.vercel.app>
+## Run it
 
 ```bash
 npm install
-npm run dev      # http://localhost:5173
+npm run dev        # http://localhost:5173
+npm run build      # type-check + production build into dist/
+npm run preview    # serve dist/ at http://localhost:4173
 ```
 
----
+Node 20+. Nothing else is required: the optional `GITHUB_TOKEN` (see `.env.example`) only raises the
+GitHub rate limit for the repo count fetched at build time, and never reaches the browser.
 
-## Table of contents
+## Edit the content
 
-- [Editing the content](#editing-the-content)
-- [Adding a project](#adding-a-project)
-- [Writing a note](#writing-a-note)
-- [Screenshots](#screenshots)
-- [Environment variables](#environment-variables)
-- [Deploying to Vercel](#deploying-to-vercel)
-- [Project structure](#project-structure)
-- [Scripts](#scripts)
-- [How it is put together](#how-it-is-put-together)
-- [Open TODOs](#open-todos)
+**All copy lives in [`src/data/portfolio.ts`](src/data/portfolio.ts)**, typed by
+[`src/data/types.ts`](src/data/types.ts); if you break a shape, `npm run build` says where. No
+component needs touching.
 
----
+| To change                                                         | Edit           |
+| ----------------------------------------------------------------- | -------------- |
+| Name, title, one-liner, email, socials, availability, site URL    | `profile`      |
+| About paragraphs (`**phrase**` = highlight, `*word*` = serif)     | `about`        |
+| The "Now" row                                                     | `now`          |
+| Highlight strip, terminal `stats`, Ask: sourced achievements only | `stats`        |
+| Experience rows                                                   | `experience`   |
+| Skills (the résumé's list; "Used in" is computed from the tags)   | `skillGroups`  |
+| Flagship projects and their case studies                          | `projects`     |
+| The "More" list                                                   | `sideProjects` |
+| Founder card                                                      | `venture`      |
+| Example traces in the left-column card                            | `agentTraces`  |
+| /uses (`null` slots stay hidden)                                  | `uses`         |
 
-## Editing the content
+Rules worth keeping: every number in `stats` has a `source`, and anything you cannot source stays
+out. `profile.siteUrl` is the one place the domain lives (canonical, Open Graph, JSON-LD, sitemap,
+robots). The ⌘K palette, the terminal and the Ask widget read the same data, so they update with it.
 
-**All copy lives in [`src/data/portfolio.ts`](src/data/portfolio.ts).** Nothing is hard-coded in a
-component, so you can change the whole site without opening any JSX. Every field is typed in
-[`src/data/types.ts`](src/data/types.ts), so if you break a shape, `npm run build` tells you where.
+**Adding a project:** append to `projects` (`slug` becomes `/projects/<slug>`). Screenshots go in
+`public/previews/` as WebP at 1024px (`name.webp`) and 640px (`name-sm.webp`), 16:10; without one,
+the card shows a schematic drawn from `detail.architecture`. The sitemap picks the new page up.
 
-| What you want to change                                               | Export to edit          |
-| --------------------------------------------------------------------- | ----------------------- |
-| Name, title, one-liner, email, socials, availability line             | `profile`               |
-| The two About paragraphs (`**phrase**` = highlight, `*word*` = serif) | `about`                 |
-| The "Now" row (the LeetCode count is added at build time)             | `now`                   |
-| The left-column agent-run card (example traces, not metrics)          | `agentTraces`           |
-| Degree, institution, dates                                            | `education`             |
-| The section nav and its order                                         | `nav`                   |
-| The experience rows (`impact` = the two short lines on the page)      | `experience`            |
-| The four flagship projects and their case studies                     | `projects`              |
-| The one-line "More" list                                              | `sideProjects`          |
-| The founder card, its mission and pipeline                            | `venture`               |
-| Sourced numbers, used by the terminal and the Ask widget              | `stats`                 |
-| The Skills section (also the terminal and Ask); evidence is computed  | `skillGroups`           |
-| How an AI project was evaluated, shown on its case study              | `projects[].evaluation` |
-| The /uses page (`null` slots stay hidden until filled)                | `uses`                  |
+**Brand assets:** after a palette or copy change, `npm run brand` re-renders the social card
+(`og.png`, 1200×630), the favicon set, the apple-touch icon and the manifest icons. `npm run icons`
+rebuilds the skill-logo sprite.
 
-Two rules worth keeping:
-
-1. **Every number needs a `source`.** Each entry in `stats` explains where the figure comes from. If
-   you cannot source a number, do not add it. The agent traces are labelled "example trace" on the
-   page for the same reason: they are illustrations, not measurements.
-2. **`profile.siteUrl` is the one place the domain lives.** It fills every `__SITE_URL__` in
-   [`index.html`](index.html) (canonical, Open Graph, JSON-LD) and the `sitemap.xml` and `robots.txt`
-   generated at build time. Change it there if you add a custom domain.
-
-The content also feeds three other surfaces automatically — the ⌘K palette, the terminal
-(`src/lib/terminal.ts`) and the "Ask about Pulkit" widget (`src/lib/ask.ts`). Adding a project makes
-it searchable in all three without extra work.
-
-## Adding a project
-
-Append an object to `projects` in `src/data/portfolio.ts`. The required shape is in `types.ts`, but
-the parts that matter:
-
-```ts
-{
-  slug: 'my-project',          // becomes /projects/my-project
-  name: 'My Project',
-  problem: 'What was broken before this existed (case study).',
-  oneLiner: 'The same problem in ~50 characters (project row).',
-  built: 'What you built.',
-  role: 'What you personally did.',
-  year: '2026',
-  stack: ['FastAPI', 'React'],
-  metric: { value: 'R² = 0.9', label: 'what the number measures' },
-  links: { demo: '…', repo: '…', api: '…' },   // all optional
-  preview: '/previews/my-project.webp',         // or null → architecture schematic
-  tags: ['Backend'],
-  detail: { overview, highlights, challenges, next, architecture },
-}
-```
-
-**`detail.architecture`** renders as an SVG flow diagram on the case study — no diagramming library.
-Give each node a `col` (left to right) and `row` (top to bottom), plus a `tone` of `client`,
-`service`, `model` or `store`, then list the `edges`. A project without a screenshot uses the same
-nodes for its row thumbnail, so it never shows an empty frame.
-
-The generated sitemap picks up the new case study automatically.
-
-## Screenshots
-
-Previews live in `public/previews/` as WebP, at two sizes: `name.webp` (1024px wide) and
-`name-sm.webp` (640px), picked via `srcset`. Thumbnails are 16:10. To add a pair:
-
-```bash
-python -c "
-from PIL import Image
-im = Image.open('shot.png').convert('RGB')
-for w in (1024, 640):
-    out = im.resize((w, round(im.height * w / im.width)), Image.LANCZOS)
-    out.save(f'public/previews/my-project{\"\" if w == 1024 else \"-sm\"}.webp', 'WEBP', quality=80, method=6)
-"
-```
-
-## Environment variables
-
-Copy `.env.example` to `.env`. The one variable is optional.
-
-| Variable       | What it does                                                                    |
-| -------------- | ------------------------------------------------------------------------------- |
-| `GITHUB_TOKEN` | Raises the GitHub rate limit for the build's repo-count fetch. Build-time only. |
-
-> `GITHUB_TOKEN` is read by `config/site-plugin.ts` in Node and never reaches the browser (it has no
-> `VITE_` prefix), so it is safe to set in Vercel. Never use a `VITE_`-prefixed token: anything with
-> that prefix is inlined into the client bundle. Without a token the build uses the public API and
-> falls back to the last good count, then to the figure in `portfolio.ts`.
-
-## Deploying to Vercel
+## Deploy to Vercel
 
 1. Push the repository to GitHub.
-2. In Vercel, **Add New → Project** and import it. There is nothing to configure.
-3. Deploy.
+2. On vercel.com: **Add New → Project**, import the repository, keep the defaults, **Deploy**.
+   [`vercel.json`](vercel.json) already pins the framework (`vite`), build command and `dist/`
+   output, rewrites every route to `index.html` (so `/projects/…` survives a refresh), redirects
+   `/resume` to the PDF, caches hashed assets and fonts for a year and sets security headers.
+3. Optional: add `GITHUB_TOKEN` under **Settings → Environment Variables** (build only).
+4. With a custom domain: add it under **Settings → Domains**, set `profile.siteUrl` to it, push.
 
-[`vercel.json`](vercel.json) pins the build (framework `vite`, `npm run build`, output `dist`), so it
-never depends on the dashboard settings. That matters here: this repository started as a static HTML
-site, and a Vercel project imported back then would otherwise keep its old preset and serve the wrong
-folder. It also redirects `/resume` to the PDF (a clean URL to share), rewrites non-`/api` paths to
-`index.html` (so `/projects/parcelpilot` survives a hard refresh), caches `/assets/*` and `/fonts/*`
-for a year, and sets `X-Content-Type-Options`, `Referrer-Policy` and `X-Frame-Options`.
+## Checks
 
-## Project structure
+```bash
+npm run lint            # ESLint, zero warnings allowed
+npm run format:check    # Prettier
+npm run qa              # needs `npm run preview`: name on one line, theme, contrast, links, console
+npm run check:reveal    # needs `npm run preview`: nothing left faded or blurred after scrolling
+```
+
+## Structure
 
 ```
-public/
-  fonts/            self-hosted woff2: Geist, Geist Mono, Instrument Serif italic
-  previews/         project screenshots, WebP at 1024 and 640
-  skills.svg        monochrome Simple Icons sprite for the skill chips (npm run icons)
-  Pulkit_Taneja_Resume.pdf
-  og.png            1200x630 social card, centred so a square crop still reads
-  favicon.svg  favicon.ico  apple-touch-icon.png  icon-192.png  icon-512.png
-  site.webmanifest  (sitemap.xml and robots.txt are generated into dist/)
-
-config/
-  site-plugin.ts    build-time LeetCode + GitHub counts, last-updated date, the
-                    site URL in index.html, sitemap.xml and robots.txt
-_drafts/            writing outlines, kept outside the build
-
 src/
-  data/
-    portfolio.ts    ← all content lives here
-    types.ts        the shape of it
-  sections/         About, Experience, Skills, Projects, Founder, Contact
-  components/       identity rail (Identity, SectionNav, ProfileLinks, AgentRun),
-                    MobileBar, rows and thumbnails, PipelineFlow, palette,
-                    terminal, Ask widget, dot + ring cursor, architecture diagram
-  pages/            Home (the split layout), ProjectDetail, Uses,
-                    NotFound, Resume
-  hooks/            reduced motion, media queries, scroll-spy, Lenis,
-                    clipboard, shortcuts
-  lib/              theme, reveal, build-time stats, view transitions, terminal
-                    commands, answer engine, helpers
-scripts/
-  qa.cjs            design QA at 1440 / 1280 / 1024 / 390
-  reveal-check.cjs  strict "nothing stuck invisible" regression check
-  skill-icons.mjs   builds public/skills.svg from the slugs in SKILL_ICONS
+  data/portfolio.ts   all content          data/types.ts   its shape
+  sections/           About, Experience, Skills, Projects (+ lazy ProjectStack), Founder, Contact
+  components/         rail, cards, cursor, overlays (⌘K, terminal, Ask), toasts
+  pages/              Home, ProjectDetail, Uses, NotFound
+  lib/ hooks/         skills evidence, theme, Lenis, reveal, terminal and Ask logic
+  index.css           tokens (PALETTE markers) and component styles
+config/site-plugin.ts build-time LeetCode / GitHub counts, sitemap.xml, robots.txt
+scripts/              qa, reveal check, brand assets, skill icons
+_drafts/              writing outlines, outside the build
+PROGRESS.md           design decisions, research and QA, round by round
 ```
-
-## Scripts
-
-| Command                | What it does                                                                                                                                                                                                                                                                                                   |
-| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `npm run dev`          | Dev server with HMR on port 5173                                                                                                                                                                                                                                                                               |
-| `npm run build`        | Type-check with `tsc -b`, then build to `dist/`                                                                                                                                                                                                                                                                |
-| `npm run preview`      | Serve the production build locally                                                                                                                                                                                                                                                                             |
-| `npm run lint`         | ESLint, zero warnings tolerated                                                                                                                                                                                                                                                                                |
-| `npm run format`       | Prettier over `src/`                                                                                                                                                                                                                                                                                           |
-| `npm run qa`           | With a preview server on :4173, at four widths and in both themes: one-line name, no theme flash and a working toggle, nothing hidden after scrolling, body contrast ≥ 7:1, accent contrast ≥ 4.5:1, exact LeetCode links, no GPA, no console errors or third-party requests; screenshots to `.screenshots/qa` |
-| `npm run check:reveal` | With a preview server on :4173: strict snapshots (about 35) across scrolls, jumps, deep links, resize, a no-scroll full-page capture and mobile                                                                                                                                                                |
-| `npm run icons`        | Rebuilds `public/skills.svg` from the Simple Icons slugs listed in `SKILL_ICONS` (`src/data/types.ts`)                                                                                                                                                                                                         |
-
-## How it is put together
-
-A few decisions that are not obvious from reading the files:
-
-**A split layout.** On desktop the left column is a sticky, full-height rail (name, title, one-liner,
-status, the section nav, the agent-run card, links and a live Chennai clock); the right column
-scrolls. Its spacing steps down in height tiers (roomy above 780px tall, compact to 680, tight to 620,
-static below) so the rail fits real laptop viewports without ever squeezing the card. Below 1024px
-the rail becomes the page header and a thin bar carries the current section and a Menu/⌘K button.
-
-**Two themes, one palette: Midnight + Glacier.** Chosen in Round 4 from three candidates after
-reading the colour tokens of the most-starred portfolio repos and ten reference sites (research and
-scorecard in PROGRESS.md). The neutrals are tinted toward a navy hue, so the page has a colour
-identity before any accent appears. Dark: ground `#0A0E14`, body `#A3ADBD` (8.5:1), glacier-blue
-accent `#8FB4FF` (9.3:1), seafoam secondary `#7DD3C0`. Light: ground `#F8FAFC`, white surfaces, body
-`#404C60` (8.3:1), accent `#2F5BD3` (5.6:1), secondary `#0E7C6C`, soft navy-tinted shadows. The accent
-is deliberate: the active nav line, hover titles, links, metrics, the status dot, focus rings and
-function names in the agent card; seafoam carries strings and quiet gradients, a soft green the ✓
-marks. A slow aurora sits behind the rail, measured
-to keep body text above 7:1 (`npm run qa`). Every colour is a CSS variable: the tokens are the RGB
-triplets between the `PALETTE` markers in `index.css`, and `border-line/[0.07]` is a navy-tinted
-hairline in both themes.
-
-**No flash, remembered choice.** An inline script in `index.html` sets `html[data-theme]` before any
-CSS loads: the saved choice, else the system setting (followed live until the visitor picks). The sun
-/ moon toggle sits beside the socials (in the top bar on phones), and ⌘K and the terminal's `theme`
-command do the same. The switch is a circle growing from the toggle on the View Transitions API, instant
-without it or under reduced motion.
-
-**Seven type sizes.** 12px mono for labels and metadata, 14px for row text, 16px body, then 20, 24, 48
-and 60px, each with one job. The serif accent word is set at 1.14em of its sentence. Before adding a
-size, check whether one of these already does the job.
-
-**The agent-run card** is driven by one elapsed-time clock in a rAF loop: the prompt types out, a
-line lands every 350ms, timings resolve with a ✓, the result holds for 4s, then the next example
-plays. Hover pauses it; the loop stops when it is off screen or the tab is hidden; reduced motion shows
-one complete trace. The traces are plain ASCII on purpose — the mono font's latin subset has no
-arrow glyphs.
-
-**Reveals can never leave content hidden.** `lib/reveal.ts` keeps everything visible by default. An
-element is only hidden after the visitor has actually scrolled, only while it is fully below the fold,
-and it is shown the moment it enters; a sweep after every scroll catches anything else. Full-page
-screenshots, prints and crawlers see every element. Decorative motion (status pulse, caret, trace
-lines) is done with colour, so nothing on screen ever rests below opacity 1, and nothing carries a
-blur.
-
-**The page calls no third-party API.** The LeetCode solved count and the public repo count are
-fetched once per build (`config/site-plugin.ts`, exposed as `virtual:site-stats`), so CORS and rate
-limits cannot break the page or log a console error. A failed fetch falls back to the last good value
-cached in `node_modules/.cache`, then to no number at all: the Now row then reads "LeetCode ↗".
-
-**Case studies open with a View Transition.** `TransitionLink` wraps the route change in
-`document.startViewTransition`: the page crossfades with a 10px lift, and on desktop the clicked
-project's thumbnail morphs into the case study's screenshot (and back on the way out). Navigation and
-scroll both happen inside the update callback, so the new snapshot is already in place. Browsers
-without the API, and reduced motion, get a plain navigation.
-
-**Skills show their evidence.** Each chip's "Used in" tooltip, and the click that highlights the
-matching experience and project rows (the rest fade to 40%, with a "Showing work with FastAPI · Clear"
-pill above Projects), is computed by `lib/skills.ts` from the real `stack` and `tags` in
-`portfolio.ts`; a skill's `aliases` bridge naming differences ("Gemini 2.5 Flash" counts for Google
-Gemini, "Go" for Golang). The list itself is the résumé's Technical Skills, minus hosting platforms.
-Nothing is typed by hand, and a skill with no tagged work is listed but not clickable. The logos come
-from one cached SVG sprite, so they cost nothing in the JS bundle.
-
-**Rows dim their siblings with `:has()`.** Hovering an experience row lifts it onto a 3% panel
-and fades the others; the progress line on the left is that section's only scroll motion.
-
-**One 3D moment: the project stack.** On desktop with full motion the four flagship projects are
-sticky cards (96px + 16px each); as the next slides up, the covered card scales to 0.92, tilts back
-8° and dims. It is all transforms and one overlay's alpha, driven by Framer Motion values off
-`scrollY` with ranges measured from static layout, so scrolling never renders React or reads layout.
-Phones and reduced motion get the same cards as a plain list. Everything else stays calm: the
-Round 5 animation audit in PROGRESS.md lists what moves and why.
-
-**Framer Motion runs behind `LazyMotion`** (`domAnimation` only): the overlays (palette, terminal, Ask
-widget, toasts, lazy chunks warmed once the page is idle), the dot + ring cursor's springs, the
-project stack and the Experience progress line.
-
-**The answer widget has no model behind it.** `lib/ask.ts` scores a question against topics built
-from `portfolio.ts`. No API key, no network call, and no way for it to invent a credential. Nothing
-floats over the content: on desktop it opens from a 36px button sized to sit in the page gutter, on
-phones from the top bar's Ask button, and from ⌘K everywhere.
-
-**Everything respects `prefers-reduced-motion`.** No Lenis, no spotlight, no entrances, reveals or
-view transitions, a static agent trace, and a global rule collapses any remaining animation.
-
-**It prints.** Every colour is a token, so `@media print` swaps the tokens for ink on white and hides
-the fixed chrome; reveals are forced visible on `beforeprint`.
-
-## Open TODOs
-
-Search the codebase for `TODO(pulkit)`. At the time of writing:
-
-- `profile.siteUrl` — change it if you add a custom domain or rename the Vercel project.
-- Evaluation details: the held-out split for Scrap 2 Spark, answer quality for ParcelPilot, and any
-  evaluation for KnowledgeHub AI (`projects[].evaluation`).
-- The empty slots on `/uses` (machine, editor, AI assistants).
-- The DPIIT recognition number and date in `venture.badges`.
-- The Audaxity site URL, once it is live (the Audaxity row links to the founder card meanwhile).
-- Company URLs for SDG Corporation and Dezors, which turn those experience rows into links.
-- A dashboard screenshot for Scrap 2 Spark and a cited-answer screenshot for KnowledgeHub AI (the
-  current thumbnails are the live demos' landing screens), and an IEEE preview if one exists.
-- A live URL for the IEEE recruitment portal, if it is still public.
