@@ -498,7 +498,7 @@ export const projects: Project[] = [
       next: [
         'Add a migration tool rather than hand-run SQL files.',
         'Structured request logging and rate limiting at the edge.',
-        'Integration tests against a throwaway Postgres container in CI.',
+        'Integration tests against a throwaway PostgreSQL container in CI.',
       ],
       architecture: {
         caption: 'Middleware authenticates and validates before a handler ever touches the database.',
@@ -714,50 +714,57 @@ export const uses: UsesGroup[] = [
 
 /**
  * The Skills section, the terminal's `skills` command and the Ask widget all
- * read this. Cross-checked against the résumé's Technical Skills and the
- * stacks in this file; nothing here is aspirational.
+ * read this. The résumé is the single source of truth: these are its
+ * Technical Skills, in its own groups, minus the two hosting platforms it
+ * lists (Vercel and Render are where things are deployed, not skills), plus
+ * the technologies its project and experience lines name (React, TypeScript,
+ * Claude, Whisper). Official spellings throughout.
  *
  * "Used in" is never typed: lib/skills.ts matches each skill (its name, or
- * its `aliases`) against the real `stack` and `tags` of the projects, roles
- * and side projects in this file. A skill with no match is still listed, it
- * just has no tooltip and is not clickable. `icon` is a Simple Icons slug in
- * public/skills.svg (regenerate with `npm run icons`).
+ * its `aliases`, which must include the name) against the real `stack` and
+ * `tags` of the projects, roles and side projects in this file. A skill with
+ * no match is still listed, it just has no tooltip and is not clickable.
+ * `icon` is a Simple Icons slug in public/skills.svg (`npm run icons`).
  */
 export const skillGroups: SkillGroup[] = [
   {
-    id: 'ai',
-    title: 'AI / ML',
+    id: 'genai',
+    title: 'Generative AI',
     items: [
       { name: 'LangChain', icon: 'langchain' },
       { name: 'LangGraph', icon: 'langgraph' },
-      { name: 'AI Agents', aliases: ['AI agents'] },
+      { name: 'AI Agents' },
       { name: 'MCP', icon: 'modelcontextprotocol' },
+      { name: 'Google Gemini', icon: 'googlegemini', aliases: ['Google Gemini', 'Gemini 2.5 Flash'] },
+      { name: 'Claude', icon: 'claude' },
       { name: 'RAG' },
       { name: 'ChromaDB' },
       { name: 'Embeddings', aliases: ['Embeddings', 'Google Embeddings'] },
-      {
-        name: 'LLM APIs (Claude, Gemini)',
-        aliases: ['Claude', 'Google Gemini', 'Gemini 2.5 Flash', 'LLM', 'LLMs'],
-      },
       { name: 'Whisper' },
+    ],
+  },
+  {
+    id: 'ml',
+    title: 'Machine Learning',
+    items: [
       { name: 'scikit-learn', icon: 'scikitlearn' },
-      { name: 'Pandas', icon: 'pandas' },
       { name: 'NumPy', icon: 'numpy' },
-      { name: 'NLP (TF-IDF)', aliases: ['NLP', 'TF-IDF'] },
+      { name: 'Pandas', icon: 'pandas' },
+      { name: 'NLP' },
+      { name: 'TF-IDF' },
     ],
   },
   {
     id: 'backend',
-    title: 'Backend',
+    title: 'Backend & Databases',
     items: [
       { name: 'FastAPI', icon: 'fastapi' },
-      { name: 'Go', icon: 'go', aliases: ['Go', 'Gin', 'Gorilla Mux'] },
       { name: 'Node.js', icon: 'nodedotjs' },
-      { name: 'Express', icon: 'express' },
+      { name: 'Express.js', icon: 'express', aliases: ['Express.js', 'Express'] },
+      { name: 'REST APIs', aliases: ['REST APIs', 'REST'] },
       { name: 'PostgreSQL', icon: 'postgresql' },
       { name: 'MongoDB', icon: 'mongodb' },
-      { name: 'SQLite', icon: 'sqlite' },
-      { name: 'REST APIs', aliases: ['REST'] },
+      { name: 'SQL', aliases: ['SQL', 'PostgreSQL', 'SQLite'] },
     ],
   },
   {
@@ -765,23 +772,11 @@ export const skillGroups: SkillGroup[] = [
     title: 'Languages',
     items: [
       { name: 'Python', icon: 'python' },
-      { name: 'Go', icon: 'go', aliases: ['Go', 'Gin', 'Gorilla Mux'] },
-      { name: 'TypeScript / JavaScript', icon: 'typescript', aliases: ['TypeScript', 'JavaScript'] },
+      { name: 'Golang', icon: 'go', aliases: ['Golang', 'Go', 'Gin', 'Gorilla Mux'] },
+      { name: 'C++', icon: 'cplusplus' },
       { name: 'Java', icon: 'openjdk' },
-      { name: 'C / C++', icon: 'cplusplus' },
-    ],
-  },
-  {
-    id: 'infra',
-    title: 'Infra & Ops',
-    items: [
-      { name: 'Docker', icon: 'docker' },
-      { name: 'Linux', icon: 'linux' },
-      { name: 'Nginx', icon: 'nginx' },
-      { name: 'Vercel', icon: 'vercel' },
-      { name: 'Render', icon: 'render' },
-      { name: 'Git', icon: 'git' },
-      { name: 'Postman', icon: 'postman' },
+      { name: 'JavaScript', icon: 'javascript' },
+      { name: 'C', icon: 'c' },
     ],
   },
   {
@@ -789,13 +784,28 @@ export const skillGroups: SkillGroup[] = [
     title: 'Frontend',
     items: [
       { name: 'React', icon: 'react' },
-      { name: 'Vite', icon: 'vite' },
-      { name: 'Tailwind CSS', icon: 'tailwindcss' },
+      { name: 'TypeScript', icon: 'typescript' },
+    ],
+  },
+  {
+    id: 'tools',
+    title: 'Tools & Deployment',
+    items: [
+      { name: 'Git', icon: 'git' },
+      { name: 'Docker', icon: 'docker' },
+      { name: 'Linux', icon: 'linux' },
+      { name: 'Nginx', icon: 'nginx' },
+      { name: 'Postman', icon: 'postman' },
     ],
   },
   {
     id: 'core',
-    title: 'CS Core',
-    items: [{ name: 'DSA' }, { name: 'OOP' }, { name: 'DBMS' }, { name: 'Operating Systems' }],
+    title: 'CS Fundamentals',
+    items: [
+      { name: 'Data Structures & Algorithms' },
+      { name: 'Object-Oriented Programming' },
+      { name: 'DBMS' },
+      { name: 'Operating Systems' },
+    ],
   },
 ];

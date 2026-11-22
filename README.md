@@ -247,7 +247,8 @@ without the API, and reduced motion, get a plain navigation.
 **Skills show their evidence.** Each chip's "Used in" tooltip, and the click that highlights the
 matching experience and project rows (the rest fade to 40%, with a "Showing work with FastAPI · Clear"
 pill above Projects), is computed by `lib/skills.ts` from the real `stack` and `tags` in
-`portfolio.ts`; a skill's `aliases` bridge naming differences ("Gemini 2.5 Flash" counts for LLM APIs).
+`portfolio.ts`; a skill's `aliases` bridge naming differences ("Gemini 2.5 Flash" counts for Google
+Gemini, "Go" for Golang). The list itself is the résumé's Technical Skills, minus hosting platforms.
 Nothing is typed by hand, and a skill with no tagged work is listed but not clickable. The logos come
 from one cached SVG sprite, so they cost nothing in the JS bundle.
 

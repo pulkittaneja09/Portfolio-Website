@@ -477,9 +477,37 @@ accessibility, best practices and SEO 100.
 ### Round 5: circle cursor, résumé-exact skills, calmer scrolling with one 3D moment
 
 - [x] D1. Dot + ring cursor — 6px dot on the pointer, 32px accent ring on a spring (300/30); 48px + 10% fill over links/buttons/chips, 72px "View" over project cards, native text cursor over inputs, 0.85 on mousedown, hidden off-window; fine pointers only (verified absent on mobile emulation); motion values + data attributes, no re-renders; reduced motion = instant, no size animation. Spotlight removed: two things trailing the mouse at different lags looked busy
-- [ ] D2. Skills match the résumé exactly; non-skills out; official spellings site-wide; mapping still works
+- [x] D2. Skills = résumé (7 groups, 39 skills): Vercel / Render / Vite / Tailwind CSS / SQLite out; SQL, C, JavaScript, TF-IDF, Claude in; official names (Golang, Express.js, Object-Oriented Programming, Data Structures & Algorithms…); full list in "Round 5: skills changelog"; mapping verified
 - [ ] D3a. Lenis tuning (lerp 0.1, wheel 1), offsets for nav and ⌘K, off for reduced motion and touch
 - [ ] D3b. Projects as a sticky 3D card stack (scale, tilt, dim, thumbnail parallax); mobile and reduced motion get plain cards
 - [ ] D3c. Experience: a thin progress line that fills with the accent as you scroll
 - [ ] D3d. Animation audit: list everything, keep only the agreed set, one moving thing per viewport
 - [ ] D4. Final QA: stack at 0–100% scroll, 1024 / 390, cursor on desktop only, spelling greps, perf trace, build with no warnings, summary
+
+## Round 5: skills changelog (D2)
+
+Source of truth: the résumé's Technical Skills, plus technologies its project and experience lines
+name. Groups now follow the résumé's own headings (AI first, since that is the headline), with
+Frontend added for React and TypeScript.
+
+- **Added (on the résumé, missing from the site):** SQL, C, JavaScript (as its own skill), TF-IDF
+  (as its own skill), Claude (ParcelPilot's stack line).
+- **Removed (not skills, or not on the résumé):** Vercel and Render (hosting platforms; note your
+  résumé lists both under Tools & Deployment, so you may want to drop them there too), Vite and
+  Tailwind CSS (not on the résumé), SQLite (not on the résumé; still credited on ParcelPilot's own
+  stack, and counted as evidence for SQL).
+- **Renamed:** "LLM APIs (Claude, Gemini)" → Google Gemini + Claude · "Go" → Golang (as on the
+  résumé; "Go" stays in prose and tags, and is an alias) · "Express" → Express.js · "NLP (TF-IDF)" →
+  NLP + TF-IDF · "TypeScript / JavaScript" → TypeScript (Frontend) + JavaScript (Languages) ·
+  "C / C++" → C++ + C · "DSA" → Data Structures & Algorithms · "OOP" → Object-Oriented Programming.
+- **Regrouped:** "AI / ML" split into Generative AI and Machine Learning, as on the résumé ·
+  "Backend" → Backend & Databases · "Infra & Ops" → Tools & Deployment · "CS Core" → CS
+  Fundamentals · Golang appears once now (it was in both Backend and Languages).
+- **Site-wide spelling pass:** tags, stacks, the terminal, Ask, ⌘K and meta tags already used the
+  official spellings; the one fix was "Postgres container" → "PostgreSQL container" (KnowledgeHub
+  AI's case study). The terminal's `skills` command and Ask's skills answer read `skillGroups`, so
+  they changed with it. The icon sprite was regenerated: Google Gemini, Claude, JavaScript and C in;
+  Vercel, Render, Vite, Tailwind CSS and SQLite out.
+- **Mapping verified:** evidence recomputed from the real modules for all 39 skills; the 26 with
+  tagged work have tooltips and filter correctly (Golang → IEEE Recruitment Backend + Go Movies API;
+  Escape clears).

@@ -310,8 +310,12 @@
     color: rgb(var(--tone));
   }
 
-  [data-tone='ai'] {
+  [data-tone='genai'] {
     --tone: var(--accent-rgb);
+  }
+  [data-tone='ml'] {
+    --tone: var(--accent-rgb);
+    --tone-fill: 0.045;
   }
   [data-tone='backend'] {
     --tone: var(--secondary-rgb);
@@ -319,12 +323,12 @@
   [data-tone='languages'] {
     --tone: var(--tone-3-rgb);
   }
-  [data-tone='infra'] {
-    --tone: var(--tone-4-rgb);
-  }
   [data-tone='frontend'] {
     --tone: var(--tone-3-rgb);
     --tone-fill: 0.05;
+  }
+  [data-tone='tools'] {
+    --tone: var(--tone-4-rgb);
   }
   [data-tone='core'] {
     --tone: var(--line-rgb);
