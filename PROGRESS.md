@@ -603,7 +603,7 @@ Also removed: an orphaned `.note-prose` stylesheet left over from Notes.
 
 ### Round 6 (final): one-circle cursor, real highlights, launch polish
 
-- [ ] E1. Cursor: one circle glued 1:1 to the pointer (no position easing); size/fill/opacity states only
+- [x] E1. One 18px circle glued to the pointer — transform written inside pointermove (0.00px offset over 25 random moves, both themes); 40px over links/chips, 64px + "View" (ground-colour fill so it reads on thumbnails) over cards, hidden over selectable text and inputs (native text cursor), 0.85 on press, fades off-window; 180ms ease-out on size/fill/opacity only. Chose the 1.5px accent ring over the white difference disc, which turned the blue CTAs gold. Touch: none; reduced motion: no size animation
 - [ ] E2. Highlights: real achievements only (drop "10+ MCP tools"); every stat re-checked against the résumé
 - [ ] E3a. Visual consistency: spacing scale, radii, borders, chips/buttons, type levels, alignment, both themes
 - [ ] E3b. Copy and links: proofread, date and dash formats, every link checked, no CGPA / TODO / placeholders
