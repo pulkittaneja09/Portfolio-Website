@@ -23,7 +23,8 @@ import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 type CursorState = 'default' | 'link' | 'card' | 'text';
 
-const TEXT = 'input:not([type="button"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]), textarea, [contenteditable="true"]';
+const TEXT =
+  'input:not([type="button"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]), textarea, [contenteditable="true"]';
 const CARD = '[data-cursor="card"]';
 const LINK = 'a, button, [role="button"], [role="option"], label, select, summary, .skill-chip';
 

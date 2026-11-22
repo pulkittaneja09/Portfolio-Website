@@ -530,48 +530,9 @@
     pointer-events: none;
   }
 
-  .section-rule::after {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: 0;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--accent);
-    opacity: 0;
-  }
-
-  .section-rule[data-run='true']::after {
-    animation: rule-dot 1.8s var(--ease) forwards;
-  }
-
   @media (min-width: 1024px) {
     .section-rule {
       top: -3.5rem;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .section-rule[data-run='true']::after {
-      animation: none;
-    }
-  }
-
-  @keyframes rule-dot {
-    0% {
-      left: 0;
-      opacity: 0;
-    }
-    12% {
-      opacity: 1;
-    }
-    80% {
-      opacity: 1;
-    }
-    100% {
-      left: calc(100% - 5px);
-      opacity: 0;
     }
   }
 
@@ -641,9 +602,9 @@
   }
 
   /* The one "special" element on the page: a hairline of accent and
-     secondary light travelling slowly round the founder card (a conic
-     gradient turning once every 14s, masked to a 1px ring). Still, at a
-     fixed angle, under reduced motion. */
+     secondary light round the founder card (a conic gradient masked to a
+     1px ring). It rests at a fixed angle and turns slowly only while the
+     card is hovered (Round 5: no ambient motion while scrolling). */
   .founder-card::before {
     content: '';
     position: absolute;
@@ -669,8 +630,13 @@
     mask:
       linear-gradient(#000 0 0) content-box exclude,
       linear-gradient(#000 0 0);
-    animation: ring-turn 14s linear infinite;
+    animation: ring-turn 14s linear infinite paused;
+    animation-delay: -8s; /* rest at a flattering angle */
     pointer-events: none;
+  }
+
+  .founder-card:hover::before {
+    animation-play-state: running;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -872,8 +838,7 @@
     border-radius: 1rem;
     padding: 1.25rem;
     background:
-      linear-gradient(140deg, rgb(var(--tint) / 0.08), rgb(var(--tint) / 0) 55%),
-      var(--bg-elevated);
+      linear-gradient(140deg, rgb(var(--tint) / 0.08), rgb(var(--tint) / 0) 55%), var(--bg-elevated);
     box-shadow: var(--shadow-card);
     transform-origin: 50% 0%;
     transition: border-color 0.3s var(--ease);
@@ -961,10 +926,10 @@
   }
 
   /* ── Aurora: a slow mesh behind the identity rail ──────────────────────── */
-  /* Two soft radial pools, accent and secondary, drifting on 38s and 46s
-     loops. Desktop only (it sits behind the sticky left column), faded out
-     toward the content column, and still under reduced motion. Plain
-     gradients and transforms: no filter, no blur, nothing to repaint. */
+  /* Two soft radial pools, accent and secondary. Desktop only (it sits
+     behind the sticky left column), faded out toward the content column.
+     Still since Round 5: background motion competed with the one thing
+     that should move while you scroll. */
   .aurora {
     position: fixed;
     inset: 0 auto 0 0;
@@ -984,14 +949,13 @@
     width: 75vmax;
     height: 75vmax;
     border-radius: 50%;
-    will-change: transform;
   }
 
   .aurora::before {
     top: -32vmax;
     left: -24vmax;
     background: radial-gradient(closest-side, rgb(var(--accent-rgb) / var(--aurora-a, 0.035)), transparent);
-    animation: aurora-a 38s ease-in-out infinite alternate;
+    transform: translate3d(7vw, 9vh, 0) scale(1.06);
   }
 
   .aurora::after {
@@ -1002,7 +966,7 @@
       rgb(var(--secondary-rgb) / var(--aurora-b, 0.025)),
       transparent
     );
-    animation: aurora-b 46s ease-in-out infinite alternate;
+    transform: translate3d(5vw, -11vh, 0) scale(0.96);
   }
 
   [data-theme='light'] .aurora {
@@ -1013,25 +977,6 @@
   @media (min-width: 1024px) {
     .aurora {
       display: block;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .aurora::before,
-    .aurora::after {
-      animation: none;
-    }
-  }
-
-  @keyframes aurora-a {
-    to {
-      transform: translate3d(14vw, 18vh, 0) scale(1.12);
-    }
-  }
-
-  @keyframes aurora-b {
-    to {
-      transform: translate3d(10vw, -22vh, 0) scale(0.92);
     }
   }
 
@@ -1159,7 +1104,7 @@
 
   /* ── Motion ────────────────────────────────────────────────────────────── */
 
-  /* Load entrance for whatever is on screen at first paint: a short fade and
+  /* Load entrance for whatever is on screen at first paint: a 400ms fade and
      12px of travel, staggered 60ms by `--i`. `backwards`, not `both`: once it
      ends the element is back on its own styles, so hover transitions on the
      same element (row dimming, for one) are never pinned by the animation. */
@@ -1175,27 +1120,8 @@
   }
 
   .enter {
-    animation: enter 0.6s var(--ease) backwards;
+    animation: enter 0.4s var(--ease) backwards;
     animation-delay: calc(var(--i, 0) * 60ms);
-  }
-
-  /* Soft accent pulse for the status dot: colour and scale, no glow. The
-     fade is in the colour's alpha, so the element itself never drops below
-     opacity 1 (nothing on screen ever reads as "stuck" to a sampler). */
-  @keyframes pulse-soft {
-    0%,
-    100% {
-      background-color: rgb(var(--accent-rgb));
-      transform: scale(1);
-    }
-    50% {
-      background-color: rgb(var(--accent-rgb) / 0.32);
-      transform: scale(0.8);
-    }
-  }
-
-  .pulse-soft {
-    animation: pulse-soft 2.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 
   /* Scroll reveal (see lib/reveal.ts). Only ever applied to an element that
@@ -1208,8 +1134,8 @@
 
   [data-reveal='shown'] {
     transition:
-      opacity 0.55s var(--ease),
-      transform 0.55s var(--ease);
+      opacity 0.4s var(--ease),
+      transform 0.4s var(--ease);
     transition-delay: calc(min(var(--i, 0), 4) * 60ms);
   }
 
@@ -1250,7 +1176,6 @@
 
   @media (prefers-reduced-motion: reduce) {
     .enter,
-    .pulse-soft,
     .line-in,
     .tick-in {
       animation: none;
@@ -1260,109 +1185,6 @@
       opacity: 1 !important;
       transform: none !important;
     }
-  }
-
-  /* ── Notes: the rendered Markdown, in the case study's reading column ─── */
-  .note-prose {
-    color: var(--text);
-    line-height: 1.75;
-  }
-
-  .note-prose > * + * {
-    margin-top: 1.25em;
-  }
-
-  .note-prose h2 {
-    margin-top: 2.5em;
-    font-size: 1.25rem;
-    font-weight: 600;
-    letter-spacing: -0.015em;
-    color: var(--text-strong);
-  }
-
-  .note-prose h3 {
-    margin-top: 2em;
-    font-weight: 600;
-    color: var(--text-strong);
-  }
-
-  .note-prose strong {
-    font-weight: 600;
-    color: var(--text-strong);
-  }
-
-  .note-prose a {
-    color: var(--text-strong);
-    text-decoration: underline;
-    text-decoration-color: rgb(var(--accent-rgb) / 0.55);
-    text-underline-offset: 3px;
-    transition: text-decoration-color 0.25s var(--ease);
-  }
-
-  .note-prose a:hover {
-    text-decoration-color: var(--accent);
-  }
-
-  .note-prose ul,
-  .note-prose ol {
-    padding-left: 1.25em;
-  }
-
-  .note-prose ul {
-    list-style: disc;
-  }
-
-  .note-prose ol {
-    list-style: decimal;
-  }
-
-  .note-prose li + li {
-    margin-top: 0.4em;
-  }
-
-  .note-prose li::marker {
-    color: var(--text-faint);
-  }
-
-  .note-prose blockquote {
-    border-left: 2px solid rgb(var(--accent-rgb) / 0.55);
-    padding-left: 1em;
-  }
-
-  .note-prose code {
-    border-radius: 4px;
-    background: rgb(var(--line-rgb) / 0.06);
-    padding: 0.1em 0.35em;
-    font-family: 'Geist Mono', ui-monospace, monospace;
-    font-size: 0.875em;
-    color: var(--text-strong);
-  }
-
-  .note-prose pre {
-    overflow-x: auto;
-    border: 1px solid var(--border);
-    border-radius: 0.75rem;
-    background: var(--card-bg);
-    box-shadow: var(--shadow-card);
-    padding: 1rem 1.25rem;
-    font-size: 0.8125rem;
-    line-height: 1.6;
-  }
-
-  .note-prose pre code {
-    background: none;
-    padding: 0;
-    font-size: inherit;
-  }
-
-  .note-prose hr {
-    margin-block: 2.5em;
-    border-color: var(--border);
-  }
-
-  .note-prose img {
-    border: 1px solid var(--border);
-    border-radius: 0.75rem;
   }
 
   /* ── Command palette (cmdk) ──────────────────────────────────────────── */

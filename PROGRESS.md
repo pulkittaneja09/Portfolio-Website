@@ -481,7 +481,7 @@ accessibility, best practices and SEO 100.
 - [x] D3a. Lenis lerp 0.1, wheel 1:1 (a 400px wheel step: 246px in 120ms, settled by ~0.8s); nav and ⌘K jumps on one eased 1s curve, every section lands at 96px via scroll-margin; not created under reduced motion or on touch-first devices (verified absent in mobile emulation)
 - [x] D3b. Projects 3D stack (≥ 1024px, full motion) — large tinted cards, sticky at 96 + 16px·i; covered cards go to 0.92 scale, 8° tilt back (1200px perspective) and 60% (a ground-colour overlay, opacity only); thumbnail drifts ±10px; ranges measured from static layout, motion values only; will-change only while in view; uniform card height so nothing peeks below; non-sticky spacers carry the scroll distance; "dim the other rows" removed from Projects (kept for Experience); hover tilt dropped (the card already tilts on scroll); click opens the case study; < 1024px and reduced motion get plain cards with one fade-up
 - [x] D3c. Experience progress line — 1px track in the gutter (≥ 640px), accent fill by scaleY from useScroll (start 70% → end 55%); static track under reduced motion; nothing else in Experience moves
-- [ ] D3d. Animation audit: list everything, keep only the agreed set, one moving thing per viewport
+- [x] D3d. Animation audit — full table in "Round 5: animation audit"; removed divider dots, aurora drift, status pulse; founder ring turns on hover only; reveals cut to Founder / Contact heading / phone cards / case study; entrances 400ms
 - [ ] D4. Final QA: stack at 0–100% scroll, 1024 / 390, cursor on desktop only, spelling greps, perf trace, build with no warnings, summary
 
 ## Round 5: skills changelog (D2)
@@ -511,3 +511,30 @@ Frontend added for React and TypeScript.
 - **Mapping verified:** evidence recomputed from the real modules for all 39 skills; the 26 with
   tagged work have tooltips and filter correctly (Golang → IEEE Recruitment Backend + Go Movies API;
   Escape clears).
+
+## Round 5: animation audit (D3d)
+
+Rule: while scrolling, at most one thing noticeably animates in the viewport; entrances ≤ 400ms,
+≤ 12px of travel, once.
+
+| Animation | Where | Verdict |
+| --- | --- | --- |
+| "PT" monogram intro | first visit, home | **kept** |
+| Dot + ring cursor (spring, hover states, press) | everywhere, fine pointers | **kept** |
+| Projects 3D card stack + thumbnail parallax | Projects, desktop | **kept** (the one "wow") |
+| Experience progress line | Experience | **kept** (the section's only motion) |
+| Metric count-up | highlight strip, project metrics, case-study result | **kept** |
+| Agent-run card (typing, line-in, ✓ tick-in, caret, fade between traces) | rail | **kept** |
+| Hover micro-interactions: link underline sweep, title colour, arrow nudge, chip states, CTA fill sweep + magnetic pull, thumbnail halo, card border tint, row panel + dim-others (Experience only), ring turning on the founder card | various | **kept** |
+| Theme switch (circular View Transition) | toggle, ⌘K, terminal | **kept** |
+| Route transitions (thumbnail morph, page fade) and overlay open/close (⌘K, terminal, Ask, toasts) | on demand | **kept**: only ever started by the visitor |
+| Load entrance (`.enter`) on what is on screen at first paint | rail, About | **toned down**: 600ms → 400ms (12px, once) |
+| Scroll reveal (`Reveal`) | was on Experience rows, Skills rows, "More" rows, 4 Contact blocks, Founder, case study | **cut back** to Founder, the Contact heading, phone project cards and the case study; 550ms → 400ms |
+| Travelling dot on section dividers | between sections | **removed** (hairline stays) |
+| Founder card ring turning (14s loop) | Founder | **toned down**: still at rest, turns only on hover |
+| Aurora drift (38s / 46s loops) | behind the rail | **removed**: the mesh stays, still |
+| Status-dot pulse (2.6s loop) | rail | **removed**: static accent dot |
+| Cursor spotlight | page-wide | **removed** in D1 |
+| Thumbnail hover tilt | project rows | **removed** in D3b (the card tilts on scroll instead) |
+
+Also removed: an orphaned `.note-prose` stylesheet left over from Notes.

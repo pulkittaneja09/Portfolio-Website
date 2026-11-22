@@ -34,7 +34,7 @@ export function Identity() {
         style={stagger(3)}
       >
         <span className="relative flex h-1.5 w-1.5 shrink-0" aria-hidden>
-          <span className="pulse-soft absolute inset-0 rounded-full bg-accent" />
+          <span className="absolute inset-0 rounded-full bg-accent" />
         </span>
         {profile.availability}
       </p>

@@ -19,7 +19,7 @@
 
 type State = 'armed' | 'shown';
 
-const SHOW_MS = 550;
+const SHOW_MS = 400;
 const STAGGER_MS = 60;
 const MAX_STEPS = 4;
 

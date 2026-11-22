@@ -1,6 +1,5 @@
 import { m, useScroll } from 'framer-motion';
 import { useRef } from 'react';
-import { Reveal } from '@/components/Reveal';
 import { Section } from '@/components/Section';
 import { ArrowUpRightIcon } from '@/components/icons';
 import { experience, profile } from '@/data/portfolio';
@@ -81,15 +80,13 @@ export function Experience() {
   return (
     <Section id="experience" label="Experience">
       <ol ref={list} className="row-list relative space-y-3">
-        {experience.map((item, index) => (
+        {experience.map((item) => (
           <li
             key={`${item.org}-${item.role}`}
             className="row-item"
             data-filter={filterState((evidence) => evidence.roles.includes(item), skill)}
           >
-            <Reveal index={index}>
-              <ExperienceRow item={item} />
-            </Reveal>
+            <ExperienceRow item={item} />
           </li>
         ))}
         {/* The one moving thing here: a hairline that fills with the accent
@@ -99,7 +96,7 @@ export function Experience() {
         </li>
       </ol>
 
-      <Reveal index={3}>
+      <div>
         <a
           href={profile.resumePath}
           target="_blank"
@@ -113,7 +110,7 @@ export function Experience() {
           />
           <span className="sr-only">(PDF, opens in a new tab)</span>
         </a>
-      </Reveal>
+      </div>
     </Section>
   );
 }

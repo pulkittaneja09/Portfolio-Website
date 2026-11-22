@@ -286,36 +286,34 @@ function MoreProjects() {
     <div className="mt-16">
       <h3 className="label mb-4 text-faint">More</h3>
       <ul>
-        {sideProjects.map((item, index) => (
+        {sideProjects.map((item) => (
           <li
             key={item.name}
             className="row-item"
             data-filter={filterState((evidence) => evidence.side.includes(item), skill)}
           >
-            <Reveal index={index}>
-              <a
-                href={item.repo}
-                target="_blank"
-                rel="noreferrer noopener"
-                className="group/more -mx-3 flex items-baseline gap-3 rounded-lg px-3 py-2.5 transition-[background-color,box-shadow] duration-300 hover:bg-[var(--row-hover-bg)] hover:shadow-card"
-                title={item.blurb}
-              >
-                <span className="shrink-0 text-sm font-medium text-strong transition-colors duration-300 group-hover/more:text-accent">
-                  {item.name}
-                </span>
-                <span className="hidden min-w-0 flex-1 truncate text-sm text-body transition-colors duration-300 group-hover/more:text-strong/80 sm:block">
-                  {item.oneLiner}
-                </span>
-                <span className="ml-auto flex shrink-0 items-baseline gap-3 sm:ml-0">
-                  {item.metric && <CountUp value={item.metric} className="font-mono text-xs text-accent" />}
-                  <ArrowUpRightIcon
-                    className="h-3.5 w-3.5 translate-y-0.5 self-center text-faint transition-[transform,color] duration-300 group-hover/more:-translate-y-0 group-hover/more:translate-x-0.5 group-hover/more:text-accent"
-                    aria-hidden
-                  />
-                </span>
-                <span className="sr-only">(opens in a new tab)</span>
-              </a>
-            </Reveal>
+            <a
+              href={item.repo}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="group/more -mx-3 flex items-baseline gap-3 rounded-lg px-3 py-2.5 transition-[background-color,box-shadow] duration-300 hover:bg-[var(--row-hover-bg)] hover:shadow-card"
+              title={item.blurb}
+            >
+              <span className="shrink-0 text-sm font-medium text-strong transition-colors duration-300 group-hover/more:text-accent">
+                {item.name}
+              </span>
+              <span className="hidden min-w-0 flex-1 truncate text-sm text-body transition-colors duration-300 group-hover/more:text-strong/80 sm:block">
+                {item.oneLiner}
+              </span>
+              <span className="ml-auto flex shrink-0 items-baseline gap-3 sm:ml-0">
+                {item.metric && <CountUp value={item.metric} className="font-mono text-xs text-accent" />}
+                <ArrowUpRightIcon
+                  className="h-3.5 w-3.5 translate-y-0.5 self-center text-faint transition-[transform,color] duration-300 group-hover/more:-translate-y-0 group-hover/more:translate-x-0.5 group-hover/more:text-accent"
+                  aria-hidden
+                />
+              </span>
+              <span className="sr-only">(opens in a new tab)</span>
+            </a>
           </li>
         ))}
       </ul>

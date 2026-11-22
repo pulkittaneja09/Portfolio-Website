@@ -42,7 +42,7 @@ export function Contact() {
         </p>
       </Reveal>
 
-      <Reveal index={1} className="mt-10">
+      <div className="mt-10">
         <button
           type="button"
           onClick={() => void onCopy()}
@@ -66,9 +66,9 @@ export function Contact() {
             />
           </a>
         </p>
-      </Reveal>
+      </div>
 
-      <Reveal index={2} className="mt-10 flex flex-wrap gap-3">
+      <div className="mt-10 flex flex-wrap gap-3">
         <a ref={emailRef} href={`mailto:${profile.email}`} className="cta">
           Email
         </a>
@@ -77,9 +77,9 @@ export function Contact() {
           <ArrowUpRightIcon className="cta-arrow h-3.5 w-3.5" aria-hidden />
           <span className="sr-only">(PDF, opens in a new tab)</span>
         </a>
-      </Reveal>
+      </div>
 
-      <Reveal index={3} className="mt-8">
+      <div className="mt-8">
         <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
           {others.map((social) => (
             <li key={social.label}>
@@ -99,7 +99,7 @@ export function Contact() {
             </li>
           ))}
         </ul>
-      </Reveal>
+      </div>
     </Section>
   );
 }

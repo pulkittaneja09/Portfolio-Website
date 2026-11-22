@@ -1,5 +1,4 @@
 import { useEffect, useId, useState } from 'react';
-import { Reveal } from '@/components/Reveal';
 import { Section } from '@/components/Section';
 import { skillGroups } from '@/data/portfolio';
 import type { Skill, SkillIcon as SkillIconSlug } from '@/data/types';
@@ -106,12 +105,8 @@ export function Skills() {
     <Section id="skills" label="Skills">
       <p className="meta -mt-4 mb-6">Pick a skill to see the work behind it.</p>
       <dl className="space-y-4">
-        {skillGroups.map((group, index) => (
-          <Reveal
-            key={group.id}
-            index={index}
-            className="grid gap-y-2 sm:grid-cols-[27%_minmax(0,1fr)] sm:gap-x-6"
-          >
+        {skillGroups.map((group) => (
+          <div key={group.id} className="grid gap-y-2 sm:grid-cols-[27%_minmax(0,1fr)] sm:gap-x-6">
             <dt className="label pt-[0.4rem] text-faint">{group.title}</dt>
             <dd data-tone={group.id}>
               <ul className="flex flex-wrap gap-1.5">
@@ -122,7 +117,7 @@ export function Skills() {
                 ))}
               </ul>
             </dd>
-          </Reveal>
+          </div>
         ))}
       </dl>
     </Section>
