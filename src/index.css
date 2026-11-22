@@ -496,6 +496,63 @@
     }
   }
 
+  /* ── Section dividers ──────────────────────────────────────────────────── */
+  /* Centred in the 6rem / 7rem gap between sections. */
+  .section-rule {
+    position: absolute;
+    top: -3rem;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, var(--border), rgb(var(--line-rgb) / 0.03));
+    pointer-events: none;
+  }
+
+  .section-rule::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 0;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0;
+  }
+
+  .section-rule[data-run='true']::after {
+    animation: rule-dot 1.8s var(--ease) forwards;
+  }
+
+  @media (min-width: 1024px) {
+    .section-rule {
+      top: -3.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .section-rule[data-run='true']::after {
+      animation: none;
+    }
+  }
+
+  @keyframes rule-dot {
+    0% {
+      left: 0;
+      opacity: 0;
+    }
+    12% {
+      opacity: 1;
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
+      left: calc(100% - 5px);
+      opacity: 0;
+    }
+  }
+
   /* ── Row lists (experience, projects) ──────────────────────────────────────
      Hovering one row fades every other row to 50%, so the eye stays on the
      one under the cursor. :has() rather than a group hover, so the gaps

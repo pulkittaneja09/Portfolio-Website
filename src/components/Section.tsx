@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { SectionLabel } from '@/components/SectionLabel';
+import { SectionRule } from '@/components/SectionRule';
 import { cn } from '@/lib/cn';
 
 interface Props {
@@ -18,8 +19,10 @@ export function Section({ id, label, children, className }: Props) {
     <section
       id={id}
       aria-labelledby={`${id}-label`}
-      className={cn('section-anchor mb-24 lg:mb-28', className)}
+      className={cn('section-anchor relative mb-24 lg:mb-28', className)}
     >
+      {/* Every section but the first gets a divider in the gap above it. */}
+      {id !== 'about' && <SectionRule />}
       <SectionLabel id={`${id}-label`} className="mb-8 text-strong">
         {label}
       </SectionLabel>

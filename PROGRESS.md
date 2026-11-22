@@ -328,7 +328,7 @@ nowhere; build without warnings.
 - [x] C3b. Founder card ring — conic accent/seafoam hairline turning every 14s via a registered `--ring-angle`, masked to 1px; fixed angle under reduced motion
 - [x] C3c. Highlight strip — 1 startup founded · 3 AI products shipped · 10+ MCP tools built (from `stats` and a count of AI/RAG/ML projects with a live demo), accent mono count-up
 - [x] C3d. Magnetic CTAs (≤ 6px, mouse + full motion) with an accent fill sweep: rail Résumé (quiet variant, same footprint as the old text link so the rail row still fits beside the clock) and a new Email · Résumé pair in Contact (replacing the plain Résumé link there)
-- [ ] C3e. Section dividers with travelling accent dot
+- [x] C3e. Section dividers — 1px hairline centred in the existing gap (absolute, no layout change), accent dot travels across once on first view (1.8s) and fades; line only under reduced motion
 - [ ] C3f. First-visit "PT" monogram intro (<1.2s, sessionStorage, skipped for reduced-motion)
 - [ ] C3g. Polish: selection colour, thin scrollbar, accent focus rings, circular-reveal theme switch
 - [ ] C4. Final QA (both themes, 1440/1024/390), greps, contrast, Lighthouse 90+, build with no warnings, summary
