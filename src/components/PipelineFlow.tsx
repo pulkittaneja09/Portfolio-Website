@@ -1,18 +1,19 @@
 import { venture } from '@/data/portfolio';
 
 /**
- * Audaxity's pipeline as a small inline SVG in mono: four stages, and on each
- * connector the step that turns one stage into the next. Horizontal from
- * 640px up; stacked vertically on phones, where a scaled-down row would leave
- * the labels unreadably small. Sizes come from the label lengths, so editing
- * the stages in `portfolio.ts` never needs a layout change here.
+ * Audaxity's pipeline as a small inline SVG in mono: four stages joined by
+ * arrows. Horizontal from 640px up, drawn at its natural size (it only scales
+ * down if the card is narrower); stacked vertically on phones, where a
+ * scaled-down row would leave the labels unreadably small. Sizes come from
+ * the label lengths, so editing the stages in `portfolio.ts` never needs a
+ * layout change here.
  */
 
-const CHAR = 6.6; // Geist Mono advance at 11px
-const PAD_X = 12;
+const CHAR = 7.2; // Geist Mono advance at 12px (0.6em)
+const PAD_X = 10;
 const NODE_H = 28;
-const GAP_H = 40; // horizontal connector length
-const GAP_V = 26; // vertical connector length
+const GAP_H = 28; // horizontal connector length
+const GAP_V = 16; // vertical connector length
 
 const nodeWidth = (label: string) => Math.round(label.length * CHAR + PAD_X * 2);
 
@@ -35,12 +36,11 @@ function Arrow({ d, head }: { d: string; head: string }) {
 }
 
 export function PipelineFlow() {
-  const { stages, steps } = venture.pipeline;
-  const label = `Pipeline: ${stages.map((stage, i) => (i < steps.length ? `${stage}, then ${steps[i]}, to` : stage)).join(' ')}`;
+  const { stages } = venture.pipeline;
+  const label = `Pipeline: ${stages.join(', then ')}`;
 
   // ── Horizontal ────────────────────────────────────────────────────────────
   let x = 0;
-  const top = 16;
   const row = stages.map((stage, i) => {
     const w = nodeWidth(stage);
     const node = { stage, x, w, i };
@@ -48,6 +48,7 @@ export function PipelineFlow() {
     return node;
   });
   const width = x;
+  const mid = NODE_H / 2;
 
   // ── Vertical ──────────────────────────────────────────────────────────────
   const column = stages.map((stage, i) => ({ stage, y: i * (NODE_H + GAP_V), w: nodeWidth(stage), i }));
@@ -55,47 +56,37 @@ export function PipelineFlow() {
   const columnWidth = Math.max(...column.map((n) => n.w)) + 4;
 
   return (
-    <div className="font-mono text-[11px]">
+    <div className="font-mono text-xs">
       <svg
-        viewBox={`-1 0 ${width + 2} ${top + NODE_H + 1}`}
-        className="hidden h-auto w-full max-w-[32rem] sm:block"
+        viewBox={`-1 -1 ${width + 2} ${NODE_H + 2}`}
+        width={width + 2}
+        height={NODE_H + 2}
+        className="hidden h-auto max-w-full sm:block"
         role="img"
         aria-label={label}
       >
         {row.map((node) => {
           const last = node.i === stages.length - 1;
-          const cx = node.x + node.w / 2;
           const next = row[node.i + 1];
           return (
             <g key={node.stage}>
               <rect
                 x={node.x}
-                y={top}
+                y={0}
                 width={node.w}
                 height={NODE_H}
                 rx={6}
                 fill="rgba(255,255,255,0.025)"
                 stroke={stroke(last)}
               />
-              <text x={cx} y={top + NODE_H / 2 + 4} textAnchor="middle" fill={ink(last)}>
+              <text x={node.x + node.w / 2} y={mid + 4} textAnchor="middle" fill={ink(last)}>
                 {node.stage}
               </text>
               {next && (
-                <>
-                  <text
-                    x={node.x + node.w + GAP_H / 2}
-                    y={top - 5}
-                    textAnchor="middle"
-                    fill="var(--text-faint)"
-                    fontSize="9.5"
-                  >
-                    {steps[node.i]}
-                  </text>
-                  <Arrow
-                    d={`M ${node.x + node.w + 5} ${top + NODE_H / 2} H ${next.x - 5}`}
-                    head={`M ${next.x - 9} ${top + NODE_H / 2 - 3.5} L ${next.x - 5} ${top + NODE_H / 2} L ${next.x - 9} ${top + NODE_H / 2 + 3.5}`}
-                  />
-                </>
+                <Arrow
+                  d={`M ${node.x + node.w + 5} ${mid} H ${next.x - 5}`}
+                  head={`M ${next.x - 9} ${mid - 3.5} L ${next.x - 5} ${mid} L ${next.x - 9} ${mid + 3.5}`}
+                />
               )}
             </g>
           );
@@ -114,8 +105,8 @@ export function PipelineFlow() {
           const last = node.i === stages.length - 1;
           const hasNext = node.i < stages.length - 1;
           const lineX = 16;
-          const y1 = node.y + NODE_H + 4;
-          const y2 = node.y + NODE_H + GAP_V - 4;
+          const y1 = node.y + NODE_H + 3;
+          const y2 = node.y + NODE_H + GAP_V - 3;
           return (
             <g key={node.stage}>
               <rect
@@ -131,15 +122,10 @@ export function PipelineFlow() {
                 {node.stage}
               </text>
               {hasNext && (
-                <>
-                  <Arrow
-                    d={`M ${lineX} ${y1} V ${y2}`}
-                    head={`M ${lineX - 3.5} ${y2 - 4} L ${lineX} ${y2} L ${lineX + 3.5} ${y2 - 4}`}
-                  />
-                  <text x={lineX + 10} y={(y1 + y2) / 2 + 3.5} fill="var(--text-faint)" fontSize="9.5">
-                    {steps[node.i]}
-                  </text>
-                </>
+                <Arrow
+                  d={`M ${lineX} ${y1} V ${y2}`}
+                  head={`M ${lineX - 3.5} ${y2 - 4} L ${lineX} ${y2} L ${lineX + 3.5} ${y2 - 4}`}
+                />
               )}
             </g>
           );

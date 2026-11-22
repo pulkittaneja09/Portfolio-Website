@@ -187,6 +187,10 @@ the rail becomes the page header and a thin bar carries the current section and 
 metrics, the status dot, ✓ marks and link underlines. The page-wide cursor spotlight peaks at 4.5%
 champagne — measured to keep every word above 7:1 even directly under the pointer.
 
+**Seven type sizes.** 12px mono for labels and metadata, 14px for row text, 16px body, then 20, 24, 48
+and 60px, each with one job. The serif accent word is set at 1.14em of its sentence. Before adding a
+size, check whether one of these already does the job.
+
 **The agent-run card** is driven by one elapsed-time clock in a rAF loop: the prompt types out, a
 line lands every 350ms, timings resolve with a ✓, the result holds for 4s, then the next example
 plays. Hover pauses it; the loop stops when it is off screen or the tab is hidden; reduced motion shows
@@ -197,8 +201,8 @@ arrow glyphs.
 element is only hidden after the visitor has actually scrolled, only while it is fully below the fold,
 and it is shown the moment it enters; a sweep after every scroll catches anything else. Full-page
 screenshots, prints and crawlers see every element. Decorative motion (status pulse, caret, trace
-lines, grain) is done with colour, so nothing on screen ever rests below opacity 1, and nothing
-carries a blur.
+lines) is done with colour, so nothing on screen ever rests below opacity 1, and nothing carries a
+blur.
 
 **Rows dim their siblings with `:has()`.** Hovering an experience or project row lifts it onto a 3%
 panel and fades the others to 50%; hovering the gap between rows dims nothing.
@@ -207,7 +211,9 @@ panel and fades the others to 50%; hovering the gap between rows dims nothing.
 widget, toasts), which are themselves lazy chunks warmed once the page is idle.
 
 **The answer widget has no model behind it.** `lib/ask.ts` scores a question against topics built
-from `portfolio.ts`. No API key, no network call, and no way for it to invent a credential.
+from `portfolio.ts`. No API key, no network call, and no way for it to invent a credential. Nothing
+floats over the content: on desktop it opens from a 36px button sized to sit in the page gutter, on
+phones from the top bar's Ask button, and from ⌘K everywhere.
 
 **Everything respects `prefers-reduced-motion`.** No Lenis, no spotlight, no entrances or reveals, a
 static agent trace, and a global rule collapses any remaining animation.

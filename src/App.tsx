@@ -1,7 +1,6 @@
 import { Suspense, lazy, useCallback, useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { CursorSpotlight } from '@/components/CursorSpotlight';
-import { GrainOverlay } from '@/components/GrainOverlay';
 import { useGlobalShortcuts } from '@/hooks/useGlobalShortcuts';
 import { useLenis } from '@/hooks/useLenis';
 import { whenIdle } from '@/lib/idle';
@@ -24,6 +23,7 @@ type Overlay = 'palette' | 'terminal' | null;
 export default function App() {
   const [overlay, setOverlay] = useState<Overlay>(null);
   const [widgetReady, setWidgetReady] = useState(false);
+  const [askOpen, setAskOpen] = useState(false);
   // Once an overlay has been opened it stays mounted, so its exit animation
   // has something to animate out of.
   const [loaded, setLoaded] = useState({ palette: false, terminal: false });
@@ -39,6 +39,13 @@ export default function App() {
   }, []);
 
   const close = useCallback(() => setOverlay(null), []);
+
+  // The Ask panel can be opened before its chunk has warmed (from the phone
+  // top bar or the palette), so opening it also mounts it.
+  const openAsk = useCallback(() => {
+    setWidgetReady(true);
+    setAskOpen(true);
+  }, []);
 
   useLenis();
   useGlobalShortcuts({ onPalette: openPalette, onTerminal: openTerminal, onEscape: close });
@@ -57,7 +64,6 @@ export default function App() {
   return (
     <>
       <CursorSpotlight />
-      <GrainOverlay />
 
       <a
         href="#main"
@@ -69,16 +75,26 @@ export default function App() {
       {/* Each page renders its own <main id="main">: on the home page it is
           the right-hand column, beside the identity rail. */}
       <Routes>
-        <Route path="/" element={<Home onOpenTerminal={openTerminal} onOpenPalette={openPalette} />} />
+        <Route
+          path="/"
+          element={<Home onOpenTerminal={openTerminal} onOpenPalette={openPalette} onOpenAsk={openAsk} />}
+        />
         <Route path="/projects/:slug" element={<ProjectDetail />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
 
-      <Suspense fallback={null}>{widgetReady && <AskWidget />}</Suspense>
+      <Suspense fallback={null}>
+        {widgetReady && <AskWidget open={askOpen} onOpenChange={setAskOpen} />}
+      </Suspense>
 
       <Suspense fallback={null}>
         {loaded.palette && (
-          <CommandPalette open={overlay === 'palette'} onClose={close} onOpenTerminal={openTerminal} />
+          <CommandPalette
+            open={overlay === 'palette'}
+            onClose={close}
+            onOpenTerminal={openTerminal}
+            onOpenAsk={openAsk}
+          />
         )}
         {loaded.terminal && <TerminalOverlay open={overlay === 'terminal'} onClose={close} />}
       </Suspense>

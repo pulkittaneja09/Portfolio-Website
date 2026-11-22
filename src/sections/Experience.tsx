@@ -10,7 +10,7 @@ function ExperienceRow({ item }: { item: ExperienceItem }) {
   const body = (
     <>
       <div className="pt-0.5">
-        <p className="font-mono text-[0.6875rem] uppercase leading-snug tracking-[0.04em] text-faint [text-wrap:balance]">
+        <p className="font-mono text-xs uppercase leading-snug tracking-[0.04em] text-faint [text-wrap:balance]">
           {formatRange(item.start, item.end)}
         </p>
         <p className="meta mt-1.5 hidden sm:block">{item.location}</p>
@@ -31,7 +31,7 @@ function ExperienceRow({ item }: { item: ExperienceItem }) {
           </span>
         </h3>
 
-        <ul className="mt-2 space-y-1 text-[0.9375rem] leading-relaxed text-body transition-colors duration-300 group-hover/row:text-strong/80">
+        <ul className="mt-2 space-y-1 text-sm leading-relaxed text-body transition-colors duration-300 group-hover/row:text-strong/80">
           {item.impact.map((line) => (
             <li key={line}>{line}</li>
           ))}
@@ -86,7 +86,7 @@ export function Experience() {
           href={profile.resumePath}
           target="_blank"
           rel="noopener"
-          className="group mt-10 inline-flex items-center gap-1.5 text-[0.9375rem] font-medium text-strong"
+          className="group mt-10 inline-flex items-center gap-1.5 text-sm font-medium text-strong"
         >
           <span className="link link-on-group">View full résumé</span>
           <ArrowUpRightIcon

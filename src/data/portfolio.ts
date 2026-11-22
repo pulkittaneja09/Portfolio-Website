@@ -503,6 +503,7 @@ export const sideProjects: SideProject[] = [
   {
     name: 'Fake News Detection',
     blurb: 'TF-IDF + logistic regression over a 20,800-article corpus, evaluated on a held-out split.',
+    oneLiner: 'TF-IDF + logistic regression',
     metric: '97.9% test accuracy',
     stack: ['Python', 'scikit-learn', 'NLP', 'TF-IDF'],
     repo: 'https://github.com/pulkittaneja09/fake-news-detection',
@@ -510,6 +511,7 @@ export const sideProjects: SideProject[] = [
   {
     name: 'Fake Job Detector',
     blurb: 'Random Forest classifier flagging fraudulent job postings from listing text.',
+    oneLiner: 'Random Forest on listing text',
     metric: '~93% accuracy',
     stack: ['Python', 'scikit-learn', 'NLP'],
     repo: 'https://github.com/pulkittaneja09/Fake-Job-Detector-Training',
@@ -517,24 +519,28 @@ export const sideProjects: SideProject[] = [
   {
     name: 'AI Email Agent',
     blurb: 'Agent that reads an inbox and drafts contextual replies with tool-calling.',
+    oneLiner: 'Reads an inbox, drafts replies',
     stack: ['Python', 'AI agents', 'LLM'],
     repo: 'https://github.com/pulkittaneja09/ai-email-agent',
   },
   {
     name: 'Go Movies API',
     blurb: 'RESTful CRUD service in Go with Gorilla Mux and JSON responses.',
+    oneLiner: 'REST CRUD service in Go',
     stack: ['Go', 'Gorilla Mux', 'REST'],
     repo: 'https://github.com/pulkittaneja09/Go-Movies-API',
   },
   {
     name: 'genai-core',
     blurb: 'Working notes and reference implementations for LLM primitives I use elsewhere.',
+    oneLiner: 'Reference LLM primitives',
     stack: ['Python', 'LangChain'],
     repo: 'https://github.com/pulkittaneja09/genai-core',
   },
   {
     name: 'agentic-ai',
     blurb: 'Notebook experiments on agent loops, tool routing and multi-step planning.',
+    oneLiner: 'Agent-loop and planning notebooks',
     stack: ['Python', 'LangGraph', 'Jupyter'],
     repo: 'https://github.com/pulkittaneja09/agentic-ai',
   },
@@ -607,7 +613,6 @@ export const venture: Venture = {
   mission: 'Lectures in, syllabus-mapped *knowledge* out.',
   pipeline: {
     stages: ['Lecture', 'Transcript', 'Knowledge', 'Syllabus coverage'],
-    steps: ['whisper', 'llm', 'map'],
   },
   badges: [
     {

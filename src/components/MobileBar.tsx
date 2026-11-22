@@ -1,19 +1,23 @@
 import { useEffect, useState } from 'react';
+import { ChatIcon } from '@/components/icons';
 import { nav } from '@/data/portfolio';
 import { cn } from '@/lib/cn';
 
 interface Props {
   active: string | null;
   onOpenPalette: () => void;
+  onOpenAsk: () => void;
 }
 
 /**
  * Below 1024px the left column becomes the page header and its nav goes away,
  * so this thin bar carries navigation instead: a monogram that returns to the
- * top, the section you are in once you have scrolled past the header, and a
- * button into the command palette (which doubles as the mobile menu).
+ * top, the section you are in once you have scrolled past the header, the
+ * "Ask about Pulkit" panel (here rather than floating over the text, as it
+ * does on desktop), and a button into the command palette, which doubles as
+ * the mobile menu.
  */
-export function MobileBar({ active, onOpenPalette }: Props) {
+export function MobileBar({ active, onOpenPalette, onOpenAsk }: Props) {
   const [scrolled, setScrolled] = useState(false);
   const [pastHeader, setPastHeader] = useState(false);
 
@@ -61,14 +65,25 @@ export function MobileBar({ active, onOpenPalette }: Props) {
           )}
         </a>
 
-        <button
-          type="button"
-          onClick={onOpenPalette}
-          className="inline-flex h-9 items-center gap-2 rounded-lg border border-white/[0.08] px-3 text-[0.8125rem] text-strong transition-colors duration-300 hover:border-white/[0.16]"
-        >
-          Menu
-          <kbd className="hidden font-mono text-[0.6875rem] text-faint [@media(hover:hover)]:inline">⌘K</kbd>
-        </button>
+        <div className="flex shrink-0 items-center gap-1">
+          <button
+            type="button"
+            onClick={onOpenAsk}
+            className="inline-flex h-9 items-center gap-1.5 rounded-lg px-2.5 text-sm text-body transition-colors duration-300 hover:text-strong"
+            aria-label="Ask about Pulkit"
+          >
+            <ChatIcon className="h-4 w-4" />
+            Ask
+          </button>
+          <button
+            type="button"
+            onClick={onOpenPalette}
+            className="inline-flex h-9 items-center gap-2 rounded-lg border border-white/[0.08] px-3 text-sm text-strong transition-colors duration-300 hover:border-white/[0.16]"
+          >
+            Menu
+            <kbd className="hidden font-mono text-xs text-faint [@media(hover:hover)]:inline">⌘K</kbd>
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -12,9 +12,12 @@ import { stagger } from '@/lib/stagger';
  * then the card fades and plays the next example.
  *
  * Everything derives from one elapsed-time clock advanced in a rAF loop.
- * Hovering pauses the clock; the loop stops entirely while the card is off
- * screen or the tab is hidden; React only re-renders when something visible
- * changes. Under reduced motion it renders the first trace, complete, still.
+ * The first trace paints complete and the clock starts at the top of its
+ * hold, so the first impression is a finished card rather than an empty box
+ * with a cursor in it; the typing starts with the second example. Hovering
+ * pauses the clock; the loop stops entirely while the card is off screen or
+ * the tab is hidden; React only re-renders when something visible changes.
+ * Under reduced motion it renders the first trace, complete, still.
  */
 
 const CHAR_MS = 22; // prompt typing speed
@@ -24,7 +27,6 @@ const RESOLVE_MS = 200; // a step's timing and ✓ land just after its line
 const HOLD_MS = 4000; // the finished trace stays up for 4s
 const FADE_MS = 450;
 const GAP_MS = 400; // blank beat before the next trace starts typing
-const START_DELAY_MS = 900; // let the page's load entrance settle first
 
 interface Frame {
   trace: number;
@@ -73,6 +75,12 @@ function complete(index: number): Frame {
   return { trace: index, typed: t.promptLen, shown: t.lines, resolved: t.lines, fading: false };
 }
 
+/** The moment a trace is fully on screen: where its hold begins. */
+function settled(index: number) {
+  const t = timeline(agentTraces[index]);
+  return t.appear(t.lines - 1) + RESOLVE_MS;
+}
+
 const same = (a: Frame, b: Frame) =>
   a.trace === b.trace &&
   a.typed === b.typed &&
@@ -109,7 +117,7 @@ const row = 'grid h-[1.7em] items-center gap-x-[1ch] pl-[2ch]';
 
 export function AgentRun({ className }: { className?: string }) {
   const reduced = useReducedMotion();
-  const [frame, setFrame] = useState<Frame>(() => (reduced ? complete(0) : derive(-1, 0)));
+  const [frame, setFrame] = useState<Frame>(() => complete(0));
   const [paused, setPaused] = useState(false);
   const pausedRef = useRef(false);
   const rootRef = useRef<HTMLElement>(null);
@@ -127,7 +135,7 @@ export function AgentRun({ className }: { className?: string }) {
     const node = rootRef.current;
     let raf = 0;
     let last = 0;
-    let elapsed = -START_DELAY_MS;
+    let elapsed = settled(0);
     let index = 0;
     let onScreen = true;
 

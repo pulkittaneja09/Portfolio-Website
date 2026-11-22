@@ -122,10 +122,50 @@ reports 0 violations in 33 strict snapshots; build, lint and format are clean.
 - The agent card cycles three traces rather than two, adding a ParcelPilot "403 before retrieval" run.
 - The Formspree contact form was dropped: the spec defines Contact as the email plus socials.
 
+## Polish pass: gap list (P3)
+
+All six sites captured live in Chrome at 1440×900 and 390×844, with the same DOM measurements on each.
+
+|                          | Mine (before → after)  | Brittany | Rauno | Emil  | Paco  | Lee   |
+| ------------------------ | ---------------------- | -------- | ----- | ----- | ----- | ----- |
+| Font sizes in use        | 17 → 10 (7 in the UI)  | 5        | 4     | 2     | 3     | 5     |
+| Text colours             | 7 → 6                  | 6        | 3     | 2     | 5     | 3     |
+| Page height at 1440      | 4,306 → 4,122px        | 3,798    | 6,108 | 1,854 | 1,424 | 1,220 |
+| Words                    | 758 → 682              | 650      | 52    | 168   | 194   | 166   |
+| Floating UI over content | Ask pill → none        | none     | none  | none  | none  | none  |
+| Transferred              | 258kB                  | 2.9MB    | 637kB | 2.2MB | 366kB | 641kB |
+
+**What they do that mine didn't**
+
+- A tight type scale (2–5 sizes). Mine had 17, six of them between 11 and 16px.
+- Nothing sits on top of the content. My "Ask about Pulkit" pill covered 73px of the content column at
+  1280 and sat over body text on phones.
+- A first screen that is already finished. My agent card painted nearly empty and started typing a
+  second later, so the first impression was a dark box with two lines in it.
+- "Now" as a plain line of text (Paco). Mine was a bordered box inside About.
+- Short lists that read as finished (Emil: a name and a few words). Every line of my More list ended in
+  an ellipsis.
+- Link previews that resolve, and a colophon or last-updated line (Brittany, Lee): see P4.
+
+**Heavier or busier on mine**
+
+- 9.5px step labels on the founder pipeline: below legibility, and repeated by the stack line under it.
+- "+4" overflow counters on the chips, and a mono metric label that wrapped on most project rows.
+- Two whites (#E6E6E6 for the title, #F2F2F2 elsewhere), and inactive nav labels at 70% body (4.2:1,
+  under AA for 12px text).
+- A full-screen blended grain layer: invisible at 2%, but a permanent compositing layer on every scroll.
+- The email at 32px under the 48px closing line: two loud sizes stacked.
+
+**Kept on purpose:** the agent card and the spotlight (the two signature details), the split layout,
+the founder card, the section labels, Live/Code links. **Not adopted:** a writing section (there are
+no posts to put in it), Lee's Default/Long bio toggle, Rauno's crosshair cursor and minimap. Each would
+add to the page, not take away.
+
 ## Polish pass notes
 
 - P1: LeetCode now points to https://leetcode.com/u/PULKITTANEJA/ everywhere (data → rail, Contact, terminal `contact`, Ask answer; JSON-LD sameAs), the palette's Elsewhere group is built from the data instead of hard-coded GitHub/LinkedIn URLs (it had no LeetCode), and the rail shows the official LeetCode mark beside GitHub and LinkedIn. Verified in Chrome: the icon opens exactly that URL; the old `/u/pulkittaneja09` link is gone.
 - P2: CGPA removed from the data (the `score`/`scoreLabel` fields are gone from the type too), the Now strip, terminal `education` and its help text, the Ask widget's answer and keywords (a GPA question now gets the honest 'nothing here matches' reply), README, PORTFOLIO_PROMPT.md and the old task-6 note; the built `dist/` has no '8.25', 'CGPA' or 'GPA'. Left alone on purpose: `public/Pulkit_Taneja_Resume.pdf` still prints 'CGPA: 8.25/10.0' (it is your document, so replace the PDF to remove it there), and older commits keep it in git history.
+- P3: Simplified without moving anything. Type scale 17 → 7 UI sizes (12 mono / 14 / 16 / 20 / 24 / 48 / 60: chips and dates 11→12, row text 15→14, founder mission 18→16, email 32→24, pipeline step labels removed and the diagram drawn at natural size); one white instead of two; inactive nav 70→80% (5.1:1). Now + Daily tools are unboxed label/value rows on the experience grid; chip counters gone; metric labels in sans with `text-wrap: pretty`; the More list has short one-liners (the full blurbs still feed the terminal and Ask). The agent card paints a complete trace first. The Ask launcher is a 36px button in the gutter on desktop (0px overlap at 1024 and 1280, label on hover) and an Ask button in the phone top bar; the panel gained a close button and Escape, and ⌘K has an Ask command. Grain layer removed. `npm run qa` all PASS at four widths; `check:reveal` 32 snapshots, 0 violations (one fewer because the page is 184px shorter).
 
 ## Checklist
 
@@ -149,6 +189,6 @@ reports 0 violations in 33 strict snapshots; build, lint and format are clean.
 
 - [x] P1. Fix the LeetCode link everywhere (https://leetcode.com/u/PULKITTANEJA/) and show its icon with the other socials
 - [x] P2. Remove the CGPA everywhere (keep "B.Tech CSE, VIT Chennai '28")
-- [ ] P3. Compare side by side with brittanychiang.com, rauno.me, emilkowal.ski, paco.me, leerob.com; write a gap list; simplify anything that adds clutter
+- [x] P3. Compare side by side with brittanychiang.com, rauno.me, emilkowal.ski, paco.me, leerob.com; write a gap list; simplify anything that adds clutter
 - [ ] P4. Add what's missing, only where it fits the minimal style (note why anything was skipped)
 - [ ] P5. Final QA at 1440 / 1024 / 390, build with no warnings, short summary

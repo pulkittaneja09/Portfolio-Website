@@ -166,7 +166,10 @@ export interface Project {
 
 export interface SideProject {
   name: string;
+  /** Full sentence, used by the terminal and the Ask widget. */
   blurb: string;
+  /** A few words that fit on the one-line "More" row without truncating. */
+  oneLiner: string;
   metric?: string;
   stack: string[];
   repo: string;
@@ -178,8 +181,8 @@ export interface Venture {
   pitch: string;
   /** One line for the founder card. `*word*` renders in the accent serif. */
   mission: string;
-  /** The product pipeline: stages, and the step that turns each into the next. */
-  pipeline: { stages: string[]; steps: string[] };
+  /** The product pipeline, stage by stage, for the founder card's diagram. */
+  pipeline: { stages: string[] };
   since: string;
   badges: { label: string; detail: string }[];
   building: { title: string; body: string }[];

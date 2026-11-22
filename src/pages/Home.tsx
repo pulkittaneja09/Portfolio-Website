@@ -21,6 +21,7 @@ const SECTION_IDS = nav.map((item) => item.id);
 interface HomeProps {
   onOpenTerminal: () => void;
   onOpenPalette: () => void;
+  onOpenAsk: () => void;
 }
 
 /**
@@ -29,7 +30,7 @@ interface HomeProps {
  * scrolls. Below 1024px the rail becomes an ordinary header and a thin bar
  * takes over navigation.
  */
-export function Home({ onOpenTerminal, onOpenPalette }: HomeProps) {
+export function Home({ onOpenTerminal, onOpenPalette, onOpenAsk }: HomeProps) {
   const active = useActiveSection(SECTION_IDS);
   const { hash } = useLocation();
 
@@ -43,7 +44,7 @@ export function Home({ onOpenTerminal, onOpenPalette }: HomeProps) {
 
   return (
     <>
-      <MobileBar active={active} onOpenPalette={onOpenPalette} />
+      <MobileBar active={active} onOpenPalette={onOpenPalette} onOpenAsk={onOpenAsk} />
 
       <div className="mx-auto max-w-page px-5 sm:px-8 lg:px-12 xl:px-[clamp(4rem,6.6vw,6rem)]">
         {/* 48/52 between 1024 and 1279px so the one-liner still fits on two

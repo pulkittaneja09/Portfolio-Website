@@ -34,7 +34,7 @@ export function SectionNav({ active, className }: { active: string | null; class
                     'label transition-colors duration-300',
                     isActive
                       ? 'text-strong'
-                      : 'text-body/70 group-hover:text-strong group-focus-visible:text-strong',
+                      : 'text-body/80 group-hover:text-strong group-focus-visible:text-strong',
                   )}
                 >
                   {item.label}

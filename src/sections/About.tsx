@@ -4,9 +4,34 @@ import { about, dailyTools, now } from '@/data/portfolio';
 import { stagger } from '@/lib/stagger';
 
 /**
- * Two short first-person paragraphs, a "Now" strip and the daily tools.
- * It is on screen at load on desktop, so it uses the load entrance rather
- * than a scroll reveal.
+ * One quiet label/value row. The label column is the same 27% as the
+ * experience dates below, so the two line up. Each separator rides on the end
+ * of the item before it, so a wrapped line never opens on a dot.
+ */
+function Fact({ label, items }: { label: string; items: string[] }) {
+  return (
+    <div className="grid gap-y-1 sm:grid-cols-[27%_minmax(0,1fr)] sm:gap-x-6">
+      <dt className="label pt-px text-faint">{label}</dt>
+      <dd className="flex flex-wrap gap-x-2 gap-y-0.5 text-body">
+        {items.map((item, i) => (
+          <span key={item}>
+            {item}
+            {i < items.length - 1 && (
+              <span className="ml-2 text-faint" aria-hidden>
+                ·
+              </span>
+            )}
+          </span>
+        ))}
+      </dd>
+    </div>
+  );
+}
+
+/**
+ * Two short first-person paragraphs, then "Now" and the daily tools as plain
+ * label/value rows. It is on screen at load on desktop, so it uses the load
+ * entrance rather than a scroll reveal.
  */
 export function About() {
   return (
@@ -19,35 +44,10 @@ export function About() {
         ))}
       </div>
 
-      <div
-        className="enter mt-8 flex max-w-prose flex-wrap items-center gap-x-3 gap-y-1.5 rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3"
-        style={stagger(4)}
-      >
-        <span className="label mr-1 text-faint">Now</span>
-        {/* Separators trail their item, so a wrapped line never opens on a dot. */}
-        {now.map((item, i) => (
-          <span key={item} className="text-sm text-strong">
-            {item}
-            {i < now.length - 1 && (
-              <span className="ml-3 text-faint" aria-hidden>
-                ·
-              </span>
-            )}
-          </span>
-        ))}
-      </div>
-
-      {/* Each separator rides on the end of the item before it, so a wrapped
-          line always starts with a tool, never with a stray dot. */}
-      <p className="enter meta mt-5 flex max-w-prose flex-wrap gap-x-2" style={stagger(5)}>
-        <span>Daily tools:</span>
-        {dailyTools.map((tool, i) => (
-          <span key={tool} className="text-body">
-            {tool}
-            {i < dailyTools.length - 1 && <span className="ml-2 text-faint">·</span>}
-          </span>
-        ))}
-      </p>
+      <dl className="enter mt-8 space-y-3 text-sm" style={stagger(4)}>
+        <Fact label="Now" items={now} />
+        <Fact label="Daily tools" items={dailyTools} />
+      </dl>
     </Section>
   );
 }

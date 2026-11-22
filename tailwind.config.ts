@@ -19,7 +19,6 @@ export default {
         body: 'rgb(var(--text-rgb) / <alpha-value>)',
         faint: 'rgb(var(--text-faint-rgb) / <alpha-value>)',
         accent: 'rgb(var(--accent-rgb) / <alpha-value>)',
-        title: '#E6E6E6',
       },
       borderColor: {
         // Consumed by Tailwind's preflight, so no extra universal selector.

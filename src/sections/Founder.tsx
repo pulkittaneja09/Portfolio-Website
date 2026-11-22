@@ -33,7 +33,7 @@ export function Founder() {
             {venture.role} · since {venture.since}
           </p>
           <h3 className="mt-3 text-2xl font-semibold tracking-[-0.02em] text-strong">{venture.name}</h3>
-          <p className="mt-3 max-w-prose text-lg leading-relaxed text-strong/85">
+          <p className="mt-3 max-w-prose leading-relaxed text-strong/85">
             <RichText text={venture.mission} />
           </p>
 
@@ -47,7 +47,7 @@ export function Founder() {
                 <Check />
                 <div>
                   <p className="font-medium text-strong">{badge.label}</p>
-                  <p className="mt-0.5 text-[0.9375rem] leading-relaxed text-body">{badge.detail}</p>
+                  <p className="mt-0.5 text-sm leading-relaxed text-body">{badge.detail}</p>
                 </div>
               </li>
             ))}

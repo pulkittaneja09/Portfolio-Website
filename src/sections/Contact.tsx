@@ -46,7 +46,7 @@ export function Contact() {
           className="group block max-w-full text-left"
           aria-label={`Copy email address: ${profile.email}`}
         >
-          <span className="link link-on-group break-all text-[clamp(1.375rem,4vw,2rem)] font-medium leading-tight tracking-[-0.02em]">
+          <span className="link link-on-group break-all text-xl font-medium leading-tight tracking-[-0.02em] sm:text-2xl">
             {profile.email}
           </span>
         </button>
@@ -66,7 +66,7 @@ export function Contact() {
       </Reveal>
 
       <Reveal index={2} className="mt-10">
-        <ul className="flex flex-wrap gap-x-6 gap-y-2 text-[0.9375rem]">
+        <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
           {others.map((social) => (
             <li key={social.label}>
               <a

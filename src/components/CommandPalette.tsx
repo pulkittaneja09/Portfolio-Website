@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   ArrowRightIcon,
   ArrowUpRightIcon,
+  ChatIcon,
   CopyIcon,
   DownloadIcon,
   MailIcon,
@@ -21,6 +22,7 @@ interface Props {
   open: boolean;
   onClose: () => void;
   onOpenTerminal: () => void;
+  onOpenAsk: () => void;
 }
 
 /** GitHub, LinkedIn, LeetCode — straight from the data, so URLs live in one place. */
@@ -30,7 +32,7 @@ const profiles = profile.socials.filter((social) => social.icon !== 'mail');
  * ⌘K / Ctrl+K palette. cmdk handles filtering and roving focus; everything
  * here is wiring actions to it.
  */
-export function CommandPalette({ open, onClose, onOpenTerminal }: Props) {
+export function CommandPalette({ open, onClose, onOpenTerminal, onOpenAsk }: Props) {
   const navigate = useNavigate();
   const copy = useCopyToClipboard();
   const reduced = useReducedMotion();
@@ -172,6 +174,15 @@ export function CommandPalette({ open, onClose, onOpenTerminal }: Props) {
                   >
                     <DownloadIcon className="h-4 w-4 text-faint" />
                     Download résumé
+                  </Command.Item>
+
+                  <Command.Item
+                    value="ask about pulkit question chat"
+                    onSelect={() => run(onOpenAsk)}
+                    className="cmd-item"
+                  >
+                    <ChatIcon className="h-4 w-4 text-faint" />
+                    Ask about Pulkit
                   </Command.Item>
 
                   <Command.Item

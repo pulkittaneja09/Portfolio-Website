@@ -29,8 +29,6 @@ function InlineLink({ href, children, label }: { href: string; children: string;
 }
 
 function ProjectRow({ project }: { project: Project }) {
-  const extra = project.stack.length - CHIP_LIMIT;
-
   return (
     <article className="row-card group/row grid gap-y-4 sm:grid-cols-[27%_minmax(0,1fr)] sm:gap-x-6">
       <ProjectThumb project={project} className="order-2 w-52 max-w-full sm:order-none sm:w-auto" />
@@ -51,12 +49,12 @@ function ProjectRow({ project }: { project: Project }) {
           />
         </h3>
 
-        <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-body transition-colors duration-300 group-hover/row:text-strong/80">
+        <p className="mt-1.5 text-sm leading-relaxed text-body transition-colors duration-300 group-hover/row:text-strong/80">
           {project.oneLiner}
         </p>
 
-        <p className="mt-2.5 font-mono text-xs leading-relaxed">
-          <span className="text-accent">{project.metric.value}</span>
+        <p className="mt-2.5 text-sm leading-relaxed [text-wrap:pretty]">
+          <span className="font-mono text-xs text-accent">{project.metric.value}</span>
           <span className="text-faint"> · {project.metric.label}</span>
         </p>
 
@@ -66,7 +64,6 @@ function ProjectRow({ project }: { project: Project }) {
               {tech}
             </li>
           ))}
-          {extra > 0 && <li className="chip border-transparent bg-transparent text-faint">+{extra}</li>}
         </ul>
 
         {(project.links.demo || project.links.repo) && (
@@ -104,11 +101,11 @@ function MoreProjects() {
                 className="group/more -mx-3 flex items-baseline gap-3 rounded-lg px-3 py-2.5 transition-colors duration-300 hover:bg-white/[0.03]"
                 title={item.blurb}
               >
-                <span className="shrink-0 text-[0.9375rem] font-medium text-strong transition-colors duration-300 group-hover/more:text-accent">
+                <span className="shrink-0 text-sm font-medium text-strong transition-colors duration-300 group-hover/more:text-accent">
                   {item.name}
                 </span>
                 <span className="hidden min-w-0 flex-1 truncate text-sm text-body transition-colors duration-300 group-hover/more:text-strong/80 sm:block">
-                  {item.blurb}
+                  {item.oneLiner}
                 </span>
                 <span className="ml-auto flex shrink-0 items-baseline gap-3 sm:ml-0">
                   {item.metric && <span className="font-mono text-xs text-accent">{item.metric}</span>}

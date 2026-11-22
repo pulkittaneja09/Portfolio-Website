@@ -16,7 +16,7 @@ export function Identity() {
       </h1>
 
       <p
-        className="identity-gap-sm enter mt-3 text-xl font-medium leading-snug tracking-[-0.012em] text-title"
+        className="identity-gap-sm enter mt-3 text-xl font-medium leading-snug tracking-[-0.012em] text-strong"
         style={stagger(1)}
       >
         {profile.title}
