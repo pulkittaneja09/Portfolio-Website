@@ -6,6 +6,8 @@ Technologies.
 Built with Vite, React 18, TypeScript (strict), Tailwind CSS, Framer Motion (overlays only) and Lenis.
 Deploys to Vercel. Dark only.
 
+**Live:** <https://portfolio-website-pi-blush-92.vercel.app>
+
 ```bash
 npm install
 npm run dev      # http://localhost:5173
