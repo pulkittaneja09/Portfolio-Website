@@ -473,3 +473,13 @@ accessibility, best practices and SEO 100.
   instead of from source.
 - `scripts/qa.cjs` now checks contrast under the spotlight in light too, with the aurora stacked
   under the rail.
+
+### Round 5: circle cursor, résumé-exact skills, calmer scrolling with one 3D moment
+
+- [ ] D1. Custom dot + ring cursor (fine pointers only; springs; link / card / text states; reduced motion)
+- [ ] D2. Skills match the résumé exactly; non-skills out; official spellings site-wide; mapping still works
+- [ ] D3a. Lenis tuning (lerp 0.1, wheel 1), offsets for nav and ⌘K, off for reduced motion and touch
+- [ ] D3b. Projects as a sticky 3D card stack (scale, tilt, dim, thumbnail parallax); mobile and reduced motion get plain cards
+- [ ] D3c. Experience: a thin progress line that fills with the accent as you scroll
+- [ ] D3d. Animation audit: list everything, keep only the agreed set, one moving thing per viewport
+- [ ] D4. Final QA: stack at 0–100% scroll, 1024 / 390, cursor on desktop only, spelling greps, perf trace, build with no warnings, summary
