@@ -9,10 +9,8 @@ import type { Stat } from '@/data/types';
  */
 export const siteStats = site;
 
-/** `stats` with the public repo count swapped for the build-time one, when there is one. */
-export const liveStats: Stat[] = stats.map((stat) =>
-  stat.live === 'publicRepos' && site.publicRepos !== null ? { ...stat, value: site.publicRepos } : stat,
-);
+/** The sourced achievements (the build-time counts are profile facts, not achievements). */
+export const liveStats: Stat[] = stats;
 
 export const leetcodeProfile = profile.socials.find((social) => social.icon === 'leetcode');
 

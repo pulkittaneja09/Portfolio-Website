@@ -2,7 +2,7 @@ import { CountUp } from '@/components/CountUp';
 import { RichText } from '@/components/RichText';
 import { Section } from '@/components/Section';
 import { ArrowUpRightIcon } from '@/components/icons';
-import { about, now, projects, stats } from '@/data/portfolio';
+import { about, now, stats } from '@/data/portfolio';
 import type { NowItem } from '@/data/types';
 import { leetcodeLabel, leetcodeProfile } from '@/lib/siteStats';
 import { stagger } from '@/lib/stagger';
@@ -62,31 +62,29 @@ function Fact({ label, items }: { label: string; items: NowItem[] }) {
 
 const statValue = (match: (label: string) => boolean) => {
   const stat = stats.find((item) => match(item.label));
-  return stat ? `${stat.prefix ?? ''}${stat.value}${stat.suffix ?? ''}` : null;
+  if (!stat) return null;
+  const number = stat.value >= 1000 ? stat.value.toLocaleString('en-US') : String(stat.value);
+  return `${stat.prefix ?? ''}${number}${stat.suffix ?? ''}`;
 };
 
 /**
- * Three real numbers, all from portfolio.ts: the startup and the MCP tools
- * from the sourced `stats`, the shipped AI products counted from the projects
- * (AI, RAG or ML work with a live demo). A tile whose figure is missing is
- * dropped rather than guessed.
+ * Real achievements only, each a sourced figure from `stats` that is also on
+ * the résumé: the startup, the people the IEEE backend served, and the
+ * battery-life model's result. A tile whose figure is missing is dropped
+ * rather than guessed, and the strip shows two rather than pad with a weak one.
  */
 const highlights = [
   { value: statValue((label) => label.startsWith('Startup')), label: 'startup founded' },
-  {
-    value: String(
-      projects.filter(
-        (project) => project.links.demo && project.tags.some((tag) => /AI|RAG|Machine learning/i.test(tag)),
-      ).length,
-    ),
-    label: 'AI products shipped',
-  },
-  { value: statValue((label) => label.includes('MCP')), label: 'MCP tools built' },
-].filter((item): item is { value: string; label: string } => Boolean(item.value) && item.value !== '0');
+  { value: statValue((label) => label.startsWith('Applicants')), label: 'applicants served' },
+  { value: statValue((label) => label.startsWith('Battery')), label: 'battery-life model' },
+].filter((item): item is { value: string; label: string } => Boolean(item.value));
 
 function Highlights() {
   return (
-    <ul className="enter mt-10 grid grid-cols-3 gap-2 sm:gap-3" style={stagger(5)}>
+    <ul
+      className={`enter mt-10 grid gap-2 sm:gap-3 ${highlights.length === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}
+      style={stagger(5)}
+    >
       {highlights.map((item) => (
         <li
           key={item.label}
@@ -94,7 +92,7 @@ function Highlights() {
         >
           <CountUp
             value={item.value}
-            className="block font-mono text-xl tracking-[-0.02em] text-accent sm:text-2xl"
+            className="block whitespace-nowrap font-mono text-lg tracking-[-0.02em] text-accent sm:text-2xl"
           />
           <span className="mt-1 block text-xs leading-snug text-body">{item.label}</span>
         </li>

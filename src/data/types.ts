@@ -97,8 +97,6 @@ export interface Stat {
   label: string;
   /** Where the number comes from — shown on hover/focus so it is auditable. */
   source: string;
-  /** Set when the value is fetched live rather than hard-coded. */
-  live?: 'publicRepos';
 }
 
 export interface ExperienceItem {

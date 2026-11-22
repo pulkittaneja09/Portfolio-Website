@@ -604,7 +604,7 @@ Also removed: an orphaned `.note-prose` stylesheet left over from Notes.
 ### Round 6 (final): one-circle cursor, real highlights, launch polish
 
 - [x] E1. One 18px circle glued to the pointer — transform written inside pointermove (0.00px offset over 25 random moves, both themes); 40px over links/chips, 64px + "View" (ground-colour fill so it reads on thumbnails) over cards, hidden over selectable text and inputs (native text cursor), 0.85 on press, fades off-window; 180ms ease-out on size/fill/opacity only. Chose the 1.5px accent ring over the white difference disc, which turned the blue CTAs gold. Touch: none; reduced motion: no size animation
-- [ ] E2. Highlights: real achievements only (drop "10+ MCP tools"); every stat re-checked against the résumé
+- [x] E2. Highlights = 1 startup founded · 1,000+ applicants served · R² 0.879 battery-life model (all sourced in `stats` and on the résumé); "10+ MCP tools" out of the strip, `stats` (terminal / Ask) and the About paragraph, kept in the SDG role; the public-repo count left `stats` (a profile fact, not an achievement) but still feeds the GitHub line; strip drops to 2 columns if a figure is missing
 - [ ] E3a. Visual consistency: spacing scale, radii, borders, chips/buttons, type levels, alignment, both themes
 - [ ] E3b. Copy and links: proofread, date and dash formats, every link checked, no CGPA / TODO / placeholders
 - [ ] E3c. Interaction: hover/focus/active consistency, full keyboard pass, ⌘K / terminal / Esc

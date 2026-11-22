@@ -14,7 +14,7 @@ import type { Project } from '@/data/types';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { tintStyle } from '@/lib/projectTint';
-import { liveStats } from '@/lib/siteStats';
+import { siteStats } from '@/lib/siteStats';
 import { filterState, useActiveSkill } from '@/lib/skills';
 
 const CHIP_LIMIT = 4;
@@ -323,13 +323,13 @@ function MoreProjects() {
 }
 
 /** Fetched at build time, falling back to the figure in portfolio.ts. */
-const publicRepos = liveStats.find((stat) => stat.live === 'publicRepos')?.value;
+const publicRepos = siteStats.publicRepos;
 
 /** "22 public repos · View GitHub ↗". */
 function GitHubLine() {
   return (
     <p className="meta mt-10 flex flex-wrap items-center gap-x-2">
-      {publicRepos !== undefined && (
+      {publicRepos !== null && (
         <>
           <span>
             <span className="text-strong">{publicRepos}</span> public repos

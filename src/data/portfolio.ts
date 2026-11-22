@@ -89,7 +89,7 @@ export const education: Education = {
  */
 export const about: string[] = [
   'I build *agents* that actually ship. My work sits where language models meet real systems: **MCP servers** that expose enterprise tools, LangGraph workflows that route each request to the right one, and **RAG pipelines** that answer from documents instead of guessing.',
-  'Right now I am co-founding **Audaxity**, an academic intelligence platform incubated at V-NEST. Before that I built an MCP server with 10+ enterprise tools at SDG Corporation. The part I care about most is everything around the model: **access control before retrieval**, cited answers, and **FastAPI and Go backends** that keep working after the demo.',
+  'Right now I am co-founding **Audaxity**, an academic intelligence platform incubated at V-NEST. Before that I built an MCP server and LangGraph agents for enterprise ITSM at SDG Corporation. The part I care about most is everything around the model: **access control before retrieval**, cited answers, and **FastAPI and Go backends** that keep working after the demo.',
 ];
 
 /**
@@ -153,7 +153,11 @@ export const agentTraces: AgentTrace[] = [
   },
 ];
 
-/** Proof bar. Verified figures only — no rounding up, no vanity metrics. */
+/**
+ * Achievements and outcomes only, each with its source: a founded startup,
+ * model results and real people served. No work details (the MCP tool count
+ * lives in the SDG role), no profile counts, no rounding up.
+ */
 export const stats: Stat[] = [
   {
     value: 97.9,
@@ -176,21 +180,8 @@ export const stats: Stat[] = [
     source: 'IEEE recruitment portal backend, Golang + PostgreSQL, 2025 cycle.',
   },
   {
-    value: 10,
-    suffix: '+',
-    label: 'Enterprise tools exposed over MCP',
-    source: 'MCP server built at SDG Corporation for intent-routed ITSM automation.',
-  },
-  {
-    value: 22,
-    suffix: '',
-    label: 'Public repositories',
-    source: 'Fetched live from the GitHub REST API; the number here is only a fallback.',
-    live: 'publicRepos',
-  },
-  {
     value: 1,
-    label: 'Startup incubated at V-NEST',
+    label: 'Startup founded: DPIIT-recognised, incubated at V-NEST',
     source: 'Audaxity Technologies, incubated at V-NEST, VIT Chennai.',
   },
 ];
