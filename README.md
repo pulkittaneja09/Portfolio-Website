@@ -169,15 +169,15 @@ scripts/
 
 ## Scripts
 
-| Command                | What it does                                                                                                                                                          |
-| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `npm run dev`          | Dev server with HMR on port 5173                                                                                                                                      |
-| `npm run build`        | Type-check with `tsc -b`, then build to `dist/`                                                                                                                       |
-| `npm run preview`      | Serve the production build locally                                                                                                                                    |
-| `npm run lint`         | ESLint, zero warnings tolerated                                                                                                                                       |
-| `npm run format`       | Prettier over `src/`                                                                                                                                                  |
-| `npm run qa`           | With a preview server on :4173: one-line name, no theme toggle, nothing hidden after scrolling, body contrast ≥ 7:1, at four widths; screenshots to `.screenshots/qa` |
-| `npm run check:reveal` | With a preview server on :4173: 33 strict snapshots across scrolls, jumps, deep links, resize, a no-scroll full-page capture and mobile                               |
+| Command                | What it does                                                                                                                                                                                                                                   |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run dev`          | Dev server with HMR on port 5173                                                                                                                                                                                                               |
+| `npm run build`        | Type-check with `tsc -b`, then build to `dist/`                                                                                                                                                                                                |
+| `npm run preview`      | Serve the production build locally                                                                                                                                                                                                             |
+| `npm run lint`         | ESLint, zero warnings tolerated                                                                                                                                                                                                                |
+| `npm run format`       | Prettier over `src/`                                                                                                                                                                                                                           |
+| `npm run qa`           | With a preview server on :4173, at four widths: one-line name, no theme toggle, nothing hidden after scrolling, body contrast ≥ 7:1, exact LeetCode links, no GPA, no console errors or third-party requests; screenshots to `.screenshots/qa` |
+| `npm run check:reveal` | With a preview server on :4173: 33 strict snapshots across scrolls, jumps, deep links, resize, a no-scroll full-page capture and mobile                                                                                                        |
 
 ## How it is put together
 

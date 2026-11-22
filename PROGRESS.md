@@ -167,6 +167,43 @@ add to the page, not take away.
 - P2: CGPA removed from the data (the `score`/`scoreLabel` fields are gone from the type too), the Now strip, terminal `education` and its help text, the Ask widget's answer and keywords (a GPA question now gets the honest 'nothing here matches' reply), README, PORTFOLIO_PROMPT.md and the old task-6 note; the built `dist/` has no '8.25', 'CGPA' or 'GPA'. Left alone on purpose: `public/Pulkit_Taneja_Resume.pdf` still prints 'CGPA: 8.25/10.0' (it is your document, so replace the PDF to remove it there), and older commits keep it in git history.
 - P3: Simplified without moving anything. Type scale 17 → 7 UI sizes (12 mono / 14 / 16 / 20 / 24 / 48 / 60: chips and dates 11→12, row text 15→14, founder mission 18→16, email 32→24, pipeline step labels removed and the diagram drawn at natural size); one white instead of two; inactive nav 70→80% (5.1:1). Now + Daily tools are unboxed label/value rows on the experience grid; chip counters gone; metric labels in sans with `text-wrap: pretty`; the More list has short one-liners (the full blurbs still feed the terminal and Ask). The agent card paints a complete trace first. The Ask launcher is a 36px button in the gutter on desktop (0px overlap at 1024 and 1280, label on hover) and an Ask button in the phone top bar; the panel gained a close button and Escape, and ⌘K has an Ask command. Grain layer removed. `npm run qa` all PASS at four widths; `check:reveal` 32 snapshots, 0 violations (one fewer because the page is 184px shorter).
 - P4: Added: the LeetCode count, fetched at build time from LeetCode's public GraphQL (and the GitHub repo count moved to build time too, so the page calls no third-party API and the rate-limit console error is gone), with a cached fallback and then plain 'LeetCode ↗' with no number (both failure paths tested); 'Building Audaxity' (links to the founder card) in the Now row in place of 'Co-founder @ Audaxity'; a favicon set from the real Geist SemiBold 'PT' outlines (svg, ico 16/32/48, 180 touch, 192/512 maskable) and a centred OG image that survives WhatsApp's square crop; one `siteUrl` (now the URL actually deployed) feeding index.html plus a generated sitemap (every case study) and robots.txt; 'Last updated November 2026' in the footer from the last commit; the palette key named per platform (Ctrl K off Apple); View Transitions into and out of case studies (crossfade, and the thumbnail morphs into the screenshot on desktop; plain navigation under reduced motion or without the API); `/resume` → the PDF; print styles (ink tokens, chrome hidden). Found and fixed on the way: Lenis 1.3 applies scroll-margin itself, so sections landed 192px down instead of 96px. Skipped: a new 404 (the existing one already matches; only its key label changed) and more footer hint text (the keys were already there as buttons). `npm run qa` all PASS, `check:reveal` 0/32, no console errors, no third-party requests.
+- P5: QA at 1440 / 1024 / 390 (screenshots reviewed): one-line name, exact LeetCode links (the icon opens the profile), nothing faded or blurred after scrolling, no console errors or failed requests on any route or overlay; `npm run qa` extended with (e) LeetCode links, (f) no GPA, (g) no console errors or third-party requests and passes at four widths; `check:reveal` 0/32; build without warnings and no GPA in `dist/`.
+
+## Polish pass summary
+
+**What changed (layout and style unchanged)**
+
+- **LeetCode.** One URL everywhere, https://leetcode.com/u/PULKITTANEJA/, with its mark beside GitHub
+  and LinkedIn; the palette's profile commands now come from the data instead of hard-coded links.
+- **CGPA.** Gone from the site, terminal, Ask widget, docs and the build output.
+- **Calmer.** 17 font sizes → 7, one white instead of two, Now and Daily tools as unboxed rows on the
+  experience grid, no chip counters, More one-liners that fit, the pipeline without its 9.5px labels, a
+  finished agent card at first paint, nothing floating over the content (a 36px gutter button on
+  desktop, Ask in the phone top bar, an Ask command in the palette), no grain layer. Page 4,306 →
+  4,122px. The gap list above has the reasoning.
+- **Added.** "120 problems solved on LeetCode ↗" and the repo count, both fetched at build time, so the
+  page makes no third-party requests; "Building Audaxity" in Now; a favicon set and a centred social
+  card; one `siteUrl` (now the URL actually deployed) with a generated sitemap and robots.txt;
+  "Last updated" in the footer; the palette key named for the visitor's platform; View Transitions into
+  and out of case studies; `/resume`; print styles.
+- **Fixed on the way.** Sections landed 192px from the top instead of 96px (Lenis 1.3 already applies
+  scroll-margin).
+
+**Verification (P5).** At 1440, 1024 and 390: the name is on one line, every LeetCode link is exact and
+the icon opens the profile, nothing is faded or blurred once scrolling settles, and there are no console
+errors or failed requests across the home page, a case study, the 404, the palette, the terminal and
+the Ask widget. `npm run qa` (now also checking LeetCode links, GPA and console/third-party requests)
+passes at four widths; `npm run check:reveal` 0 violations in 32 snapshots; `npm run build` has no
+warnings and its output has no "8.25", "CGPA" or "GPA"; lint and Prettier are clean.
+
+**Still yours to do**
+
+- `public/Pulkit_Taneja_Resume.pdf` itself still prints "CGPA: 8.25/10.0"; export a new PDF to remove it
+  there too. Older commits also keep it in git history.
+- `profile.siteUrl` is now https://portfolio-website-pi-blush-92.vercel.app (the URL in your original
+  README). Change that one value if you add a custom domain or rename the Vercel project.
+- Optional: a `GITHUB_TOKEN` in Vercel (build-time only, never shipped) if the repo count ever has to
+  fall back.
 
 ## Checklist
 
@@ -192,4 +229,4 @@ add to the page, not take away.
 - [x] P2. Remove the CGPA everywhere (keep "B.Tech CSE, VIT Chennai '28")
 - [x] P3. Compare side by side with brittanychiang.com, rauno.me, emilkowal.ski, paco.me, leerob.com; write a gap list; simplify anything that adds clutter
 - [x] P4. Add what's missing, only where it fits the minimal style (note why anything was skipped)
-- [ ] P5. Final QA at 1440 / 1024 / 390, build with no warnings, short summary
+- [x] P5. Final QA at 1440 / 1024 / 390, build with no warnings, short summary

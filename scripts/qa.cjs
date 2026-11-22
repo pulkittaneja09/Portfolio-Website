@@ -6,6 +6,10 @@
  *   (c) after scrolling, nothing in the viewport rests below opacity 1 or blurred
  *   (d) body text contrast is at least 7:1 — at rest, under the brightest
  *       point of the cursor spotlight, and inside a hovered row
+ *   (e) every LeetCode link is exactly https://leetcode.com/u/PULKITTANEJA/
+ *   (f) no GPA anywhere in the rendered page
+ *   (g) no console errors, no failed requests, and no third-party requests
+ *       (the LeetCode and GitHub counts are fetched at build time)
  *
  * Screenshots for the visual review land in .screenshots/qa/.
  *
@@ -17,6 +21,7 @@ const fs = require('fs');
 const path = require('path');
 
 const BASE = process.env.AUDIT_BASE || 'http://localhost:4173';
+const LEETCODE = 'https://leetcode.com/u/PULKITTANEJA/';
 const OUT = path.join(__dirname, '..', '.screenshots', 'qa');
 const SIZES = [
   [1440, 900],
@@ -213,16 +218,16 @@ async function settle(page) {
       isMobile: mobile,
       hasTouch: mobile,
     });
-    await context.route('https://api.github.com/**', (route) =>
-      route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify({ public_repos: 22, login: 'pulkittaneja09' }),
-      }),
-    );
     const page = await context.newPage();
     const errors = [];
     page.on('pageerror', (e) => errors.push(String(e).slice(0, 120)));
+    const noise = [];
+    page.on('console', (m) => m.type() === 'error' && noise.push(`console: ${m.text().slice(0, 100)}`));
+    page.on('response', (r) => r.status() >= 400 && noise.push(`HTTP ${r.status()} ${r.url()}`));
+    page.on('request', (r) => {
+      const host = new URL(r.url()).hostname;
+      if (host !== new URL(BASE).hostname) noise.push(`third-party request: ${host}`);
+    });
 
     await page.goto(BASE + '/', { waitUntil: 'networkidle' });
     if (!mobile) await page.mouse.move(160, Math.round(height * 0.66));
@@ -230,6 +235,11 @@ async function settle(page) {
     await page.screenshot({ path: path.join(OUT, `${width}-top.png`) });
 
     const name = await call(page, 'nameLines');
+    const leetcode = await page.$$eval('a[href*="leetcode.com"]', (links) =>
+      links.map((link) => link.getAttribute('href')),
+    );
+    const wrongLeetcode = leetcode.filter((href) => href !== LEETCODE);
+    const gpa = await page.evaluate(() => /8\.25|cgpa|\bgpa\b/i.test(document.body.innerText));
     const toggles = await call(page, 'themeToggles');
     const rest = await call(page, 'contrast', false);
     const lit = await call(page, 'contrast', true);
@@ -271,6 +281,9 @@ async function settle(page) {
       b: toggles.length === 0,
       c: violations.length === 0,
       d: rest.min >= 7 && lit.min >= 7 && (hovered === null || hovered >= 7),
+      e: leetcode.length > 0 && wrongLeetcode.length === 0,
+      f: !gpa,
+      g: noise.length === 0,
     };
     if (!Object.values(pass).every(Boolean) || errors.length) failed = true;
 
@@ -281,6 +294,9 @@ async function settle(page) {
         `  (b) theme toggles / light CSS: ${toggles.length ? toggles.join(' | ') : 'none'}  ${pass.b ? 'PASS' : 'FAIL'}`,
         `  (c) hidden or blurred after scrolling: ${violations.length ? violations.slice(0, 5).join(' | ') : 'none'}  ${pass.c ? 'PASS' : 'FAIL'}`,
         `  (d) body text contrast: min ${rest.min}:1 at rest, ${lit.min}:1 under the spotlight${hovered ? `, ${hovered}:1 in a hovered row` : ''} (${rest.count} text nodes; lowest: ${rest.worst})  ${pass.d ? 'PASS' : 'FAIL'}`,
+        `  (e) LeetCode links: ${leetcode.length}, ${wrongLeetcode.length ? `wrong: ${wrongLeetcode.join(' | ')}` : `all ${LEETCODE}`}  ${pass.e ? 'PASS' : 'FAIL'}`,
+        `  (f) GPA in the page: ${gpa ? 'found' : 'none'}  ${pass.f ? 'PASS' : 'FAIL'}`,
+        `  (g) console errors, failed or third-party requests: ${noise.length ? [...new Set(noise)].slice(0, 4).join(' | ') : 'none'}  ${pass.g ? 'PASS' : 'FAIL'}`,
         errors.length ? `  page errors: ${errors.join(' | ')}` : '  page errors: none',
       ].join('\n'),
     );
