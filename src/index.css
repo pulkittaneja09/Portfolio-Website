@@ -639,6 +639,80 @@
     -webkit-backdrop-filter: blur(16px) saturate(140%);
   }
 
+  /* ── CTAs: Résumé and Email ────────────────────────────────────────────── */
+  /* A hairline pill; on hover the accent sweeps in from the left and the
+     label turns to the ground colour (9.3:1 dark, 5.6:1 light). The
+     magnetic pull is a transform set from useMagnetic. */
+  .cta {
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    overflow: hidden;
+    border: 1px solid rgb(var(--accent-rgb) / 0.4);
+    border-radius: 999px;
+    padding: 0.3125rem 0.875rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--text-strong);
+    white-space: nowrap;
+    transition:
+      color 0.35s var(--ease),
+      border-color 0.35s var(--ease),
+      transform 0.4s var(--ease);
+  }
+
+  .cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.45s var(--ease);
+  }
+
+  .cta:hover,
+  .cta:focus-visible {
+    color: var(--bg);
+    border-color: var(--accent);
+  }
+
+  .cta:hover::before,
+  .cta:focus-visible::before {
+    transform: scaleX(1);
+  }
+
+  .cta:focus-visible {
+    border-radius: 999px;
+  }
+
+  /* In the rail the link row is measured to fit beside the clock, so the
+     quiet variant takes exactly the old text link's space: no border at
+     rest, padding cancelled by margins; the pill appears with the sweep. */
+  .cta-quiet {
+    border-width: 0;
+    margin-inline: -0.625rem;
+    margin-block: -0.375rem;
+    padding: 0.375rem 0.625rem;
+  }
+
+  .cta-arrow {
+    color: var(--accent);
+    transition:
+      color 0.35s var(--ease),
+      transform 0.35s var(--ease);
+  }
+
+  .cta:hover .cta-arrow,
+  .cta:focus-visible .cta-arrow {
+    color: currentColor;
+    transform: translate(1px, -1px);
+  }
+
   /* ── Project colour identity ───────────────────────────────────────────── */
   .tinted {
     --tint: var(--tint-d);

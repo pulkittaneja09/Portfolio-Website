@@ -327,7 +327,7 @@ nowhere; build without warnings.
 - [x] C3a. Project tints (glacier, seafoam, sky, steel) — 12% blurred halo + ≤4° tilt toward the cursor on hover (mouse + full motion only), tinted wash and dot on each case-study header
 - [x] C3b. Founder card ring — conic accent/seafoam hairline turning every 14s via a registered `--ring-angle`, masked to 1px; fixed angle under reduced motion
 - [x] C3c. Highlight strip — 1 startup founded · 3 AI products shipped · 10+ MCP tools built (from `stats` and a count of AI/RAG/ML projects with a live demo), accent mono count-up
-- [ ] C3d. Magnetic CTAs with accent fill-sweep
+- [x] C3d. Magnetic CTAs (≤ 6px, mouse + full motion) with an accent fill sweep: rail Résumé (quiet variant, same footprint as the old text link so the rail row still fits beside the clock) and a new Email · Résumé pair in Contact (replacing the plain Résumé link there)
 - [ ] C3e. Section dividers with travelling accent dot
 - [ ] C3f. First-visit "PT" monogram intro (<1.2s, sessionStorage, skipped for reduced-motion)
 - [ ] C3g. Polish: selection colour, thin scrollbar, accent focus rings, circular-reveal theme switch

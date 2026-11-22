@@ -3,6 +3,7 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { ArrowUpRightIcon, MailIcon, socialIconMap } from '@/components/icons';
 import { profile } from '@/data/portfolio';
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
+import { useMagnetic } from '@/hooks/useMagnetic';
 import { cn } from '@/lib/cn';
 
 const iconLink =
@@ -18,6 +19,7 @@ const ICON_PROFILES = ['github', 'linkedin', 'leetcode'] as const;
  */
 export function ProfileLinks({ className }: { className?: string }) {
   const copy = useCopyToClipboard();
+  const resumeRef = useMagnetic<HTMLAnchorElement>();
   const links = ICON_PROFILES.flatMap((icon) => profile.socials.filter((social) => social.icon === icon));
 
   return (
@@ -60,18 +62,10 @@ export function ProfileLinks({ className }: { className?: string }) {
         <li className="hidden lg:block">
           <ThemeToggle />
         </li>
-        <li className="ml-3 lg:ml-2 xl:ml-3">
-          <a
-            href={profile.resumePath}
-            target="_blank"
-            rel="noopener"
-            className="group inline-flex items-center gap-1 text-sm font-medium text-strong"
-          >
-            <span className="link link-on-group">Résumé</span>
-            <ArrowUpRightIcon
-              className="h-3.5 w-3.5 text-body transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
-              aria-hidden
-            />
+        <li className="ml-3 lg:ml-1.5 xl:ml-2">
+          <a ref={resumeRef} href={profile.resumePath} target="_blank" rel="noopener" className="cta cta-quiet">
+            Résumé
+            <ArrowUpRightIcon className="cta-arrow h-3.5 w-3.5" aria-hidden />
             <span className="sr-only">(PDF, opens in a new tab)</span>
           </a>
         </li>

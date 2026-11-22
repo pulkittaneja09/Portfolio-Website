@@ -4,6 +4,7 @@ import { Section } from '@/components/Section';
 import { ArrowUpRightIcon } from '@/components/icons';
 import { profile } from '@/data/portfolio';
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
+import { useMagnetic } from '@/hooks/useMagnetic';
 
 /**
  * One big line, the address set large (click to copy, with a toast and an
@@ -12,6 +13,8 @@ import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
  */
 export function Contact() {
   const copy = useCopyToClipboard();
+  const emailRef = useMagnetic<HTMLAnchorElement>();
+  const resumeRef = useMagnetic<HTMLAnchorElement>();
   const [copied, setCopied] = useState(false);
   const timer = useRef(0);
 
@@ -65,7 +68,18 @@ export function Contact() {
         </p>
       </Reveal>
 
-      <Reveal index={2} className="mt-10">
+      <Reveal index={2} className="mt-10 flex flex-wrap gap-3">
+        <a ref={emailRef} href={`mailto:${profile.email}`} className="cta">
+          Email
+        </a>
+        <a ref={resumeRef} href={profile.resumePath} target="_blank" rel="noopener" className="cta">
+          Résumé
+          <ArrowUpRightIcon className="cta-arrow h-3.5 w-3.5" aria-hidden />
+          <span className="sr-only">(PDF, opens in a new tab)</span>
+        </a>
+      </Reveal>
+
+      <Reveal index={3} className="mt-8">
         <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
           {others.map((social) => (
             <li key={social.label}>
@@ -84,21 +98,6 @@ export function Contact() {
               </a>
             </li>
           ))}
-          <li>
-            <a
-              href={profile.resumePath}
-              target="_blank"
-              rel="noopener"
-              className="group inline-flex items-center gap-1 font-medium text-strong"
-            >
-              <span className="link link-on-group">Résumé</span>
-              <ArrowUpRightIcon
-                className="h-3.5 w-3.5 text-body transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
-                aria-hidden
-              />
-              <span className="sr-only">(PDF, opens in a new tab)</span>
-            </a>
-          </li>
         </ul>
       </Reveal>
     </Section>
