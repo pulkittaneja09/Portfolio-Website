@@ -478,7 +478,7 @@ accessibility, best practices and SEO 100.
 
 - [x] D1. Dot + ring cursor — 6px dot on the pointer, 32px accent ring on a spring (300/30); 48px + 10% fill over links/buttons/chips, 72px "View" over project cards, native text cursor over inputs, 0.85 on mousedown, hidden off-window; fine pointers only (verified absent on mobile emulation); motion values + data attributes, no re-renders; reduced motion = instant, no size animation. Spotlight removed: two things trailing the mouse at different lags looked busy
 - [x] D2. Skills = résumé (7 groups, 39 skills): Vercel / Render / Vite / Tailwind CSS / SQLite out; SQL, C, JavaScript, TF-IDF, Claude in; official names (Golang, Express.js, Object-Oriented Programming, Data Structures & Algorithms…); full list in "Round 5: skills changelog"; mapping verified
-- [ ] D3a. Lenis tuning (lerp 0.1, wheel 1), offsets for nav and ⌘K, off for reduced motion and touch
+- [x] D3a. Lenis lerp 0.1, wheel 1:1 (a 400px wheel step: 246px in 120ms, settled by ~0.8s); nav and ⌘K jumps on one eased 1s curve, every section lands at 96px via scroll-margin; not created under reduced motion or on touch-first devices (verified absent in mobile emulation)
 - [ ] D3b. Projects as a sticky 3D card stack (scale, tilt, dim, thumbnail parallax); mobile and reduced motion get plain cards
 - [ ] D3c. Experience: a thin progress line that fills with the accent as you scroll
 - [ ] D3d. Animation audit: list everything, keep only the agreed set, one moving thing per viewport
