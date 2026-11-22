@@ -3,7 +3,7 @@
 Personal portfolio for **Pulkit Taneja** — AI agents & backend engineer, co-founder of Audaxity
 Technologies.
 
-Built with Vite, React 18, TypeScript (strict), Tailwind CSS, Framer Motion (overlays only) and Lenis.
+Built with Vite, React 18, TypeScript (strict), Tailwind CSS, Framer Motion (overlays, the cursor and the project stack) and Lenis.
 Deploys to Vercel. Dark and light themes.
 
 **Live:** <https://portfolio-website-pi-blush-92.vercel.app>
@@ -252,11 +252,19 @@ Gemini, "Go" for Golang). The list itself is the résumé's Technical Skills, mi
 Nothing is typed by hand, and a skill with no tagged work is listed but not clickable. The logos come
 from one cached SVG sprite, so they cost nothing in the JS bundle.
 
-**Rows dim their siblings with `:has()`.** Hovering an experience or project row lifts it onto a 3%
-panel and fades the others to 50%; hovering the gap between rows dims nothing.
+**Rows dim their siblings with `:has()`.** Hovering an experience row lifts it onto a 3% panel
+and fades the others; the progress line on the left is that section's only scroll motion.
 
-**Framer Motion runs behind `LazyMotion`** and is only used by the overlays (palette, terminal, Ask
-widget, toasts), which are themselves lazy chunks warmed once the page is idle.
+**One 3D moment: the project stack.** On desktop with full motion the four flagship projects are
+sticky cards (96px + 16px each); as the next slides up, the covered card scales to 0.92, tilts back
+8° and dims. It is all transforms and one overlay's alpha, driven by Framer Motion values off
+`scrollY` with ranges measured from static layout, so scrolling never renders React or reads layout.
+Phones and reduced motion get the same cards as a plain list. Everything else stays calm: the
+Round 5 animation audit in PROGRESS.md lists what moves and why.
+
+**Framer Motion runs behind `LazyMotion`** (`domAnimation` only): the overlays (palette, terminal, Ask
+widget, toasts, lazy chunks warmed once the page is idle), the dot + ring cursor's springs, the
+project stack and the Experience progress line.
 
 **The answer widget has no model behind it.** `lib/ask.ts` scores a question against topics built
 from `portfolio.ts`. No API key, no network call, and no way for it to invent a credential. Nothing

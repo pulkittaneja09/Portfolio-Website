@@ -117,8 +117,9 @@ function ProjectCard({ project, motion }: { project: Project; motion?: CardMotio
         </div>
       </div>
 
-      {/* Depth: the ground colour laid over a covered card (opacity only). */}
-      {motion && <m.div className="card-dim" style={{ opacity: dim }} aria-hidden />}
+      {/* Depth: the ground colour laid over a covered card, its alpha driven
+          by the scroll (a paint of one layer; no layout). */}
+      {motion && <m.div className="card-dim" style={{ '--dim': dim } as MotionStyle} aria-hidden />}
       {/* Shown when an active skill filter does not match this project. */}
       <div className="card-filter-dim" aria-hidden />
     </m.article>

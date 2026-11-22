@@ -482,7 +482,7 @@ accessibility, best practices and SEO 100.
 - [x] D3b. Projects 3D stack (≥ 1024px, full motion) — large tinted cards, sticky at 96 + 16px·i; covered cards go to 0.92 scale, 8° tilt back (1200px perspective) and 60% (a ground-colour overlay, opacity only); thumbnail drifts ±10px; ranges measured from static layout, motion values only; will-change only while in view; uniform card height so nothing peeks below; non-sticky spacers carry the scroll distance; "dim the other rows" removed from Projects (kept for Experience); hover tilt dropped (the card already tilts on scroll); click opens the case study; < 1024px and reduced motion get plain cards with one fade-up
 - [x] D3c. Experience progress line — 1px track in the gutter (≥ 640px), accent fill by scaleY from useScroll (start 70% → end 55%); static track under reduced motion; nothing else in Experience moves
 - [x] D3d. Animation audit — full table in "Round 5: animation audit"; removed divider dots, aurora drift, status pulse; founder ring turns on hover only; reveals cut to Founder / Contact heading / phone cards / case study; entrances 400ms
-- [ ] D4. Final QA: stack at 0–100% scroll, 1024 / 390, cursor on desktop only, spelling greps, perf trace, build with no warnings, summary
+- [x] D4. Final QA — stack verified at 0–100% (1440, 1024; none at 390), cursor desktop-only in both themes, spelling greps clean, perf trace clean (0 main-thread long tasks, 0 forced layouts), qa + reveal pass, Lighthouse 95 / 100, build 0 warnings; summary below
 
 ## Round 5: skills changelog (D2)
 
@@ -538,3 +538,65 @@ Rule: while scrolling, at most one thing noticeably animates in the viewport; en
 | Thumbnail hover tilt | project rows | **removed** in D3b (the card tilts on scroll instead) |
 
 Also removed: an orphaned `.note-prose` stylesheet left over from Notes.
+
+## Round 5 summary
+
+**What changed**
+
+- **Dot + ring cursor** on fine pointers: a 6px accent dot, plus a 32px accent hairline ring on a
+  spring (stiffness 300, damping 30).
+  - Over links, buttons and chips the ring grows to 48px with a 10% fill and the dot fades. Over a
+    project card it grows to 72px and says "View". Text inputs get the normal text cursor back.
+    Mousedown squeezes the ring to 0.85.
+  - It hides when the mouse leaves the window. It runs on motion values and data attributes, so
+    React never re-renders while the mouse moves.
+  - It's absent on touch devices, and instant with no size animation under reduced motion. The
+    cursor spotlight was removed: two things trailing the mouse looked busy.
+- **Skills now match the résumé exactly:** 7 groups, 39 skills, official names. Every addition,
+  removal and rename is in "Round 5: skills changelog". The tooltips and click-to-filter were
+  verified against evidence recomputed from the data.
+- **Scrolling:**
+  - Lenis runs at lerp 0.1 with a 1:1 wheel; nav and ⌘K land every section at 96px. Phones and
+    reduced motion keep native scroll.
+  - **Projects is a sticky 3D card stack** on desktop. Phones and reduced motion get plain cards
+    with one fade-up.
+  - **Experience** has an accent progress line, and nothing else moves there.
+- **Animation audit:** the full table is in "Round 5: animation audit". Gone: the divider dots,
+  the aurora's drift, the status-dot pulse and most scroll fade-ins. The founder ring turns on
+  hover only. Entrances are 400ms.
+
+**Verification (production preview)**
+
+- **Stack:** screenshots at 0 / 25 / 50 / 75 / 100% (+115%) at 1440 and 1024 in both themes. The
+  cards stick at 96 / 112 / 128 / 144px, and covered cards reach 0.92 scale, 8° tilt and a 40%
+  dim. At 390 there's no stack (`.screenshots/r5/final-stack`).
+- **Cursor:** present on desktop in both themes (ring #8FB4FF dark, #2F5BD3 light, native cursor
+  hidden). Absent in mobile emulation, along with Lenis and the stack.
+- **Spelling:** no "OOPS", "Oops", "Javascript", "Postgres ", "Fast API" or "Nodejs" anywhere in
+  `dist/`. Vercel, Render, Vite, Tailwind CSS and SQLite are not in the skills data.
+- **Performance trace**, wheel-scrolling through Projects for 3.6s:
+  - Frame time: median 7ms, p95 13.9ms.
+  - Zero long tasks on the renderer main thread and zero JS-forced layouts, so no thrashing.
+  - The four tasks over 50ms were on the GPU process and compositor thread of headless Chrome's
+    software renderer.
+- **`npm run qa`** passes everywhere (name on one line, contrast, nothing faded or blurred, no
+  console errors). The reveal check finds 0 violations in 37 snapshots. Lighthouse: mobile 95/100/
+  100/100, desktop 100 across. The build has no warnings; lint and Prettier are clean.
+
+**Judgement calls**
+
+- **"Only skills on my résumé":** I took this to mean its Technical Skills, plus technologies its
+  project and experience lines name (React, TypeScript, Claude, Whisper). Vercel and Render are
+  listed under Tools & Deployment on the résumé itself; they're off the site because they're
+  hosting platforms, as you asked.
+- **The thumbnail hover tilt from Round 4 is gone:** in the stack the whole card tilts with the
+  scroll. The tint halo on hover stays.
+- **Dim overlays** in the stack (and the skill-filter dim) use the alpha of the ground colour
+  instead of opacity, so a covered card never shows the one underneath through it. The same goes
+  for the cursor's hidden parts, so the strict reveal check still needs no exceptions.
+- **The progress line shows from 640px up:** at phone width there's no gutter for it.
+- **QA script changes:**
+  - The spotlight is gone, so its contrast case is too.
+  - The hovered-row check now uses an Experience row.
+  - Faint dates and the accent hover title in that row are held to 4.5:1, not the 7:1 that body
+    text needs, matching check h.

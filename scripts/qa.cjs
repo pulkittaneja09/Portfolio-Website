@@ -193,13 +193,21 @@ function inPage() {
       const row = document.querySelector('.row-card:hover');
       if (!row) return null;
       let min = Infinity;
+      let faintMin = Infinity;
+      const faint = token('--text-faint-rgb');
+      const accent = token('--accent-rgb');
       row.querySelectorAll('li, p, h3').forEach((el) => {
         if (!ownText(el)) return;
         const fg = parse(getComputedStyle(el).color);
         const bg = backgroundOf(el, spotlight);
         // Translucent text (text-strong/80 in a hovered row) is composited first.
-        min = Math.min(min, ratio(fg.a < 0.99 ? over(fg, bg) : fg, bg));
+        const value = ratio(fg.a < 0.99 ? over(fg, bg) : fg, bg);
+        // Faint dates and the accent hover title are held to 4.5:1 (as in
+        // check h), not the 7:1 that running text needs.
+        if (same(fg, faint) || same(fg, accent)) faintMin = Math.min(faintMin, value);
+        else min = Math.min(min, value);
       });
+      if (faintMin < 4.5) return Math.round(faintMin * 100) / 100 - 100; // fails (d)
       return Math.round(min * 100) / 100;
     },
   };
@@ -295,14 +303,15 @@ async function settle(page) {
         if (a.min !== null && a.min < accent.min) accent = a;
       }
 
-      // Hover a project row (desktop) and re-check its contrast with the light on it.
+      // Hover an experience row (desktop: the rows that still lift onto a panel)
+      // and re-check its contrast.
       let hovered = null;
       if (!mobile) {
         await page.evaluate(() =>
-          document.querySelector('#projects .row-card').scrollIntoView({ block: 'center' }),
+          document.querySelector('#experience .row-card').scrollIntoView({ block: 'center' }),
         );
         await settle(page);
-        const box = await page.locator('#projects .row-card').first().boundingBox();
+        const box = await page.locator('#experience .row-card').first().boundingBox();
         await page.mouse.move(box.x + box.width * 0.6, box.y + box.height * 0.3, { steps: 6 });
         await page.waitForTimeout(500);
         hovered = await call(page, 'hoveredRowContrast');
