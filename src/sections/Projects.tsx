@@ -1,3 +1,4 @@
+import type { PointerEvent } from 'react';
 import { CountUp } from '@/components/CountUp';
 import { ProjectThumb } from '@/components/ProjectThumb';
 import { Reveal } from '@/components/Reveal';
@@ -31,9 +32,36 @@ function InlineLink({ href, children, label }: { href: string; children: string;
   );
 }
 
+const MAX_TILT = 4; // degrees
+
+/** Tilts the row's thumbnail toward the cursor; fine pointers and full motion only. */
+function tilt(event: PointerEvent<HTMLElement>) {
+  if (event.pointerType !== 'mouse' || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const row = event.currentTarget;
+  const thumb = row.querySelector<HTMLElement>('.thumb');
+  if (!thumb) return;
+  const rect = thumb.getBoundingClientRect();
+  const clamp = (value: number) => Math.max(-1, Math.min(1, value));
+  const x = clamp((event.clientX - (rect.left + rect.width / 2)) / (rect.width / 2));
+  const y = clamp((event.clientY - (rect.top + rect.height / 2)) / (rect.height / 2));
+  thumb.style.setProperty('--ry', `${(x * MAX_TILT).toFixed(2)}deg`);
+  thumb.style.setProperty('--rx', `${(-y * MAX_TILT).toFixed(2)}deg`);
+}
+
+function untilt(event: PointerEvent<HTMLElement>) {
+  const thumb = event.currentTarget.querySelector<HTMLElement>('.thumb');
+  thumb?.style.removeProperty('--rx');
+  thumb?.style.removeProperty('--ry');
+}
+
 function ProjectRow({ project }: { project: Project }) {
   return (
-    <article className="row-card group/row grid gap-y-4 sm:grid-cols-[27%_minmax(0,1fr)] sm:gap-x-6">
+    <article
+      className="row-card group/row grid gap-y-4 sm:grid-cols-[27%_minmax(0,1fr)] sm:gap-x-6"
+      onPointerMove={tilt}
+      onPointerLeave={untilt}
+      onPointerDown={untilt}
+    >
       <ProjectThumb project={project} className="order-2 w-52 max-w-full sm:order-none sm:w-auto" />
 
       <div className="min-w-0">

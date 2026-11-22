@@ -586,6 +586,62 @@
     -webkit-backdrop-filter: blur(16px) saturate(140%);
   }
 
+  /* ── Project colour identity ───────────────────────────────────────────── */
+  .tinted {
+    --tint: var(--tint-d);
+  }
+  [data-theme='light'] .tinted {
+    --tint: var(--tint-l);
+  }
+
+  /* The thumbnail: on hover, a soft glow of the project's tint behind it
+     (12%) and a tilt of at most 4° toward the cursor (set from Projects.tsx). */
+  .thumb {
+    position: relative;
+    align-self: start; /* a grid item: never stretch to the row's height */
+    transform: perspective(700px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition: transform 0.5s var(--ease);
+  }
+
+  .thumb::before {
+    content: '';
+    position: absolute;
+    inset: -10% -8% -16%;
+    z-index: -1;
+    border-radius: 1rem;
+    background: rgb(var(--tint) / 0.12);
+    filter: blur(22px);
+    opacity: 0;
+    transition: opacity 0.4s var(--ease);
+    pointer-events: none;
+  }
+
+  .group\/row:hover .thumb::before,
+  .group\/row:focus-within .thumb::before {
+    opacity: 1;
+  }
+
+  [data-theme='light'] .group\/row:hover .thumb::before {
+    background: rgb(var(--tint) / 0.16);
+  }
+
+  /* Case-study header: a quiet wash of the project's tint above the title,
+     faded out before the text it sits behind. */
+  .case-tint {
+    position: absolute;
+    /* A closed ellipse that fades to nothing on every side, centred just
+       above the label, so it never shows an edge. */
+    inset: -18rem -30vw auto;
+    height: 34rem;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(closest-side, rgb(var(--tint) / var(--case-tint, 0.1)), transparent);
+  }
+
+  [data-theme='light'] .case-tint {
+    --case-tint: 0.08;
+  }
+
   /* ── Aurora: a slow mesh behind the identity rail ──────────────────────── */
   /* Two soft radial pools, accent and secondary, drifting on 38s and 46s
      loops. Desktop only (it sits behind the sticky left column), faded out

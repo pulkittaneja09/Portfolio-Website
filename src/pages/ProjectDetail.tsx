@@ -9,6 +9,7 @@ import { ArrowLeftIcon, ArrowRightIcon, ArrowUpRightIcon } from '@/components/ic
 import { profile, projects } from '@/data/portfolio';
 import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { previewSrcSet } from '@/lib/images';
+import { tintStyle } from '@/lib/projectTint';
 import { stagger } from '@/lib/stagger';
 import { NotFound } from '@/pages/NotFound';
 
@@ -78,8 +79,10 @@ export function ProjectDetail() {
       </TransitionLink>
 
       <article className="mt-14 sm:mt-20">
-        <header>
-          <p className="enter label text-faint" style={stagger(1)}>
+        <header className="tinted relative isolate" style={tintStyle(project.slug)}>
+          <div className="case-tint" aria-hidden />
+          <p className="enter label flex items-center gap-2.5 text-faint" style={stagger(1)}>
+            <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[rgb(var(--tint))]" aria-hidden />
             {[project.year, ...project.tags].join(' · ')}
           </p>
           <h1

@@ -1,6 +1,7 @@
 import type { Project } from '@/data/types';
 import { cn } from '@/lib/cn';
 import { previewSrcSet } from '@/lib/images';
+import { tintStyle } from '@/lib/projectTint';
 
 const frame =
   'relative aspect-[16/10] overflow-hidden rounded-lg border border-line/[0.08] bg-line/[0.02] light:bg-white light:shadow-card';
@@ -12,10 +13,20 @@ const frame =
  * from its case-study diagram, cascaded in mono. Nothing invented.
  */
 export function ProjectThumb({ project, className }: { project: Project; className?: string }) {
+  // The outer layer carries the project's tint (a soft glow behind it on
+  // hover) and the 3D tilt toward the cursor (see `.thumb` in index.css).
+  return (
+    <div className={cn('thumb tinted', className)} style={tintStyle(project.slug)}>
+      <ThumbFace project={project} />
+    </div>
+  );
+}
+
+function ThumbFace({ project }: { project: Project }) {
   if (project.preview) {
     return (
       // data-vt-shot lets a View Transition morph this into the case study's image.
-      <div className={cn(frame, className)} data-vt-shot={project.slug}>
+      <div className={frame} data-vt-shot={project.slug}>
         <img
           src={project.preview}
           srcSet={previewSrcSet(project.preview)}
@@ -40,7 +51,6 @@ export function ProjectThumb({ project, className }: { project: Project; classNa
       className={cn(
         frame,
         'flex flex-col justify-center gap-[0.2rem] px-3.5 font-mono text-[0.625rem] leading-[1.5] transition-colors duration-300 group-hover/row:border-line/[0.12]',
-        className,
       )}
       role="img"
       aria-label={`${project.name} architecture: ${nodes.map((node) => node.label).join(', ')}`}
