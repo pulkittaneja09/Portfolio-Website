@@ -326,7 +326,7 @@ nowhere; build without warnings.
 - [x] C2d. Midnight + Glacier live in both themes — tinted neutrals, aurora (38s/46s, desktop, still for reduced motion), spotlight 5.5% dark / 5% light (now on in light; light body deepened to #434F63 to stay ≥ 7:1 under it), serif gradient, editor-style agent card, toned chips with solid active chip, count-up metrics; /palette deleted
 - [x] C3a. Project tints (glacier, seafoam, sky, steel) — 12% blurred halo + ≤4° tilt toward the cursor on hover (mouse + full motion only), tinted wash and dot on each case-study header
 - [x] C3b. Founder card ring — conic accent/seafoam hairline turning every 14s via a registered `--ring-angle`, masked to 1px; fixed angle under reduced motion
-- [ ] C3c. Highlight strip under About: 3 real stat tiles with count-up
+- [x] C3c. Highlight strip — 1 startup founded · 3 AI products shipped · 10+ MCP tools built (from `stats` and a count of AI/RAG/ML projects with a live demo), accent mono count-up
 - [ ] C3d. Magnetic CTAs with accent fill-sweep
 - [ ] C3e. Section dividers with travelling accent dot
 - [ ] C3f. First-visit "PT" monogram intro (<1.2s, sessionStorage, skipped for reduced-motion)

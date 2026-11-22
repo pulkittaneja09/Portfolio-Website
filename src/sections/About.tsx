@@ -1,7 +1,8 @@
+import { CountUp } from '@/components/CountUp';
 import { RichText } from '@/components/RichText';
 import { Section } from '@/components/Section';
 import { ArrowUpRightIcon } from '@/components/icons';
-import { about, now } from '@/data/portfolio';
+import { about, now, projects, stats } from '@/data/portfolio';
 import type { NowItem } from '@/data/types';
 import { leetcodeLabel, leetcodeProfile } from '@/lib/siteStats';
 import { stagger } from '@/lib/stagger';
@@ -59,6 +60,46 @@ function Fact({ label, items }: { label: string; items: NowItem[] }) {
   );
 }
 
+const statValue = (match: (label: string) => boolean) => {
+  const stat = stats.find((item) => match(item.label));
+  return stat ? `${stat.prefix ?? ''}${stat.value}${stat.suffix ?? ''}` : null;
+};
+
+/**
+ * Three real numbers, all from portfolio.ts: the startup and the MCP tools
+ * from the sourced `stats`, the shipped AI products counted from the projects
+ * (AI, RAG or ML work with a live demo). A tile whose figure is missing is
+ * dropped rather than guessed.
+ */
+const highlights = [
+  { value: statValue((label) => label.startsWith('Startup')), label: 'startup founded' },
+  {
+    value: String(
+      projects.filter(
+        (project) => project.links.demo && project.tags.some((tag) => /AI|RAG|Machine learning/i.test(tag)),
+      ).length,
+    ),
+    label: 'AI products shipped',
+  },
+  { value: statValue((label) => label.includes('MCP')), label: 'MCP tools built' },
+].filter((item): item is { value: string; label: string } => Boolean(item.value) && item.value !== '0');
+
+function Highlights() {
+  return (
+    <ul className="enter mt-10 grid grid-cols-3 gap-2 sm:gap-3" style={stagger(5)}>
+      {highlights.map((item) => (
+        <li
+          key={item.label}
+          className="rounded-xl border border-line/[0.08] bg-[var(--chip-bg)] px-3 py-3 light:bg-[var(--bg-elevated)] light:shadow-card sm:px-4 sm:py-3.5"
+        >
+          <CountUp value={item.value} className="block font-mono text-xl tracking-[-0.02em] text-accent sm:text-2xl" />
+          <span className="mt-1 block text-xs leading-snug text-body">{item.label}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 /**
  * Two short first-person paragraphs, then "Now" as a plain label/value row
  * (the tools live in the Skills section). It is on screen at load on
@@ -78,6 +119,8 @@ export function About() {
       <dl className="enter mt-8 space-y-3 text-sm" style={stagger(4)}>
         <Fact label="Now" items={nowItems} />
       </dl>
+
+      <Highlights />
     </Section>
   );
 }
