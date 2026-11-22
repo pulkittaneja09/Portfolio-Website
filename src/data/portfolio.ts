@@ -397,7 +397,7 @@ export const projects: Project[] = [
     tags: ['RAG', 'LangChain', 'Backend'],
     detail: {
       overview: [
-        'KnowledgeHub AI is a document-intelligence service: upload enterprise PDFs, and ask questions about them in plain language. Retrieval runs before generation, so answers arrive with citations back to the source chunks and hallucinations drop sharply versus prompting the model directly.',
+        'KnowledgeHub AI is a document-intelligence service: upload enterprise PDFs, and ask questions about them in plain language. Retrieval runs before generation, so every answer arrives with citations back to the source chunks and can be checked rather than taken on trust.',
         'The ingestion path is text extraction → chunking → Google Embeddings → ChromaDB. The query path embeds the question, runs semantic similarity search, assembles the retrieved context, and only then calls Gemini 2.5 Flash.',
       ],
       highlights: [
@@ -626,7 +626,7 @@ export const experience: ExperienceItem[] = [
 export const venture: Venture = {
   name: 'Audaxity Technologies',
   role: 'Co-founder & CEO',
-  since: 'March 2026',
+  since: 'Mar 2026',
   pitch:
     'An AI-powered Academic Intelligence Platform for higher-education institutions — turning what happens in a lecture hall into structured, searchable, syllabus-mapped knowledge.',
   mission: 'Lectures in, syllabus-mapped *knowledge* out.',
@@ -670,15 +670,12 @@ export const venture: Venture = {
  * and from this site's own stack.
  */
 export const uses: UsesGroup[] = [
-  { title: 'Machine', items: [{ name: null, note: 'TODO(pulkit): laptop and OS' }] },
-  {
-    title: 'Editor & terminal',
-    items: [{ name: null, note: 'TODO(pulkit): editor, theme, font, terminal, shell' }],
-  },
-  {
-    title: 'AI assistants',
-    items: [{ name: null, note: 'TODO(pulkit): the assistants and model APIs you use day to day' }],
-  },
+  // TODO(pulkit): laptop and OS, e.g. { name: 'MacBook Air M2', note: 'macOS' }.
+  { title: 'Machine', items: [{ name: null }] },
+  // TODO(pulkit): editor, theme, font, terminal, shell.
+  { title: 'Editor & terminal', items: [{ name: null }] },
+  // TODO(pulkit): the assistants and model APIs you use day to day.
+  { title: 'AI assistants', items: [{ name: null }] },
   {
     title: 'Build & test',
     items: [{ name: 'Git' }, { name: 'Docker' }, { name: 'Postman' }, { name: 'Linux' }],

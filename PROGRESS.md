@@ -606,7 +606,7 @@ Also removed: an orphaned `.note-prose` stylesheet left over from Notes.
 - [x] E1. One 18px circle glued to the pointer — transform written inside pointermove (0.00px offset over 25 random moves, both themes); 40px over links/chips, 64px + "View" (ground-colour fill so it reads on thumbnails) over cards, hidden over selectable text and inputs (native text cursor), 0.85 on press, fades off-window; 180ms ease-out on size/fill/opacity only. Chose the 1.5px accent ring over the white difference disc, which turned the blue CTAs gold. Touch: none; reduced motion: no size animation
 - [x] E2. Highlights = 1 startup founded · 1,000+ applicants served · R² 0.879 battery-life model (all sourced in `stats` and on the résumé); "10+ MCP tools" out of the strip, `stats` (terminal / Ask) and the About paragraph, kept in the SDG role; the public-repo count left `stats` (a profile fact, not an achievement) but still feeds the GitHub line; strip drops to 2 columns if a figure is missing
 - [x] E3a. Consistency pass — 4px layout grid, three hairline levels, one radius scale, one pill chip style (baseline-aligned), documented type ramp; Experience label gap fixed (60px → 32px like every section); compared against brittanychiang.com / rauno.me / emilkowal.ski at 1440
-- [ ] E3b. Copy and links: proofread, date and dash formats, every link checked, no CGPA / TODO / placeholders
+- [x] E3b. Copy and links — en-dash full-year ranges everywhere, one unmeasured claim softened, 404 titled + noindex, TODO notes out of the bundle; 21 links checked (all good; Vercel demos unverifiable from this network, Render needs a cold start); details in "Round 6: copy and link check"
 - [ ] E3c. Interaction: hover/focus/active consistency, full keyboard pass, ⌘K / terminal / Esc
 - [ ] E3d. Responsive: 1440 / 1280 / 1024 / 768 / 390 / 360, no horizontal scroll, name on one line, 44px tap targets
 - [ ] E3e. Launch readiness: Lighthouse 95+, images, fonts, bundle, meta / OG / icons / sitemap / robots / JSON-LD, 404, vercel.json, README
@@ -628,3 +628,22 @@ Also removed: an orphaned `.note-prose` stylesheet left over from Notes.
   reading rows · 16 body · 18 / 20 / 24 subheads · display. Headings balance, paragraphs `pretty`.
 - **Fixed:** the Experience list carried its rows' 20px hover padding above the first role (~60px
   under the label against 32px elsewhere). It is pulled up by exactly that padding.
+
+## Round 6: copy and link check (E3b)
+
+- **Dates:** every range is now "Mar 2026 – Present" / "Jun 2026 – Jul 2026" (full years, spaced
+  en dash, as on the résumé; it was "Jun — Jul 2026" with an em dash). The founder card's "since
+  March 2026" became "since Mar 2026".
+- **Copy:** proofread every page (home, the four case studies, /uses, 404). One claim was softened:
+  KnowledgeHub's overview said hallucinations "drop sharply", which nothing measured; it now says
+  answers arrive with citations "and can be checked rather than taken on trust". The 404 page now
+  has its own title ("Page not found — Pulkit Taneja") and `noindex`.
+- **Hidden leftovers:** the /uses empty slots shipped their "TODO(pulkit)" notes inside the JS
+  bundle; they are source comments now. No CGPA, TODO, lorem or placeholder text in `dist/`.
+- **Links (all 21 unique URLs on every route):** GitHub (profile + 9 repos), LinkedIn, the résumé
+  PDF, every case study and anchor: 200. Render APIs (ParcelPilot `/docs`, Scrap 2 Spark): 503
+  "Application loading" on a cold start, then 200 (free tier sleeps; first load takes ~30–60s).
+  LeetCode (exactly https://leetcode.com/u/PULKITTANEJA/): Cloudflare challenges automated
+  requests; fine in a browser. **The three `*.vercel.app` demos could not be verified from this
+  machine**: the network presents an untrusted certificate for every Vercel host (vercel.com did
+  the same in Round 4). Check them yourself in a browser.

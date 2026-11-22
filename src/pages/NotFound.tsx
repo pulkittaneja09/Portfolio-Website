@@ -1,11 +1,28 @@
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 import { ArrowLeftIcon } from '@/components/icons';
-import { projects } from '@/data/portfolio';
+import { profile, projects } from '@/data/portfolio';
+import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { paletteKey } from '@/lib/platform';
 import { stagger } from '@/lib/stagger';
 
 /** Same reading column as a case study, with a way back and a way forward. */
 export function NotFound() {
+  useDocumentMeta(
+    `Page not found — ${profile.name}`,
+    'This page does not exist. Everything on the site is reachable from the home page.',
+    '/404',
+  );
+
+  // Keep a dead URL out of search results.
+  useEffect(() => {
+    const meta = document.createElement('meta');
+    meta.name = 'robots';
+    meta.content = 'noindex';
+    document.head.appendChild(meta);
+    return () => meta.remove();
+  }, []);
+
   return (
     <main
       id="main"
