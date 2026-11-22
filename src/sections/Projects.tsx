@@ -98,7 +98,7 @@ function MoreProjects() {
                 href={item.repo}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="group/more -mx-3 flex items-baseline gap-3 rounded-lg px-3 py-2.5 transition-colors duration-300 hover:bg-white/[0.03]"
+                className="group/more -mx-3 flex items-baseline gap-3 rounded-lg px-3 py-2.5 transition-[background-color,box-shadow] duration-300 hover:bg-[var(--row-hover-bg)] hover:shadow-card"
                 title={item.blurb}
               >
                 <span className="shrink-0 text-sm font-medium text-strong transition-colors duration-300 group-hover/more:text-accent">

@@ -4,6 +4,7 @@ import { CursorSpotlight } from '@/components/CursorSpotlight';
 import { useGlobalShortcuts } from '@/hooks/useGlobalShortcuts';
 import { useLenis } from '@/hooks/useLenis';
 import { whenIdle } from '@/lib/idle';
+import { followSystemTheme } from '@/lib/theme';
 import { Home } from '@/pages/Home';
 import { NotFound } from '@/pages/NotFound';
 import { ProjectDetail } from '@/pages/ProjectDetail';
@@ -49,6 +50,8 @@ export default function App() {
   }, []);
 
   useLenis();
+  // Until the visitor picks a theme, track the system setting live.
+  useEffect(() => followSystemTheme(), []);
   useGlobalShortcuts({ onPalette: openPalette, onTerminal: openTerminal, onEscape: close });
 
   // Warm both chunks once the page is otherwise idle, so the first ⌘K is
@@ -68,7 +71,7 @@ export default function App() {
 
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:border focus:border-white/[0.14] focus:bg-bg focus:px-4 focus:py-2 focus:text-sm focus:text-strong"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:border focus:border-line/[0.14] focus:bg-bg focus:px-4 focus:py-2 focus:text-sm focus:text-strong"
       >
         Skip to content
       </a>

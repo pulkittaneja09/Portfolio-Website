@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { ChatIcon } from '@/components/icons';
 import { nav } from '@/data/portfolio';
 import { cn } from '@/lib/cn';
@@ -52,7 +53,7 @@ export function MobileBar({ active, onOpenPalette, onOpenAsk }: Props) {
       >
         <a href="#about" className="flex min-w-0 items-center gap-3" aria-label="Back to top">
           <span
-            className="grid h-7 w-7 shrink-0 place-items-center rounded-md border border-white/[0.14] text-[0.625rem] font-semibold tracking-tight text-strong"
+            className="grid h-7 w-7 shrink-0 place-items-center rounded-md border border-line/[0.14] text-[0.625rem] font-semibold tracking-tight text-strong"
             aria-hidden
           >
             PT
@@ -76,10 +77,11 @@ export function MobileBar({ active, onOpenPalette, onOpenAsk }: Props) {
             <ChatIcon className="h-4 w-4" />
             Ask
           </button>
+          <ThemeToggle className="h-9 w-9 rounded-lg" />
           <button
             type="button"
             onClick={onOpenPalette}
-            className="inline-flex h-9 items-center gap-2 rounded-lg border border-white/[0.08] px-3 text-sm text-strong transition-colors duration-300 hover:border-white/[0.16]"
+            className="inline-flex h-9 items-center gap-2 rounded-lg border border-line/[0.08] px-3 text-sm text-strong transition-colors duration-300 hover:border-line/[0.16]"
           >
             Menu
             <kbd className="hidden font-mono text-xs text-faint [@media(hover:hover)]:inline">

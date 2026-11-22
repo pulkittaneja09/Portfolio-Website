@@ -206,18 +206,18 @@ export function AgentRun({ className }: { className?: string }) {
     <figure
       ref={rootRef}
       className={cn(
-        'enter surface-solid w-full max-w-[22.5rem] overflow-hidden rounded-xl border border-white/[0.08] font-mono text-xs',
+        'enter surface-solid w-full max-w-[22.5rem] overflow-hidden rounded-xl border border-line/[0.08] font-mono text-xs',
         className,
       )}
       style={stagger(9)}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <figcaption className="flex items-center gap-2.5 whitespace-nowrap border-b border-white/[0.06] px-3.5 py-2.5">
+      <figcaption className="flex items-center gap-2.5 whitespace-nowrap border-b border-line/[0.06] px-3.5 py-2.5">
         <span className="flex shrink-0 gap-1.5" aria-hidden>
-          <span className="h-1.5 w-1.5 rounded-full bg-white/[0.14]" />
-          <span className="h-1.5 w-1.5 rounded-full bg-white/[0.14]" />
-          <span className="h-1.5 w-1.5 rounded-full bg-white/[0.14]" />
+          <span className="h-1.5 w-1.5 rounded-full bg-line/[0.14]" />
+          <span className="h-1.5 w-1.5 rounded-full bg-line/[0.14]" />
+          <span className="h-1.5 w-1.5 rounded-full bg-line/[0.14]" />
         </span>
         <span className="shrink-0 text-body">
           agent.run <span className="text-faint">— example trace</span>
@@ -234,9 +234,9 @@ export function AgentRun({ className }: { className?: string }) {
         {/* The prompt types out character by character. */}
         <div className="flex h-[1.7em] items-center whitespace-pre">
           <span className="text-faint">{'> '}</span>
-          <span className="text-body">{typedHead}</span>
+          <span className="text-trace">{typedHead}</span>
           <span className="text-strong">{typedArg}</span>
-          <span className="text-body">{typedTail}</span>
+          <span className="text-trace">{typedTail}</span>
           {frame.shown === 0 && !reduced && <Caret />}
         </div>
 
@@ -253,7 +253,7 @@ export function AgentRun({ className }: { className?: string }) {
                 <>
                   <span className="line-in text-faint">{step.kind}</span>
                   <span
-                    className={cn('line-in truncate whitespace-pre text-body', !step.time && 'col-span-3')}
+                    className={cn('line-in truncate whitespace-pre text-trace', !step.time && 'col-span-3')}
                   >
                     {step.detail}
                     {active && <Caret />}

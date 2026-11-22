@@ -21,7 +21,9 @@ export interface Line {
 export interface CommandResult {
   lines: Line[];
   /** Side effects the overlay performs after printing. */
-  effect?: 'clear' | 'close' | 'download-resume' | 'easter-egg';
+  effect?: 'clear' | 'close' | 'download-resume' | 'easter-egg' | 'theme';
+  /** For effect 'theme': the theme asked for, or undefined to toggle. */
+  theme?: 'light' | 'dark';
 }
 
 const l = (text: string, tone: Line['tone'] = 'default', href?: string): Line =>
@@ -40,6 +42,7 @@ export const COMMANDS = [
   'startup',
   'resume',
   'contact',
+  'theme',
   'clear',
   'exit',
   'sudo hire-pulkit',
@@ -57,6 +60,7 @@ function helpOutput(): Line[] {
     ['startup', 'Audaxity Technologies'],
     ['resume', 'download the PDF'],
     ['contact', 'how to reach me'],
+    ['theme', 'switch light / dark (or: theme light)'],
     ['clear', 'wipe the screen'],
     ['exit', 'close the terminal'],
   ];
@@ -153,6 +157,13 @@ const EASTER_EGG: Line[] = [
 /** Resolves a typed line to output. Unknown input returns an error line. */
 export function runCommand(raw: string): CommandResult {
   const input = raw.trim().toLowerCase().replace(/\s+/g, ' ');
+
+  if (input === 'theme' || input.startsWith('theme ')) {
+    const arg = input.slice(6).trim();
+    if (arg === '' || arg === 'toggle') return { lines: [], effect: 'theme' };
+    if (arg === 'light' || arg === 'dark') return { lines: [], effect: 'theme', theme: arg };
+    return { lines: [l('usage: theme [light|dark]', 'muted')] };
+  }
 
   switch (input) {
     case '':

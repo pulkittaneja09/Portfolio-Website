@@ -129,7 +129,7 @@ export function ProjectDetail() {
 
         {/* Facts, as label/value rows. */}
         <dl
-          className="enter mt-12 divide-y divide-white/[0.06] border-y border-white/[0.06]"
+          className="enter mt-12 divide-y divide-line/[0.06] border-y border-line/[0.06]"
           style={stagger(5)}
         >
           <div className="grid gap-1 py-4 sm:grid-cols-[27%_minmax(0,1fr)] sm:gap-6">
@@ -169,7 +169,7 @@ export function ProjectDetail() {
               height={640}
               loading="eager"
               decoding="async"
-              className="vt-shot w-full rounded-xl border border-white/[0.08]"
+              className="vt-shot w-full rounded-xl border border-line/[0.08]"
             />
           </Reveal>
         )}
@@ -190,7 +190,7 @@ export function ProjectDetail() {
           <ul className="space-y-3">
             {project.detail.highlights.map((highlight) => (
               <li key={highlight.slice(0, 24)} className="flex gap-4 text-body">
-                <span className="mt-[0.8rem] h-px w-3 shrink-0 bg-white/20" aria-hidden />
+                <span className="mt-[0.8rem] h-px w-3 shrink-0 bg-line/20" aria-hidden />
                 {highlight}
               </li>
             ))}
@@ -198,7 +198,7 @@ export function ProjectDetail() {
         </Block>
 
         <Block label="What was hard">
-          <ol className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
+          <ol className="divide-y divide-line/[0.06] border-y border-line/[0.06]">
             {project.detail.challenges.map((challenge, i) => (
               <li key={challenge.title} className="grid gap-1 py-5 sm:grid-cols-[27%_minmax(0,1fr)] sm:gap-6">
                 <span className="font-mono text-xs text-faint">{String(i + 1).padStart(2, '0')}</span>
@@ -238,7 +238,7 @@ export function ProjectDetail() {
                   height={480}
                   loading="lazy"
                   decoding="async"
-                  className="w-full rounded-lg border border-white/[0.08]"
+                  className="w-full rounded-lg border border-line/[0.08]"
                 />
               ))}
             </div>
@@ -249,7 +249,7 @@ export function ProjectDetail() {
       {/* Next project */}
       <TransitionLink
         to={`/projects/${next.slug}`}
-        className="group mt-24 flex items-end justify-between gap-6 border-t border-white/[0.07] pt-8"
+        className="group mt-24 flex items-end justify-between gap-6 border-t border-line/[0.07] pt-8"
       >
         <span>
           <span className="label block text-faint">Next project</span>

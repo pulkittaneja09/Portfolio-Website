@@ -1,12 +1,13 @@
 import { flushSync } from 'react-dom';
 import { scrollToTarget, scrollToTop } from '@/hooks/useLenis';
 
-type StartViewTransition = (update: () => void) => { finished: Promise<void> };
+type StartViewTransition = (update: () => void) => { finished: Promise<void>; ready: Promise<void> };
 
 const SHOT = 'project-shot';
 const caseStudySlug = (path: string) => /^\/projects\/([^/#?]+)/.exec(path)?.[1];
 
-function viewTransitionApi(): StartViewTransition | null {
+/** document.startViewTransition, bound, or null where the API is missing. */
+export function viewTransitionApi(): StartViewTransition | null {
   const start = (document as unknown as { startViewTransition?: StartViewTransition }).startViewTransition;
   return typeof start === 'function' ? start.bind(document) : null;
 }

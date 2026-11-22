@@ -18,14 +18,18 @@ const toneStyles: Record<
   { fill: string; stroke: string; label: string }
 > = {
   // Role is carried by how much light a node holds; champagne marks the model.
-  client: { fill: 'var(--bg)', stroke: 'rgba(255, 255, 255, 0.08)', label: 'var(--text)' },
-  service: { fill: '#121316', stroke: 'rgba(255, 255, 255, 0.14)', label: 'var(--text-strong)' },
+  client: { fill: 'var(--bg)', stroke: 'rgb(var(--line-rgb) / 0.08)', label: 'var(--text)' },
+  service: {
+    fill: 'var(--diagram-service)',
+    stroke: 'rgb(var(--line-rgb) / 0.14)',
+    label: 'var(--text-strong)',
+  },
   model: {
     fill: 'rgb(var(--accent-rgb) / 0.08)',
     stroke: 'rgb(var(--accent-rgb) / 0.6)',
     label: 'var(--text-strong)',
   },
-  store: { fill: 'var(--bg)', stroke: 'rgba(255, 255, 255, 0.14)', label: 'var(--text)' },
+  store: { fill: 'var(--bg)', stroke: 'rgb(var(--line-rgb) / 0.14)', label: 'var(--text)' },
 };
 
 export function ArchitectureDiagram({ architecture }: { architecture: Architecture }) {
@@ -49,7 +53,7 @@ export function ArchitectureDiagram({ architecture }: { architecture: Architectu
   return (
     <figure className="not-prose">
       <div
-        className="overflow-x-auto rounded-xl border border-white/[0.07] bg-white/[0.02] p-3 sm:p-6"
+        className="overflow-x-auto rounded-xl border border-line/[0.07] bg-line/[0.02] p-3 sm:p-6"
         data-lenis-prevent
       >
         <svg

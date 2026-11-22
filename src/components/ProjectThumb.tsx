@@ -2,7 +2,8 @@ import type { Project } from '@/data/types';
 import { cn } from '@/lib/cn';
 import { previewSrcSet } from '@/lib/images';
 
-const frame = 'relative aspect-[16/10] overflow-hidden rounded-lg border border-white/[0.08] bg-white/[0.02]';
+const frame =
+  'relative aspect-[16/10] overflow-hidden rounded-lg border border-line/[0.08] bg-line/[0.02] light:bg-white light:shadow-card';
 
 /**
  * A 16:10 thumbnail for a project row: the real screenshot, slightly dimmed
@@ -24,7 +25,7 @@ export function ProjectThumb({ project, className }: { project: Project; classNa
           height={640}
           loading="lazy"
           decoding="async"
-          className="h-full w-full object-cover object-left-top brightness-[0.8] saturate-[0.85] transition-[filter] duration-300 group-hover/row:brightness-100 group-hover/row:saturate-100"
+          className="h-full w-full object-cover object-left-top brightness-[0.8] saturate-[0.85] transition-[filter] duration-300 group-hover/row:brightness-100 group-hover/row:saturate-100 light:brightness-100 light:saturate-100"
         />
       </div>
     );
@@ -38,7 +39,7 @@ export function ProjectThumb({ project, className }: { project: Project; classNa
     <div
       className={cn(
         frame,
-        'flex flex-col justify-center gap-[0.2rem] px-3.5 font-mono text-[0.625rem] leading-[1.5] transition-colors duration-300 group-hover/row:border-white/[0.12]',
+        'flex flex-col justify-center gap-[0.2rem] px-3.5 font-mono text-[0.625rem] leading-[1.5] transition-colors duration-300 group-hover/row:border-line/[0.12]',
         className,
       )}
       role="img"
@@ -49,7 +50,7 @@ export function ProjectThumb({ project, className }: { project: Project; classNa
           {/* The elbow is drawn, not typed: box-drawing glyphs are outside
               the mono font's latin subset. */}
           {i > 0 && (
-            <span className="mr-1.5 inline-block h-[0.45rem] w-[0.45rem] -translate-y-[0.2rem] border-b border-l border-white/[0.18]" />
+            <span className="mr-1.5 inline-block h-[0.45rem] w-[0.45rem] -translate-y-[0.2rem] border-b border-l border-line/[0.18]" />
           )}
           <span className="text-strong/85">{node.label}</span>
         </p>

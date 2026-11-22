@@ -28,7 +28,7 @@ export function Founder() {
   return (
     <Section id="founder" label="Founder">
       <Reveal>
-        <article className="founder-card relative overflow-hidden rounded-2xl border border-white/[0.08] p-6 sm:p-8">
+        <article className="founder-card relative overflow-hidden rounded-2xl border border-line/[0.08] p-6 sm:p-8">
           <p className="label text-faint">
             {venture.role} · since {venture.since}
           </p>
@@ -41,7 +41,7 @@ export function Founder() {
             <PipelineFlow />
           </div>
 
-          <ul className="mt-8 space-y-3.5 border-t border-white/[0.06] pt-6">
+          <ul className="mt-8 space-y-3.5 border-t border-line/[0.06] pt-6">
             {venture.badges.map((badge) => (
               <li key={badge.label} className="flex gap-3">
                 <Check />

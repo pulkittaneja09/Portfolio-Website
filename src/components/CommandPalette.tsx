@@ -9,7 +9,9 @@ import {
   CopyIcon,
   DownloadIcon,
   MailIcon,
+  MoonIcon,
   SearchIcon,
+  SunIcon,
   TerminalIcon,
   socialIconMap,
 } from '@/components/icons';
@@ -17,6 +19,8 @@ import { nav, profile, projects } from '@/data/portfolio';
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
 import { scrollToTarget, scrollToTop } from '@/hooks/useLenis';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { useTheme } from '@/hooks/useTheme';
+import { toggleTheme } from '@/lib/theme';
 
 interface Props {
   open: boolean;
@@ -36,6 +40,7 @@ export function CommandPalette({ open, onClose, onOpenTerminal, onOpenAsk }: Pro
   const navigate = useNavigate();
   const copy = useCopyToClipboard();
   const reduced = useReducedMotion();
+  const theme = useTheme();
 
   // Lock the page behind the palette so the background cannot scroll away.
   useEffect(() => {
@@ -83,16 +88,16 @@ export function CommandPalette({ open, onClose, onOpenTerminal, onOpenAsk }: Pro
             <Command
               label="Command palette"
               loop
-              className="glass-strong overflow-hidden rounded-xl shadow-[0_24px_64px_-24px_rgba(0,0,0,0.7)]"
+              className="glass-strong overflow-hidden rounded-xl shadow-overlay"
             >
-              <div className="flex items-center gap-3 border-b border-white/[0.07] px-4">
+              <div className="flex items-center gap-3 border-b border-line/[0.07] px-4">
                 <SearchIcon className="h-4 w-4 shrink-0 text-faint" />
                 <Command.Input
                   autoFocus
                   placeholder="Type a command or search…"
                   className="h-14 w-full bg-transparent font-sans text-[0.9375rem] text-strong outline-none placeholder:text-faint"
                 />
-                <kbd className="hidden shrink-0 rounded border border-white/[0.07] px-1.5 py-0.5 font-mono text-[0.625rem] uppercase tracking-[0.06em] text-faint sm:block">
+                <kbd className="hidden shrink-0 rounded border border-line/[0.07] px-1.5 py-0.5 font-mono text-[0.625rem] uppercase tracking-[0.06em] text-faint sm:block">
                   esc
                 </kbd>
               </div>
@@ -177,6 +182,22 @@ export function CommandPalette({ open, onClose, onOpenTerminal, onOpenAsk }: Pro
                   </Command.Item>
 
                   <Command.Item
+                    value="toggle theme light dark mode"
+                    onSelect={() => run(() => toggleTheme())}
+                    className="cmd-item"
+                  >
+                    {theme === 'light' ? (
+                      <MoonIcon className="h-4 w-4 text-faint" />
+                    ) : (
+                      <SunIcon className="h-4 w-4 text-faint" />
+                    )}
+                    Toggle theme
+                    <span className="ml-auto hidden font-mono text-[0.625rem] text-faint sm:block">
+                      {theme === 'light' ? 'to dark' : 'to light'}
+                    </span>
+                  </Command.Item>
+
+                  <Command.Item
                     value="ask about pulkit question chat"
                     onSelect={() => run(onOpenAsk)}
                     className="cmd-item"
@@ -192,7 +213,7 @@ export function CommandPalette({ open, onClose, onOpenTerminal, onOpenAsk }: Pro
                   >
                     <TerminalIcon className="h-4 w-4 text-faint" />
                     Open terminal
-                    <kbd className="ml-auto rounded border border-white/[0.07] px-1.5 py-0.5 font-mono text-[0.625rem] text-faint">
+                    <kbd className="ml-auto rounded border border-line/[0.07] px-1.5 py-0.5 font-mono text-[0.625rem] text-faint">
                       `
                     </kbd>
                   </Command.Item>

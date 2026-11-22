@@ -4,7 +4,7 @@ Personal portfolio for **Pulkit Taneja** — AI agents & backend engineer, co-fo
 Technologies.
 
 Built with Vite, React 18, TypeScript (strict), Tailwind CSS, Framer Motion (overlays only) and Lenis.
-Deploys to Vercel. Dark only.
+Deploys to Vercel. Dark and light themes.
 
 **Live:** <https://portfolio-website-pi-blush-92.vercel.app>
 
@@ -160,7 +160,7 @@ src/
   pages/            Home (the split layout), ProjectDetail, NotFound, Resume
   hooks/            reduced motion, media queries, scroll-spy, Lenis,
                     clipboard, shortcuts
-  lib/              reveal, build-time stats, view transitions, terminal
+  lib/              theme, reveal, build-time stats, view transitions, terminal
                     commands, answer engine, helpers
 scripts/
   qa.cjs            design QA at 1440 / 1280 / 1024 / 390
@@ -169,15 +169,15 @@ scripts/
 
 ## Scripts
 
-| Command                | What it does                                                                                                                                                                                                                                   |
-| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `npm run dev`          | Dev server with HMR on port 5173                                                                                                                                                                                                               |
-| `npm run build`        | Type-check with `tsc -b`, then build to `dist/`                                                                                                                                                                                                |
-| `npm run preview`      | Serve the production build locally                                                                                                                                                                                                             |
-| `npm run lint`         | ESLint, zero warnings tolerated                                                                                                                                                                                                                |
-| `npm run format`       | Prettier over `src/`                                                                                                                                                                                                                           |
-| `npm run qa`           | With a preview server on :4173, at four widths: one-line name, no theme toggle, nothing hidden after scrolling, body contrast ≥ 7:1, exact LeetCode links, no GPA, no console errors or third-party requests; screenshots to `.screenshots/qa` |
-| `npm run check:reveal` | With a preview server on :4173: 33 strict snapshots across scrolls, jumps, deep links, resize, a no-scroll full-page capture and mobile                                                                                                        |
+| Command                | What it does                                                                                                                                                                                                                                                                                                   |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run dev`          | Dev server with HMR on port 5173                                                                                                                                                                                                                                                                               |
+| `npm run build`        | Type-check with `tsc -b`, then build to `dist/`                                                                                                                                                                                                                                                                |
+| `npm run preview`      | Serve the production build locally                                                                                                                                                                                                                                                                             |
+| `npm run lint`         | ESLint, zero warnings tolerated                                                                                                                                                                                                                                                                                |
+| `npm run format`       | Prettier over `src/`                                                                                                                                                                                                                                                                                           |
+| `npm run qa`           | With a preview server on :4173, at four widths and in both themes: one-line name, no theme flash and a working toggle, nothing hidden after scrolling, body contrast ≥ 7:1, accent contrast ≥ 4.5:1, exact LeetCode links, no GPA, no console errors or third-party requests; screenshots to `.screenshots/qa` |
+| `npm run check:reveal` | With a preview server on :4173: 33 strict snapshots across scrolls, jumps, deep links, resize, a no-scroll full-page capture and mobile                                                                                                                                                                        |
 
 ## How it is put together
 
@@ -189,10 +189,20 @@ scrolls. Its spacing steps down in height tiers (roomy above 780px tall, compact
 static below) so the rail fits real laptop viewports without ever squeezing the card. Below 1024px
 the rail becomes the page header and a thin bar carries the current section and a Menu/⌘K button.
 
-**Two greys and one colour.** Body text is `#A1A1AA` (7.6:1 on `#0B0C0E`), names and highlights
-`#F2F2F2`, metadata `#5C5C66`. Champagne `#D9C7A7` appears only on the active nav line, hover titles,
-metrics, the status dot, ✓ marks and link underlines. The page-wide cursor spotlight peaks at 4.5%
-champagne — measured to keep every word above 7:1 even directly under the pointer.
+**Two themes, one brand.** Dark is the default design: body `#A1A1AA` (7.6:1 on `#0B0C0E`), names and
+highlights `#F2F2F2`, metadata `#5C5C66`, and champagne `#D9C7A7` only on the active nav line, hover
+titles, metrics, the status dot, ✓ marks and link underlines. Light is a clean, corporate counterpart,
+not an inversion: warm off-white `#FAFAF9`, pure-white surfaces, body `#52525B` (7.4:1), black
+hairlines, depth from soft shadows instead of glows, and deep bronze `#7A5C2E` (5.9:1) in the same
+places as the champagne. The page-wide cursor spotlight peaks at 4.5% champagne in dark (measured to
+keep every word above 7:1 under the pointer) and is off in light. Every colour is a CSS variable, so a
+theme is one block of values in `index.css`; `border-line/[0.07]` is white in dark and black in light.
+
+**No flash, remembered choice.** An inline script in `index.html` sets `html[data-theme]` before any
+CSS loads: the saved choice, else the system setting (followed live until the visitor picks). The sun
+/ moon toggle sits beside the socials (in the top bar on phones), and ⌘K and the terminal's `theme`
+command do the same. The switch is a circle growing from the toggle on the View Transitions API, instant
+without it or under reduced motion.
 
 **Seven type sizes.** 12px mono for labels and metadata, 14px for row text, 16px body, then 20, 24, 48
 and 60px, each with one job. The serif accent word is set at 1.14em of its sentence. Before adding a

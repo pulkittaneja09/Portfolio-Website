@@ -68,7 +68,7 @@ async function wheelTo(page, target, step = 300) {
 
   // ── Desktop ──────────────────────────────────────────────────────────────
   {
-    const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    const context = await browser.newContext({ colorScheme: 'dark', viewport: { width: 1440, height: 900 } });
     const page = await context.newPage();
     await page.goto(BASE + '/', { waitUntil: 'networkidle' });
     // Park the cursor over the left rail (spotlight on, no row hovered): a
@@ -111,7 +111,7 @@ async function wheelTo(page, target, step = 300) {
 
   // ── Deep link ────────────────────────────────────────────────────────────
   {
-    const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    const context = await browser.newContext({ colorScheme: 'dark', viewport: { width: 1440, height: 900 } });
     const page = await context.newPage();
     await page.goto(BASE + '/#projects', { waitUntil: 'networkidle' });
     await page.waitForTimeout(1200);
@@ -121,7 +121,7 @@ async function wheelTo(page, target, step = 300) {
 
   // ── Full-page capture with no scroll ─────────────────────────────────────
   {
-    const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    const context = await browser.newContext({ colorScheme: 'dark', viewport: { width: 1440, height: 900 } });
     const page = await context.newPage();
     await page.goto(BASE + '/', { waitUntil: 'networkidle' });
     await page.waitForTimeout(1500);
@@ -140,6 +140,7 @@ async function wheelTo(page, target, step = 300) {
   // ── Mobile, touch scrolling ──────────────────────────────────────────────
   {
     const context = await browser.newContext({
+      colorScheme: 'dark',
       viewport: { width: 390, height: 844 },
       isMobile: true,
       hasTouch: true,

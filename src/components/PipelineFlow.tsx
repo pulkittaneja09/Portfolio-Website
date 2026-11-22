@@ -17,13 +17,13 @@ const GAP_V = 16; // vertical connector length
 
 const nodeWidth = (label: string) => Math.round(label.length * CHAR + PAD_X * 2);
 
-const stroke = (last: boolean) => (last ? 'rgba(255,255,255,0.24)' : 'rgba(255,255,255,0.12)');
+const stroke = (last: boolean) => (last ? 'rgb(var(--line-rgb) / 0.24)' : 'rgb(var(--line-rgb) / 0.12)');
 const ink = (last: boolean) => (last ? 'var(--text-strong)' : 'var(--text)');
 
 function Arrow({ d, head }: { d: string; head: string }) {
   return (
     <g
-      stroke="rgba(255,255,255,0.28)"
+      stroke="rgb(var(--line-rgb) / 0.28)"
       strokeWidth="1"
       fill="none"
       strokeLinecap="round"
@@ -76,7 +76,7 @@ export function PipelineFlow() {
                 width={node.w}
                 height={NODE_H}
                 rx={6}
-                fill="rgba(255,255,255,0.025)"
+                fill="var(--node-fill)"
                 stroke={stroke(last)}
               />
               <text x={node.x + node.w / 2} y={mid + 4} textAnchor="middle" fill={ink(last)}>
@@ -115,7 +115,7 @@ export function PipelineFlow() {
                 width={node.w}
                 height={NODE_H}
                 rx={6}
-                fill="rgba(255,255,255,0.025)"
+                fill="var(--node-fill)"
                 stroke={stroke(last)}
               />
               <text x={PAD_X} y={node.y + NODE_H / 2 + 4} fill={ink(last)}>

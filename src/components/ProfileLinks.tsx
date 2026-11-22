@@ -1,4 +1,5 @@
 import { LocalClock } from '@/components/LocalClock';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { ArrowUpRightIcon, MailIcon, socialIconMap } from '@/components/icons';
 import { profile } from '@/data/portfolio';
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
@@ -12,7 +13,7 @@ const ICON_PROFILES = ['github', 'linkedin', 'leetcode'] as const;
 
 /**
  * Bottom of the left column: GitHub, LinkedIn, LeetCode, copy-email, the
- * résumé, and the local time in Chennai. The email icon copies rather than
+ * theme toggle, the résumé, and the local time in Chennai. The email icon copies rather than
  * launching a mail client — the address is the useful thing, not the app.
  */
 export function ProfileLinks({ className }: { className?: string }) {
@@ -20,8 +21,13 @@ export function ProfileLinks({ className }: { className?: string }) {
   const links = ICON_PROFILES.flatMap((icon) => profile.socials.filter((social) => social.icon === icon));
 
   return (
-    <div className={cn('flex flex-wrap items-center justify-between gap-x-6 gap-y-3', className)}>
-      <ul className="-ml-1.5 flex items-center gap-2">
+    <div
+      className={cn(
+        'flex flex-wrap items-center justify-between gap-x-6 gap-y-3 lg:gap-x-4 xl:gap-x-6',
+        className,
+      )}
+    >
+      <ul className="-ml-1.5 flex items-center gap-2 lg:gap-1 xl:gap-2">
         {links.map((social) => {
           const Icon = socialIconMap[social.icon];
           return (
@@ -50,7 +56,11 @@ export function ProfileLinks({ className }: { className?: string }) {
             <MailIcon className="h-[18px] w-[18px]" />
           </button>
         </li>
-        <li className="ml-3">
+        {/* Phones get the toggle in the top bar instead. */}
+        <li className="hidden lg:block">
+          <ThemeToggle />
+        </li>
+        <li className="ml-3 lg:ml-2 xl:ml-3">
           <a
             href={profile.resumePath}
             target="_blank"

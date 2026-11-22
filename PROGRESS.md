@@ -205,6 +205,9 @@ warnings and its output has no "8.25", "CGPA" or "GPA"; lint and Prettier are cl
 - Optional: a `GITHUB_TOKEN` in Vercel (build-time only, never shipped) if the repo count ever has to
   fall back.
 
+## Round 3 notes
+- R1: Light theme as a second token set under `html[data-theme='light']`, with the exact tokens requested; depth from soft shadows on hovered rows, the agent card (white, #3F3F46 trace, bronze ✓), the founder card, thumbnails (no dimming), toasts and overlays. Spotlight off in light (it read as a smudge and would have pulled body text to 6.99:1); grain was already gone. Hardcoded white alphas became a `line` colour (white in dark, black in light) and the rest became tokens, so dark is pixel-identical (diffed home + case study at 1440 and 390: only the new toggle differs). An inline head script sets the theme before any CSS (saved choice, else system, followed live until chosen) and syncs theme-color. The toggle sits beside the socials (top bar on phones), plus ⌘K 'Toggle theme' and terminal `theme [light|dark]`, with a 500ms circular View Transition from the toggle (instant under reduced motion). At 1024 the link row needed 6px more, so its gaps tighten there only. Every component checked in light: palette, terminal, Ask, toasts, case study, 404, focus ring, scrollbar, selection; the OG image stays the dark brand card. `npm run qa` now runs both themes at four widths (body 7.64:1 dark / 7.4:1 light, accent 10.35 / 5.92, no flash): all PASS; `check:reveal` 0/32.
+
 ## Checklist
 
 - [x] 1. Study the 5 reference sites and write notes
@@ -230,3 +233,10 @@ warnings and its output has no "8.25", "CGPA" or "GPA"; lint and Prettier are cl
 - [x] P3. Compare side by side with brittanychiang.com, rauno.me, emilkowal.ski, paco.me, leerob.com; write a gap list; simplify anything that adds clutter
 - [x] P4. Add what's missing, only where it fits the minimal style (note why anything was skipped)
 - [x] P5. Final QA at 1440 / 1024 / 390, build with no warnings, short summary
+
+### Round 3: light mode, skills, AI-engineer pass (dark design unchanged unless a task says so)
+
+- [x] R1. Light mode as a clean "corporate" theme (exact tokens, soft shadows, every component), system default + saved choice, no flash, toggle in rail / phone bar / ⌘K / terminal, circular View Transition reveal
+- [ ] R2. Skills section between Experience and Projects (grouped rows, chips with tiny monochrome logos, "Used in" tooltips and click-to-filter from real tags), in nav and ⌘K; drop the Daily tools line
+- [ ] R3. Study top AI engineers' portfolios + design refs; gap list; implement what fits with real content (notes infrastructure with drafts, evaluation lines, research if real, /uses)
+- [ ] R4. Final QA: every section in both themes at 1440 / 1024 / 390; no theme flash, persistence, contrast, skills filter, drafts hidden; build with no warnings; final summary

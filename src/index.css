@@ -5,11 +5,15 @@
 @tailwind utilities;
 
 /* ───────────────────────────────────────────────────────────────────────────
-   Tokens. Dark only.
+   Tokens. Dark by default; light under html[data-theme="light"], set before
+   first paint by the inline script in index.html.
 
    The named hex values are the design tokens; the `-rgb` channel twins exist
    so Tailwind can apply alpha (`text-accent/60`) without a second palette.
-   Champagne is the only colour on the page, used on under 5% of it.
+   The accent is the only colour on the page: champagne in dark, its darker
+   sibling, deep bronze, in light. Below the core tokens, the "plumbing"
+   values hold what used to be hardcoded, so the dark theme renders exactly
+   as before and the light one can swap glows for soft shadows.
    ─────────────────────────────────────────────────────────────────────────── */
 @layer base {
   :root {
@@ -27,14 +31,71 @@
     --text-faint-rgb: 92 92 102;
     --accent-rgb: 217 199 167;
 
+    /* Plumbing */
+    --line-rgb: 255 255 255; /* hairlines and faint fills: white in dark, black in light */
+    --trace: var(--text);
+    --row-hover-bg: rgba(255, 255, 255, 0.03);
+    --row-hover-border: rgba(255, 255, 255, 0.06);
+    --chip-bg: rgba(255, 255, 255, 0.02);
+    --node-fill: rgba(255, 255, 255, 0.025);
+    --diagram-service: #121316;
+    --card-bg: linear-gradient(rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02)), var(--bg);
+    --founder-bg:
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0) 45%), var(--bg);
+    --glass-bg: rgb(var(--bg-rgb) / 0.94);
+    --overlay-bg: rgb(15 16 19 / 0.94);
+    --shadow-card: none;
+    --shadow-float: 0 12px 32px -12px rgba(0, 0, 0, 0.6);
+    --shadow-overlay: 0 24px 64px -24px rgba(0, 0, 0, 0.7);
+    --selection: rgb(var(--accent-rgb) / 0.28);
+    --scrollbar: rgba(255, 255, 255, 0.12);
+
     --ease: cubic-bezier(0.16, 1, 0.3, 1);
 
     color-scheme: dark;
   }
 
+  /* Light: a clean, corporate page. Warm off-white ground, pure-white
+     surfaces, black hairlines, and depth from soft shadows instead of glows.
+     Body #52525B is 7.4:1 on the ground; bronze #7A5C2E is 5.9:1. */
+  :root[data-theme='light'] {
+    --bg: #fafaf9;
+    --surface: #ffffff;
+    --border: rgba(0, 0, 0, 0.08);
+    --text-strong: #0f0f10;
+    --text: #52525b;
+    --text-faint: #8a8a93;
+    --accent: #7a5c2e;
+
+    --bg-rgb: 250 250 249;
+    --text-strong-rgb: 15 15 16;
+    --text-rgb: 82 82 91;
+    --text-faint-rgb: 138 138 147;
+    --accent-rgb: 122 92 46;
+
+    --line-rgb: 0 0 0;
+    --trace: #3f3f46;
+    --row-hover-bg: #ffffff;
+    --row-hover-border: rgba(0, 0, 0, 0.06);
+    --chip-bg: #ffffff;
+    --node-fill: #ffffff;
+    --diagram-service: #ffffff;
+    --card-bg: #ffffff;
+    --founder-bg: #ffffff;
+    --glass-bg: rgb(255 255 255 / 0.92);
+    --overlay-bg: rgb(255 255 255 / 0.97);
+    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.06);
+    --shadow-float: 0 1px 2px rgba(0, 0, 0, 0.05), 0 8px 24px rgba(0, 0, 0, 0.08);
+    --shadow-overlay: 0 1px 3px rgba(0, 0, 0, 0.06), 0 24px 64px -16px rgba(0, 0, 0, 0.18);
+    --selection: rgb(var(--accent-rgb) / 0.2);
+    --scrollbar: rgba(0, 0, 0, 0.2);
+
+    color-scheme: light;
+  }
+
   html {
     -webkit-text-size-adjust: 100%;
-    scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+    scrollbar-color: var(--scrollbar) transparent;
   }
 
   /* The ground lives on <body> only, so it propagates to the canvas and the
@@ -71,7 +132,7 @@
   }
 
   ::selection {
-    background-color: rgb(var(--accent-rgb) / 0.28);
+    background-color: var(--selection);
     color: var(--text-strong);
   }
 
@@ -133,7 +194,7 @@
     align-items: center;
     border: 1px solid var(--border);
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--chip-bg);
     padding: 0.125rem 0.5rem;
     font-family: 'Geist Mono', ui-monospace, monospace;
     font-size: 0.75rem;
@@ -293,14 +354,17 @@
     border-radius: 0.75rem;
     transition:
       background-color 0.3s var(--ease),
-      border-color 0.3s var(--ease);
+      border-color 0.3s var(--ease),
+      box-shadow 0.3s var(--ease);
   }
 
+  /* Dark: a 3% panel with a 6% hairline. Light: pure white with a soft shadow. */
   .row-card:hover,
   .row-card:focus-visible,
   .row-card:has(:focus-visible) {
-    background-color: rgba(255, 255, 255, 0.03);
-    border-color: rgba(255, 255, 255, 0.06);
+    background-color: var(--row-hover-bg);
+    border-color: var(--row-hover-border);
+    box-shadow: var(--shadow-card);
   }
 
   .row-card:focus-visible {
@@ -318,13 +382,16 @@
      over an opaque ground so the cursor spotlight never shines through behind
      its text (that would cost contrast). */
   .founder-card {
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0) 45%), var(--bg);
+    background: var(--founder-bg);
+    box-shadow: var(--shadow-card);
   }
 
   /* 2% white, but opaque: the agent card looks exactly like rgba(255,255,255,
-     .02) on the page, while blocking the spotlight behind its trace text. */
+     .02) on the page, while blocking the spotlight behind its trace text.
+     Light: a white card with a soft shadow. */
   .surface-solid {
-    background: linear-gradient(rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02)), var(--bg);
+    background: var(--card-bg);
+    box-shadow: var(--shadow-card);
   }
 
   /* Inside a hovered row the panel, a chip's own fill and the spotlight stack
@@ -339,13 +406,13 @@
   /* Always-on surfaces (mobile bar, Ask launcher, toasts): near-solid, no
      backdrop blur — nothing on the resting page carries a blur. */
   .glass {
-    background: rgb(var(--bg-rgb) / 0.94);
+    background: var(--glass-bg);
     border: 1px solid var(--border);
   }
 
   /* Overlays sit over dense text, so their ground is nearly opaque. */
   .glass-strong {
-    background: rgb(15 16 19 / 0.94);
+    background: var(--overlay-bg);
     border: 1px solid var(--border);
     backdrop-filter: blur(16px) saturate(140%);
     -webkit-backdrop-filter: blur(16px) saturate(140%);
@@ -371,6 +438,12 @@
   .cursor-spotlight[data-active] {
     display: block;
     animation: spot-in 0.6s var(--ease) backwards;
+  }
+
+  /* Off in the light theme: even a 4% bronze wash reads as a smudge on
+     off-white, and at its centre it would pull body text below 7:1. */
+  [data-theme='light'] .cursor-spotlight {
+    display: none !important;
   }
 
   /* Only while the pointer is outside the window. */
@@ -508,7 +581,7 @@
   /* The selected command carries the same champagne line as the active nav
      item, so "where am I" reads the same everywhere. */
   .cmd-item[data-selected='true'] {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgb(var(--line-rgb) / 0.05);
     color: var(--text-strong);
   }
 
@@ -573,6 +646,26 @@
   .vt-shot {
     view-transition-name: project-shot;
   }
+}
+
+/* Theme switch: the new theme is revealed in a circle growing from the toggle
+   (lib/theme.ts animates the clip-path), so the default crossfade is off, and
+   a case study's named screenshot is revealed with the page, not morphed. */
+html.theme-switching::view-transition-old(root),
+html.theme-switching::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+html.theme-switching .vt-shot {
+  view-transition-name: none;
+}
+
+/* Colours snap during the switch instead of fading on their own timers. */
+html.theme-switching *,
+html.theme-switching *::before,
+html.theme-switching *::after {
+  transition: none !important;
 }
 
 @media (prefers-reduced-motion: reduce) {

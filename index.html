@@ -4,7 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0B0C0E" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="color-scheme" content="dark light" />
+    <!-- Theme before first paint: the saved choice, else the system setting.
+         Parser-blocking and ahead of every stylesheet, so the page never
+         flashes the wrong theme. lib/theme.ts takes over after mount. -->
+    <script>
+      (function () {
+        var root = document.documentElement;
+        var theme = null;
+        try {
+          theme = localStorage.getItem('theme');
+        } catch (e) {}
+        if (theme !== 'light' && theme !== 'dark') {
+          theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        }
+        root.setAttribute('data-theme', theme);
+        root.style.colorScheme = theme;
+        document
+          .querySelector('meta[name="theme-color"]')
+          .setAttribute('content', theme === 'light' ? '#FAFAF9' : '#0B0C0E');
+      })();
+    </script>
 
     <title>Pulkit Taneja — AI Agents & Backend Engineer</title>
     <meta

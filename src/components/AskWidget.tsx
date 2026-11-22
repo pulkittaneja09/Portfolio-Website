@@ -86,7 +86,7 @@ export function AskWidget({ open, onOpenChange }: Props) {
       <button
         type="button"
         onClick={() => onOpenChange(!open)}
-        className="group glass fixed bottom-6 right-3 z-[65] hidden h-9 w-9 print:!hidden place-items-center rounded-full text-body shadow-[0_12px_32px_-12px_rgba(0,0,0,0.6)] transition-[border-color,color] duration-300 hover:border-white/[0.14] hover:text-strong lg:grid xl:right-6"
+        className="group glass fixed bottom-6 right-3 z-[65] hidden h-9 w-9 print:!hidden place-items-center rounded-full text-body shadow-float transition-[border-color,color] duration-300 hover:border-line/[0.14] hover:text-strong lg:grid xl:right-6"
         aria-expanded={open}
         aria-controls="ask-panel"
         aria-label={open ? 'Close the Ask about Pulkit panel' : 'Ask about Pulkit'}
@@ -108,13 +108,13 @@ export function AskWidget({ open, onOpenChange }: Props) {
             role="dialog"
             ref={panelRef}
             aria-label="Ask about Pulkit"
-            className="glass-strong fixed bottom-4 right-4 z-[66] flex print:hidden max-h-[min(30rem,70vh)] w-[min(24rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-xl shadow-[0_24px_64px_-24px_rgba(0,0,0,0.7)] lg:bottom-[4.25rem] lg:right-3 xl:right-6"
+            className="glass-strong fixed bottom-4 right-4 z-[66] flex print:hidden max-h-[min(30rem,70vh)] w-[min(24rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-xl shadow-overlay lg:bottom-[4.25rem] lg:right-3 xl:right-6"
             initial={reduced ? undefined : { opacity: 0, y: 10, scale: 0.985 }}
             animate={reduced ? undefined : { opacity: 1, y: 0, scale: 1 }}
             exit={reduced ? undefined : { opacity: 0, y: 6, scale: 0.99 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >
-            <header className="flex shrink-0 items-center gap-2.5 border-b border-white/[0.07] py-2.5 pl-4 pr-2">
+            <header className="flex shrink-0 items-center gap-2.5 border-b border-line/[0.07] py-2.5 pl-4 pr-2">
               <p className="flex-1 text-sm font-medium tracking-[-0.01em]">Ask about Pulkit</p>
               <span className="label text-[0.625rem] text-faint">offline · no API</span>
               <button
@@ -138,8 +138,8 @@ export function AskWidget({ open, onOpenChange }: Props) {
                   <div
                     className={
                       message.from === 'visitor'
-                        ? 'ml-auto max-w-[85%] rounded-xl rounded-br-sm bg-white/[0.08] px-3.5 py-2.5 text-[0.8125rem] leading-relaxed text-strong'
-                        : 'max-w-[92%] rounded-xl rounded-bl-sm border border-white/[0.07] px-3.5 py-2.5 text-[0.8125rem] leading-relaxed text-body'
+                        ? 'ml-auto max-w-[85%] rounded-xl rounded-br-sm bg-line/[0.08] px-3.5 py-2.5 text-[0.8125rem] leading-relaxed text-strong'
+                        : 'max-w-[92%] rounded-xl rounded-bl-sm border border-line/[0.07] px-3.5 py-2.5 text-[0.8125rem] leading-relaxed text-body'
                     }
                   >
                     {message.text}
@@ -152,7 +152,7 @@ export function AskWidget({ open, onOpenChange }: Props) {
                           <button
                             type="button"
                             onClick={() => send(question)}
-                            className="rounded-md border border-white/[0.07] px-2.5 py-1 text-left text-[0.6875rem] text-body transition-colors duration-400 hover:border-white/[0.14] hover:text-strong"
+                            className="rounded-md border border-line/[0.07] px-2.5 py-1 text-left text-[0.6875rem] text-body transition-colors duration-400 hover:border-line/[0.14] hover:text-strong"
                           >
                             {question}
                           </button>
@@ -165,7 +165,7 @@ export function AskWidget({ open, onOpenChange }: Props) {
             </div>
 
             <form
-              className="flex shrink-0 items-center gap-2 border-t border-white/[0.07] p-3"
+              className="flex shrink-0 items-center gap-2 border-t border-line/[0.07] p-3"
               onSubmit={(event) => {
                 event.preventDefault();
                 send(value);
@@ -181,7 +181,7 @@ export function AskWidget({ open, onOpenChange }: Props) {
                 onChange={(event) => setValue(event.target.value)}
                 placeholder="What has he built?"
                 autoComplete="off"
-                className="min-w-0 flex-1 rounded-lg border border-white/[0.07] bg-transparent px-3.5 py-2 text-[0.8125rem] text-strong outline-none transition-colors duration-400 placeholder:text-faint focus:border-white/[0.14]"
+                className="min-w-0 flex-1 rounded-lg border border-line/[0.07] bg-transparent px-3.5 py-2 text-[0.8125rem] text-strong outline-none transition-colors duration-400 placeholder:text-faint focus:border-line/[0.14]"
               />
               <button
                 type="submit"
@@ -192,7 +192,7 @@ export function AskWidget({ open, onOpenChange }: Props) {
               </button>
             </form>
 
-            <p className="meta shrink-0 border-t border-white/[0.07] px-4 py-2.5 text-[0.625rem] leading-relaxed">
+            <p className="meta shrink-0 border-t border-line/[0.07] px-4 py-2.5 text-[0.625rem] leading-relaxed">
               Answers are matched against this page&rsquo;s data, not generated. For anything it cannot
               answer, email {profile.email}.
             </p>
