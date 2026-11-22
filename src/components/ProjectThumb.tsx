@@ -1,5 +1,3 @@
-import { m } from 'framer-motion';
-import type { MotionValue } from 'framer-motion';
 import type { Project } from '@/data/types';
 import { cn } from '@/lib/cn';
 import { previewSrcSet } from '@/lib/images';
@@ -17,30 +15,25 @@ const frame =
 interface ThumbProps {
   project: Project;
   className?: string;
-  /** In the desktop project stack: the image drifts this many px against its frame. */
-  parallax?: MotionValue<number>;
 }
 
-export function ProjectThumb({ project, className, parallax }: ThumbProps) {
+export function ProjectThumb({ project, className }: ThumbProps) {
   // The outer layer carries the project's tint: a soft glow behind it on
   // hover (see `.thumb` in index.css).
   return (
     <div className={cn('thumb tinted', className)} style={tintStyle(project.slug)}>
-      <ThumbFace project={project} parallax={parallax} />
+      <ThumbFace project={project} />
     </div>
   );
 }
 
-/** Parallax needs headroom: the face is scaled up so a ±10px drift never shows an edge. */
-const drift = (parallax?: MotionValue<number>) => (parallax ? { y: parallax, scale: 1.14 } : undefined);
-
-function ThumbFace({ project, parallax }: Omit<ThumbProps, 'className'>) {
+/* In the desktop stack the face drifts by --parallax (see `.thumb-drift`). */
+function ThumbFace({ project }: Omit<ThumbProps, 'className'>) {
   if (project.preview) {
     return (
       // data-vt-shot lets a View Transition morph this into the case study's image.
       <div className={frame} data-vt-shot={project.slug}>
-        <m.img
-          style={drift(parallax)}
+        <img
           src={project.preview}
           srcSet={previewSrcSet(project.preview)}
           sizes="(min-width: 1024px) 200px, (min-width: 640px) 28vw, 208px"
@@ -49,7 +42,7 @@ function ThumbFace({ project, parallax }: Omit<ThumbProps, 'className'>) {
           height={640}
           loading="lazy"
           decoding="async"
-          className="h-full w-full object-cover object-left-top brightness-[0.8] saturate-[0.85] transition-[filter] duration-200 group-hover/row:brightness-100 group-hover/row:saturate-100 light:brightness-100 light:saturate-100"
+          className="thumb-drift h-full w-full object-cover object-left-top brightness-[0.8] saturate-[0.85] transition-[filter] duration-200 group-hover/row:brightness-100 group-hover/row:saturate-100 light:brightness-100 light:saturate-100"
         />
       </div>
     );
@@ -68,7 +61,7 @@ function ThumbFace({ project, parallax }: Omit<ThumbProps, 'className'>) {
       role="img"
       aria-label={`${project.name} architecture: ${nodes.map((node) => node.label).join(', ')}`}
     >
-      <m.div className="flex flex-col gap-[0.2rem]" style={parallax ? { y: parallax } : undefined}>
+      <div className="thumb-drift flex flex-col gap-[0.2rem]">
         {nodes.map((node, i) => (
           <p key={node.id} className="truncate" style={{ paddingLeft: `${i * 0.55}rem` }} aria-hidden>
             {/* The elbow is drawn, not typed: box-drawing glyphs are outside
@@ -79,7 +72,7 @@ function ThumbFace({ project, parallax }: Omit<ThumbProps, 'className'>) {
             <span className="text-strong/85">{node.label}</span>
           </p>
         ))}
-      </m.div>
+      </div>
     </div>
   );
 }

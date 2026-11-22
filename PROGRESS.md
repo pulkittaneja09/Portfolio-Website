@@ -609,7 +609,7 @@ Also removed: an orphaned `.note-prose` stylesheet left over from Notes.
 - [x] E3b. Copy and links — en-dash full-year ranges everywhere, one unmeasured claim softened, 404 titled + noindex, TODO notes out of the bundle; 21 links checked (all good; Vercel demos unverifiable from this network, Render needs a cold start); details in "Round 6: copy and link check"
 - [x] E3c. Interaction — keyboard pass in both themes: 158 tab stops in reading order, every one with a visible accent ring and scrolled into view; ⌘K, terminal and Ask each open and close with Esc; no console errors. Hover timing unified: 200ms for colour / underline / border, 300ms for larger moves (was 300–400ms, felt slow)
 - [x] E3d. Responsive — 1440 / 1280 / 1024 / 768 / 390 / 360: no horizontal scroll, nothing off screen, the name on one line at every width. Tap targets: 66 controls were under 44px on phones; on coarse pointers every link/button now gets an invisible ≥ 44×44 hit area (zero-specificity ::after, no visual change) and skill chips grow to 32px; 0 under 44px at 390 and 360; card taps and inline links verified
-- [ ] E3e. Launch readiness: Lighthouse 95+, images, fonts, bundle, meta / OG / icons / sitemap / robots / JSON-LD, 404, vercel.json, README
+- [x] E3e. Launch readiness — palette OG card + favicon set via `npm run brand` (with a real maskable icon), theme-color for both themes, critical JS ~120 → ~91KB gz (Framer Motion fully lazy), warm-up deferred past load, serif preload dropped; Lighthouse mobile 96–97 / 100 / 100 / 100, desktop 100 across; unused deps removed; README rewritten; details in "Round 6: launch readiness"
 - [ ] E4. Final QA (every section, both themes, 1440 / 390), build clean, final report with deploy steps
 
 ## Round 6: the system after the consistency pass (E3a)
@@ -647,3 +647,30 @@ Also removed: an orphaned `.note-prose` stylesheet left over from Notes.
   requests; fine in a browser. **The three `*.vercel.app` demos could not be verified from this
   machine**: the network presents an untrusted certificate for every Vercel host (vercel.com did
   the same in Round 4). Check them yourself in a browser.
+
+## Round 6: launch readiness (E3e)
+
+- **Brand assets in the palette:** `npm run brand` (new, `scripts/brand-assets.cjs`) renders the
+  1200×630 social card (midnight ground, glacier dot and serif gradient, the site's own fonts), the
+  favicon SVG and ICO (16 + 32), the apple-touch icon, the 192 / 512 manifest icons and a proper
+  full-bleed maskable icon (the manifest used the rounded 512 before). The old card was the black
+  and champagne one.
+- **theme-color for both themes:** per-scheme `<meta>` tags; the head script and the theme toggle
+  set both, so a visitor's choice still wins.
+- **JS on the critical path: ~120KB → ~91KB gzipped.** Framer Motion is off the home page's critical
+  path entirely: the overlays and toasts mount their own `LazyMotion` root inside their lazy chunks,
+  the Experience line uses a 20-line scroll handler, the project cards are plain HTML, and the
+  desktop stack is a lazy chunk (prefetched at start-up on desktop only) that drives the cards
+  through the item's transform and two CSS variables. The animation features load asynchronously.
+- **Bandwidth during first paint:** the overlay warm-up waits for `load` plus a beat (it was firing
+  at ~500ms), and the accent serif is no longer preloaded (one word per section; `swap`).
+- **Lighthouse (production preview, three mobile runs):** mobile 96 / 97 / 97 performance (LCP
+  2.9s → 2.5s), 100 accessibility, best practices and SEO; desktop 100 / 100 / 100 / 100.
+- **Unused dependencies removed:** `@typescript-eslint/eslint-plugin` and `@typescript-eslint/parser`
+  (the `typescript-eslint` package bundles them).
+- **Already in place and re-checked:** canonical, title and description per route, Open Graph and
+  Twitter tags with the card, `sitemap.xml` and `robots.txt` generated at build, JSON-LD `Person` with
+  sameAs GitHub / LinkedIn / LeetCode, the 404 page (now with its own title and `noindex`),
+  `vercel.json` (SPA rewrite, `/resume`, immutable caching, security headers), WebP previews with
+  `srcset` and lazy loading, `font-display: swap`.
+- **README:** rewritten short: stack, run, edit `portfolio.ts`, deploy to Vercel, checks, structure.

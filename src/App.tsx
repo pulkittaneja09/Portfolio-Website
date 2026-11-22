@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { CustomCursor } from '@/components/CustomCursor';
 import { useGlobalShortcuts } from '@/hooks/useGlobalShortcuts';
 import { useLenis } from '@/hooks/useLenis';
-import { whenIdle } from '@/lib/idle';
+import { afterLoadIdle } from '@/lib/idle';
 import { followSystemTheme } from '@/lib/theme';
 import { Home } from '@/pages/Home';
 import { NotFound } from '@/pages/NotFound';
@@ -55,15 +55,16 @@ export default function App() {
   useEffect(() => followSystemTheme(), []);
   useGlobalShortcuts({ onPalette: openPalette, onTerminal: openTerminal, onEscape: close });
 
-  // Warm both chunks once the page is otherwise idle, so the first ⌘K is
-  // instant without costing anything during load.
+  // Warm the overlay chunks after load and once the page is idle, so the
+  // first ⌘K is instant without competing with the first paint.
   useEffect(() => {
     const warm = () => {
       void import('@/components/CommandPalette');
       void import('@/components/TerminalOverlay');
+      void import('@/components/ToastViewport');
       setWidgetReady(true);
     };
-    return whenIdle(warm, 4000);
+    return afterLoadIdle(warm);
   }, []);
 
   return (

@@ -29,7 +29,8 @@ export default defineConfig(({ mode }) => ({
         // a content edit does not bust the cache for React or Framer Motion.
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            if (/framer-motion/.test(id)) return 'motion';
+            // framer-motion is left to Rollup: its animation features split into
+            // the async motionFeatures chunk, the rest rides with the app.
             if (/cmdk/.test(id)) return 'cmdk';
             // React must be named before react-router, or rollup folds
             // react-dom into the router chunk.

@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0A0E14" />
+    <meta name="theme-color" content="#0A0E14" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#F8FAFC" media="(prefers-color-scheme: light)" />
     <meta name="color-scheme" content="dark light" />
     <!-- Theme before first paint: the saved choice, else the system setting.
          Parser-blocking and ahead of every stylesheet, so the page never
@@ -20,9 +21,11 @@
         }
         root.setAttribute('data-theme', theme);
         root.style.colorScheme = theme;
-        document
-          .querySelector('meta[name="theme-color"]')
-          .setAttribute('content', theme === 'light' ? '#F8FAFC' : '#0A0E14');
+        // Both scheme-specific theme-color tags follow the chosen theme, so a
+        // visitor's choice wins over their system setting.
+        document.querySelectorAll('meta[name="theme-color"]').forEach(function (meta) {
+          meta.setAttribute('content', theme === 'light' ? '#F8FAFC' : '#0A0E14');
+        });
 
         // First visit of the session to the home page only: a "PT" monogram
         // draws itself and fades into the page (0.95s from first paint, never
@@ -144,11 +147,12 @@
     />
     <meta name="twitter:image" content="__SITE_URL__/og.png" />
 
-    <!-- Fonts are self-hosted (see src/fonts.css). Preload the three faces that
-         paint above the fold so they arrive with the stylesheet, not after it. -->
+    <!-- Fonts are self-hosted (see src/fonts.css). Preload the two faces that
+         paint the first screen so they arrive with the stylesheet; the accent
+         serif (one word per section) loads on demand with font-display: swap
+         rather than compete with the page's JS for bandwidth. -->
     <link rel="preload" as="font" type="font/woff2" href="/fonts/geist-latin.woff2" crossorigin />
     <link rel="preload" as="font" type="font/woff2" href="/fonts/geist-mono-latin.woff2" crossorigin />
-    <link rel="preload" as="font" type="font/woff2" href="/fonts/instrument-serif-italic-latin.woff2" crossorigin />
 
     <script type="application/ld+json">
       {

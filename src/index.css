@@ -923,11 +923,11 @@
      the last spacer holds the finished stack for a beat before it scrolls
      away with the section (sticky is bounded by the list's content box, so
      this has to be content, not padding). */
+  /* The tilt and scale are a transform on this item, with perspective(1200px)
+     in the transform itself (ProjectStack.tsx). */
   .project-stack > [data-card] {
     position: sticky;
     top: calc(96px + var(--i) * 16px);
-    perspective: 1200px;
-    perspective-origin: 50% 0%;
   }
 
   .project-stack > .stack-spacer {
@@ -942,8 +942,18 @@
     min-height: var(--card-h, auto);
   }
 
-  .project-stack[data-active] .project-card {
+  .project-stack[data-active] > [data-card] {
     will-change: transform;
+  }
+
+  /* Thumbnail parallax: the face drifts by --parallax (±10px) against its
+     frame; the image is scaled up so the drift never shows an edge. */
+  .project-stack .thumb-drift {
+    transform: translateY(var(--parallax, 0px));
+  }
+
+  .project-stack img.thumb-drift {
+    transform: translateY(var(--parallax, 0px)) scale(1.14);
   }
 
   /* Case-study header: a quiet wash of the project's tint above the title,

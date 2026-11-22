@@ -12,7 +12,8 @@
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\"",
     "check:reveal": "node scripts/reveal-check.cjs",
     "qa": "node scripts/qa.cjs",
-    "icons": "node scripts/skill-icons.mjs"
+    "icons": "node scripts/skill-icons.mjs",
+    "brand": "node scripts/brand-assets.cjs"
   },
   "dependencies": {
     "cmdk": "^1.0.4",
@@ -27,8 +28,6 @@
     "@types/node": "^26.6.6",
     "@types/react": "^18.3.17",
     "@types/react-dom": "^18.3.5",
-    "@typescript-eslint/eslint-plugin": "^8.18.1",
-    "@typescript-eslint/parser": "^8.18.1",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.17.0",

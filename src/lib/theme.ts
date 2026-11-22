@@ -30,7 +30,9 @@ function apply(theme: Theme) {
   const root = document.documentElement;
   root.dataset.theme = theme;
   root.style.colorScheme = theme;
-  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', THEME_COLOR[theme]);
+  document
+    .querySelectorAll('meta[name="theme-color"]')
+    .forEach((meta) => meta.setAttribute('content', THEME_COLOR[theme]));
   window.dispatchEvent(new Event(EVENT));
 }
 

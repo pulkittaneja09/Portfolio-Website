@@ -1,5 +1,4 @@
-import { m, useScroll } from 'framer-motion';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Section } from '@/components/Section';
 import { ArrowUpRightIcon } from '@/components/icons';
 import { experience, profile } from '@/data/portfolio';
@@ -75,7 +74,37 @@ export function Experience() {
   const skill = useActiveSkill();
   const reduced = useReducedMotion();
   const list = useRef<HTMLOListElement>(null);
-  const { scrollYProgress: fill } = useScroll({ target: list, offset: ['start 70%', 'end 55%'] });
+  const fill = useRef<HTMLSpanElement>(null);
+
+  // Progress from the list's top passing 70% of the viewport to its bottom
+  // passing 55%: one rect read and one transform write per frame, only
+  // while scrolling, and never a React render.
+  useEffect(() => {
+    const node = list.current;
+    const bar = fill.current;
+    if (!node || !bar) return;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const rect = node.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const start = rect.top - vh * 0.7;
+      const end = rect.bottom - vh * 0.55;
+      const progress = Math.min(1, Math.max(0, -start / (end - start || 1)));
+      bar.style.transform = `scaleY(${progress.toFixed(4)})`;
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, [reduced]);
 
   return (
     <Section id="experience" label="Experience">
@@ -92,7 +121,7 @@ export function Experience() {
         {/* The one moving thing here: a hairline that fills with the accent
             as you read down the roles. Transform only (scaleY). */}
         <li className="exp-track" aria-hidden role="presentation">
-          {!reduced && <m.span className="exp-fill" style={{ scaleY: fill }} />}
+          {!reduced && <span ref={fill} className="exp-fill" style={{ transform: 'scaleY(0)' }} />}
         </li>
       </ol>
 

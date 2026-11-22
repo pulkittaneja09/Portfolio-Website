@@ -4,6 +4,7 @@ import { ChatIcon, CloseIcon, SendIcon } from '@/components/icons';
 import { profile } from '@/data/portfolio';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { SUGGESTED_QUESTIONS, ask } from '@/lib/ask';
+import { MotionRoot } from '@/components/MotionRoot';
 
 interface Message {
   id: number;
@@ -78,7 +79,7 @@ export function AskWidget({ open, onOpenChange }: Props) {
   }
 
   return (
-    <>
+    <MotionRoot>
       {/* ── Launcher (desktop) ───────────────────────────────────────────
           36px wide at 12px from the edge between 1024 and 1279, where the
           gutter is 48px; 24px from the edge above that. The label shows on
@@ -199,6 +200,6 @@ export function AskWidget({ open, onOpenChange }: Props) {
           </m.div>
         )}
       </AnimatePresence>
-    </>
+    </MotionRoot>
   );
 }
