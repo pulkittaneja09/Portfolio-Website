@@ -161,7 +161,7 @@ src/
   sections/         About, Experience, Skills, Projects, Founder, Contact
   components/       identity rail (Identity, SectionNav, ProfileLinks, AgentRun),
                     MobileBar, rows and thumbnails, PipelineFlow, palette,
-                    terminal, Ask widget, cursor spotlight, architecture diagram
+                    terminal, Ask widget, dot + ring cursor, architecture diagram
   pages/            Home (the split layout), ProjectDetail, Uses,
                     NotFound, Resume
   hooks/            reduced motion, media queries, scroll-spy, Lenis,
@@ -205,7 +205,7 @@ accent `#8FB4FF` (9.3:1), seafoam secondary `#7DD3C0`. Light: ground `#F8FAFC`, 
 `#404C60` (8.3:1), accent `#2F5BD3` (5.6:1), secondary `#0E7C6C`, soft navy-tinted shadows. The accent
 is deliberate: the active nav line, hover titles, links, metrics, the status dot, focus rings and
 function names in the agent card; seafoam carries strings and quiet gradients, a soft green the ✓
-marks. A slow aurora sits behind the rail and the cursor spotlight is 5.5% / 5% accent, both measured
+marks. A slow aurora sits behind the rail, measured
 to keep body text above 7:1 (`npm run qa`). Every colour is a CSS variable: the tokens are the RGB
 triplets between the `PALETTE` markers in `index.css`, and `border-line/[0.07]` is a navy-tinted
 hairline in both themes.

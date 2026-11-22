@@ -1,6 +1,6 @@
 import { Suspense, lazy, useCallback, useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { CursorSpotlight } from '@/components/CursorSpotlight';
+import { CustomCursor } from '@/components/CustomCursor';
 import { useGlobalShortcuts } from '@/hooks/useGlobalShortcuts';
 import { useLenis } from '@/hooks/useLenis';
 import { whenIdle } from '@/lib/idle';
@@ -68,7 +68,7 @@ export default function App() {
 
   return (
     <>
-      <CursorSpotlight />
+      <CustomCursor />
 
       <a
         href="#main"

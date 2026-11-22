@@ -476,7 +476,7 @@ accessibility, best practices and SEO 100.
 
 ### Round 5: circle cursor, résumé-exact skills, calmer scrolling with one 3D moment
 
-- [ ] D1. Custom dot + ring cursor (fine pointers only; springs; link / card / text states; reduced motion)
+- [x] D1. Dot + ring cursor — 6px dot on the pointer, 32px accent ring on a spring (300/30); 48px + 10% fill over links/buttons/chips, 72px "View" over project cards, native text cursor over inputs, 0.85 on mousedown, hidden off-window; fine pointers only (verified absent on mobile emulation); motion values + data attributes, no re-renders; reduced motion = instant, no size animation. Spotlight removed: two things trailing the mouse at different lags looked busy
 - [ ] D2. Skills match the résumé exactly; non-skills out; official spellings site-wide; mapping still works
 - [ ] D3a. Lenis tuning (lerp 0.1, wheel 1), offsets for nav and ⌘K, off for reduced motion and touch
 - [ ] D3b. Projects as a sticky 3D card stack (scale, tilt, dim, thumbnail parallax); mobile and reduced motion get plain cards

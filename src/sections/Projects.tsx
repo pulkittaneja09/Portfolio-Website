@@ -58,6 +58,7 @@ function ProjectRow({ project }: { project: Project }) {
   return (
     <article
       className="row-card group/row grid gap-y-4 sm:grid-cols-[27%_minmax(0,1fr)] sm:gap-x-6"
+      data-cursor="card"
       onPointerMove={tilt}
       onPointerLeave={untilt}
       onPointerDown={untilt}
@@ -70,6 +71,7 @@ function ProjectRow({ project }: { project: Project }) {
               link; the Live and Code links below sit above it. */}
           <TransitionLink
             to={`/projects/${project.slug}`}
+            data-card-link
             className="after:absolute after:inset-0 after:rounded-xl after:content-[''] focus-visible:outline-none"
           >
             {project.name}
