@@ -20,6 +20,13 @@
    Dark:  bg #0A0E14 · text #A3ADBD (8.5:1) · accent #8FB4FF (9.3:1)
    Light: bg #F8FAFC · text #434F63 (7.9:1) · accent #2F5BD3 (5.6:1)
    ─────────────────────────────────────────────────────────────────────────── */
+/* Registered so the founder card's ring can animate its angle. */
+@property --ring-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
 @layer base {
   :root,
   [data-palette] {
@@ -552,6 +559,52 @@
   .founder-card {
     background: var(--founder-bg);
     box-shadow: var(--shadow-card);
+  }
+
+  /* The one "special" element on the page: a hairline of accent and
+     secondary light travelling slowly round the founder card (a conic
+     gradient turning once every 14s, masked to a 1px ring). Still, at a
+     fixed angle, under reduced motion. */
+  .founder-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(
+      from var(--ring-angle),
+      rgb(var(--accent-rgb) / 0) 0turn,
+      rgb(var(--accent-rgb) / 0.85) 0.1turn,
+      rgb(var(--secondary-rgb) / 0.7) 0.2turn,
+      rgb(var(--accent-rgb) / 0) 0.32turn,
+      rgb(var(--accent-rgb) / 0) 0.5turn,
+      rgb(var(--secondary-rgb) / 0.45) 0.62turn,
+      rgb(var(--accent-rgb) / 0.55) 0.72turn,
+      rgb(var(--accent-rgb) / 0) 0.84turn
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box exclude,
+      linear-gradient(#000 0 0);
+    animation: ring-turn 14s linear infinite;
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .founder-card::before {
+      animation: none;
+      --ring-angle: 200deg;
+    }
+  }
+
+  @keyframes ring-turn {
+    to {
+      --ring-angle: 360deg;
+    }
   }
 
   /* 2% white, but opaque: the agent card looks exactly like rgba(255,255,255,
