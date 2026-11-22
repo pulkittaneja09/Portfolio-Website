@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowLeftIcon } from '@/components/icons';
 import { projects } from '@/data/portfolio';
+import { paletteKey } from '@/lib/platform';
 import { stagger } from '@/lib/stagger';
 
 /** Same reading column as a case study, with a way back and a way forward. */
@@ -18,7 +19,7 @@ export function NotFound() {
         That page does not <em className="serif">exist</em>.
       </h1>
       <p className="enter mt-4 max-w-prose text-body" style={stagger(2)}>
-        The link may be stale. Everything on this site is reachable from the home page, or with ⌘K.
+        The link may be stale. Everything on this site is reachable from the home page, or with {paletteKey}.
       </p>
 
       <Link

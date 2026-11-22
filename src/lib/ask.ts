@@ -6,9 +6,9 @@ import {
   projects,
   sideProjects,
   skillGroups,
-  stats,
   venture,
 } from '@/data/portfolio';
+import { liveStats as stats, siteStats } from '@/lib/siteStats';
 
 /**
  * Offline answer engine for the "Ask about Pulkit" widget.
@@ -245,7 +245,7 @@ const TOPICS: Topic[] = [
       'school',
     ],
     answer: () =>
-      `${education.degree} in ${education.field} at ${education.institution}, ${education.start} to ${education.end}. He has also solved 120+ problems on LeetCode.`,
+      `${education.degree} in ${education.field} at ${education.institution}, ${education.start} to ${education.end}. He has also solved ${siteStats.leetcodeSolved ?? '120+'} problems on LeetCode.`,
     related: ['Is he available for internships?', 'What has he built?', 'Where is he based?'],
   },
   {

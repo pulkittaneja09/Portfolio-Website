@@ -1,9 +1,22 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import { fileURLToPath, URL } from 'node:url';
+import { site } from './config/site-plugin';
+import { GITHUB_USERNAME, profile, projects } from './src/data/portfolio';
 
-export default defineConfig({
-  plugins: [react()],
+export default defineConfig(({ mode }) => ({
+  plugins: [
+    react(),
+    site({
+      siteUrl: profile.siteUrl,
+      routes: ['/', ...projects.map((project) => `/projects/${project.slug}`)],
+      leetcodeUser: profile.socials.find((social) => social.icon === 'leetcode')?.handle ?? '',
+      githubUser: GITHUB_USERNAME,
+      // All variables, not only VITE_*: GITHUB_TOKEN stays in this Node
+      // process and is never inlined into the client bundle.
+      githubToken: loadEnv(mode, process.cwd(), '').GITHUB_TOKEN || undefined,
+    }),
+  ],
   resolve: {
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
   },
@@ -28,4 +41,4 @@ export default defineConfig({
       },
     },
   },
-});
+}));

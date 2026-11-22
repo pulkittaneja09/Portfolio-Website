@@ -39,7 +39,7 @@ component, so you can change the whole site without opening any JSX. Every field
 | --------------------------------------------------------------------- | ------------------- |
 | Name, title, one-liner, email, socials, availability line             | `profile`           |
 | The two About paragraphs (`**phrase**` = highlight, `*word*` = serif) | `about`             |
-| The "Now" strip and the "Daily tools" line                            | `now`, `dailyTools` |
+| The "Now" row (the LeetCode count is added at build) and daily tools  | `now`, `dailyTools` |
 | The left-column agent-run card (example traces, not metrics)          | `agentTraces`       |
 | Degree, institution, dates                                            | `education`         |
 | The section nav and its order                                         | `nav`               |
@@ -55,9 +55,9 @@ Two rules worth keeping:
 1. **Every number needs a `source`.** Each entry in `stats` explains where the figure comes from. If
    you cannot source a number, do not add it. The agent traces are labelled "example trace" on the
    page for the same reason: they are illustrations, not measurements.
-2. **`siteUrl` drives canonical URLs, the sitemap, Open Graph and JSON-LD.** Set it to your real
-   domain after the first deploy, and update the matching URLs in [`index.html`](index.html) and
-   [`public/sitemap.xml`](public/sitemap.xml).
+2. **`profile.siteUrl` is the one place the domain lives.** It fills every `__SITE_URL__` in
+   [`index.html`](index.html) (canonical, Open Graph, JSON-LD) and the `sitemap.xml` and `robots.txt`
+   generated at build time. Change it there if you add a custom domain.
 
 The content also feeds three other surfaces automatically — the ⌘K palette, the terminal
 (`src/lib/terminal.ts`) and the "Ask about Pulkit" widget (`src/lib/ask.ts`). Adding a project makes
@@ -91,7 +91,7 @@ Give each node a `col` (left to right) and `row` (top to bottom), plus a `tone` 
 `service`, `model` or `store`, then list the `edges`. A project without a screenshot uses the same
 nodes for its row thumbnail, so it never shows an empty frame.
 
-After adding a project, add its URL to `public/sitemap.xml`.
+The generated sitemap picks up the new case study automatically.
 
 ## Screenshots
 
@@ -112,13 +112,14 @@ for w in (1024, 640):
 
 Copy `.env.example` to `.env`. The one variable is optional.
 
-| Variable            | What it does                                                     |
-| ------------------- | ---------------------------------------------------------------- |
-| `VITE_GITHUB_TOKEN` | Raises the GitHub API rate limit **for local development only**. |
+| Variable       | What it does                                                                    |
+| -------------- | ------------------------------------------------------------------------------- |
+| `GITHUB_TOKEN` | Raises the GitHub rate limit for the build's repo-count fetch. Build-time only. |
 
-> **Do not set `VITE_GITHUB_TOKEN` in Vercel.** Anything prefixed `VITE_` is inlined into the client
-> bundle. The site makes one cached request (the public repo count under Projects) and falls back to
-> the number in `portfolio.ts` if the unauthenticated limit is ever hit.
+> `GITHUB_TOKEN` is read by `config/site-plugin.ts` in Node and never reaches the browser (it has no
+> `VITE_` prefix), so it is safe to set in Vercel. Never use a `VITE_`-prefixed token: anything with
+> that prefix is inlined into the client bundle. Without a token the build uses the public API and
+> falls back to the last good count, then to the figure in `portfolio.ts`.
 
 ## Deploying to Vercel
 
@@ -129,9 +130,9 @@ Copy `.env.example` to `.env`. The one variable is optional.
 [`vercel.json`](vercel.json) pins the build (framework `vite`, `npm run build`, output `dist`), so it
 never depends on the dashboard settings. That matters here: this repository started as a static HTML
 site, and a Vercel project imported back then would otherwise keep its old preset and serve the wrong
-folder. It also rewrites non-`/api` paths to `index.html` (so `/projects/parcelpilot` survives a hard
-refresh), caches `/assets/*` and `/fonts/*` for a year, and sets `X-Content-Type-Options`,
-`Referrer-Policy` and `X-Frame-Options`.
+folder. It also redirects `/resume` to the PDF (a clean URL to share), rewrites non-`/api` paths to
+`index.html` (so `/projects/parcelpilot` survives a hard refresh), caches `/assets/*` and `/fonts/*`
+for a year, and sets `X-Content-Type-Options`, `Referrer-Policy` and `X-Frame-Options`.
 
 ## Project structure
 
@@ -140,8 +141,13 @@ public/
   fonts/            self-hosted woff2: Geist, Geist Mono, Instrument Serif italic
   previews/         project screenshots, WebP at 1024 and 640
   Pulkit_Taneja_Resume.pdf
-  og.png            1200x630 social card
-  favicon.svg  robots.txt  sitemap.xml  site.webmanifest
+  og.png            1200x630 social card, centred so a square crop still reads
+  favicon.svg  favicon.ico  apple-touch-icon.png  icon-192.png  icon-512.png
+  site.webmanifest  (sitemap.xml and robots.txt are generated into dist/)
+
+config/
+  site-plugin.ts    build-time LeetCode + GitHub counts, last-updated date,
+                    the site URL in index.html, sitemap.xml and robots.txt
 
 src/
   data/
@@ -151,10 +157,11 @@ src/
   components/       identity rail (Identity, SectionNav, ProfileLinks, AgentRun),
                     MobileBar, rows and thumbnails, PipelineFlow, palette,
                     terminal, Ask widget, cursor spotlight, architecture diagram
-  pages/            Home (the split layout), ProjectDetail, NotFound
+  pages/            Home (the split layout), ProjectDetail, NotFound, Resume
   hooks/            reduced motion, media queries, scroll-spy, Lenis,
-                    clipboard, GitHub, shortcuts
-  lib/              reveal, GitHub client, terminal commands, answer engine, helpers
+                    clipboard, shortcuts
+  lib/              reveal, build-time stats, view transitions, terminal
+                    commands, answer engine, helpers
 scripts/
   qa.cjs            design QA at 1440 / 1280 / 1024 / 390
   reveal-check.cjs  strict "nothing stuck invisible" regression check
@@ -204,6 +211,17 @@ screenshots, prints and crawlers see every element. Decorative motion (status pu
 lines) is done with colour, so nothing on screen ever rests below opacity 1, and nothing carries a
 blur.
 
+**The page calls no third-party API.** The LeetCode solved count and the public repo count are
+fetched once per build (`config/site-plugin.ts`, exposed as `virtual:site-stats`), so CORS and rate
+limits cannot break the page or log a console error. A failed fetch falls back to the last good value
+cached in `node_modules/.cache`, then to no number at all: the Now row then reads "LeetCode ↗".
+
+**Case studies open with a View Transition.** `TransitionLink` wraps the route change in
+`document.startViewTransition`: the page crossfades with a 10px lift, and on desktop the clicked
+project's thumbnail morphs into the case study's screenshot (and back on the way out). Navigation and
+scroll both happen inside the update callback, so the new snapshot is already in place. Browsers
+without the API, and reduced motion, get a plain navigation.
+
 **Rows dim their siblings with `:has()`.** Hovering an experience or project row lifts it onto a 3%
 panel and fades the others to 50%; hovering the gap between rows dims nothing.
 
@@ -215,14 +233,17 @@ from `portfolio.ts`. No API key, no network call, and no way for it to invent a 
 floats over the content: on desktop it opens from a 36px button sized to sit in the page gutter, on
 phones from the top bar's Ask button, and from ⌘K everywhere.
 
-**Everything respects `prefers-reduced-motion`.** No Lenis, no spotlight, no entrances or reveals, a
-static agent trace, and a global rule collapses any remaining animation.
+**Everything respects `prefers-reduced-motion`.** No Lenis, no spotlight, no entrances, reveals or
+view transitions, a static agent trace, and a global rule collapses any remaining animation.
+
+**It prints.** Every colour is a token, so `@media print` swaps the tokens for ink on white and hides
+the fixed chrome; reveals are forced visible on `beforeprint`.
 
 ## Open TODOs
 
 Search the codebase for `TODO(pulkit)`. At the time of writing:
 
-- `profile.siteUrl` — set to the real domain after the first deploy.
+- `profile.siteUrl` — change it if you add a custom domain or rename the Vercel project.
 - The DPIIT recognition number and date in `venture.badges`.
 - The Audaxity site URL, once it is live (the Audaxity row links to the founder card meanwhile).
 - Company URLs for SDG Corporation and Dezors, which turn those experience rows into links.

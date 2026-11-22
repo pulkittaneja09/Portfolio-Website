@@ -64,6 +64,12 @@ export interface Profile {
   socials: Social[];
 }
 
+/** One item in the About "Now" row. `href` makes it a link: an in-page anchor or a URL. */
+export interface NowItem {
+  label: string;
+  href?: string;
+}
+
 export interface Education {
   institution: string;
   degree: string;

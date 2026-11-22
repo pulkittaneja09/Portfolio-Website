@@ -13,6 +13,7 @@ import type {
   Education,
   ExperienceItem,
   NavItem,
+  NowItem,
   Profile,
   Project,
   SideProject,
@@ -41,9 +42,10 @@ export const profile: Profile = {
   phone: '+91 94681 28969',
   availability: 'Open to AI/ML & backend internships · 2027',
   resumePath: '/Pulkit_Taneja_Resume.pdf',
-  // TODO(pulkit): swap in your real domain after the first Vercel deploy —
-  // this drives canonical URLs, sitemap.xml, Open Graph and JSON-LD.
-  siteUrl: 'https://pulkittaneja.vercel.app',
+  // Where the site is served from. Drives canonical URLs, Open Graph and
+  // JSON-LD in index.html, and the generated sitemap.xml and robots.txt.
+  // TODO(pulkit): change it if you add a custom domain or rename the Vercel project.
+  siteUrl: 'https://portfolio-website-pi-blush-92.vercel.app',
   socials: [
     {
       label: 'GitHub',
@@ -89,8 +91,14 @@ export const about: string[] = [
   'Right now I am co-founding **Audaxity**, an academic intelligence platform incubated at V-NEST. Before that I built an MCP server with 10+ enterprise tools at SDG Corporation. The part I care about most is everything around the model: **access control before retrieval**, cited answers, and **FastAPI and Go backends** that keep working after the demo.',
 ];
 
-/** The compact "Now" strip under About. */
-export const now: string[] = ['Co-founder @ Audaxity', "B.Tech CSE, VIT Chennai '28"];
+/**
+ * The "Now" row under About. The LeetCode solved count is appended after
+ * these at build time (see src/lib/siteStats.ts), so it is never typed here.
+ */
+export const now: NowItem[] = [
+  { label: 'Building Audaxity', href: '#founder' },
+  { label: "B.Tech CSE, VIT Chennai '28" },
+];
 
 /** One line at the end of About — the whole tech stack section, compressed. */
 export const dailyTools: string[] = [

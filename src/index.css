@@ -538,3 +538,87 @@
     scrollbar-width: none;
   }
 }
+
+/* ── View transitions: opening and closing a case study ──────────────────
+   The old page fades out quickly and the new one fades up 10px. On desktop
+   the project's screenshot morphs between its row thumbnail (named from JS,
+   only for the clicked row) and the case study's image (named here). */
+::view-transition-old(root) {
+  animation: 180ms var(--ease) both vt-fade-out;
+}
+
+::view-transition-new(root) {
+  animation: 380ms var(--ease) both vt-fade-up;
+}
+
+::view-transition-group(project-shot) {
+  animation-duration: 480ms;
+  animation-timing-function: var(--ease);
+}
+
+@keyframes vt-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes vt-fade-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+}
+
+@media (min-width: 1024px) {
+  .vt-shot {
+    view-transition-name: project-shot;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* ── Print: ink on paper ───────────────────────────────────────────────────
+   Every colour is a token, so printing just swaps the tokens: near-black text
+   on white and a darker champagne for the few accents. Fixed chrome (top bar,
+   Ask, toasts) carries `print:hidden`; reveals are forced visible on
+   beforeprint (lib/reveal.ts). */
+@media print {
+  :root {
+    --bg: #ffffff;
+    --surface: transparent;
+    --border: rgba(0, 0, 0, 0.14);
+    --text-strong: #111113;
+    --text: #3b3b41;
+    --text-faint: #6b6b73;
+    --accent: #7a6338;
+    --bg-rgb: 255 255 255;
+    --text-strong-rgb: 17 17 19;
+    --text-rgb: 59 59 65;
+    --text-faint-rgb: 107 107 115;
+    --accent-rgb: 122 99 56;
+    color-scheme: light;
+  }
+
+  .cursor-spotlight {
+    display: none !important;
+  }
+
+  .row-card,
+  .founder-card,
+  figure {
+    break-inside: avoid;
+  }
+
+  .founder-card,
+  .surface-solid {
+    background: none !important;
+    /* Their hairlines are white-on-dark; on paper they need the ink token. */
+    border-color: var(--border) !important;
+  }
+}

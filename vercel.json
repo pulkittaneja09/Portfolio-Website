@@ -3,6 +3,13 @@
   "framework": "vite",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "/resume",
+      "destination": "/Pulkit_Taneja_Resume.pdf",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/((?!api/).*)",

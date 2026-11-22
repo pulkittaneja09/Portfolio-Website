@@ -30,7 +30,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       {children}
 
       <div
-        className="pointer-events-none fixed inset-x-0 bottom-6 z-[80] flex flex-col items-center gap-2 px-4"
+        className="pointer-events-none fixed inset-x-0 bottom-6 z-[80] flex print:hidden flex-col items-center gap-2 px-4"
         role="status"
         aria-live="polite"
       >

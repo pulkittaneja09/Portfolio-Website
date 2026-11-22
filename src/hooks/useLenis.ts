@@ -11,10 +11,13 @@ import { useReducedMotion } from '@/hooks/useReducedMotion';
  */
 let instance: Lenis | null = null;
 
-/** Desktop sections land level with the rail's top; mobile ones clear the 56px bar. */
-function scrollOffset(): number {
-  return window.matchMedia('(min-width: 1024px)').matches ? -96 : -72;
-}
+/*
+ * Where a section lands comes from its own `scroll-margin-top` (.section-anchor:
+ * 96px on desktop, level with the rail's top; 72px on phones, clear of the
+ * 56px bar). Lenis 1.3 reads scroll-margin itself, and native scrolling under
+ * reduced motion honours it too, so there is deliberately no offset here: one
+ * would be applied on top of the margin and land sections twice as low.
+ */
 
 /**
  * Scroll to an element on the shared curve when Lenis is running, natively
@@ -23,7 +26,7 @@ function scrollOffset(): number {
  */
 export function scrollToTarget(target: HTMLElement | null, smooth = true): void {
   if (!target) return;
-  if (instance) instance.scrollTo(target, { offset: scrollOffset(), immediate: !smooth });
+  if (instance) instance.scrollTo(target, { immediate: !smooth });
   else target.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto' });
 }
 
@@ -71,7 +74,7 @@ export function useLenis(): void {
       if (!target) return;
 
       event.preventDefault();
-      lenis.scrollTo(target as HTMLElement, { offset: scrollOffset() });
+      lenis.scrollTo(target as HTMLElement);
       history.replaceState(null, '', hash);
     };
 

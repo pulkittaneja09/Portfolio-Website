@@ -6,9 +6,9 @@ import {
   projects,
   sideProjects,
   skillGroups,
-  stats,
   venture,
 } from '@/data/portfolio';
+import { liveStats as stats } from '@/lib/siteStats';
 
 /** One line of terminal output. `tone` drives the colour, nothing else. */
 export interface Line {

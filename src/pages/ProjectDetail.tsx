@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import type { ReactNode } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { ArchitectureDiagram } from '@/components/ArchitectureDiagram';
 import { Reveal } from '@/components/Reveal';
+import { TransitionLink } from '@/components/TransitionLink';
 import { ArrowLeftIcon, ArrowRightIcon, ArrowUpRightIcon } from '@/components/icons';
 import { profile, projects } from '@/data/portfolio';
 import { previewSrcSet } from '@/lib/images';
@@ -93,7 +94,7 @@ export function ProjectDetail() {
 
   return (
     <main id="main" className="mx-auto max-w-[46rem] px-5 pb-24 pt-12 sm:px-8 sm:pb-32 sm:pt-20">
-      <Link
+      <TransitionLink
         to="/#projects"
         className="enter group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.1em] text-body transition-colors duration-300 hover:text-strong"
       >
@@ -102,7 +103,7 @@ export function ProjectDetail() {
           aria-hidden
         />
         {profile.name}
-      </Link>
+      </TransitionLink>
 
       <article className="mt-14 sm:mt-20">
         <header>
@@ -168,7 +169,7 @@ export function ProjectDetail() {
               height={640}
               loading="eager"
               decoding="async"
-              className="w-full rounded-xl border border-white/[0.08]"
+              className="vt-shot w-full rounded-xl border border-white/[0.08]"
             />
           </Reveal>
         )}
@@ -246,7 +247,7 @@ export function ProjectDetail() {
       </article>
 
       {/* Next project */}
-      <Link
+      <TransitionLink
         to={`/projects/${next.slug}`}
         className="group mt-24 flex items-end justify-between gap-6 border-t border-white/[0.07] pt-8"
       >
@@ -260,7 +261,7 @@ export function ProjectDetail() {
           className="mb-1.5 h-5 w-5 shrink-0 text-body transition-[transform,color] duration-300 group-hover:translate-x-0.5 group-hover:text-accent"
           aria-hidden
         />
-      </Link>
+      </TransitionLink>
     </main>
   );
 }

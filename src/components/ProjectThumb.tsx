@@ -13,7 +13,8 @@ const frame = 'relative aspect-[16/10] overflow-hidden rounded-lg border border-
 export function ProjectThumb({ project, className }: { project: Project; className?: string }) {
   if (project.preview) {
     return (
-      <div className={cn(frame, className)}>
+      // data-vt-shot lets a View Transition morph this into the case study's image.
+      <div className={cn(frame, className)} data-vt-shot={project.slug}>
         <img
           src={project.preview}
           srcSet={previewSrcSet(project.preview)}

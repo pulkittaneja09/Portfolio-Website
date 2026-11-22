@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { ChatIcon } from '@/components/icons';
 import { nav } from '@/data/portfolio';
 import { cn } from '@/lib/cn';
+import { paletteKey } from '@/lib/platform';
 
 interface Props {
   active: string | null;
@@ -42,7 +43,7 @@ export function MobileBar({ active, onOpenPalette, onOpenAsk }: Props) {
   const section = nav.find((item) => item.id === active)?.label;
 
   return (
-    <div className="fixed inset-x-0 top-0 z-50 lg:hidden">
+    <div className="fixed inset-x-0 top-0 z-50 lg:hidden print:hidden">
       <div
         className={cn(
           'flex h-14 items-center justify-between border-b px-5 transition-[background-color,border-color,backdrop-filter] duration-300 sm:px-8',
@@ -81,7 +82,9 @@ export function MobileBar({ active, onOpenPalette, onOpenAsk }: Props) {
             className="inline-flex h-9 items-center gap-2 rounded-lg border border-white/[0.08] px-3 text-sm text-strong transition-colors duration-300 hover:border-white/[0.16]"
           >
             Menu
-            <kbd className="hidden font-mono text-xs text-faint [@media(hover:hover)]:inline">⌘K</kbd>
+            <kbd className="hidden font-mono text-xs text-faint [@media(hover:hover)]:inline">
+              {paletteKey}
+            </kbd>
           </button>
         </div>
       </div>

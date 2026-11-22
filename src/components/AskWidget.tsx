@@ -86,7 +86,7 @@ export function AskWidget({ open, onOpenChange }: Props) {
       <button
         type="button"
         onClick={() => onOpenChange(!open)}
-        className="group glass fixed bottom-6 right-3 z-[65] hidden h-9 w-9 place-items-center rounded-full text-body shadow-[0_12px_32px_-12px_rgba(0,0,0,0.6)] transition-[border-color,color] duration-300 hover:border-white/[0.14] hover:text-strong lg:grid xl:right-6"
+        className="group glass fixed bottom-6 right-3 z-[65] hidden h-9 w-9 print:!hidden place-items-center rounded-full text-body shadow-[0_12px_32px_-12px_rgba(0,0,0,0.6)] transition-[border-color,color] duration-300 hover:border-white/[0.14] hover:text-strong lg:grid xl:right-6"
         aria-expanded={open}
         aria-controls="ask-panel"
         aria-label={open ? 'Close the Ask about Pulkit panel' : 'Ask about Pulkit'}
@@ -108,7 +108,7 @@ export function AskWidget({ open, onOpenChange }: Props) {
             role="dialog"
             ref={panelRef}
             aria-label="Ask about Pulkit"
-            className="glass-strong fixed bottom-4 right-4 z-[66] flex max-h-[min(30rem,70vh)] w-[min(24rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-xl shadow-[0_24px_64px_-24px_rgba(0,0,0,0.7)] lg:bottom-[4.25rem] lg:right-3 xl:right-6"
+            className="glass-strong fixed bottom-4 right-4 z-[66] flex print:hidden max-h-[min(30rem,70vh)] w-[min(24rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-xl shadow-[0_24px_64px_-24px_rgba(0,0,0,0.7)] lg:bottom-[4.25rem] lg:right-3 xl:right-6"
             initial={reduced ? undefined : { opacity: 0, y: 10, scale: 0.985 }}
             animate={reduced ? undefined : { opacity: 1, y: 0, scale: 1 }}
             exit={reduced ? undefined : { opacity: 0, y: 6, scale: 0.99 }}

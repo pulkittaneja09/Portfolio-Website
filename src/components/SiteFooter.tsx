@@ -1,3 +1,6 @@
+import { paletteKey } from '@/lib/platform';
+import { updatedLabel } from '@/lib/siteStats';
+
 interface Props {
   onOpenPalette: () => void;
   onOpenTerminal: () => void;
@@ -8,7 +11,8 @@ const key =
 
 /**
  * One small mono line. The two shortcuts it mentions are also buttons, for
- * anyone reading it without a keyboard to hand.
+ * anyone reading it without a keyboard to hand; the palette key is named for
+ * the visitor's platform. "Last updated" is the month of the last commit.
  */
 export function SiteFooter({ onOpenPalette, onOpenTerminal }: Props) {
   return (
@@ -18,9 +22,9 @@ export function SiteFooter({ onOpenPalette, onOpenTerminal }: Props) {
         type="button"
         onClick={onOpenPalette}
         className={key}
-        aria-label="Open the command palette (⌘K)"
+        aria-label={`Open the command palette (${paletteKey})`}
       >
-        ⌘K
+        {paletteKey}
       </button>{' '}
       to navigate, or{' '}
       <button
@@ -31,7 +35,7 @@ export function SiteFooter({ onOpenPalette, onOpenTerminal }: Props) {
       >
         `
       </button>{' '}
-      for terminal.
+      for terminal. Last updated {updatedLabel}.
     </footer>
   );
 }

@@ -1,11 +1,11 @@
-import { Link } from 'react-router-dom';
 import { ProjectThumb } from '@/components/ProjectThumb';
 import { Reveal } from '@/components/Reveal';
 import { Section } from '@/components/Section';
+import { TransitionLink } from '@/components/TransitionLink';
 import { ArrowUpRightIcon } from '@/components/icons';
-import { GITHUB_USERNAME, projects, sideProjects, stats } from '@/data/portfolio';
+import { GITHUB_USERNAME, projects, sideProjects } from '@/data/portfolio';
 import type { Project } from '@/data/types';
-import { useGitHub } from '@/hooks/useGitHub';
+import { liveStats } from '@/lib/siteStats';
 
 const CHIP_LIMIT = 4;
 
@@ -37,12 +37,12 @@ function ProjectRow({ project }: { project: Project }) {
         <h3 className="font-medium leading-snug text-strong transition-colors duration-300 group-hover/row:text-accent">
           {/* The whole card opens the case study through this stretched
               link; the Live and Code links below sit above it. */}
-          <Link
+          <TransitionLink
             to={`/projects/${project.slug}`}
             className="after:absolute after:inset-0 after:rounded-xl after:content-[''] focus-visible:outline-none"
           >
             {project.name}
-          </Link>
+          </TransitionLink>
           <ArrowUpRightIcon
             className="ml-1 inline-block h-3.5 w-3.5 -translate-y-px transition-transform duration-300 group-hover/row:-translate-y-[3px] group-hover/row:translate-x-0.5"
             aria-hidden
@@ -124,19 +124,21 @@ function MoreProjects() {
   );
 }
 
-const FALLBACK_REPOS = stats.find((stat) => stat.live === 'publicRepos')?.value ?? 22;
+/** Fetched at build time, falling back to the figure in portfolio.ts. */
+const publicRepos = liveStats.find((stat) => stat.live === 'publicRepos')?.value;
 
-/** "22 public repos · View GitHub ↗", with the count fetched live and cached. */
+/** "22 public repos · View GitHub ↗". */
 function GitHubLine() {
-  const github = useGitHub();
-  const count = github.status === 'ready' ? github.data.user.public_repos : FALLBACK_REPOS;
-
   return (
     <p className="meta mt-10 flex flex-wrap items-center gap-x-2">
-      <span>
-        <span className="text-strong">{count}</span> public repos
-      </span>
-      <span aria-hidden>·</span>
+      {publicRepos !== undefined && (
+        <>
+          <span>
+            <span className="text-strong">{publicRepos}</span> public repos
+          </span>
+          <span aria-hidden>·</span>
+        </>
+      )}
       <InlineLink href={`https://github.com/${GITHUB_USERNAME}`} label="GitHub profile">
         View GitHub
       </InlineLink>

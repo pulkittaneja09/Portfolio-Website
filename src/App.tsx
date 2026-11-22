@@ -7,6 +7,7 @@ import { whenIdle } from '@/lib/idle';
 import { Home } from '@/pages/Home';
 import { NotFound } from '@/pages/NotFound';
 import { ProjectDetail } from '@/pages/ProjectDetail';
+import { Resume } from '@/pages/Resume';
 
 // Both overlays are opt-in surfaces, so they stay out of the initial bundle
 // (cmdk alone is ~17KB gzipped) and load the first time one is opened.
@@ -80,6 +81,7 @@ export default function App() {
           element={<Home onOpenTerminal={openTerminal} onOpenPalette={openPalette} onOpenAsk={openAsk} />}
         />
         <Route path="/projects/:slug" element={<ProjectDetail />} />
+        <Route path="/resume" element={<Resume />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
 
