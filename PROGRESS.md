@@ -608,7 +608,7 @@ Also removed: an orphaned `.note-prose` stylesheet left over from Notes.
 - [x] E3a. Consistency pass — 4px layout grid, three hairline levels, one radius scale, one pill chip style (baseline-aligned), documented type ramp; Experience label gap fixed (60px → 32px like every section); compared against brittanychiang.com / rauno.me / emilkowal.ski at 1440
 - [x] E3b. Copy and links — en-dash full-year ranges everywhere, one unmeasured claim softened, 404 titled + noindex, TODO notes out of the bundle; 21 links checked (all good; Vercel demos unverifiable from this network, Render needs a cold start); details in "Round 6: copy and link check"
 - [x] E3c. Interaction — keyboard pass in both themes: 158 tab stops in reading order, every one with a visible accent ring and scrolled into view; ⌘K, terminal and Ask each open and close with Esc; no console errors. Hover timing unified: 200ms for colour / underline / border, 300ms for larger moves (was 300–400ms, felt slow)
-- [ ] E3d. Responsive: 1440 / 1280 / 1024 / 768 / 390 / 360, no horizontal scroll, name on one line, 44px tap targets
+- [x] E3d. Responsive — 1440 / 1280 / 1024 / 768 / 390 / 360: no horizontal scroll, nothing off screen, the name on one line at every width. Tap targets: 66 controls were under 44px on phones; on coarse pointers every link/button now gets an invisible ≥ 44×44 hit area (zero-specificity ::after, no visual change) and skill chips grow to 32px; 0 under 44px at 390 and 360; card taps and inline links verified
 - [ ] E3e. Launch readiness: Lighthouse 95+, images, fonts, bundle, meta / OG / icons / sitemap / robots / JSON-LD, 404, vercel.json, README
 - [ ] E4. Final QA (every section, both themes, 1440 / 390), build clean, final report with deploy steps
 

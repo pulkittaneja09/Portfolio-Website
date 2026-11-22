@@ -522,6 +522,33 @@
     }
   }
 
+  /* ── Touch targets ─────────────────────────────────────────────────────── */
+  /* On touch screens every link and button gets an invisible hit area of at
+     least 44×44px, centred on it, without changing how anything looks.
+     :where() keeps the specificity at zero, so an element's own positioning
+     (sr-only, fixed, absolute) and any Tailwind `after:` utilities (the
+     project card's stretched link) still win. */
+  @media (pointer: coarse) {
+    :where(a, button, summary, [role='button']):not([data-card-link]) {
+      position: relative;
+    }
+
+    :where(a, button, summary, [role='button']):not([data-card-link])::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: max(100%, 44px);
+      height: max(100%, 44px);
+      transform: translate(-50%, -50%);
+    }
+
+    /* Dense chip rows: taller chips, so neighbouring hit areas barely overlap. */
+    .skill-chip {
+      min-height: 2rem;
+    }
+  }
+
   /* ── Section dividers ──────────────────────────────────────────────────── */
   /* Centred in the 6rem / 7rem gap between sections. */
   .section-rule {
