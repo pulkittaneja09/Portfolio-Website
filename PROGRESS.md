@@ -329,7 +329,7 @@ nowhere; build without warnings.
 - [x] C3c. Highlight strip — 1 startup founded · 3 AI products shipped · 10+ MCP tools built (from `stats` and a count of AI/RAG/ML projects with a live demo), accent mono count-up
 - [x] C3d. Magnetic CTAs (≤ 6px, mouse + full motion) with an accent fill sweep: rail Résumé (quiet variant, same footprint as the old text link so the rail row still fits beside the clock) and a new Email · Résumé pair in Contact (replacing the plain Résumé link there)
 - [x] C3e. Section dividers — 1px hairline centred in the existing gap (absolute, no layout change), accent dot travels across once on first view (1.8s) and fades; line only under reduced motion
-- [ ] C3f. First-visit "PT" monogram intro (<1.2s, sessionStorage, skipped for reduced-motion)
+- [x] C3f. "PT" monogram intro — inline in index.html (no flash before React), 4 accent strokes draw then fade; ~0.95s from first paint, removed on its fade end; home page, first visit of the session only (sessionStorage), never for deep links or reduced motion; pointer-events none throughout
 - [ ] C3g. Polish: selection colour, thin scrollbar, accent focus rings, circular-reveal theme switch
 - [ ] C4. Final QA (both themes, 1440/1024/390), greps, contrast, Lighthouse 90+, build with no warnings, summary
 
