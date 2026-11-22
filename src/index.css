@@ -575,7 +575,7 @@
     }
   }
 
-  /* ── Row lists (experience, projects) ──────────────────────────────────────
+  /* ── Row lists (experience) ─────────────────────────────────────────────────
      Hovering one row fades every other row to 50%, so the eye stays on the
      one under the cursor. :has() rather than a group hover, so the gaps
      between rows dim nothing. Fine pointers only. */
@@ -593,7 +593,7 @@
 
   /* A skill picked in the Skills section: the matching rows stay, the rest
      step back (over the hover dimming too). Only ever user-initiated. */
-  .row-list .row-item[data-filter='dim'] {
+  .row-item[data-filter='dim'] {
     opacity: 0.4 !important;
   }
 
@@ -801,12 +801,12 @@
   }
 
   /* The thumbnail: on hover, a soft glow of the project's tint behind it
-     (12%) and a tilt of at most 4° toward the cursor (set from Projects.tsx). */
+     (12%). Round 5 dropped the hover tilt: in the desktop stack the whole
+     card already tilts with the scroll, and two kinds of 3D at once is one
+     too many. */
   .thumb {
     position: relative;
     align-self: start; /* a grid item: never stretch to the row's height */
-    transform: perspective(700px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
-    transition: transform 0.5s var(--ease);
   }
 
   .thumb::before {
@@ -829,6 +829,88 @@
 
   [data-theme='light'] .group\/row:hover .thumb::before {
     background: rgb(var(--tint) / 0.16);
+  }
+
+  /* ── Flagship project cards ────────────────────────────────────────────── */
+  /* An opaque panel (it has to cover the card below it in the stack) with a
+     hairline and a wash of the project's own tint from the top-left corner. */
+  .project-card {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border: 1px solid rgb(var(--tint) / 0.16);
+    border-radius: 1rem;
+    padding: 1.25rem;
+    background:
+      linear-gradient(140deg, rgb(var(--tint) / 0.08), rgb(var(--tint) / 0) 55%),
+      var(--bg-elevated);
+    box-shadow: var(--shadow-card);
+    transform-origin: 50% 0%;
+    transition: border-color 0.3s var(--ease);
+  }
+
+  .project-card:hover,
+  .project-card:has(:focus-visible) {
+    border-color: rgb(var(--tint) / 0.4);
+  }
+
+  @media (min-width: 640px) {
+    .project-card {
+      padding: 1.5rem;
+    }
+  }
+
+  /* The stack's depth: the ground colour laid over a covered card. */
+  .card-dim,
+  .card-filter-dim {
+    position: absolute;
+    inset: 0;
+    z-index: 30;
+    border-radius: inherit;
+    background: var(--bg);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* A skill filter this project does not match: the card steps back. An
+     overlay rather than opacity, so a stacked card never shows the one
+     underneath through it. */
+  .card-filter-dim {
+    transition: opacity 0.3s var(--ease);
+  }
+
+  [data-filter='dim'] > .project-card .card-filter-dim,
+  [data-filter='dim'] .project-card .card-filter-dim {
+    opacity: 0.6;
+  }
+
+  /* Desktop stack: each card sticks 16px lower than the one before and sits
+     in its own 1200px perspective, so it can tilt back as the next covers it.
+     The spacers between cards are the scroll distance spent covering one;
+     the last spacer holds the finished stack for a beat before it scrolls
+     away with the section (sticky is bounded by the list's content box, so
+     this has to be content, not padding). */
+  .project-stack > [data-card] {
+    position: sticky;
+    top: calc(96px + var(--i) * 16px);
+    perspective: 1200px;
+    perspective-origin: 50% 0%;
+  }
+
+  .project-stack > .stack-spacer {
+    height: 22vh;
+  }
+
+  .project-stack > .stack-spacer-end {
+    height: 18vh;
+  }
+
+  .project-stack .project-card {
+    min-height: var(--card-h, auto);
+  }
+
+  .project-stack[data-active] .project-card {
+    will-change: transform;
   }
 
   /* Case-study header: a quiet wash of the project's tint above the title,

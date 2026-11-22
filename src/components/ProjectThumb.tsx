@@ -1,3 +1,5 @@
+import { m } from 'framer-motion';
+import type { MotionValue } from 'framer-motion';
 import type { Project } from '@/data/types';
 import { cn } from '@/lib/cn';
 import { previewSrcSet } from '@/lib/images';
@@ -12,22 +14,33 @@ const frame =
  * schematic of its own architecture instead — the services and data stores
  * from its case-study diagram, cascaded in mono. Nothing invented.
  */
-export function ProjectThumb({ project, className }: { project: Project; className?: string }) {
-  // The outer layer carries the project's tint (a soft glow behind it on
-  // hover) and the 3D tilt toward the cursor (see `.thumb` in index.css).
+interface ThumbProps {
+  project: Project;
+  className?: string;
+  /** In the desktop project stack: the image drifts this many px against its frame. */
+  parallax?: MotionValue<number>;
+}
+
+export function ProjectThumb({ project, className, parallax }: ThumbProps) {
+  // The outer layer carries the project's tint: a soft glow behind it on
+  // hover (see `.thumb` in index.css).
   return (
     <div className={cn('thumb tinted', className)} style={tintStyle(project.slug)}>
-      <ThumbFace project={project} />
+      <ThumbFace project={project} parallax={parallax} />
     </div>
   );
 }
 
-function ThumbFace({ project }: { project: Project }) {
+/** Parallax needs headroom: the face is scaled up so a ±10px drift never shows an edge. */
+const drift = (parallax?: MotionValue<number>) => (parallax ? { y: parallax, scale: 1.14 } : undefined);
+
+function ThumbFace({ project, parallax }: Omit<ThumbProps, 'className'>) {
   if (project.preview) {
     return (
       // data-vt-shot lets a View Transition morph this into the case study's image.
       <div className={frame} data-vt-shot={project.slug}>
-        <img
+        <m.img
+          style={drift(parallax)}
           src={project.preview}
           srcSet={previewSrcSet(project.preview)}
           sizes="(min-width: 1024px) 200px, (min-width: 640px) 28vw, 208px"
@@ -50,21 +63,23 @@ function ThumbFace({ project }: { project: Project }) {
     <div
       className={cn(
         frame,
-        'flex flex-col justify-center gap-[0.2rem] px-3.5 font-mono text-[0.625rem] leading-[1.5] transition-colors duration-300 group-hover/row:border-line/[0.12]',
+        'flex flex-col justify-center px-3.5 font-mono text-[0.625rem] leading-[1.5] transition-colors duration-300 group-hover/row:border-line/[0.12]',
       )}
       role="img"
       aria-label={`${project.name} architecture: ${nodes.map((node) => node.label).join(', ')}`}
     >
-      {nodes.map((node, i) => (
-        <p key={node.id} className="truncate" style={{ paddingLeft: `${i * 0.55}rem` }} aria-hidden>
-          {/* The elbow is drawn, not typed: box-drawing glyphs are outside
-              the mono font's latin subset. */}
-          {i > 0 && (
-            <span className="mr-1.5 inline-block h-[0.45rem] w-[0.45rem] -translate-y-[0.2rem] border-b border-l border-line/[0.18]" />
-          )}
-          <span className="text-strong/85">{node.label}</span>
-        </p>
-      ))}
+      <m.div className="flex flex-col gap-[0.2rem]" style={parallax ? { y: parallax } : undefined}>
+        {nodes.map((node, i) => (
+          <p key={node.id} className="truncate" style={{ paddingLeft: `${i * 0.55}rem` }} aria-hidden>
+            {/* The elbow is drawn, not typed: box-drawing glyphs are outside
+                the mono font's latin subset. */}
+            {i > 0 && (
+              <span className="mr-1.5 inline-block h-[0.45rem] w-[0.45rem] -translate-y-[0.2rem] border-b border-l border-line/[0.18]" />
+            )}
+            <span className="text-strong/85">{node.label}</span>
+          </p>
+        ))}
+      </m.div>
     </div>
   );
 }
