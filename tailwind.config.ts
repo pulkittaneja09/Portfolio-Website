@@ -3,17 +3,18 @@ import plugin from 'tailwindcss/plugin';
 
 /**
  * Every colour resolves to a CSS variable in src/index.css, so the light theme
- * is a second set of values, not a second palette (dark → light):
+ * is a second set of values, not a second palette (Midnight + Glacier,
+ * dark → light):
  *
- *   strong  #F2F2F2 → #0F0F10  names, titles, highlighted phrases
- *   body    #A1A1AA → #52525B  running text (7.6:1 / 7.4:1 on the ground)
- *   faint   #5C5C66 → #8A8A93  dates and metadata
- *   accent  #D9C7A7 → #7A5C2E  champagne / deep bronze — the active nav line,
- *                              hover titles, metrics, the status dot, ✓ marks
- *                              and link underlines. Nothing else.
- *   line    white  → black     hairlines and faint fills, always with an alpha
- *                              (`border-line/[0.07]`), so one class reads right
- *                              in both themes.
+ *   strong     #EEF2F8 → #0B1220  names, titles, highlighted phrases
+ *   body       #A3ADBD → #434F63  running text (8.5:1 / 7.9:1 on the ground)
+ *   faint      #5E6878 → #8792A2  dates and metadata
+ *   accent     #8FB4FF → #2F5BD3  glacier blue: the active nav line, hover
+ *                                 titles, metrics, the status dot, links,
+ *                                 focus rings, function names
+ *   secondary  #7DD3C0 → #0E7C6C  seafoam: strings, quiet gradients
+ *   line       navy-tinted white → navy, always with an alpha
+ *              (`border-line/[0.07]`), so one class reads right in both themes.
  *
  * `light:` targets the light theme only (html[data-theme="light"]).
  */
@@ -27,6 +28,8 @@ export default {
         body: 'rgb(var(--text-rgb) / <alpha-value>)',
         faint: 'rgb(var(--text-faint-rgb) / <alpha-value>)',
         accent: 'rgb(var(--accent-rgb) / <alpha-value>)',
+        secondary: 'rgb(var(--secondary-rgb) / <alpha-value>)',
+        ok: 'rgb(var(--ok-rgb) / <alpha-value>)',
         line: 'rgb(var(--line-rgb) / <alpha-value>)',
         trace: 'var(--trace)',
       },

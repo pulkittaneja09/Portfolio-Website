@@ -12,7 +12,7 @@ export type Theme = 'light' | 'dark';
 
 const KEY = 'theme';
 const EVENT = 'themechange';
-const THEME_COLOR: Record<Theme, string> = { light: '#FAFAF9', dark: '#0B0C0E' };
+const THEME_COLOR: Record<Theme, string> = { light: '#F8FAFC', dark: '#0A0E14' };
 
 export const currentTheme = (): Theme =>
   document.documentElement.dataset.theme === 'light' ? 'light' : 'dark';

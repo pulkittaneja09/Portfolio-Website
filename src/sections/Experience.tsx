@@ -6,7 +6,7 @@ import type { ExperienceItem } from '@/data/types';
 import { formatRange } from '@/lib/dates';
 import { filterState, useActiveSkill } from '@/lib/skills';
 
-export function ExperienceRow({ item }: { item: ExperienceItem }) {
+function ExperienceRow({ item }: { item: ExperienceItem }) {
   const external = Boolean(item.href?.startsWith('http'));
   const body = (
     <>

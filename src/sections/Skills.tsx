@@ -33,7 +33,7 @@ function pick(name: string) {
   scrollToTarget(document.getElementById(target));
 }
 
-export function SkillChip({ skill, selected }: { skill: Skill; selected: boolean }) {
+function SkillChip({ skill, selected }: { skill: Skill; selected: boolean }) {
   const tipId = useId();
   const [alignEnd, setAlignEnd] = useState(false);
   const evidence = evidenceFor(skill.name);

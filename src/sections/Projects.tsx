@@ -1,3 +1,4 @@
+import { CountUp } from '@/components/CountUp';
 import { ProjectThumb } from '@/components/ProjectThumb';
 import { Reveal } from '@/components/Reveal';
 import { Section } from '@/components/Section';
@@ -30,7 +31,7 @@ function InlineLink({ href, children, label }: { href: string; children: string;
   );
 }
 
-export function ProjectRow({ project }: { project: Project }) {
+function ProjectRow({ project }: { project: Project }) {
   return (
     <article className="row-card group/row grid gap-y-4 sm:grid-cols-[27%_minmax(0,1fr)] sm:gap-x-6">
       <ProjectThumb project={project} className="order-2 w-52 max-w-full sm:order-none sm:w-auto" />
@@ -56,7 +57,7 @@ export function ProjectRow({ project }: { project: Project }) {
         </p>
 
         <p className="mt-2.5 text-sm leading-relaxed [text-wrap:pretty]">
-          <span className="font-mono text-xs text-accent">{project.metric.value}</span>
+          <CountUp value={project.metric.value} className="font-mono text-xs text-accent" />
           <span className="text-faint"> · {project.metric.label}</span>
         </p>
 
@@ -116,7 +117,7 @@ function MoreProjects() {
                   {item.oneLiner}
                 </span>
                 <span className="ml-auto flex shrink-0 items-baseline gap-3 sm:ml-0">
-                  {item.metric && <span className="font-mono text-xs text-accent">{item.metric}</span>}
+                  {item.metric && <CountUp value={item.metric} className="font-mono text-xs text-accent" />}
                   <ArrowUpRightIcon
                     className="h-3.5 w-3.5 translate-y-0.5 self-center text-faint transition-[transform,color] duration-300 group-hover/more:-translate-y-0 group-hover/more:translate-x-0.5 group-hover/more:text-accent"
                     aria-hidden

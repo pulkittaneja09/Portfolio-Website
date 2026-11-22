@@ -65,11 +65,14 @@ function tokenize(detail: string): Token[] {
   return out;
 }
 
+// Literal class names, so Tailwind's content scan keeps the rules.
+const TONE_CLASS = { fn: 'syn-fn', str: 'syn-str' } as const;
+
 function Tokens({ tokens }: { tokens: Token[] }) {
   return (
     <>
       {tokens.map((token, i) => (
-        <span key={i} className={token.tone ? `syn-${token.tone}` : undefined}>
+        <span key={i} className={token.tone && TONE_CLASS[token.tone]}>
           {token.text}
         </span>
       ))}

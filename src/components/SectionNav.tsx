@@ -4,7 +4,7 @@ import { stagger } from '@/lib/stagger';
 
 /**
  * The in-page nav: a hairline and a mono label per section. The section in
- * view gets a champagne line twice as long and white text; hovering or
+ * view gets a accent line twice as long and white text; hovering or
  * focusing any item previews the same state.
  */
 export function SectionNav({ active, className }: { active: string | null; className?: string }) {

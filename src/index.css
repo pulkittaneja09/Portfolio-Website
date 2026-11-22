@@ -8,12 +8,17 @@
    Tokens. Dark by default; light under html[data-theme="light"], set before
    first paint by the inline script in index.html.
 
-   The named hex values are the design tokens; the `-rgb` channel twins exist
-   so Tailwind can apply alpha (`text-accent/60`) without a second palette.
-   The accent is the only colour on the page: champagne in dark, its darker
-   sibling, deep bronze, in light. Below the core tokens, the "plumbing"
-   values hold what used to be hardcoded, so the dark theme renders exactly
-   as before and the light one can swap glows for soft shadows.
+   Palette: Midnight + Glacier (chosen in Round 4; research and scorecard in
+   PROGRESS.md). The design tokens are the `-rgb` channel triplets between the
+   PALETTE markers, so Tailwind can apply alpha (`text-accent/60`); the named
+   colours derive from them. Neutrals are tinted toward the accent's navy, so
+   the page has a colour identity before any accent appears. Colour is used
+   deliberately: glacier blue (accent) for the active nav line, hover titles,
+   links, metrics, the status dot, focus rings and function names; seafoam
+   (secondary) for strings and quiet gradients; a soft green for ✓ marks.
+
+   Dark:  bg #0A0E14 · text #A3ADBD (8.5:1) · accent #8FB4FF (9.3:1)
+   Light: bg #F8FAFC · text #434F63 (7.9:1) · accent #2F5BD3 (5.6:1)
    ─────────────────────────────────────────────────────────────────────────── */
 @layer base {
   :root,
@@ -67,9 +72,8 @@
     color-scheme: dark;
   }
 
-  /* Light: a clean, corporate page. Warm off-white ground, pure-white
-     surfaces, black hairlines, and depth from soft shadows instead of glows.
-     Body #52525B is 7.4:1 on the ground; bronze #7A5C2E is 5.9:1. */
+  /* Light: a clean, corporate page. Cool off-white ground, pure-white
+     surfaces, navy hairlines, and depth from soft navy-tinted shadows. */
   :root[data-theme='light'],
   [data-palette][data-theme='light'] {
     --surface: var(--bg-elevated);
@@ -80,7 +84,7 @@
     --bg-rgb: 248 250 252;
     --bg-elevated-rgb: 255 255 255;
     --text-strong-rgb: 11 18 32;
-    --text-rgb: 71 84 103;
+    --text-rgb: 67 79 99;
     --text-faint-rgb: 135 146 162;
     --accent-rgb: 47 91 211;
     --secondary-rgb: 14 124 108;
@@ -92,7 +96,7 @@
 
     --trace: rgb(var(--text-strong-rgb) / 0.8);
     --row-hover-bg: #ffffff;
-    --row-hover-border: rgba(0, 0, 0, 0.06);
+    --row-hover-border: rgb(var(--line-rgb) / 0.06);
     --chip-bg: #ffffff;
     --node-fill: #ffffff;
     --diagram-service: #ffffff;
@@ -100,11 +104,11 @@
     --founder-bg: #ffffff;
     --glass-bg: rgb(255 255 255 / 0.92);
     --overlay-bg: rgb(255 255 255 / 0.97);
-    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.06);
-    --shadow-float: 0 1px 2px rgba(0, 0, 0, 0.05), 0 8px 24px rgba(0, 0, 0, 0.08);
-    --shadow-overlay: 0 1px 3px rgba(0, 0, 0, 0.06), 0 24px 64px -16px rgba(0, 0, 0, 0.18);
+    --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 8px 24px rgb(15 23 42 / 0.06);
+    --shadow-float: 0 1px 2px rgb(15 23 42 / 0.05), 0 8px 24px rgb(15 23 42 / 0.08);
+    --shadow-overlay: 0 1px 3px rgb(15 23 42 / 0.06), 0 24px 64px -16px rgb(15 23 42 / 0.18);
     --selection: rgb(var(--accent-rgb) / 0.2);
-    --scrollbar: rgba(0, 0, 0, 0.2);
+    --scrollbar: rgb(var(--line-rgb) / 0.2);
     --tip-bg: #ffffff;
 
     color-scheme: light;
@@ -352,7 +356,7 @@
     pointer-events: none;
   }
 
-  /* Underline drawn in from the left, in champagne. Works across line breaks. */
+  /* Underline drawn in from the left, in the accent. Works across line breaks. */
   .link {
     color: var(--text-strong);
     background-image: linear-gradient(var(--accent), var(--accent));
@@ -582,17 +586,88 @@
     -webkit-backdrop-filter: blur(16px) saturate(140%);
   }
 
+  /* ── Aurora: a slow mesh behind the identity rail ──────────────────────── */
+  /* Two soft radial pools, accent and secondary, drifting on 38s and 46s
+     loops. Desktop only (it sits behind the sticky left column), faded out
+     toward the content column, and still under reduced motion. Plain
+     gradients and transforms: no filter, no blur, nothing to repaint. */
+  .aurora {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: -11;
+    width: 55vw;
+    overflow: hidden;
+    pointer-events: none;
+    display: none;
+    -webkit-mask-image: linear-gradient(to right, #000 55%, transparent);
+    mask-image: linear-gradient(to right, #000 55%, transparent);
+  }
+
+  .aurora::before,
+  .aurora::after {
+    content: '';
+    position: absolute;
+    width: 75vmax;
+    height: 75vmax;
+    border-radius: 50%;
+    will-change: transform;
+  }
+
+  .aurora::before {
+    top: -32vmax;
+    left: -24vmax;
+    background: radial-gradient(closest-side, rgb(var(--accent-rgb) / var(--aurora-a, 0.07)), transparent);
+    animation: aurora-a 38s ease-in-out infinite alternate;
+  }
+
+  .aurora::after {
+    bottom: -40vmax;
+    left: -6vmax;
+    background: radial-gradient(closest-side, rgb(var(--secondary-rgb) / var(--aurora-b, 0.045)), transparent);
+    animation: aurora-b 46s ease-in-out infinite alternate;
+  }
+
+  [data-theme='light'] .aurora {
+    --aurora-a: 0.06;
+    --aurora-b: 0.05;
+  }
+
+  @media (min-width: 1024px) {
+    .aurora {
+      display: block;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .aurora::before,
+    .aurora::after {
+      animation: none;
+    }
+  }
+
+  @keyframes aurora-a {
+    to {
+      transform: translate3d(14vw, 18vh, 0) scale(1.12);
+    }
+  }
+
+  @keyframes aurora-b {
+    to {
+      transform: translate3d(10vw, -22vh, 0) scale(0.92);
+    }
+  }
+
   /* ── The page-wide cursor spotlight ────────────────────────────────────── */
   .cursor-spotlight {
     position: fixed;
     inset: 0;
     z-index: -10;
     pointer-events: none;
-    /* 4.5% at the centre, not 5%: measured, 5% put body text directly under
-       the cursor at 6.95:1; 4.5% keeps every word above 7:1 and looks the same. */
+    /* Glacier blue at 5.5% (dark) / 5% (light). Measured at the centre of the
+       pool: body text 7.93:1 in dark and 7.38:1 in light. */
     background: radial-gradient(
       600px circle at var(--spot-x, 50%) var(--spot-y, -20%),
-      rgb(var(--accent-rgb) / 0.045),
+      rgb(var(--accent-rgb) / var(--spot-alpha, 0.055)),
       transparent 80%
     );
     display: none;
@@ -604,10 +679,8 @@
     animation: spot-in 0.6s var(--ease) backwards;
   }
 
-  /* Off in the light theme: even a 4% bronze wash reads as a smudge on
-     off-white, and at its centre it would pull body text below 7:1. */
   [data-theme='light'] .cursor-spotlight {
-    display: none !important;
+    --spot-alpha: 0.05;
   }
 
   /* Only while the pointer is outside the window. */
@@ -643,7 +716,7 @@
     animation-delay: calc(var(--i, 0) * 60ms);
   }
 
-  /* Soft champagne pulse for the status dot: colour and scale, no glow. The
+  /* Soft accent pulse for the status dot: colour and scale, no glow. The
      fade is in the colour's alpha, so the element itself never drops below
      opacity 1 (nothing on screen ever reads as "stuck" to a sampler). */
   @keyframes pulse-soft {
@@ -845,7 +918,7 @@
     transition: background-color 0.18s ease;
   }
 
-  /* The selected command carries the same champagne line as the active nav
+  /* The selected command carries the same accent line as the active nav
      item, so "where am I" reads the same everywhere. */
   .cmd-item[data-selected='true'] {
     background: rgb(var(--line-rgb) / 0.05);
@@ -945,7 +1018,7 @@ html.theme-switching *::after {
 
 /* ── Print: ink on paper ───────────────────────────────────────────────────
    Every colour is a token, so printing just swaps the tokens: near-black text
-   on white and a darker champagne for the few accents. Fixed chrome (top bar,
+   on white and a deep blue for the few accents. Fixed chrome (top bar,
    Ask, toasts) carries `print:hidden`; reveals are forced visible on
    beforeprint (lib/reveal.ts). */
 @media print {
@@ -956,12 +1029,12 @@ html.theme-switching *::after {
     --text-strong: #111113;
     --text: #3b3b41;
     --text-faint: #6b6b73;
-    --accent: #7a6338;
+    --accent: #234aae;
     --bg-rgb: 255 255 255;
     --text-strong-rgb: 17 17 19;
     --text-rgb: 59 59 65;
     --text-faint-rgb: 107 107 115;
-    --accent-rgb: 122 99 56;
+    --accent-rgb: 35 74 174;
     color-scheme: light;
   }
 

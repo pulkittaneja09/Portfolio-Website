@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { useParams } from 'react-router-dom';
 import { ArchitectureDiagram } from '@/components/ArchitectureDiagram';
+import { CountUp } from '@/components/CountUp';
 import { Reveal } from '@/components/Reveal';
 import { TransitionLink } from '@/components/TransitionLink';
 import { ArrowLeftIcon, ArrowRightIcon, ArrowUpRightIcon } from '@/components/icons';
@@ -106,7 +107,7 @@ export function ProjectDetail() {
           <div className="grid gap-1 py-4 sm:grid-cols-[27%_minmax(0,1fr)] sm:gap-6">
             <dt className="label pt-0.5 text-faint">Result</dt>
             <dd className="text-[0.9375rem] text-body">
-              <span className="font-mono text-accent">{project.metric.value}</span>
+              <CountUp value={project.metric.value} className="font-mono text-accent" />
               <span className="text-faint"> · </span>
               {project.metric.label}
             </dd>

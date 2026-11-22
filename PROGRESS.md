@@ -323,7 +323,7 @@ nowhere; build without warnings.
 - [x] C2a. Research palettes — 10 repos' theme files + 10 live sites read with Playwright; findings in "Round 4 research"
 - [x] C2b. Shortlist — Midnight+Glacier, Slate+Teal, Graphite+Indigo; full tokens, all pass contrast
 - [x] C2c. /palette compare page, 6 screenshots, scorecard — A · Midnight + Glacier wins 29/30
-- [ ] C2d. Implement the winner site-wide in both themes (aurora, spotlight, serif gradient, agent-run syntax, chip tints, count-up metrics, accent UI); delete /palette
+- [x] C2d. Midnight + Glacier live in both themes — tinted neutrals, aurora (38s/46s, desktop, still for reduced motion), spotlight 5.5% dark / 5% light (now on in light; light body deepened to #434F63 to stay ≥ 7:1 under it), serif gradient, editor-style agent card, toned chips with solid active chip, count-up metrics; /palette deleted
 - [ ] C3a. Project colour identity: per-project tint, hover glow + 3D tilt on thumbnails, tinted case-study header
 - [ ] C3b. Founder card animated hairline gradient border
 - [ ] C3c. Highlight strip under About: 3 real stat tiles with count-up

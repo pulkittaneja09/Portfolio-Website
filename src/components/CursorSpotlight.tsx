@@ -3,7 +3,7 @@ import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 /**
- * A soft 600px champagne pool that follows the cursor across the whole page,
+ * A soft 600px glacier-blue pool that follows the cursor across the whole page,
  * behind the content. Fine pointers only: there is no cursor to follow on a
  * touch screen, and the effect is pure decoration under reduced motion.
  *

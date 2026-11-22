@@ -45,6 +45,8 @@ export function Home({ onOpenTerminal, onOpenPalette, onOpenAsk }: HomeProps) {
 
   return (
     <>
+      {/* A barely-there, slow mesh of the accent and secondary behind the rail. */}
+      <div className="aurora" aria-hidden />
       <MobileBar active={active} onOpenPalette={onOpenPalette} onOpenAsk={onOpenAsk} />
 
       <div className="mx-auto max-w-page px-5 sm:px-8 lg:px-12 xl:px-[clamp(4rem,6.6vw,6rem)]">

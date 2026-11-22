@@ -17,7 +17,7 @@ const toneStyles: Record<
   Architecture['nodes'][number]['tone'],
   { fill: string; stroke: string; label: string }
 > = {
-  // Role is carried by how much light a node holds; champagne marks the model.
+  // Role is carried by how much light a node holds; the accent marks the model.
   client: { fill: 'var(--bg)', stroke: 'rgb(var(--line-rgb) / 0.08)', label: 'var(--text)' },
   service: {
     fill: 'var(--diagram-service)',
