@@ -121,13 +121,15 @@ Copy `.env.example` to `.env`. The one variable is optional.
 ## Deploying to Vercel
 
 1. Push the repository to GitHub.
-2. In Vercel, **Add New → Project** and import it. The framework preset is detected as **Vite**;
-   build command `npm run build`, output directory `dist`.
+2. In Vercel, **Add New → Project** and import it. There is nothing to configure.
 3. Deploy.
 
-[`vercel.json`](vercel.json) already rewrites non-`/api` paths to `index.html` (so
-`/projects/parcelpilot` survives a hard refresh), caches `/assets/*` and `/fonts/*` for a year, and
-sets `X-Content-Type-Options`, `Referrer-Policy` and `X-Frame-Options`.
+[`vercel.json`](vercel.json) pins the build (framework `vite`, `npm run build`, output `dist`), so it
+never depends on the dashboard settings. That matters here: this repository started as a static HTML
+site, and a Vercel project imported back then would otherwise keep its old preset and serve the wrong
+folder. It also rewrites non-`/api` paths to `index.html` (so `/projects/parcelpilot` survives a hard
+refresh), caches `/assets/*` and `/fonts/*` for a year, and sets `X-Content-Type-Options`,
+`Referrer-Policy` and `X-Frame-Options`.
 
 ## Project structure
 
