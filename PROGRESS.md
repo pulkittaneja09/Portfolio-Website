@@ -610,7 +610,7 @@ Also removed: an orphaned `.note-prose` stylesheet left over from Notes.
 - [x] E3c. Interaction — keyboard pass in both themes: 158 tab stops in reading order, every one with a visible accent ring and scrolled into view; ⌘K, terminal and Ask each open and close with Esc; no console errors. Hover timing unified: 200ms for colour / underline / border, 300ms for larger moves (was 300–400ms, felt slow)
 - [x] E3d. Responsive — 1440 / 1280 / 1024 / 768 / 390 / 360: no horizontal scroll, nothing off screen, the name on one line at every width. Tap targets: 66 controls were under 44px on phones; on coarse pointers every link/button now gets an invisible ≥ 44×44 hit area (zero-specificity ::after, no visual change) and skill chips grow to 32px; 0 under 44px at 390 and 360; card taps and inline links verified
 - [x] E3e. Launch readiness — palette OG card + favicon set via `npm run brand` (with a real maskable icon), theme-color for both themes, critical JS ~120 → ~91KB gz (Framer Motion fully lazy), warm-up deferred past load, serif preload dropped; Lighthouse mobile 96–97 / 100 / 100 / 100, desktop 100 across; unused deps removed; README rewritten; details in "Round 6: launch readiness"
-- [ ] E4. Final QA (every section, both themes, 1440 / 390), build clean, final report with deploy steps
+- [x] E4. Final QA — every section in both themes at 1440 and 390 (no console errors), qa + reveal pass, build / lint / Prettier clean; final report with Lighthouse scores, your to-do list and deploy steps below
 
 ## Round 6: the system after the consistency pass (E3a)
 
@@ -674,3 +674,96 @@ Also removed: an orphaned `.note-prose` stylesheet left over from Notes.
   `vercel.json` (SPA rewrite, `/resume`, immutable caching, security headers), WebP previews with
   `srcset` and lazy loading, `font-display: swap`.
 - **README:** rewritten short: stack, run, edit `portfolio.ts`, deploy to Vercel, checks, structure.
+
+## Final report (Round 6)
+
+**What changed this round**
+
+- **Cursor:** one 18px accent ring, glued to the pointer.
+  - Its transform is written inside `pointermove`, with no spring or easing: 0.00px offset over 25
+    random moves in both themes.
+  - It grows to 40px over links, buttons and chips, and to 64px with "View" over project cards.
+    It's hidden over selectable text and inputs (the native text cursor returns there), squeezes
+    to 0.85 on press and fades off-window. Only size, fill and opacity animate (180ms ease-out).
+  - Chosen over the white `mix-blend-mode: difference` disc, which turned the blue CTAs gold.
+  - Desktop mice only; no size animation under reduced motion.
+- **Highlights:** 1 startup founded · 1,000+ applicants served · R² 0.879 battery-life model.
+  "10+ MCP tools" left the strip, `stats` and the About paragraph; it stays in the SDG role.
+- **Consistency:**
+  - A 4px layout grid, three hairline levels, one radius scale, and one pill chip style that
+    aligns whether or not a chip has a logo.
+  - The Experience label gap was fixed (about 60px → 32px, like every section).
+  - Hover timing is 200ms for colour, underline and border changes, 300ms for larger moves.
+- **Copy and links:**
+  - Every range is "Mar 2026 – Present" (en dash, full years). One unmeasured claim was softened.
+    The 404 page has its own title and `noindex`. No TODO, CGPA or placeholder text ships in the
+    bundle.
+  - All 21 links were checked; see "Round 6: copy and link check".
+- **Keyboard and responsive:**
+  - 158 tab stops, all with visible rings. ⌘K, the terminal and Ask open and close with Esc.
+  - No horizontal scroll at 1440 / 1280 / 1024 / 768 / 390 / 360, and the name stays on one line.
+  - Every control has a hit area of at least 44×44px on touch, with no visual change.
+- **Launch:**
+  - The social card and favicon set are in the palette (`npm run brand`), and there's a real
+    maskable icon.
+  - theme-color is set for both themes.
+  - Critical JS dropped from ~120KB to ~91KB gzipped, with Framer Motion fully lazy. Warm-up
+    downloads now wait until after `load`.
+  - Unused dependencies were removed and the README was rewritten.
+
+**Lighthouse** (production build, `vite preview`, Lighthouse 12.6)
+
+| | Performance | Accessibility | Best practices | SEO |
+| --- | --- | --- | --- | --- |
+| Mobile (3 runs) | 96 · 97 · 97 | 100 | 100 | 100 |
+| Desktop | 100 | 100 | 100 | 100 |
+
+Mobile: LCP 2.5s, TBT 50–70ms, CLS 0. Desktop: LCP 0.6s, TBT 0ms, CLS 0.
+
+**Verification:**
+- The build has zero warnings, lint has zero warnings, and Prettier is clean.
+- `npm run qa` passes everywhere; the reveal check finds 0 violations in 38 snapshots.
+- There are no console errors on any route or overlay in either theme.
+- Screenshots of every section in both themes at 1440 and 390 are in `.screenshots/r6/final`
+  (`sheet-1440.png`, `sheet-390.png`). The ring in the 390 captures is the desktop cursor: that
+  script runs a narrow window with a mouse; phone emulation has no cursor.
+
+**For you to handle**
+
+1. **Open the three Vercel demos in your browser** (ParcelPilot, Scrap 2 Spark, KnowledgeHub AI).
+   This machine's network rejects every `*.vercel.app` certificate, so they couldn't be checked
+   here. Every other link works.
+2. **Render backends sleep:** a first visit takes about 30–60s to wake ParcelPilot's API and
+   Scrap 2 Spark's. Consider a paid instance or a keep-warm ping before you send the link to
+   recruiters.
+3. **Two résumé mismatches:** the résumé lists Vercel and Render under Tools & Deployment (the site
+   no longer does) and calls the project "Scrap to Spark (S2S)" (the site says "Scrap 2 Spark").
+   DPIIT recognition is on the site but not on the résumé. Pick one version of each.
+4. **`TODO(pulkit)` notes in `src/data/portfolio.ts`** (none are visible on the site):
+   - Evaluation details: ParcelPilot answer quality, the Scrap 2 Spark held-out split, a
+     KnowledgeHub evaluation.
+   - Screenshots: the S2S analytics dashboard, a KnowledgeHub cited answer, an API snippet for
+     IEEE.
+   - Links: the IEEE portal URL if it's still public, the Audaxity site, company URLs for SDG and
+     Dezors.
+   - The DPIIT recognition number, and the three empty /uses groups.
+5. **`npm audit`:** two moderate react-router advisories (open redirect via user-supplied
+   targets; SSR hydration). Neither applies to a client-rendered site with static links. The fix is
+   the React Router 7 major upgrade, if you want it.
+
+**Deploy to Vercel**
+
+1. Commit and push: `git push origin master`. GitHub must have the repository; create it first if
+   needed.
+2. Go to vercel.com → **Add New → Project** → import the repository → keep every default →
+   **Deploy**. `vercel.json` pins the Vite preset, `npm run build`, the `dist` output, the SPA
+   rewrite, the `/resume` redirect, caching and security headers. If the existing Vercel project
+   (`portfolio-website-pi-blush-92`) is already linked to this repository, pushing `master` is
+   enough; it redeploys automatically.
+3. Optional: **Settings → Environment Variables →** `GITHUB_TOKEN` (build only; raises the GitHub
+   rate limit for the repo count).
+4. For a custom domain: **Settings → Domains → Add**, follow the DNS instructions, then set
+   `profile.siteUrl` in `src/data/portfolio.ts` to the new domain and push. Canonical, Open Graph,
+   JSON-LD, sitemap and robots all follow it.
+5. After the deploy, check the link preview with a card validator (e.g. opengraph.xyz) and open
+   the live site once on a phone.
