@@ -600,3 +600,14 @@ Also removed: an orphaned `.note-prose` stylesheet left over from Notes.
   - The hovered-row check now uses an Experience row.
   - Faint dates and the accent hover title in that row are held to 4.5:1, not the 7:1 that body
     text needs, matching check h.
+
+### Round 6 (final): one-circle cursor, real highlights, launch polish
+
+- [ ] E1. Cursor: one circle glued 1:1 to the pointer (no position easing); size/fill/opacity states only
+- [ ] E2. Highlights: real achievements only (drop "10+ MCP tools"); every stat re-checked against the résumé
+- [ ] E3a. Visual consistency: spacing scale, radii, borders, chips/buttons, type levels, alignment, both themes
+- [ ] E3b. Copy and links: proofread, date and dash formats, every link checked, no CGPA / TODO / placeholders
+- [ ] E3c. Interaction: hover/focus/active consistency, full keyboard pass, ⌘K / terminal / Esc
+- [ ] E3d. Responsive: 1440 / 1280 / 1024 / 768 / 390 / 360, no horizontal scroll, name on one line, 44px tap targets
+- [ ] E3e. Launch readiness: Lighthouse 95+, images, fonts, bundle, meta / OG / icons / sitemap / robots / JSON-LD, 404, vercel.json, README
+- [ ] E4. Final QA (every section, both themes, 1440 / 390), build clean, final report with deploy steps
