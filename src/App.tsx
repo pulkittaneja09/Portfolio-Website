@@ -7,8 +7,11 @@ import { whenIdle } from '@/lib/idle';
 import { followSystemTheme } from '@/lib/theme';
 import { Home } from '@/pages/Home';
 import { NotFound } from '@/pages/NotFound';
+import { NotePage } from '@/pages/NotePage';
+import { NotesIndex } from '@/pages/NotesIndex';
 import { ProjectDetail } from '@/pages/ProjectDetail';
 import { Resume } from '@/pages/Resume';
+import { Uses } from '@/pages/Uses';
 
 // Both overlays are opt-in surfaces, so they stay out of the initial bundle
 // (cmdk alone is ~17KB gzipped) and load the first time one is opened.
@@ -85,6 +88,9 @@ export default function App() {
         />
         <Route path="/projects/:slug" element={<ProjectDetail />} />
         <Route path="/resume" element={<Resume />} />
+        <Route path="/notes" element={<NotesIndex />} />
+        <Route path="/notes/:slug" element={<NotePage />} />
+        <Route path="/uses" element={<Uses />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
 

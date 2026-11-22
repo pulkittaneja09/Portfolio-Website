@@ -15,11 +15,13 @@ import {
   TerminalIcon,
   socialIconMap,
 } from '@/components/icons';
-import { nav, profile, projects } from '@/data/portfolio';
+import { profile, projects } from '@/data/portfolio';
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
 import { scrollToTarget, scrollToTop } from '@/hooks/useLenis';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { useTheme } from '@/hooks/useTheme';
+import { formatNoteDate, notes } from '@/lib/notes';
+import { sections as pageSections } from '@/lib/sections';
 import { toggleTheme } from '@/lib/theme';
 
 interface Props {
@@ -58,7 +60,7 @@ export function CommandPalette({ open, onClose, onOpenTerminal, onOpenAsk }: Pro
     window.setTimeout(action, 60);
   };
 
-  const sections = useMemo(() => [{ id: 'top', label: 'Top' }, ...nav], []);
+  const sections = useMemo(() => [{ id: 'top', label: 'Top' }, ...pageSections], []);
 
   return (
     <AnimatePresence>
@@ -151,6 +153,25 @@ export function CommandPalette({ open, onClose, onOpenTerminal, onOpenAsk }: Pro
                     </Command.Item>
                   ))}
                 </Command.Group>
+
+                {notes.length > 0 && (
+                  <Command.Group heading="Notes" className="cmd-group">
+                    {notes.map((note) => (
+                      <Command.Item
+                        key={note.slug}
+                        value={`read note ${note.title}`}
+                        onSelect={() => run(() => navigate(`/notes/${note.slug}`))}
+                        className="cmd-item"
+                      >
+                        <ArrowRightIcon className="h-4 w-4 text-faint" />
+                        <span className="truncate">{note.title}</span>
+                        <span className="ml-auto hidden font-mono text-[0.625rem] text-faint sm:block">
+                          {formatNoteDate(note.date)}
+                        </span>
+                      </Command.Item>
+                    ))}
+                  </Command.Group>
+                )}
 
                 <Command.Group heading="Actions" className="cmd-group">
                   <Command.Item

@@ -19,6 +19,7 @@ npm run dev      # http://localhost:5173
 
 - [Editing the content](#editing-the-content)
 - [Adding a project](#adding-a-project)
+- [Writing a note](#writing-a-note)
 - [Screenshots](#screenshots)
 - [Environment variables](#environment-variables)
 - [Deploying to Vercel](#deploying-to-vercel)
@@ -35,20 +36,23 @@ npm run dev      # http://localhost:5173
 component, so you can change the whole site without opening any JSX. Every field is typed in
 [`src/data/types.ts`](src/data/types.ts), so if you break a shape, `npm run build` tells you where.
 
-| What you want to change                                               | Export to edit |
-| --------------------------------------------------------------------- | -------------- |
-| Name, title, one-liner, email, socials, availability line             | `profile`      |
-| The two About paragraphs (`**phrase**` = highlight, `*word*` = serif) | `about`        |
-| The "Now" row (the LeetCode count is added at build time)             | `now`          |
-| The left-column agent-run card (example traces, not metrics)          | `agentTraces`  |
-| Degree, institution, dates                                            | `education`    |
-| The section nav and its order                                         | `nav`          |
-| The experience rows (`impact` = the two short lines on the page)      | `experience`   |
-| The four flagship projects and their case studies                     | `projects`     |
-| The one-line "More" list                                              | `sideProjects` |
-| The founder card, its mission and pipeline                            | `venture`      |
-| Sourced numbers, used by the terminal and the Ask widget              | `stats`        |
-| The Skills section (also the terminal and Ask); evidence is computed  | `skillGroups`  |
+| What you want to change                                               | Export to edit          |
+| --------------------------------------------------------------------- | ----------------------- |
+| Name, title, one-liner, email, socials, availability line             | `profile`               |
+| The two About paragraphs (`**phrase**` = highlight, `*word*` = serif) | `about`                 |
+| The "Now" row (the LeetCode count is added at build time)             | `now`                   |
+| The left-column agent-run card (example traces, not metrics)          | `agentTraces`           |
+| Degree, institution, dates                                            | `education`             |
+| The section nav and its order                                         | `nav`                   |
+| The experience rows (`impact` = the two short lines on the page)      | `experience`            |
+| The four flagship projects and their case studies                     | `projects`              |
+| The one-line "More" list                                              | `sideProjects`          |
+| The founder card, its mission and pipeline                            | `venture`               |
+| Sourced numbers, used by the terminal and the Ask widget              | `stats`                 |
+| The Skills section (also the terminal and Ask); evidence is computed  | `skillGroups`           |
+| How an AI project was evaluated, shown on its case study              | `projects[].evaluation` |
+| The /uses page (`null` slots stay hidden until filled)                | `uses`                  |
+| Notes (writing)                                                       | `content/notes/*.md`    |
 
 Two rules worth keeping:
 
@@ -92,6 +96,29 @@ Give each node a `col` (left to right) and `row` (top to bottom), plus a `tone` 
 nodes for its row thumbnail, so it never shows an empty frame.
 
 The generated sitemap picks up the new case study automatically.
+
+## Writing a note
+
+Notes are Markdown files in [`content/notes/`](content/notes), rendered to HTML at build time, so
+Markdown costs nothing in the browser. Each starts with a small frontmatter block:
+
+```md
+---
+title: RAG that cites its sources
+date: 2026-12-01
+summary: One sentence for the notes list, the RSS feed and the meta description.
+draft: true
+---
+```
+
+- **While `draft: true` is set, the note is not published.** It is left out of production builds
+  entirely (not in the bundle, the feed or the sitemap). `npm run dev` shows drafts, marked as such,
+  so you can read them as you write; `NOTES_DRAFTS=1 npm run build` makes a preview build with them.
+- **Publishing is deleting `draft: true`.** The first published note switches on everything at once:
+  the Notes section and nav item on the home page, `/notes` and `/notes/<file-name>`, `/rss.xml`
+  (with a feed `<link>` in the page), sitemap entries, ⌘K entries and the terminal's `notes` command.
+- Three outlines are waiting in `content/notes`, built only from facts in `portfolio.ts`, with
+  TODO(pulkit) wherever you need to add something. They are notes to you, not posts written as you.
 
 ## Screenshots
 
@@ -147,18 +174,22 @@ public/
   site.webmanifest  (sitemap.xml and robots.txt are generated into dist/)
 
 config/
-  site-plugin.ts    build-time LeetCode + GitHub counts, last-updated date,
-                    the site URL in index.html, sitemap.xml and robots.txt
+  site-plugin.ts    build-time LeetCode + GitHub counts, last-updated date, the
+                    site URL in index.html, sitemap.xml, robots.txt and the notes
+  notes.ts          Markdown notes: frontmatter, rendering, the RSS feed
+content/
+  notes/            your notes, one Markdown file each
 
 src/
   data/
     portfolio.ts    ← all content lives here
     types.ts        the shape of it
-  sections/         About, Experience, Skills, Projects, Founder, Contact
+  sections/         About, Experience, Skills, Projects, Notes, Founder, Contact
   components/       identity rail (Identity, SectionNav, ProfileLinks, AgentRun),
                     MobileBar, rows and thumbnails, PipelineFlow, palette,
                     terminal, Ask widget, cursor spotlight, architecture diagram
-  pages/            Home (the split layout), ProjectDetail, NotFound, Resume
+  pages/            Home (the split layout), ProjectDetail, NotesIndex, NotePage, Uses,
+                    NotFound, Resume
   hooks/            reduced motion, media queries, scroll-spy, Lenis,
                     clipboard, shortcuts
   lib/              theme, reveal, build-time stats, view transitions, terminal
@@ -264,6 +295,10 @@ the fixed chrome; reveals are forced visible on `beforeprint`.
 Search the codebase for `TODO(pulkit)`. At the time of writing:
 
 - `profile.siteUrl` — change it if you add a custom domain or rename the Vercel project.
+- Write and publish the three draft notes in `content/notes`.
+- Evaluation details: the held-out split for Scrap 2 Spark, answer quality for ParcelPilot, and any
+  evaluation for KnowledgeHub AI (`projects[].evaluation`).
+- The empty slots on `/uses` (machine, editor, AI assistants).
 - The DPIIT recognition number and date in `venture.badges`.
 - The Audaxity site URL, once it is live (the Audaxity row links to the founder card meanwhile).
 - Company URLs for SDG Corporation and Dezors, which turn those experience rows into links.

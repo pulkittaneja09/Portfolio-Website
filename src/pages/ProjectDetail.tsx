@@ -6,39 +6,10 @@ import { Reveal } from '@/components/Reveal';
 import { TransitionLink } from '@/components/TransitionLink';
 import { ArrowLeftIcon, ArrowRightIcon, ArrowUpRightIcon } from '@/components/icons';
 import { profile, projects } from '@/data/portfolio';
+import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { previewSrcSet } from '@/lib/images';
 import { stagger } from '@/lib/stagger';
 import { NotFound } from '@/pages/NotFound';
-
-/** Keeps the document title and description in step with the route. */
-function useDocumentMeta(title: string, description: string, canonicalPath: string) {
-  useEffect(() => {
-    const previousTitle = document.title;
-    document.title = title;
-
-    const setMeta = (selector: string, attribute: string, value: string) => {
-      const element = document.querySelector<HTMLMetaElement | HTMLLinkElement>(selector);
-      const previous = element?.getAttribute(attribute) ?? null;
-      element?.setAttribute(attribute, value);
-      return () => {
-        if (previous !== null) element?.setAttribute(attribute, previous);
-      };
-    };
-
-    const restore = [
-      setMeta('meta[name="description"]', 'content', description),
-      setMeta('meta[property="og:title"]', 'content', title),
-      setMeta('meta[property="og:description"]', 'content', description),
-      setMeta('meta[property="og:url"]', 'content', `${profile.siteUrl}${canonicalPath}`),
-      setMeta('link[rel="canonical"]', 'href', `${profile.siteUrl}${canonicalPath}`),
-    ];
-
-    return () => {
-      document.title = previousTitle;
-      restore.forEach((undo) => undo());
-    };
-  }, [title, description, canonicalPath]);
-}
 
 /** A labelled block of the case study, with the same mono label as the home page. */
 function Block({ label, children }: { label: string; children: ReactNode }) {
@@ -140,6 +111,12 @@ export function ProjectDetail() {
               {project.metric.label}
             </dd>
           </div>
+          {project.evaluation && (
+            <div className="grid gap-1 py-4 sm:grid-cols-[27%_minmax(0,1fr)] sm:gap-6">
+              <dt className="label pt-0.5 text-faint">Evaluation</dt>
+              <dd className="text-[0.9375rem] leading-relaxed text-body">{project.evaluation}</dd>
+            </div>
+          )}
           <div className="grid gap-1 py-4 sm:grid-cols-[27%_minmax(0,1fr)] sm:gap-6">
             <dt className="label pt-0.5 text-faint">Role</dt>
             <dd className="text-[0.9375rem] leading-relaxed text-body">{project.role}</dd>

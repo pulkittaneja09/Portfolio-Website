@@ -14,6 +14,7 @@ import type {
   ExperienceItem,
   NavItem,
   NowItem,
+  UsesGroup,
   Profile,
   Project,
   SideProject,
@@ -208,6 +209,9 @@ export const projects: Project[] = [
     year: '2026',
     stack: ['FastAPI', 'Python', 'React', 'TypeScript', 'Claude', 'ChromaDB', 'SQLite', 'Render', 'Vercel'],
     metric: { value: '403 before retrieval', label: 'out-of-scope requests blocked pre-LLM' },
+    // TODO(pulkit): answer quality is not measured yet — add it here once you have an eval set.
+    evaluation:
+      'pytest: an agent scoped to ACCT-001/ACCT-003 asking about an ACCT-004 ticket gets HTTP 403, with zero retrieval and zero model spend.',
     links: {
       demo: 'https://parcelpilot-ai-agent-psi.vercel.app/',
       repo: 'https://github.com/pulkittaneja09/parcelpilot-ai-agent',
@@ -299,6 +303,9 @@ export const projects: Project[] = [
       'Vercel',
     ],
     metric: { value: 'R² = 0.879', label: 'RUL prediction on 2,716 NASA cycles' },
+    // TODO(pulkit): add how the held-out set was split (by cell or by cycle) and its ratio.
+    evaluation:
+      'NASA Battery Dataset, 2,716 charge/discharge cycles across 34 cells; Random Forest regressor, R² = 0.879 on held-out data.',
     links: {
       demo: 'https://sdg-hackthon.vercel.app/',
       repo: 'https://github.com/pulkittaneja09/sdg-hackthon',
@@ -386,6 +393,8 @@ export const projects: Project[] = [
       'Vercel',
     ],
     metric: { value: 'Cited answers', label: 'every response traced to source chunks' },
+    // TODO(pulkit): no evaluation is recorded yet (e.g. citation accuracy on a question set); add
+    // `evaluation` once measured and it appears on the case study.
     links: {
       demo: 'https://knowledgehub-ai-pulkit.vercel.app/',
       repo: 'https://github.com/pulkittaneja09/Enterprise-Knowledge-Assistant',
@@ -661,6 +670,47 @@ export const venture: Venture = {
   ],
   stack: ['Whisper', 'Python', 'FastAPI', 'LLMs', 'Vector search'],
 };
+
+/**
+ * /uses — the setup behind the work, linked from the footer only.
+ * TODO(pulkit): fill in the `null` slots. Anything still `null` is hidden, and a
+ * group with nothing filled in is hidden too, so the page only ever shows what
+ * is real. The filled entries come from the résumé's Tools & Deployment line
+ * and from this site's own stack.
+ */
+export const uses: UsesGroup[] = [
+  { title: 'Machine', items: [{ name: null, note: 'TODO(pulkit): laptop and OS' }] },
+  {
+    title: 'Editor & terminal',
+    items: [{ name: null, note: 'TODO(pulkit): editor, theme, font, terminal, shell' }],
+  },
+  {
+    title: 'AI assistants',
+    items: [{ name: null, note: 'TODO(pulkit): the assistants and model APIs you use day to day' }],
+  },
+  {
+    title: 'Build & test',
+    items: [{ name: 'Git' }, { name: 'Docker' }, { name: 'Postman' }, { name: 'Linux' }],
+  },
+  {
+    title: 'Deploy',
+    items: [
+      { name: 'Vercel', note: 'frontends: this site and the project demos' },
+      { name: 'Render', note: 'the FastAPI backends' },
+      { name: 'Nginx', note: 'in front of a FastAPI backend on a VPS' },
+    ],
+  },
+  {
+    title: 'This site',
+    items: [
+      { name: 'React + TypeScript' },
+      { name: 'Vite' },
+      { name: 'Tailwind CSS' },
+      { name: 'Framer Motion' },
+      { name: 'Lenis' },
+    ],
+  },
+];
 
 /**
  * The Skills section, the terminal's `skills` command and the Ask widget all

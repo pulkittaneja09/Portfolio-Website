@@ -2,6 +2,8 @@ import { execSync } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import type { Logger, Plugin } from 'vite';
+import { readNotes, rssFeed } from './notes';
+import type { Note } from './notes';
 
 /**
  * Build-time site data, so the page itself never calls a third-party API:
@@ -15,6 +17,10 @@ import type { Logger, Plugin } from 'vite';
  *   Graph and JSON-LD URLs come from one place.
  * - sitemap.xml (every route, including each case study) and robots.txt are
  *   generated into the build.
+ * - `virtual:notes`: the Markdown notes in content/notes, rendered to HTML
+ *   (config/notes.ts). Drafts only in dev (or with NOTES_DRAFTS=1); the RSS
+ *   feed, the sitemap entries and the feed <link> appear only once a note is
+ *   published.
  */
 
 export interface SiteStats {
@@ -31,10 +37,14 @@ interface Options {
   githubUser: string;
   /** Optional, server-side only: raises the GitHub rate limit for the build. */
   githubToken?: string;
+  notesDir: string;
+  feed: { title: string; description: string };
 }
 
 const VIRTUAL_ID = 'virtual:site-stats';
 const RESOLVED_ID = `\0${VIRTUAL_ID}`;
+const NOTES_ID = 'virtual:notes';
+const RESOLVED_NOTES = `\0${NOTES_ID}`;
 const CACHE_FILE = resolve('node_modules/.cache/site-stats.json');
 const TIMEOUT_MS = 6000;
 
@@ -133,7 +143,7 @@ async function collect(options: Options, logger: Logger): Promise<SiteStats> {
   return stats;
 }
 
-function sitemap({ siteUrl, routes }: Options, updated: string) {
+function sitemap(siteUrl: string, routes: string[], updated: string) {
   const day = updated.slice(0, 10);
   const urls = routes
     .map(
@@ -149,30 +159,86 @@ export function site(options: Options): Plugin {
   let logger: Logger;
   const getStats = () => (stats ??= collect(options, logger));
 
+  const notesDir = resolve(options.notesDir);
+  let includeDrafts = false;
+  let notes: Note[] = [];
+  const published = () => notes.filter((note) => !note.draft);
+
   return {
     name: 'portfolio-site',
     configResolved(config) {
       logger = config.logger;
+      includeDrafts = config.command === 'serve' || process.env.NOTES_DRAFTS === '1';
+      notes = readNotes(notesDir, includeDrafts);
     },
     resolveId(id) {
-      return id === VIRTUAL_ID ? RESOLVED_ID : null;
+      if (id === VIRTUAL_ID) return RESOLVED_ID;
+      if (id === NOTES_ID) return RESOLVED_NOTES;
+      return null;
     },
     async load(id) {
+      if (id === RESOLVED_NOTES) return `export default ${JSON.stringify(notes)};`;
       if (id !== RESOLVED_ID) return null;
       return `export default ${JSON.stringify(await getStats())};`;
     },
     transformIndexHtml: {
       order: 'pre',
-      handler: (html) => html.replaceAll('__SITE_URL__', options.siteUrl),
+      handler: (html) => ({
+        html: html.replaceAll('__SITE_URL__', options.siteUrl),
+        // Advertise the feed only once there is something in it.
+        tags: published().length
+          ? [
+              {
+                tag: 'link',
+                attrs: {
+                  rel: 'alternate',
+                  type: 'application/rss+xml',
+                  title: options.feed.title,
+                  href: '/rss.xml',
+                },
+                injectTo: 'head',
+              },
+            ]
+          : [],
+      }),
+    },
+    // Editing a note in dev reloads the page with the new text.
+    configureServer(server) {
+      server.watcher.add(notesDir);
+      const refresh = (file: string) => {
+        if (!resolve(file).startsWith(notesDir)) return;
+        notes = readNotes(notesDir, includeDrafts);
+        const module = server.moduleGraph.getModuleById(RESOLVED_NOTES);
+        if (module) server.moduleGraph.invalidateModule(module);
+        server.ws.send({ type: 'full-reload' });
+      };
+      server.watcher.on('add', refresh);
+      server.watcher.on('change', refresh);
+      server.watcher.on('unlink', refresh);
     },
     async generateBundle() {
       const { updated } = await getStats();
-      this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: sitemap(options, updated) });
+      const live = published();
+      const routes = live.length
+        ? [...options.routes, '/notes', ...live.map((note) => `/notes/${note.slug}`)]
+        : options.routes;
+      this.emitFile({
+        type: 'asset',
+        fileName: 'sitemap.xml',
+        source: sitemap(options.siteUrl, routes, updated),
+      });
       this.emitFile({
         type: 'asset',
         fileName: 'robots.txt',
         source: `User-agent: *\nAllow: /\n\nSitemap: ${options.siteUrl}/sitemap.xml\n`,
       });
+      if (live.length) {
+        this.emitFile({
+          type: 'asset',
+          fileName: 'rss.xml',
+          source: rssFeed(options.siteUrl, options.feed.title, options.feed.description, live),
+        });
+      }
     },
   };
 }

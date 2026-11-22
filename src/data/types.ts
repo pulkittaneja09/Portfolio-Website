@@ -71,6 +71,12 @@ export interface NowItem {
   href?: string;
 }
 
+/** One group on /uses. A `null` name is a slot still to fill in: hidden until it is. */
+export interface UsesGroup {
+  title: string;
+  items: { name: string | null; note?: string }[];
+}
+
 export interface Education {
   institution: string;
   degree: string;
@@ -152,6 +158,8 @@ export interface Project {
   stack: string[];
   /** The single number a recruiter should remember. */
   metric: { value: string; label: string };
+  /** How an AI project was evaluated (data, split, metric), shown on its case study. Real numbers only. */
+  evaluation?: string;
   links: { demo?: string; repo?: string; api?: string };
   /** Path under /public, or null while a screenshot is still missing. */
   preview: string | null;

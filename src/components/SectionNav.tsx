@@ -1,4 +1,4 @@
-import { nav } from '@/data/portfolio';
+import { sections } from '@/lib/sections';
 import { cn } from '@/lib/cn';
 import { stagger } from '@/lib/stagger';
 
@@ -11,7 +11,7 @@ export function SectionNav({ active, className }: { active: string | null; class
   return (
     <nav aria-label="Sections" className={className}>
       <ul className="w-max">
-        {nav.map((item, i) => {
+        {sections.map((item, i) => {
           const isActive = active === item.id;
           return (
             <li key={item.id} className="enter" style={stagger(4 + i)}>

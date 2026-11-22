@@ -6,7 +6,6 @@ import { MobileBar } from '@/components/MobileBar';
 import { ProfileLinks } from '@/components/ProfileLinks';
 import { SectionNav } from '@/components/SectionNav';
 import { SiteFooter } from '@/components/SiteFooter';
-import { nav } from '@/data/portfolio';
 import { useActiveSection } from '@/hooks/useActiveSection';
 import { scrollToTarget } from '@/hooks/useLenis';
 import { About } from '@/sections/About';
@@ -14,10 +13,12 @@ import { About } from '@/sections/About';
 import { Contact } from '@/sections/Contact';
 import { Experience } from '@/sections/Experience';
 import { Founder } from '@/sections/Founder';
+import { Notes } from '@/sections/Notes';
 import { Projects } from '@/sections/Projects';
 import { Skills } from '@/sections/Skills';
+import { sections } from '@/lib/sections';
 
-const SECTION_IDS = nav.map((item) => item.id);
+const SECTION_IDS = sections.map((item) => item.id);
 
 interface HomeProps {
   onOpenTerminal: () => void;
@@ -52,7 +53,7 @@ export function Home({ onOpenTerminal, onOpenPalette, onOpenAsk }: HomeProps) {
             lines; the full 45/55 split and 96px gutters from 1280px up. */}
         <div className="lg:grid lg:grid-cols-[minmax(0,48fr)_minmax(0,52fr)] lg:gap-x-12 xl:grid-cols-[minmax(0,45fr)_minmax(0,55fr)] xl:gap-x-16">
           {/* ── Left: identity rail ─────────────────────────────────────── */}
-          <header className="rail flex flex-col">
+          <header className="rail flex flex-col" data-items={sections.length}>
             <div>
               <Identity />
               <SectionNav active={active} className="rail-nav hidden lg:block" />
@@ -72,6 +73,7 @@ export function Home({ onOpenTerminal, onOpenPalette, onOpenAsk }: HomeProps) {
             <Experience />
             <Skills />
             <Projects />
+            <Notes />
             <Founder />
             <Contact />
             <SiteFooter onOpenPalette={onOpenPalette} onOpenTerminal={onOpenTerminal} />

@@ -1,3 +1,4 @@
+import { TransitionLink } from '@/components/TransitionLink';
 import { paletteKey } from '@/lib/platform';
 import { updatedLabel } from '@/lib/siteStats';
 
@@ -35,7 +36,10 @@ export function SiteFooter({ onOpenPalette, onOpenTerminal }: Props) {
       >
         `
       </button>{' '}
-      for terminal. Last updated {updatedLabel}.
+      for terminal. Last updated {updatedLabel} ·{' '}
+      <TransitionLink to="/uses" className="link">
+        Uses
+      </TransitionLink>
     </footer>
   );
 }

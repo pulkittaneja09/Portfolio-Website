@@ -205,9 +205,37 @@ warnings and its output has no "8.25", "CGPA" or "GPA"; lint and Prettier are cl
 - Optional: a `GITHUB_TOKEN` in Vercel (build-time only, never shipped) if the repo count ever has to
   fall back.
 
+## Round 3: what AI engineers show that mine didn't (R3)
+
+Studied live in Chrome: karpathy.ai, eugeneyan.com, huyenchip.com, hamel.dev, jxnl.co,
+simonwillison.net and lilianweng.github.io, plus brittanychiang.com, rauno.me, emilkowal.ski and
+leerob.com again.
+
+- **Writing, dated, with RSS: 6 of 7** (Eugene lists 183 posts; Lilian's long-form log; Simon's daily
+  entries and TILs; Hamel's blog and notes; Chip's blog; Jason's essays). Mine had none.
+  **Built:** Markdown notes rendered at build time, `/notes` and `/notes/:slug`, a one-line-each list
+  on the home page, RSS, sitemap entries, plus the nav, ⌘K and the terminal. All of it stays hidden
+  until a note is published. Three draft outlines from real projects are waiting for you.
+- **How the work was evaluated** (Eugene, Hamel and Jason write mostly about evals). Mine showed one
+  metric per project with no method. **Built:** an Evaluation line on case studies (Scrap 2 Spark:
+  dataset, cells and the held-out R²; ParcelPilot: the pytest authorization check). KnowledgeHub stays a
+  TODO(pulkit) rather than an invented number.
+- **Papers and a Scholar or arXiv link** (Karpathy, Chip, Hamel, Lilian). **Skipped:** the résumé lists
+  no papers or research, so there is no Research list.
+- **Talks and teaching** (Eugene's talks, Hamel's course, Karpathy's videos). **Skipped:** none to list.
+- **A photo beside the bio** (Karpathy, Chip, Hamel). **Skipped:** there is no photo in the repo; it
+  would be your call.
+- **A newsletter** (Eugene, Hamel). **Skipped:** nothing to send yet; RSS covers following along.
+- **Search, tags and archives** (Simon, Lilian, Eugene). **Skipped:** worth it past roughly 20 posts.
+- **A /uses page.** **Built** from real tools only; TODO slots stay hidden until you fill them in, and
+  it is linked from the footer only.
+- **An open-source list** (Hamel's OSS, Simon's tools). Already covered by the More list and the live
+  repo count.
+
 ## Round 3 notes
 - R1: Light theme as a second token set under `html[data-theme='light']`, with the exact tokens requested; depth from soft shadows on hovered rows, the agent card (white, #3F3F46 trace, bronze ✓), the founder card, thumbnails (no dimming), toasts and overlays. Spotlight off in light (it read as a smudge and would have pulled body text to 6.99:1); grain was already gone. Hardcoded white alphas became a `line` colour (white in dark, black in light) and the rest became tokens, so dark is pixel-identical (diffed home + case study at 1440 and 390: only the new toggle differs). An inline head script sets the theme before any CSS (saved choice, else system, followed live until chosen) and syncs theme-color. The toggle sits beside the socials (top bar on phones), plus ⌘K 'Toggle theme' and terminal `theme [light|dark]`, with a 500ms circular View Transition from the toggle (instant under reduced motion). At 1024 the link row needed 6px more, so its gaps tighten there only. Every component checked in light: palette, terminal, Ask, toasts, case study, 404, focus ring, scrollbar, selection; the OG image stays the dark brand card. `npm run qa` now runs both themes at four widths (body 7.64:1 dark / 7.4:1 light, accent 10.35 / 5.92, no flash): all PASS; `check:reveal` 0/32.
 - R2: Skills section between Experience and Projects (in the rail nav, the scroll-spy and ⌘K): the six groups as asked, cross-checked against the résumé's Technical Skills and the data, plus the real ones that were missing (Embeddings, Whisper, Pandas, NumPy, NLP (TF-IDF), Express, MongoDB, SQLite, Postman). True tags were added to stacks so the evidence is complete (Python on Scrap 2 Spark and KnowledgeHub; Vercel on the three Vercel-hosted demos). Chips: mono, 6px radius, hairline, a tiny monochrome logo from one Simple Icons sprite (`public/skills.svg`, 16KB gzipped, `npm run icons`). Evidence comes from the real stack/tags via aliases (`lib/skills.ts`), nothing typed: 28 of 40 chips have tagged work and get a 'Used in: … · at …' tooltip; a click highlights the matching roles, projects and side projects (others 0.4), scrolls to Projects (or Experience for role-only skills) and shows a sticky 'Showing work with FastAPI · Clear ✕' pill; Escape or a second click clears. The 12 with no tagged work (Node.js, Java, DSA…) are listed but not clickable. Hover dimming yields to the filter, so matches never fade. Daily tools removed from About. The sixth nav item meant shifting the rail tiers (compact below 840px tall, tight below 720px): it fits from 1280×621 to 1440×900. QA all PASS in both themes; `check:reveal` 0/35.
+- R3: Gap list above. Built: Markdown notes in `content/notes` (frontmatter, rendered to HTML at build time by `config/notes.ts`; `marked` is a dev dependency and costs nothing in the browser) with `/notes`, `/notes/:slug` (reading time, note typography in both themes), a one-line home list, an RSS feed with full content, sitemap entries, a feed `<link>`, a Notes nav item, ⌘K entries and a terminal `notes` command — all only once a note is published. Drafts are never in a production build (verified: no draft text anywhere in `dist/`), and the dev server shows them marked as drafts. Three outlines from real projects (MCP server, KnowledgeHub RAG, battery RUL), facts and TODO(pulkit) only. The published path was tested with a temporary fixture (one RSS item, valid XML, sitemap, nav, both themes) and the fixture deleted. A seven-item nav scrolls with the page below 650px tall. Evaluation lines on case studies (Scrap 2 Spark, ParcelPilot; KnowledgeHub TODO); /uses from real tools with hidden TODO slots, footer link only. Skipped Research (nothing on the résumé), talks, photo, newsletter and search, with reasons above.
 
 ## Checklist
 
@@ -239,5 +267,5 @@ warnings and its output has no "8.25", "CGPA" or "GPA"; lint and Prettier are cl
 
 - [x] R1. Light mode as a clean "corporate" theme (exact tokens, soft shadows, every component), system default + saved choice, no flash, toggle in rail / phone bar / ⌘K / terminal, circular View Transition reveal
 - [x] R2. Skills section between Experience and Projects (grouped rows, chips with tiny monochrome logos, "Used in" tooltips and click-to-filter from real tags), in nav and ⌘K; drop the Daily tools line
-- [ ] R3. Study top AI engineers' portfolios + design refs; gap list; implement what fits with real content (notes infrastructure with drafts, evaluation lines, research if real, /uses)
+- [x] R3. Study top AI engineers' portfolios + design refs; gap list; implement what fits with real content (notes infrastructure with drafts, evaluation lines, research if real, /uses)
 - [ ] R4. Final QA: every section in both themes at 1440 / 1024 / 390; no theme flash, persistence, contrast, skills filter, drafts hidden; build with no warnings; final summary

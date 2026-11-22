@@ -9,12 +9,17 @@ export default defineConfig(({ mode }) => ({
     react(),
     site({
       siteUrl: profile.siteUrl,
-      routes: ['/', ...projects.map((project) => `/projects/${project.slug}`)],
+      routes: ['/', ...projects.map((project) => `/projects/${project.slug}`), '/uses'],
       leetcodeUser: profile.socials.find((social) => social.icon === 'leetcode')?.handle ?? '',
       githubUser: GITHUB_USERNAME,
       // All variables, not only VITE_*: GITHUB_TOKEN stays in this Node
       // process and is never inlined into the client bundle.
       githubToken: loadEnv(mode, process.cwd(), '').GITHUB_TOKEN || undefined,
+      notesDir: 'content/notes',
+      feed: {
+        title: `Notes · ${profile.name}`,
+        description: 'Notes on building AI agents, RAG systems and the backends that run them.',
+      },
     }),
   ],
   resolve: {

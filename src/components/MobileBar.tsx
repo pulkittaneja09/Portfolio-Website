@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { ChatIcon } from '@/components/icons';
-import { nav } from '@/data/portfolio';
 import { cn } from '@/lib/cn';
 import { paletteKey } from '@/lib/platform';
+import { sections } from '@/lib/sections';
 
 interface Props {
   active: string | null;
@@ -41,7 +41,7 @@ export function MobileBar({ active, onOpenPalette, onOpenAsk }: Props) {
     };
   }, []);
 
-  const section = nav.find((item) => item.id === active)?.label;
+  const section = sections.find((item) => item.id === active)?.label;
 
   return (
     <div className="fixed inset-x-0 top-0 z-50 lg:hidden print:hidden">
