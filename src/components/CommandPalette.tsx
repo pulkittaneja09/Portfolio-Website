@@ -7,11 +7,10 @@ import {
   ArrowUpRightIcon,
   CopyIcon,
   DownloadIcon,
-  GitHubIcon,
-  LinkedInIcon,
   MailIcon,
   SearchIcon,
   TerminalIcon,
+  socialIconMap,
 } from '@/components/icons';
 import { nav, profile, projects } from '@/data/portfolio';
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
@@ -23,6 +22,9 @@ interface Props {
   onClose: () => void;
   onOpenTerminal: () => void;
 }
+
+/** GitHub, LinkedIn, LeetCode — straight from the data, so URLs live in one place. */
+const profiles = profile.socials.filter((social) => social.icon !== 'mail');
 
 /**
  * ⌘K / Ctrl+K palette. cmdk handles filtering and roving focus; everything
@@ -186,28 +188,20 @@ export function CommandPalette({ open, onClose, onOpenTerminal }: Props) {
                 </Command.Group>
 
                 <Command.Group heading="Elsewhere" className="cmd-group">
-                  <Command.Item
-                    value="open github profile"
-                    onSelect={() =>
-                      run(() => window.open(`https://github.com/pulkittaneja09`, '_blank', 'noopener'))
-                    }
-                    className="cmd-item"
-                  >
-                    <GitHubIcon className="h-4 w-4 text-faint" />
-                    GitHub
-                  </Command.Item>
-                  <Command.Item
-                    value="open linkedin profile"
-                    onSelect={() =>
-                      run(() =>
-                        window.open('https://linkedin.com/in/pulkit-taneja-627437366', '_blank', 'noopener'),
-                      )
-                    }
-                    className="cmd-item"
-                  >
-                    <LinkedInIcon className="h-4 w-4 text-faint" />
-                    LinkedIn
-                  </Command.Item>
+                  {profiles.map((social) => {
+                    const Icon = socialIconMap[social.icon];
+                    return (
+                      <Command.Item
+                        key={social.label}
+                        value={`open ${social.label.toLowerCase()} profile`}
+                        onSelect={() => run(() => window.open(social.href, '_blank', 'noopener'))}
+                        className="cmd-item"
+                      >
+                        <Icon className="h-4 w-4 text-faint" />
+                        {social.label}
+                      </Command.Item>
+                    );
+                  })}
                   <Command.Item
                     value="send me an email"
                     onSelect={() =>

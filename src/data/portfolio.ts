@@ -64,11 +64,10 @@ export const profile: Profile = {
       icon: 'mail',
     },
     {
-      // TODO(pulkit): add your LeetCode profile URL (the résumé only says "120+").
       label: 'LeetCode',
-      href: 'https://leetcode.com/u/pulkittaneja09/',
-      handle: '120+ solved',
-      icon: 'code',
+      href: 'https://leetcode.com/u/PULKITTANEJA/',
+      handle: 'PULKITTANEJA',
+      icon: 'leetcode',
     },
   ],
 };

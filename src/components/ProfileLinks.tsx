@@ -1,5 +1,5 @@
 import { LocalClock } from '@/components/LocalClock';
-import { ArrowUpRightIcon, GitHubIcon, LinkedInIcon, MailIcon } from '@/components/icons';
+import { ArrowUpRightIcon, MailIcon, socialIconMap } from '@/components/icons';
 import { profile } from '@/data/portfolio';
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
 import { cn } from '@/lib/cn';
@@ -7,47 +7,38 @@ import { cn } from '@/lib/cn';
 const iconLink =
   'grid h-8 w-8 place-items-center rounded-md text-body transition-colors duration-300 hover:text-strong';
 
+/** Profiles shown as icons, in this order. Email gets its own copy button. */
+const ICON_PROFILES = ['github', 'linkedin', 'leetcode'] as const;
+
 /**
- * Bottom of the left column: GitHub, LinkedIn, copy-email, the résumé, and
- * the local time in Chennai. The email icon copies rather than launching a
- * mail client — the address is the useful thing, not the app.
+ * Bottom of the left column: GitHub, LinkedIn, LeetCode, copy-email, the
+ * résumé, and the local time in Chennai. The email icon copies rather than
+ * launching a mail client — the address is the useful thing, not the app.
  */
 export function ProfileLinks({ className }: { className?: string }) {
   const copy = useCopyToClipboard();
-  const github = profile.socials.find((social) => social.icon === 'github');
-  const linkedin = profile.socials.find((social) => social.icon === 'linkedin');
+  const links = ICON_PROFILES.flatMap((icon) => profile.socials.filter((social) => social.icon === icon));
 
   return (
     <div className={cn('flex flex-wrap items-center justify-between gap-x-6 gap-y-3', className)}>
       <ul className="-ml-1.5 flex items-center gap-2">
-        {github && (
-          <li>
-            <a
-              href={github.href}
-              target="_blank"
-              rel="noreferrer noopener"
-              className={iconLink}
-              aria-label="GitHub (opens in a new tab)"
-              title="GitHub"
-            >
-              <GitHubIcon className="h-[18px] w-[18px]" />
-            </a>
-          </li>
-        )}
-        {linkedin && (
-          <li>
-            <a
-              href={linkedin.href}
-              target="_blank"
-              rel="noreferrer noopener"
-              className={iconLink}
-              aria-label="LinkedIn (opens in a new tab)"
-              title="LinkedIn"
-            >
-              <LinkedInIcon className="h-[18px] w-[18px]" />
-            </a>
-          </li>
-        )}
+        {links.map((social) => {
+          const Icon = socialIconMap[social.icon];
+          return (
+            <li key={social.label}>
+              <a
+                href={social.href}
+                target="_blank"
+                rel="noreferrer noopener"
+                className={iconLink}
+                aria-label={`${social.label} (opens in a new tab)`}
+                title={social.label}
+              >
+                <Icon className="h-[18px] w-[18px]" />
+              </a>
+            </li>
+          );
+        })}
         <li>
           <button
             type="button"

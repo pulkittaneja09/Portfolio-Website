@@ -122,6 +122,10 @@ reports 0 violations in 33 strict snapshots; build, lint and format are clean.
 - The agent card cycles three traces rather than two, adding a ParcelPilot "403 before retrieval" run.
 - The Formspree contact form was dropped: the spec defines Contact as the email plus socials.
 
+## Polish pass notes
+
+- P1: LeetCode now points to https://leetcode.com/u/PULKITTANEJA/ everywhere (data → rail, Contact, terminal `contact`, Ask answer; JSON-LD sameAs), the palette's Elsewhere group is built from the data instead of hard-coded GitHub/LinkedIn URLs (it had no LeetCode), and the rail shows the official LeetCode mark beside GitHub and LinkedIn. Verified in Chrome: the icon opens exactly that URL; the old `/u/pulkittaneja09` link is gone.
+
 ## Checklist
 
 - [x] 1. Study the 5 reference sites and write notes
@@ -139,3 +143,11 @@ reports 0 violations in 33 strict snapshots; build, lint and format are clean.
 - [x] 13. Fix/verify the reveal bug: nothing stuck blurred or invisible
 - [x] 14. Playwright QA at 1440, 1280, 1024 and 390px (one-line name, no theme toggle, no stuck opacity/blur, body contrast ≥ 7:1, not template-like)
 - [x] 15. npm run build, fix all warnings, final summary
+
+### Polish pass (keep the layout and style; no redesign)
+
+- [x] P1. Fix the LeetCode link everywhere (https://leetcode.com/u/PULKITTANEJA/) and show its icon with the other socials
+- [ ] P2. Remove the CGPA everywhere (keep "B.Tech CSE, VIT Chennai '28")
+- [ ] P3. Compare side by side with brittanychiang.com, rauno.me, emilkowal.ski, paco.me, leerob.com; write a gap list; simplify anything that adds clutter
+- [ ] P4. Add what's missing, only where it fits the minimal style (note why anything was skipped)
+- [ ] P5. Final QA at 1440 / 1024 / 390, build with no warnings, short summary

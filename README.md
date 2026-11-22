@@ -217,7 +217,6 @@ static agent trace, and a global rule collapses any remaining animation.
 Search the codebase for `TODO(pulkit)`. At the time of writing:
 
 - `profile.siteUrl` — set to the real domain after the first deploy.
-- LeetCode profile URL in `profile.socials` (the résumé only states "120+").
 - The DPIIT recognition number and date in `venture.badges`.
 - The Audaxity site URL, once it is live (the Audaxity row links to the founder card meanwhile).
 - Company URLs for SDG Corporation and Dezors, which turn those experience rows into links.

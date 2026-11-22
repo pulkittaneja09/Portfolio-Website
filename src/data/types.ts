@@ -42,7 +42,7 @@ export interface Social {
   href: string;
   /** Short handle shown next to the label, e.g. "@pulkittaneja09". */
   handle: string;
-  icon: 'github' | 'linkedin' | 'mail' | 'code' | 'file';
+  icon: 'github' | 'linkedin' | 'leetcode' | 'mail' | 'file';
 }
 
 export interface Profile {
