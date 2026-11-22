@@ -1,7 +1,6 @@
 import {
   education,
   experience,
-  fundamentals,
   profile,
   projects,
   sideProjects,
@@ -227,7 +226,7 @@ const TOPICS: Topic[] = [
     answer: () =>
       skillGroups
         .map((group) => `${group.title}: ${group.items.map((item) => item.name).join(', ')}.`)
-        .join(' ') + ` CS fundamentals: ${fundamentals.join(', ')}.`,
+        .join(' '),
     related: ['What is his backend stack?', 'What machine learning has he done?', 'Does he write Go?'],
   },
   {

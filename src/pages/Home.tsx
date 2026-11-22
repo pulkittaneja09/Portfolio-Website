@@ -15,6 +15,7 @@ import { Contact } from '@/sections/Contact';
 import { Experience } from '@/sections/Experience';
 import { Founder } from '@/sections/Founder';
 import { Projects } from '@/sections/Projects';
+import { Skills } from '@/sections/Skills';
 
 const SECTION_IDS = nav.map((item) => item.id);
 
@@ -69,6 +70,7 @@ export function Home({ onOpenTerminal, onOpenPalette, onOpenAsk }: HomeProps) {
             <About />
 
             <Experience />
+            <Skills />
             <Projects />
             <Founder />
             <Contact />

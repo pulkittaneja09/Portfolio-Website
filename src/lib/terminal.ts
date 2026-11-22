@@ -1,7 +1,6 @@
 import {
   education,
   experience,
-  fundamentals,
   profile,
   projects,
   sideProjects,
@@ -98,8 +97,6 @@ function skillsOutput(): Line[] {
     lines.push(l(`    ${group.items.map((item) => item.name).join(' · ')}`, 'muted'));
     lines.push(blank());
   });
-  lines.push(l('  CS fundamentals', 'accent'));
-  lines.push(l(`    ${fundamentals.join(' · ')}`, 'muted'));
   return lines;
 }
 

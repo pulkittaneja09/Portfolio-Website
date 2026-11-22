@@ -11,7 +11,8 @@
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \"*.{json,ts,js}\" README.md",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\"",
     "check:reveal": "node scripts/reveal-check.cjs",
-    "qa": "node scripts/qa.cjs"
+    "qa": "node scripts/qa.cjs",
+    "icons": "node scripts/skill-icons.mjs"
   },
   "dependencies": {
     "cmdk": "^1.0.4",

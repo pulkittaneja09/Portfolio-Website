@@ -1,11 +1,13 @@
 import { ProjectThumb } from '@/components/ProjectThumb';
 import { Reveal } from '@/components/Reveal';
 import { Section } from '@/components/Section';
+import { SkillFilterPill } from '@/components/SkillFilterPill';
 import { TransitionLink } from '@/components/TransitionLink';
 import { ArrowUpRightIcon } from '@/components/icons';
 import { GITHUB_USERNAME, projects, sideProjects } from '@/data/portfolio';
 import type { Project } from '@/data/types';
 import { liveStats } from '@/lib/siteStats';
+import { filterState, useActiveSkill } from '@/lib/skills';
 
 const CHIP_LIMIT = 4;
 
@@ -87,12 +89,18 @@ function ProjectRow({ project }: { project: Project }) {
 
 /** Smaller work, one line each, linking to the repo. */
 function MoreProjects() {
+  const skill = useActiveSkill();
+
   return (
     <div className="mt-16">
       <h3 className="label mb-4 text-faint">More</h3>
       <ul className="row-list">
         {sideProjects.map((item, index) => (
-          <li key={item.name} className="row-item">
+          <li
+            key={item.name}
+            className="row-item"
+            data-filter={filterState((evidence) => evidence.side.includes(item), skill)}
+          >
             <Reveal index={index}>
               <a
                 href={item.repo}
@@ -147,11 +155,18 @@ function GitHubLine() {
 }
 
 export function Projects() {
+  const skill = useActiveSkill();
+
   return (
     <Section id="projects" label="Projects">
+      <SkillFilterPill />
       <ol className="row-list space-y-3">
         {projects.map((project, index) => (
-          <li key={project.slug} className="row-item">
+          <li
+            key={project.slug}
+            className="row-item"
+            data-filter={filterState((evidence) => evidence.projects.includes(project), skill)}
+          >
             <Reveal index={index}>
               <ProjectRow project={project} />
             </Reveal>

@@ -49,6 +49,7 @@
     --shadow-overlay: 0 24px 64px -24px rgba(0, 0, 0, 0.7);
     --selection: rgb(var(--accent-rgb) / 0.28);
     --scrollbar: rgba(255, 255, 255, 0.12);
+    --tip-bg: #17181b;
 
     --ease: cubic-bezier(0.16, 1, 0.3, 1);
 
@@ -89,6 +90,7 @@
     --shadow-overlay: 0 1px 3px rgba(0, 0, 0, 0.06), 0 24px 64px -16px rgba(0, 0, 0, 0.18);
     --selection: rgb(var(--accent-rgb) / 0.2);
     --scrollbar: rgba(0, 0, 0, 0.2);
+    --tip-bg: #ffffff;
 
     color-scheme: light;
   }
@@ -204,6 +206,73 @@
     white-space: nowrap;
   }
 
+  /* Skill chips: smaller corners than the tag chips, a tiny monochrome logo,
+     and on chips with evidence a hover, a selected state and a tooltip. */
+  .skill-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--chip-bg);
+    padding: 0.1875rem 0.5rem;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 0.75rem;
+    line-height: 1.45;
+    letter-spacing: 0.01em;
+    color: var(--text);
+    white-space: nowrap;
+    transition:
+      color 0.2s var(--ease),
+      border-color 0.2s var(--ease);
+  }
+
+  .skill-chip svg {
+    color: var(--text-faint);
+    transition: color 0.2s var(--ease);
+  }
+
+  button.skill-chip:hover,
+  button.skill-chip:focus-visible {
+    color: var(--text-strong);
+    border-color: rgb(var(--line-rgb) / 0.2);
+  }
+
+  button.skill-chip:hover svg,
+  button.skill-chip:focus-visible svg {
+    color: var(--text-strong);
+  }
+
+  .skill-chip[data-selected] {
+    color: var(--accent);
+    border-color: rgb(var(--accent-rgb) / 0.55);
+  }
+
+  .skill-chip[data-selected] svg {
+    color: var(--accent);
+  }
+
+  .skill-tip {
+    position: absolute;
+    bottom: calc(100% + 0.5rem);
+    z-index: 30;
+    width: max-content;
+    max-width: min(18rem, calc(100vw - 2.5rem));
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    background: var(--tip-bg);
+    box-shadow: var(--shadow-float);
+    padding: 0.375rem 0.625rem;
+    font-family: Geist, ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    letter-spacing: 0;
+    color: var(--text-strong);
+    text-align: left;
+    white-space: normal;
+    pointer-events: none;
+  }
+
   /* Underline drawn in from the left, in champagne. Works across line breaks. */
   .link {
     color: var(--text-strong);
@@ -232,9 +301,9 @@
   /* Desktop: a sticky, full-height column whose three groups (identity + nav,
      the agent trace, links) spread out with space-between. Nothing in it may
      shrink — a squeezed card would clip its own trace — so the spacing steps
-     down in tiers instead, measured to fit real laptop viewports: roomy above
-     780px tall, compact to 680px, tight to 620px, and below that the rail
-     simply scrolls with the page. */
+     down in tiers instead, measured to fit real laptop viewports (six nav
+     items): roomy above 840px tall, compact to 720px, tight to 620px, and
+     below that the rail simply scrolls with the page. */
   @media (min-width: 1024px) {
     .rail {
       position: sticky;
@@ -262,7 +331,7 @@
     }
   }
 
-  @media (min-width: 1024px) and (max-height: 780px) {
+  @media (min-width: 1024px) and (max-height: 840px) {
     .rail {
       padding-block: 2.25rem 1.5rem;
     }
@@ -280,17 +349,17 @@
     }
   }
 
-  @media (min-width: 1024px) and (max-height: 680px) {
+  @media (min-width: 1024px) and (max-height: 720px) {
     .rail {
       padding-block: 1.75rem 1.25rem;
     }
 
     .rail-nav {
-      margin-top: 1rem;
+      margin-top: 0.875rem;
     }
 
     .rail-nav a {
-      padding-block: 0.2rem;
+      padding-block: 0.15rem;
     }
 
     .rail-card {
@@ -337,10 +406,17 @@
   }
 
   @media (hover: hover) and (pointer: fine) {
-    .row-list:has(.row-item:hover) .row-item:not(:hover),
-    .row-list:has(.row-item:focus-within) .row-item:not(:focus-within) {
+    /* While a skill filter is active, the filter alone decides who fades. */
+    .row-list:has(.row-item:hover) .row-item:not(:hover):not([data-filter]),
+    .row-list:has(.row-item:focus-within) .row-item:not(:focus-within):not([data-filter]) {
       opacity: 0.5;
     }
+  }
+
+  /* A skill picked in the Skills section: the matching rows stay, the rest
+     step back (over the hover dimming too). Only ever user-initiated. */
+  .row-list .row-item[data-filter='dim'] {
+    opacity: 0.4 !important;
   }
 
   /* The row surface: invisible until hovered or focused, then a 3% panel with

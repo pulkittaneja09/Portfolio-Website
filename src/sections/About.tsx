@@ -1,7 +1,7 @@
 import { RichText } from '@/components/RichText';
 import { Section } from '@/components/Section';
 import { ArrowUpRightIcon } from '@/components/icons';
-import { about, dailyTools, now } from '@/data/portfolio';
+import { about, now } from '@/data/portfolio';
 import type { NowItem } from '@/data/types';
 import { leetcodeLabel, leetcodeProfile } from '@/lib/siteStats';
 import { stagger } from '@/lib/stagger';
@@ -10,7 +10,6 @@ import { stagger } from '@/lib/stagger';
 const nowItems: NowItem[] = leetcodeProfile
   ? [...now, { label: leetcodeLabel, href: leetcodeProfile.href }]
   : now;
-const toolItems: NowItem[] = dailyTools.map((label) => ({ label }));
 
 function FactItem({ item }: { item: NowItem }) {
   if (!item.href) return <>{item.label}</>;
@@ -61,9 +60,9 @@ function Fact({ label, items }: { label: string; items: NowItem[] }) {
 }
 
 /**
- * Two short first-person paragraphs, then "Now" and the daily tools as plain
- * label/value rows. It is on screen at load on desktop, so it uses the load
- * entrance rather than a scroll reveal.
+ * Two short first-person paragraphs, then "Now" as a plain label/value row
+ * (the tools live in the Skills section). It is on screen at load on
+ * desktop, so it uses the load entrance rather than a scroll reveal.
  */
 export function About() {
   return (
@@ -78,7 +77,6 @@ export function About() {
 
       <dl className="enter mt-8 space-y-3 text-sm" style={stagger(4)}>
         <Fact label="Now" items={nowItems} />
-        <Fact label="Daily tools" items={toolItems} />
       </dl>
     </Section>
   );

@@ -100,22 +100,11 @@ export const now: NowItem[] = [
   { label: "B.Tech CSE, VIT Chennai '28" },
 ];
 
-/** One line at the end of About — the whole tech stack section, compressed. */
-export const dailyTools: string[] = [
-  'Python',
-  'Go',
-  'TypeScript',
-  'FastAPI',
-  'LangGraph',
-  'MCP',
-  'PostgreSQL',
-  'Docker',
-];
-
 /** Section anchors, in page order. Drives the left-column nav and ⌘K. */
 export const nav: NavItem[] = [
   { id: 'about', label: 'About' },
   { id: 'experience', label: 'Experience' },
+  { id: 'skills', label: 'Skills' },
   { id: 'projects', label: 'Projects' },
   { id: 'founder', label: 'Founder' },
   { id: 'contact', label: 'Contact' },
@@ -208,6 +197,7 @@ export const stats: Stat[] = [
 export const projects: Project[] = [
   {
     slug: 'parcelpilot',
+    short: 'ParcelPilot',
     name: 'ParcelPilot AI Support Copilot',
     problem:
       'Support agents lose minutes per ticket digging through policy PDFs and escalation runbooks before they can answer a customer.',
@@ -216,7 +206,7 @@ export const projects: Project[] = [
       'A support-operations copilot where agents ask questions in plain English and get answers grounded in the actual order record, company policy documents and the conversation so far — with every action confirmed before it fires.',
     role: 'Sole engineer — FastAPI backend, RAG pipeline, agent routing, access-control layer, React/TS frontend and both deployments.',
     year: '2026',
-    stack: ['FastAPI', 'Python', 'React', 'TypeScript', 'Claude', 'ChromaDB', 'SQLite', 'Render'],
+    stack: ['FastAPI', 'Python', 'React', 'TypeScript', 'Claude', 'ChromaDB', 'SQLite', 'Render', 'Vercel'],
     metric: { value: '403 before retrieval', label: 'out-of-scope requests blocked pre-LLM' },
     links: {
       demo: 'https://parcelpilot-ai-agent-psi.vercel.app/',
@@ -296,7 +286,18 @@ export const projects: Project[] = [
       'A battery-intelligence platform that ingests telemetry CSVs, predicts remaining useful life with a trained Random Forest, grades cell health and risk, and recommends a second-life deployment path with a sustainability estimate.',
     role: 'Built the FastAPI service, the ML integration and inference endpoints, and shipped both halves to production (Vercel + Render) during the SDG hackathon.',
     year: '2026',
-    stack: ['FastAPI', 'scikit-learn', 'Pandas', 'NumPy', 'React', 'TypeScript', 'Vite', 'Render'],
+    stack: [
+      'FastAPI',
+      'scikit-learn',
+      'Pandas',
+      'NumPy',
+      'React',
+      'TypeScript',
+      'Vite',
+      'Render',
+      'Python',
+      'Vercel',
+    ],
     metric: { value: 'R² = 0.879', label: 'RUL prediction on 2,716 NASA cycles' },
     links: {
       demo: 'https://sdg-hackthon.vercel.app/',
@@ -373,7 +374,17 @@ export const projects: Project[] = [
       'A RAG assistant that ingests enterprise PDFs, embeds and indexes them in ChromaDB, and answers natural-language questions with cited, retrieval-grounded responses from Gemini 2.5 Flash.',
     role: 'Built the end-to-end LangChain ingestion and retrieval pipeline, the FastAPI service and the React client, then deployed across Render and Vercel.',
     year: '2026',
-    stack: ['FastAPI', 'LangChain', 'ChromaDB', 'Gemini 2.5 Flash', 'Google Embeddings', 'React', 'Vite'],
+    stack: [
+      'FastAPI',
+      'LangChain',
+      'ChromaDB',
+      'Gemini 2.5 Flash',
+      'Google Embeddings',
+      'React',
+      'Vite',
+      'Python',
+      'Vercel',
+    ],
     metric: { value: 'Cited answers', label: 'every response traced to source chunks' },
     links: {
       demo: 'https://knowledgehub-ai-pulkit.vercel.app/',
@@ -651,103 +662,90 @@ export const venture: Venture = {
   stack: ['Whisper', 'Python', 'FastAPI', 'LLMs', 'Vector search'],
 };
 
+/**
+ * The Skills section, the terminal's `skills` command and the Ask widget all
+ * read this. Cross-checked against the résumé's Technical Skills and the
+ * stacks in this file; nothing here is aspirational.
+ *
+ * "Used in" is never typed: lib/skills.ts matches each skill (its name, or
+ * its `aliases`) against the real `stack` and `tags` of the projects, roles
+ * and side projects in this file. A skill with no match is still listed, it
+ * just has no tooltip and is not clickable. `icon` is a Simple Icons slug in
+ * public/skills.svg (regenerate with `npm run icons`).
+ */
 export const skillGroups: SkillGroup[] = [
   {
-    id: 'genai',
+    id: 'ai',
     title: 'AI / ML',
-    blurb: 'Agents, retrieval and the models underneath.',
     items: [
-      { name: 'LangChain', icon: 'langchain', usedIn: ['KnowledgeHub AI', 'genai-core'] },
-      { name: 'LangGraph', icon: 'langchain', usedIn: ['SDG Corporation', 'agentic-ai'] },
-      { name: 'MCP', icon: 'modelcontextprotocol', usedIn: ['SDG Corporation'] },
-      { name: 'Claude', icon: 'claude', usedIn: ['ParcelPilot AI Support Copilot'] },
-      { name: 'Google Gemini', icon: 'googlegemini', usedIn: ['KnowledgeHub AI', 'Dezors'] },
-      { name: 'ChromaDB', icon: 'chromadb', usedIn: ['ParcelPilot AI Support Copilot', 'KnowledgeHub AI'] },
-      { name: 'scikit-learn', icon: 'scikitlearn', usedIn: ['Scrap 2 Spark', 'Fake News Detection'] },
-      { name: 'NumPy', icon: 'numpy', usedIn: ['Scrap 2 Spark'] },
-      { name: 'Pandas', icon: 'pandas', usedIn: ['Scrap 2 Spark', 'Fake News Detection'] },
+      { name: 'LangChain', icon: 'langchain' },
+      { name: 'LangGraph', icon: 'langgraph' },
+      { name: 'AI Agents', aliases: ['AI agents'] },
+      { name: 'MCP', icon: 'modelcontextprotocol' },
+      { name: 'RAG' },
+      { name: 'ChromaDB' },
+      { name: 'Embeddings', aliases: ['Embeddings', 'Google Embeddings'] },
+      {
+        name: 'LLM APIs (Claude, Gemini)',
+        aliases: ['Claude', 'Google Gemini', 'Gemini 2.5 Flash', 'LLM', 'LLMs'],
+      },
+      { name: 'Whisper' },
+      { name: 'scikit-learn', icon: 'scikitlearn' },
+      { name: 'Pandas', icon: 'pandas' },
+      { name: 'NumPy', icon: 'numpy' },
+      { name: 'NLP (TF-IDF)', aliases: ['NLP', 'TF-IDF'] },
     ],
   },
   {
     id: 'backend',
     title: 'Backend',
-    blurb: 'The services that carry the models.',
     items: [
-      {
-        name: 'FastAPI',
-        icon: 'fastapi',
-        usedIn: ['ParcelPilot AI Support Copilot', 'Scrap 2 Spark', 'KnowledgeHub AI', 'Dezors'],
-      },
-      { name: 'Node.js', icon: 'nodedotjs', usedIn: ['Ollamachat API', 'Career Advisor Backend'] },
-      { name: 'Express', icon: 'express', usedIn: ['Career Advisor Backend'] },
-      { name: 'PostgreSQL', icon: 'postgresql', usedIn: ['IEEE Recruitment Backend'] },
-      { name: 'MongoDB', icon: 'mongodb', usedIn: ['Career Advisor Backend'] },
+      { name: 'FastAPI', icon: 'fastapi' },
+      { name: 'Go', icon: 'go', aliases: ['Go', 'Gin', 'Gorilla Mux'] },
+      { name: 'Node.js', icon: 'nodedotjs' },
+      { name: 'Express', icon: 'express' },
+      { name: 'PostgreSQL', icon: 'postgresql' },
+      { name: 'MongoDB', icon: 'mongodb' },
+      { name: 'SQLite', icon: 'sqlite' },
+      { name: 'REST APIs', aliases: ['REST'] },
     ],
   },
   {
     id: 'languages',
     title: 'Languages',
-    blurb: 'Ranked by what I actually ship in.',
     items: [
-      {
-        name: 'Python',
-        icon: 'python',
-        usedIn: ['ParcelPilot AI Support Copilot', 'Scrap 2 Spark', 'KnowledgeHub AI', 'SDG Corporation'],
-      },
-      { name: 'Go', icon: 'go', usedIn: ['IEEE Recruitment Backend', 'Go Movies API', 'GoFormHandler'] },
-      {
-        name: 'TypeScript',
-        icon: 'typescript',
-        usedIn: ['ParcelPilot AI Support Copilot', 'Scrap 2 Spark', 'This site'],
-      },
-      { name: 'JavaScript', icon: 'javascript', usedIn: ['KnowledgeHub AI', 'Ollamachat API'] },
-      { name: 'C++', icon: 'cplusplus', usedIn: ['DSA practice', 'Coursework'] },
-      { name: 'Java', icon: 'openjdk', usedIn: ['OOP coursework'] },
-      { name: 'C', icon: 'c', usedIn: ['Systems coursework'] },
+      { name: 'Python', icon: 'python' },
+      { name: 'Go', icon: 'go', aliases: ['Go', 'Gin', 'Gorilla Mux'] },
+      { name: 'TypeScript / JavaScript', icon: 'typescript', aliases: ['TypeScript', 'JavaScript'] },
+      { name: 'Java', icon: 'openjdk' },
+      { name: 'C / C++', icon: 'cplusplus' },
     ],
   },
   {
     id: 'infra',
-    title: 'Infra & tooling',
-    blurb: 'Getting it off localhost.',
+    title: 'Infra & Ops',
     items: [
-      { name: 'Docker', icon: 'docker', usedIn: ['IEEE Recruitment Backend'] },
-      { name: 'Linux', icon: 'linux', usedIn: ['Dezors VPS'] },
-      { name: 'Nginx', icon: 'nginx', usedIn: ['Dezors'] },
-      { name: 'Git', icon: 'git', usedIn: ['Everything'] },
-      {
-        name: 'Vercel',
-        icon: 'vercel',
-        usedIn: ['ParcelPilot AI Support Copilot', 'Scrap 2 Spark', 'KnowledgeHub AI'],
-      },
-      {
-        name: 'Render',
-        icon: 'render',
-        usedIn: ['ParcelPilot AI Support Copilot', 'Scrap 2 Spark', 'KnowledgeHub AI'],
-      },
-      { name: 'Postman', icon: 'postman', usedIn: ['API development'] },
+      { name: 'Docker', icon: 'docker' },
+      { name: 'Linux', icon: 'linux' },
+      { name: 'Nginx', icon: 'nginx' },
+      { name: 'Vercel', icon: 'vercel' },
+      { name: 'Render', icon: 'render' },
+      { name: 'Git', icon: 'git' },
+      { name: 'Postman', icon: 'postman' },
     ],
   },
   {
     id: 'frontend',
     title: 'Frontend',
-    blurb: 'Enough to ship the whole product.',
     items: [
-      {
-        name: 'React',
-        icon: 'react',
-        usedIn: ['ParcelPilot AI Support Copilot', 'Scrap 2 Spark', 'This site'],
-      },
-      { name: 'Vite', icon: 'vite', usedIn: ['Scrap 2 Spark', 'KnowledgeHub AI', 'This site'] },
-      { name: 'Tailwind CSS', icon: 'tailwindcss', usedIn: ['Scrap 2 Spark', 'This site'] },
+      { name: 'React', icon: 'react' },
+      { name: 'Vite', icon: 'vite' },
+      { name: 'Tailwind CSS', icon: 'tailwindcss' },
     ],
   },
-];
-
-/** CS fundamentals from the résumé — shown as plain text, never as skill bars. */
-export const fundamentals = [
-  'Data Structures & Algorithms',
-  'Object-Oriented Programming',
-  'DBMS',
-  'Operating Systems',
+  {
+    id: 'core',
+    title: 'CS Core',
+    items: [{ name: 'DSA' }, { name: 'OOP' }, { name: 'DBMS' }, { name: 'Operating Systems' }],
+  },
 ];

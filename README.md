@@ -35,20 +35,20 @@ npm run dev      # http://localhost:5173
 component, so you can change the whole site without opening any JSX. Every field is typed in
 [`src/data/types.ts`](src/data/types.ts), so if you break a shape, `npm run build` tells you where.
 
-| What you want to change                                               | Export to edit      |
-| --------------------------------------------------------------------- | ------------------- |
-| Name, title, one-liner, email, socials, availability line             | `profile`           |
-| The two About paragraphs (`**phrase**` = highlight, `*word*` = serif) | `about`             |
-| The "Now" row (the LeetCode count is added at build) and daily tools  | `now`, `dailyTools` |
-| The left-column agent-run card (example traces, not metrics)          | `agentTraces`       |
-| Degree, institution, dates                                            | `education`         |
-| The section nav and its order                                         | `nav`               |
-| The experience rows (`impact` = the two short lines on the page)      | `experience`        |
-| The four flagship projects and their case studies                     | `projects`          |
-| The one-line "More" list                                              | `sideProjects`      |
-| The founder card, its mission and pipeline                            | `venture`           |
-| Sourced numbers, used by the terminal and the Ask widget              | `stats`             |
-| Skills, used by the terminal's `skills` command                       | `skillGroups`       |
+| What you want to change                                               | Export to edit |
+| --------------------------------------------------------------------- | -------------- |
+| Name, title, one-liner, email, socials, availability line             | `profile`      |
+| The two About paragraphs (`**phrase**` = highlight, `*word*` = serif) | `about`        |
+| The "Now" row (the LeetCode count is added at build time)             | `now`          |
+| The left-column agent-run card (example traces, not metrics)          | `agentTraces`  |
+| Degree, institution, dates                                            | `education`    |
+| The section nav and its order                                         | `nav`          |
+| The experience rows (`impact` = the two short lines on the page)      | `experience`   |
+| The four flagship projects and their case studies                     | `projects`     |
+| The one-line "More" list                                              | `sideProjects` |
+| The founder card, its mission and pipeline                            | `venture`      |
+| Sourced numbers, used by the terminal and the Ask widget              | `stats`        |
+| The Skills section (also the terminal and Ask); evidence is computed  | `skillGroups`  |
 
 Two rules worth keeping:
 
@@ -140,6 +140,7 @@ for a year, and sets `X-Content-Type-Options`, `Referrer-Policy` and `X-Frame-Op
 public/
   fonts/            self-hosted woff2: Geist, Geist Mono, Instrument Serif italic
   previews/         project screenshots, WebP at 1024 and 640
+  skills.svg        monochrome Simple Icons sprite for the skill chips (npm run icons)
   Pulkit_Taneja_Resume.pdf
   og.png            1200x630 social card, centred so a square crop still reads
   favicon.svg  favicon.ico  apple-touch-icon.png  icon-192.png  icon-512.png
@@ -153,7 +154,7 @@ src/
   data/
     portfolio.ts    ← all content lives here
     types.ts        the shape of it
-  sections/         About, Experience, Projects, Founder, Contact
+  sections/         About, Experience, Skills, Projects, Founder, Contact
   components/       identity rail (Identity, SectionNav, ProfileLinks, AgentRun),
                     MobileBar, rows and thumbnails, PipelineFlow, palette,
                     terminal, Ask widget, cursor spotlight, architecture diagram
@@ -165,6 +166,7 @@ src/
 scripts/
   qa.cjs            design QA at 1440 / 1280 / 1024 / 390
   reveal-check.cjs  strict "nothing stuck invisible" regression check
+  skill-icons.mjs   builds public/skills.svg from the slugs in SKILL_ICONS
 ```
 
 ## Scripts
@@ -177,7 +179,8 @@ scripts/
 | `npm run lint`         | ESLint, zero warnings tolerated                                                                                                                                                                                                                                                                                |
 | `npm run format`       | Prettier over `src/`                                                                                                                                                                                                                                                                                           |
 | `npm run qa`           | With a preview server on :4173, at four widths and in both themes: one-line name, no theme flash and a working toggle, nothing hidden after scrolling, body contrast ≥ 7:1, accent contrast ≥ 4.5:1, exact LeetCode links, no GPA, no console errors or third-party requests; screenshots to `.screenshots/qa` |
-| `npm run check:reveal` | With a preview server on :4173: 33 strict snapshots across scrolls, jumps, deep links, resize, a no-scroll full-page capture and mobile                                                                                                                                                                        |
+| `npm run check:reveal` | With a preview server on :4173: strict snapshots (about 35) across scrolls, jumps, deep links, resize, a no-scroll full-page capture and mobile                                                                                                                                                                |
+| `npm run icons`        | Rebuilds `public/skills.svg` from the Simple Icons slugs listed in `SKILL_ICONS` (`src/data/types.ts`)                                                                                                                                                                                                         |
 
 ## How it is put together
 
@@ -231,6 +234,13 @@ cached in `node_modules/.cache`, then to no number at all: the Now row then read
 project's thumbnail morphs into the case study's screenshot (and back on the way out). Navigation and
 scroll both happen inside the update callback, so the new snapshot is already in place. Browsers
 without the API, and reduced motion, get a plain navigation.
+
+**Skills show their evidence.** Each chip's "Used in" tooltip, and the click that highlights the
+matching experience and project rows (the rest fade to 40%, with a "Showing work with FastAPI · Clear"
+pill above Projects), is computed by `lib/skills.ts` from the real `stack` and `tags` in
+`portfolio.ts`; a skill's `aliases` bridge naming differences ("Gemini 2.5 Flash" counts for LLM APIs).
+Nothing is typed by hand, and a skill with no tagged work is listed but not clickable. The logos come
+from one cached SVG sprite, so they cost nothing in the JS bundle.
 
 **Rows dim their siblings with `:has()`.** Hovering an experience or project row lifts it onto a 3%
 panel and fades the others to 50%; hovering the gap between rows dims nothing.

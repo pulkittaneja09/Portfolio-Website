@@ -5,37 +5,38 @@
  * typed here, so editing content never means touching a component.
  */
 
-export type IconSlug =
-  | 'python'
-  | 'go'
-  | 'typescript'
-  | 'javascript'
-  | 'react'
-  | 'cplusplus'
-  | 'c'
-  | 'openjdk'
-  | 'fastapi'
-  | 'nodedotjs'
-  | 'express'
-  | 'postgresql'
-  | 'mongodb'
-  | 'docker'
-  | 'linux'
-  | 'nginx'
-  | 'git'
-  | 'vercel'
-  | 'render'
-  | 'postman'
-  | 'langchain'
-  | 'googlegemini'
-  | 'claude'
-  | 'chromadb'
-  | 'scikitlearn'
-  | 'numpy'
-  | 'pandas'
-  | 'vite'
-  | 'tailwindcss'
-  | 'modelcontextprotocol';
+/** Simple Icons slugs available in public/skills.svg (see scripts/skill-icons.mjs). */
+export const SKILL_ICONS = [
+  'langchain',
+  'langgraph',
+  'modelcontextprotocol',
+  'scikitlearn',
+  'pandas',
+  'numpy',
+  'fastapi',
+  'go',
+  'nodedotjs',
+  'express',
+  'postgresql',
+  'mongodb',
+  'sqlite',
+  'python',
+  'typescript',
+  'openjdk',
+  'cplusplus',
+  'docker',
+  'linux',
+  'nginx',
+  'vercel',
+  'render',
+  'git',
+  'postman',
+  'react',
+  'vite',
+  'tailwindcss',
+] as const;
+
+export type SkillIcon = (typeof SKILL_ICONS)[number];
 
 export interface Social {
   label: string;
@@ -138,6 +139,8 @@ export interface Architecture {
 export interface Project {
   slug: string;
   name: string;
+  /** A shorter name for tight spots (skill tooltips), e.g. "ParcelPilot". */
+  short?: string;
   /** One line: what was broken before this existed. */
   problem: string;
   /** The same problem in ~50 characters, for the project row. */
@@ -196,11 +199,21 @@ export interface Venture {
   href?: string;
 }
 
+/**
+ * A skill chip. `aliases` are the stack/tag names in projects, roles and side
+ * projects that count as this skill (defaults to the name itself), so the
+ * "Used in" evidence is computed from the data, never typed.
+ */
+export interface Skill {
+  name: string;
+  icon?: SkillIcon;
+  aliases?: string[];
+}
+
 export interface SkillGroup {
   id: string;
   title: string;
-  blurb: string;
-  items: { name: string; icon: IconSlug; usedIn: string[] }[];
+  items: Skill[];
 }
 
 /** One step of an example agent trace. Steps without `time` (the plan) get no ✓. */

@@ -4,6 +4,7 @@ import { ArrowUpRightIcon } from '@/components/icons';
 import { experience, profile } from '@/data/portfolio';
 import type { ExperienceItem } from '@/data/types';
 import { formatRange } from '@/lib/dates';
+import { filterState, useActiveSkill } from '@/lib/skills';
 
 function ExperienceRow({ item }: { item: ExperienceItem }) {
   const external = Boolean(item.href?.startsWith('http'));
@@ -69,11 +70,17 @@ function ExperienceRow({ item }: { item: ExperienceItem }) {
  * row lifts it onto a faint panel and fades the others (see `.row-list`).
  */
 export function Experience() {
+  const skill = useActiveSkill();
+
   return (
     <Section id="experience" label="Experience">
       <ol className="row-list space-y-3">
         {experience.map((item, index) => (
-          <li key={`${item.org}-${item.role}`} className="row-item">
+          <li
+            key={`${item.org}-${item.role}`}
+            className="row-item"
+            data-filter={filterState((evidence) => evidence.roles.includes(item), skill)}
+          >
             <Reveal index={index}>
               <ExperienceRow item={item} />
             </Reveal>
