@@ -7,8 +7,8 @@ import plugin from 'tailwindcss/plugin';
  * dark → light):
  *
  *   strong     #EEF2F8 → #0B1220  names, titles, highlighted phrases
- *   body       #A3ADBD → #434F63  running text (8.5:1 / 7.9:1 on the ground)
- *   faint      #5E6878 → #8792A2  dates and metadata
+ *   body       #A3ADBD → #404C60  running text (8.5:1 / 8.3:1 on the ground)
+ *   faint      #7A8597 → #646F82  dates and metadata (5.2:1 / 4.9:1)
  *   accent     #8FB4FF → #2F5BD3  glacier blue: the active nav line, hover
  *                                 titles, metrics, the status dot, links,
  *                                 focus rings, function names

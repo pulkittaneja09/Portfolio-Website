@@ -63,7 +63,13 @@ export function ProfileLinks({ className }: { className?: string }) {
           <ThemeToggle />
         </li>
         <li className="ml-3 lg:ml-1.5 xl:ml-2">
-          <a ref={resumeRef} href={profile.resumePath} target="_blank" rel="noopener" className="cta cta-quiet">
+          <a
+            ref={resumeRef}
+            href={profile.resumePath}
+            target="_blank"
+            rel="noopener"
+            className="cta cta-quiet"
+          >
             Résumé
             <ArrowUpRightIcon className="cta-arrow h-3.5 w-3.5" aria-hidden />
             <span className="sr-only">(PDF, opens in a new tab)</span>

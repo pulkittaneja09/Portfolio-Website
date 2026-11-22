@@ -92,7 +92,10 @@ function Highlights() {
           key={item.label}
           className="rounded-xl border border-line/[0.08] bg-[var(--chip-bg)] px-3 py-3 light:bg-[var(--bg-elevated)] light:shadow-card sm:px-4 sm:py-3.5"
         >
-          <CountUp value={item.value} className="block font-mono text-xl tracking-[-0.02em] text-accent sm:text-2xl" />
+          <CountUp
+            value={item.value}
+            className="block font-mono text-xl tracking-[-0.02em] text-accent sm:text-2xl"
+          />
           <span className="mt-1 block text-xs leading-snug text-body">{item.label}</span>
         </li>
       ))}

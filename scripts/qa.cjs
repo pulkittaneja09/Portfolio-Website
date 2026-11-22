@@ -6,7 +6,8 @@
  *       flash), the toggle is present, and <meta name="theme-color"> matches
  *   (c) after scrolling, nothing in the viewport rests below opacity 1 or blurred
  *   (d) body text contrast is at least 7:1 — at rest, under the brightest
- *       point of the cursor spotlight (dark only; it is off in light), and
+ *       point of the cursor spotlight (5.5% dark, 5% light; on the rail also
+ *       with both aurora pools at full strength stacked on top), and
  *       inside a hovered row
  *   (e) every LeetCode link is exactly https://leetcode.com/u/PULKITTANEJA/
  *   (f) no GPA anywhere in the rendered page
@@ -27,7 +28,7 @@ const BASE = process.env.AUDIT_BASE || 'http://localhost:4173';
 const LEETCODE = 'https://leetcode.com/u/PULKITTANEJA/';
 const OUT = path.join(__dirname, '..', '.screenshots', 'qa');
 const THEMES = ['dark', 'light'];
-const THEME_COLOR = { dark: '#0B0C0E', light: '#FAFAF9' };
+const THEME_COLOR = { dark: '#0A0E14', light: '#F8FAFC' };
 const SIZES = [
   [1440, 900],
   [1280, 800],
@@ -90,14 +91,24 @@ function inPage() {
     Math.abs(fg.r - ref.r) < 2 && Math.abs(fg.g - ref.g) < 2 && Math.abs(fg.b - ref.b) < 2 && fg.a > 0.99;
   const light = document.documentElement.dataset.theme === 'light';
   const ground = parse(getComputedStyle(document.body).backgroundColor);
-  // The cursor spotlight's brightest point; there is no spotlight in light.
-  const spotlight = light ? null : { ...token('--accent-rgb'), a: 0.045 };
+  // The cursor spotlight's brightest point.
+  const spotlight = { ...token('--accent-rgb'), a: light ? 0.05 : 0.055 };
+  // Behind the desktop rail: both aurora pools at their peak, as if they
+  // overlapped exactly under the text (they never quite do).
+  const aurora =
+    window.innerWidth >= 1024
+      ? [
+          { ...token('--accent-rgb'), a: light ? 0.04 : 0.035 },
+          { ...token('--secondary-rgb'), a: light ? 0.03 : 0.025 },
+        ]
+      : [];
 
   const backgroundOf = (el, extra) => {
     const chain = [];
     for (let node = el; node && node !== document.documentElement; node = node.parentElement)
       chain.unshift(node);
     let bg = { ...ground };
+    if (el.closest('header.rail')) aurora.forEach((layer) => (bg = over(layer, bg)));
     if (extra) bg = over(extra, bg);
     chain.forEach((node) => {
       const c = parse(getComputedStyle(node).backgroundColor);
@@ -322,7 +333,7 @@ async function settle(page) {
       };
       if (!Object.values(pass).every(Boolean) || errors.length) failed = true;
 
-      const spot = theme === 'dark' ? `, ${lit.min}:1 under the spotlight` : '';
+      const spot = `, ${lit.min}:1 under the spotlight`;
       report.push(
         [
           `── ${width}×${height} ${theme}`,

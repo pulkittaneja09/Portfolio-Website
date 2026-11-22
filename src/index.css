@@ -18,7 +18,7 @@
    (secondary) for strings and quiet gradients; a soft green for ✓ marks.
 
    Dark:  bg #0A0E14 · text #A3ADBD (8.5:1) · accent #8FB4FF (9.3:1)
-   Light: bg #F8FAFC · text #434F63 (7.9:1) · accent #2F5BD3 (5.6:1)
+   Light: bg #F8FAFC · text #404C60 (8.3:1) · accent #2F5BD3 (5.6:1)
    ─────────────────────────────────────────────────────────────────────────── */
 /* Registered so the founder card's ring can animate its angle. */
 @property --ring-angle {
@@ -46,7 +46,7 @@
     --bg-elevated-rgb: 16 21 29;
     --text-strong-rgb: 238 242 248;
     --text-rgb: 163 173 189;
-    --text-faint-rgb: 94 104 120;
+    --text-faint-rgb: 122 133 151;
     --accent-rgb: 143 180 255;
     --secondary-rgb: 125 211 192;
     --ok-rgb: 134 214 158;
@@ -91,8 +91,8 @@
     --bg-rgb: 248 250 252;
     --bg-elevated-rgb: 255 255 255;
     --text-strong-rgb: 11 18 32;
-    --text-rgb: 67 79 99;
-    --text-faint-rgb: 135 146 162;
+    --text-rgb: 64 76 96;
+    --text-faint-rgb: 100 111 130;
     --accent-rgb: 47 91 211;
     --secondary-rgb: 14 124 108;
     --ok-rgb: 31 138 84;
@@ -837,11 +837,11 @@
     height: 34rem;
     z-index: -1;
     pointer-events: none;
-    background: radial-gradient(closest-side, rgb(var(--tint) / var(--case-tint, 0.1)), transparent);
+    background: radial-gradient(closest-side, rgb(var(--tint) / var(--case-tint, 0.07)), transparent);
   }
 
   [data-theme='light'] .case-tint {
-    --case-tint: 0.08;
+    --case-tint: 0.055;
   }
 
   /* ── Aurora: a slow mesh behind the identity rail ──────────────────────── */
@@ -874,20 +874,24 @@
   .aurora::before {
     top: -32vmax;
     left: -24vmax;
-    background: radial-gradient(closest-side, rgb(var(--accent-rgb) / var(--aurora-a, 0.07)), transparent);
+    background: radial-gradient(closest-side, rgb(var(--accent-rgb) / var(--aurora-a, 0.035)), transparent);
     animation: aurora-a 38s ease-in-out infinite alternate;
   }
 
   .aurora::after {
     bottom: -40vmax;
     left: -6vmax;
-    background: radial-gradient(closest-side, rgb(var(--secondary-rgb) / var(--aurora-b, 0.045)), transparent);
+    background: radial-gradient(
+      closest-side,
+      rgb(var(--secondary-rgb) / var(--aurora-b, 0.025)),
+      transparent
+    );
     animation: aurora-b 46s ease-in-out infinite alternate;
   }
 
   [data-theme='light'] .aurora {
-    --aurora-a: 0.06;
-    --aurora-b: 0.05;
+    --aurora-a: 0.04;
+    --aurora-b: 0.03;
   }
 
   @media (min-width: 1024px) {
@@ -922,7 +926,8 @@
     z-index: -10;
     pointer-events: none;
     /* Glacier blue at 5.5% (dark) / 5% (light). Measured at the centre of the
-       pool: body text 7.93:1 in dark and 7.38:1 in light. */
+       pool, over the aurora at its peak: body text stays above 7:1 in both
+       themes (scripts/qa.cjs, check d). */
     background: radial-gradient(
       600px circle at var(--spot-x, 50%) var(--spot-y, -20%),
       rgb(var(--accent-rgb) / var(--spot-alpha, 0.055)),

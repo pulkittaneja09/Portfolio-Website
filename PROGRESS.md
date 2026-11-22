@@ -323,7 +323,7 @@ nowhere; build without warnings.
 - [x] C2a. Research palettes — 10 repos' theme files + 10 live sites read with Playwright; findings in "Round 4 research"
 - [x] C2b. Shortlist — Midnight+Glacier, Slate+Teal, Graphite+Indigo; full tokens, all pass contrast
 - [x] C2c. /palette compare page, 6 screenshots, scorecard — A · Midnight + Glacier wins 29/30
-- [x] C2d. Midnight + Glacier live in both themes — tinted neutrals, aurora (38s/46s, desktop, still for reduced motion), spotlight 5.5% dark / 5% light (now on in light; light body deepened to #434F63 to stay ≥ 7:1 under it), serif gradient, editor-style agent card, toned chips with solid active chip, count-up metrics; /palette deleted
+- [x] C2d. Midnight + Glacier live in both themes — tinted neutrals, aurora (38s/46s, desktop, still for reduced motion), spotlight 5.5% dark / 5% light (now on in light; light body deepened to #404C60 to stay ≥ 7:1 under it and the aurora), serif gradient, editor-style agent card, toned chips with solid active chip, count-up metrics; /palette deleted
 - [x] C3a. Project tints (glacier, seafoam, sky, steel) — 12% blurred halo + ≤4° tilt toward the cursor on hover (mouse + full motion only), tinted wash and dot on each case-study header
 - [x] C3b. Founder card ring — conic accent/seafoam hairline turning every 14s via a registered `--ring-angle`, masked to 1px; fixed angle under reduced motion
 - [x] C3c. Highlight strip — 1 startup founded · 3 AI products shipped · 10+ MCP tools built (from `stats` and a count of AI/RAG/ML projects with a live demo), accent mono count-up
@@ -331,7 +331,7 @@ nowhere; build without warnings.
 - [x] C3e. Section dividers — 1px hairline centred in the existing gap (absolute, no layout change), accent dot travels across once on first view (1.8s) and fades; line only under reduced motion
 - [x] C3f. "PT" monogram intro — inline in index.html (no flash before React), 4 accent strokes draw then fade; ~0.95s from first paint, removed on its fade end; home page, first visit of the session only (sessionStorage), never for deep links or reduced motion; pointer-events none throughout
 - [x] C3g. Polish — selection, focus rings (now 1.5px solid accent) and the circular View Transition theme switch were already token-driven and carry the new accent; added a thin scrollbar (standard + WebKit, accent thumb on hover in WebKit)
-- [ ] C4. Final QA (both themes, 1440/1024/390), greps, contrast, Lighthouse 90+, build with no warnings, summary
+- [x] C4. Final QA — 42 section screenshots (6 sections + top, both themes, 1440/1024/390) in `.screenshots/r5/final`; `npm run qa` all PASS; reveal 0/35; old hexes and Notes gone; Lighthouse mobile 95/100/100/100, desktop 100 across; build 0 warnings; summary below
 
 ## Round 4 research: colour
 
@@ -422,3 +422,54 @@ itself (#8FB4FF dark / #2F5BD3 light) can stay on small things. It is the only c
 equally at home in both themes: B's teal is derivative and its light accent barely clears 4.5:1, and
 C's indigo drifts toward the purple "AI" look the brief bans. Blue for function names and seafoam for
 strings also gives the agent-run card the most convincing code-editor look of the three.
+
+## Round 4 summary
+
+**Palette: Midnight + Glacier won (29/30 against 21 and 23).** Navy-tinted neutrals give the page a
+colour identity before any accent appears, which is what "too black and white" was missing. Glacier
+blue (#8FB4FF dark / #2F5BD3 light) is the one accent; seafoam (#7DD3C0 / #0E7C6C) is the secondary.
+Slate + Teal was nearly brittanychiang.com and only just cleared 4.5:1 in light. Graphite + Indigo
+drifted toward the banned purple "AI" look. The gold/champagne/bronze accent is gone from code, docs,
+theme-color and the manifest.
+
+**What changed**
+
+- **Notes removed** (route, home section, nav, ⌘K, terminal, RSS, sitemap); the three outlines are
+  in `_drafts/`, outside the build; `marked` uninstalled.
+- **Colour, used deliberately:** a slow aurora behind the rail (38s/46s loops); the spotlight at
+  5.5% / 5% (now on in light too); the serif accent words as an accent-to-seafoam gradient; the
+  agent card syntax-highlighted (function names blue, strings seafoam, timings faint, ✓ soft
+  green); skill chips washed per category with a solid-accent active chip; metrics in accent mono
+  with count-up; nav line, hover titles, links, status dot and focus rings in accent.
+- **Finishing touches:** project tints (halo + ≤4° tilt on hover, tinted case-study headers), the
+  founder card's turning gradient hairline, a 1 · 3 · 10+ highlight strip under About, magnetic
+  Email / Résumé CTAs with a fill sweep, section dividers with a travelling dot, a first-visit "PT"
+  intro, a thin themed scrollbar.
+
+**Verification:** body text ≥ 7:1 everywhere (lowest 7.15:1 dark / 7.06:1 light: rail tagline under
+the spotlight with both aurora pools at peak); accent ≥ 5.26:1; case-study bodies ≥ 7.16:1 under
+the tint's peak. Name on one line at every width, nothing stuck faded or blurred, no console errors
+on any route in either theme. Lighthouse (production preview): mobile performance 95, desktop 100;
+accessibility, best practices and SEO 100.
+
+**Judgement calls and deviations**
+
+- **Nothing in the brief was skipped.**
+- **Tokens moved after the scorecard.** Light body went from #475467 to #404C60 so the spotlight
+  could run in light and still keep 7:1. Faint metadata went to #7A8597 / #646F82 (5.2 / 4.9:1, was
+  ~3.4:1): Lighthouse flagged it, and dates stay clearly quieter than body text.
+- **Aurora is very faint** (3.5% + 2.5% dark, 4% + 3% light). The QA check stacks both pools at peak
+  under the spotlight, and anything stronger pulled the rail tagline below 7:1.
+- **The rail Résumé CTA has no border at rest.** It keeps the old text link's footprint, so the link
+  row still fits beside the clock at 1024–1440px; the pill appears with the hover sweep. Contact has
+  the full bordered Email · Résumé pair, which replaced its plain Résumé link.
+- **"403 before retrieval" does not count up.** It is an HTTP status, not a quantity. R², 1,000+,
+  97.9% and ~93% do.
+- **The intro plays on the home page only**, not on deep links to case studies, and is removed when
+  its fade ends (backstop timer 2s).
+- **Research limits:** vercel.com failed TLS verification from this machine and was skipped. The
+  GitHub search API rate-limited after the first queries, so later repos' theme files were read from
+  raw.githubusercontent.com at their usual paths. eugeneyan.com and huyenchip.com were read live
+  instead of from source.
+- `scripts/qa.cjs` now checks contrast under the spotlight in light too, with the aurora stacked
+  under the rail.

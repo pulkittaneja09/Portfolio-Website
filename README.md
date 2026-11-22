@@ -158,11 +158,11 @@ src/
   data/
     portfolio.ts    ← all content lives here
     types.ts        the shape of it
-  sections/         About, Experience, Skills, Projects, Notes, Founder, Contact
+  sections/         About, Experience, Skills, Projects, Founder, Contact
   components/       identity rail (Identity, SectionNav, ProfileLinks, AgentRun),
                     MobileBar, rows and thumbnails, PipelineFlow, palette,
                     terminal, Ask widget, cursor spotlight, architecture diagram
-  pages/            Home (the split layout), ProjectDetail, NotesIndex, NotePage, Uses,
+  pages/            Home (the split layout), ProjectDetail, Uses,
                     NotFound, Resume
   hooks/            reduced motion, media queries, scroll-spy, Lenis,
                     clipboard, shortcuts
@@ -197,14 +197,18 @@ scrolls. Its spacing steps down in height tiers (roomy above 780px tall, compact
 static below) so the rail fits real laptop viewports without ever squeezing the card. Below 1024px
 the rail becomes the page header and a thin bar carries the current section and a Menu/⌘K button.
 
-**Two themes, one brand.** Dark is the default design: body `#A1A1AA` (7.6:1 on `#0B0C0E`), names and
-highlights `#F2F2F2`, metadata `#5C5C66`, and champagne `#D9C7A7` only on the active nav line, hover
-titles, metrics, the status dot, ✓ marks and link underlines. Light is a clean, corporate counterpart,
-not an inversion: warm off-white `#FAFAF9`, pure-white surfaces, body `#52525B` (7.4:1), black
-hairlines, depth from soft shadows instead of glows, and deep bronze `#7A5C2E` (5.9:1) in the same
-places as the champagne. The page-wide cursor spotlight peaks at 4.5% champagne in dark (measured to
-keep every word above 7:1 under the pointer) and is off in light. Every colour is a CSS variable, so a
-theme is one block of values in `index.css`; `border-line/[0.07]` is white in dark and black in light.
+**Two themes, one palette: Midnight + Glacier.** Chosen in Round 4 from three candidates after
+reading the colour tokens of the most-starred portfolio repos and ten reference sites (research and
+scorecard in PROGRESS.md). The neutrals are tinted toward a navy hue, so the page has a colour
+identity before any accent appears. Dark: ground `#0A0E14`, body `#A3ADBD` (8.5:1), glacier-blue
+accent `#8FB4FF` (9.3:1), seafoam secondary `#7DD3C0`. Light: ground `#F8FAFC`, white surfaces, body
+`#404C60` (8.3:1), accent `#2F5BD3` (5.6:1), secondary `#0E7C6C`, soft navy-tinted shadows. The accent
+is deliberate: the active nav line, hover titles, links, metrics, the status dot, focus rings and
+function names in the agent card; seafoam carries strings and quiet gradients, a soft green the ✓
+marks. A slow aurora sits behind the rail and the cursor spotlight is 5.5% / 5% accent, both measured
+to keep body text above 7:1 (`npm run qa`). Every colour is a CSS variable: the tokens are the RGB
+triplets between the `PALETTE` markers in `index.css`, and `border-line/[0.07]` is a navy-tinted
+hairline in both themes.
 
 **No flash, remembered choice.** An inline script in `index.html` sets `html[data-theme]` before any
 CSS loads: the saved choice, else the system setting (followed live until the visitor picks). The sun

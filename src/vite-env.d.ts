@@ -10,4 +10,3 @@ declare module 'virtual:site-stats' {
   };
   export default stats;
 }
-
